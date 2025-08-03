@@ -1,0 +1,109 @@
+'use client';
+
+import { useState } from 'react';
+import { Search, User, ShoppingCart, Menu, Heart, Package, Clock6Icon } from 'lucide-react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { colors, colorClasses, navigation } from '@/lib/constants';
+import MobileNavigation from './Navigation';
+
+export default function Header() {
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+    return (
+        <>
+            <header className={`${colorClasses.primary.bg} text-white sticky top-0 z-30 shadow-lg`}>
+                {/* Main Header */}
+                <div className="md:mx-20 px-4 py-3">
+                    <div className="flex items-center justify-between">
+                        {/* Logo */}
+                        <div className="flex items-center space-x-4">
+                            <Link href="/" className=" items-center">
+                                <Image
+                                    src="/images/logos/logo.jpg"
+                                    alt="Zeynix Logo"
+                                    width={200}
+                                    height={200}
+                                    className="md:h-15 md:w-15 h-12 w-16 rounded-lg"
+                                    priority
+                                />
+                            </Link>
+                        </div>
+
+                        <div className="w-full mx-4 max-w-md">
+                            <div className="relative">
+                                <Search className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${colorClasses.secondary.text} w-5 h-5`} />
+                                <input
+                                    type="text"
+                                    placeholder="Search"
+                                    className={`w-full ${colorClasses.light.bg} text-gray-700 px-10 py-2 rounded-lg focus:outline-none focus:ring-2 ${colorClasses.secondary.ring}`}
+                                />
+                            </div>
+                        </div>
+
+                        {/* Desktop Navigation Icons - Hidden on mobile */}
+                        <div className="hidden md:flex items-center space-x-6">
+                            {navigation.userMenu.map((item) => (
+                                <Link
+                                    key={item.name}
+                                    href={item.href}
+                                    className={`flex flex-row items-center space-x-2 ${colorClasses.secondary.text}`}
+                                >
+                                    {item.icon === 'User' && <User className="w-6 h-6 mb-1" />}
+                                    {item.icon === 'Package' && <Package className="w-6 h-6 mb-1" />}
+                                    {item.icon === 'ShoppingCart' && <ShoppingCart className="w-6 h-6 mb-1" />}
+                                    <span className="text-md">{item.name}</span>
+                                </Link>
+                            ))}
+                        </div>
+
+                        {/* Mobile Hamburger Menu */}
+                        <div className="md:hidden">
+                            <button
+                                onClick={() => setIsMobileMenuOpen(true)}
+                                className={`p-2 ${colorClasses.secondary.text}`}
+                            >
+                                <Menu className="w-6 h-6" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Secondary Navigation - Hidden on mobile */}
+                <div className={`hidden md:block ${colorClasses.secondary.bg} ${colorClasses.primary.text}`}>
+                    <div className="container mx-auto px-4 py-2">
+                        <div className="flex items-center justify-between">
+                            <nav className="flex items-center space-x-8">
+                                {navigation.categories.map((category) => (
+                                    <Link
+                                        key={category.name}
+                                        href={category.href}
+                                        className="font-medium"
+                                    >
+                                        {category.name}
+                                    </Link>
+                                ))}
+                            </nav>
+
+                            <div className="flex items-center space-x-2">
+                                <Link href="/wishlist" className="flex items-center space-x-2">
+                                    <Heart className="w-6 h-6 mb-1" />
+                                    <span className="font-medium">Wishlist</span>
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            {/* Mobile Navigation */}
+            <MobileNavigation
+                isOpen={isMobileMenuOpen}
+                onClose={() => setIsMobileMenuOpen(false)}
+            />
+        </>
+    );
+}
+
+
+
