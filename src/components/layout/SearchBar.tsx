@@ -67,10 +67,22 @@ export default function SearchBar() {
         });
     }, []);
 
+    // Debounce utility function
+    function debounce<T extends (...args: unknown[]) => unknown>(
+        func: T,
+        wait: number
+    ): (...args: Parameters<T>) => void {
+        let timeout: NodeJS.Timeout;
+        return (...args: Parameters<T>) => {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func(...args), wait);
+        };
+    }
+
     // Debounced search function
     const debouncedSearch = useCallback(
-        debounce(async (searchTerm: string) => {
-            if (!searchTerm.trim()) {
+        debounce(async (searchTerm: unknown) => {
+            if (typeof searchTerm !== 'string' || !searchTerm.trim()) {
                 setSuggestions([]);
                 setIsLoading(false);
                 return;
@@ -267,14 +279,14 @@ export default function SearchBar() {
                 addToCart({
                     product: {
                         id: product.id,
-                        title: product.title,
+                        title: product.name,
                         images: product.images,
                         price: product.price,
-                        discountPrice: product.discountPrice
+                        discountPrice: product.originalPrice > product.price ? product.originalPrice : undefined
                     },
-                    size: size as any,
+                    size: size as 'M' | 'L' | 'XL' | 'XXL' | 'XXXL',
                     quantity: 1,
-                    totalPrice: (product.discountPrice || product.price) * 1
+                    totalPrice: (product.originalPrice > product.price ? product.originalPrice : product.price) * 1
                 });
             }
         } catch (error) {
@@ -322,18 +334,6 @@ export default function SearchBar() {
         document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
-
-    // Debounce utility function
-    function debounce<T extends (...args: any[]) => any>(
-        func: T,
-        wait: number
-    ): (...args: Parameters<T>) => void {
-        let timeout: NodeJS.Timeout;
-        return (...args: Parameters<T>) => {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => func(...args), wait);
-        };
-    }
 
     const formatPrice = (price: number) => {
         return new Intl.NumberFormat('en-IN', {
@@ -452,7 +452,7 @@ export default function SearchBar() {
                                 </div>
                             ) : !isLoading && (
                                 <div className="text-sm text-gray-500 py-4 text-center">
-                                    No results found for "{query}"
+                                    No results found for &quot;{query}&quot;
                                 </div>
                             )}
                         </div>

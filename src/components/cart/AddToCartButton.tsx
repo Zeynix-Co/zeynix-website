@@ -43,8 +43,14 @@ export default function AddToCartButton({ product, size, disabled = false }: Add
         await new Promise(resolve => setTimeout(resolve, 500));
 
         addToCart({
-            product,
-            size: size as any,
+            product: {
+                id: product.id,
+                title: product.title,
+                images: product.images,
+                price: product.price,
+                discountPrice: product.discountPrice
+            },
+            size: size as 'M' | 'L' | 'XL' | 'XXL' | 'XXXL',
             quantity: 1,
             totalPrice: (product.discountPrice || product.price) * 1
         });

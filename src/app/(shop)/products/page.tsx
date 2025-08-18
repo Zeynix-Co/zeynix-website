@@ -153,11 +153,10 @@ export default function ProductsPage() {
         fetchProducts(currentPage + 1, true);
     }, [fetchProducts, currentPage]);
 
-    const handleQuickFilterApply = useCallback((filter: any) => {
-        // Apply quick filter logic here
-        console.log('Applying quick filter:', filter);
-        // TODO: Implement quick filter logic
-    }, []);
+    const handleQuickFilterApply = (filterType: string, value: string) => {
+        setActiveQuickFilters(prev => [...prev, `${filterType}:${value}`]);
+        // Apply the filter logic here
+    };
 
     const handleQuickFilterClear = useCallback(() => {
         setActiveQuickFilters([]);
@@ -208,8 +207,7 @@ export default function ProductsPage() {
                             {/* Active Filters Summary */}
                             {searchQuery && (
                                 <div className="flex items-center space-x-2">
-                                    <span className="text-sm text-gray-600">Search:</span>
-                                    <span className="text-sm font-medium text-gray-900">"{searchQuery}"</span>
+                                    <span className="text-sm text-gray-600">Search: &quot;{searchQuery}&quot;</span>
                                     <button
                                         onClick={handleSearchClear}
                                         className="text-red-500 hover:text-red-700"

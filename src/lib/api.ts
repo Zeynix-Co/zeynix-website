@@ -1,3 +1,42 @@
+import { Product } from '@/data/products';
+import { Order, CreateOrderData } from '@/types/order';
+
+interface User {
+    id: string;
+    name: string;
+    email: string;
+    phone: string;
+    role: 'user' | 'admin';
+}
+
+interface AuthResponse {
+    success: boolean;
+    message: string;
+    data: {
+        user: User;
+        token: string;
+    };
+}
+
+interface RegisterResponse {
+    success: boolean;
+    message: string;
+    data: User;
+}
+
+interface CartResponse {
+    success: boolean;
+    message: string;
+    data: {
+        cartItem: {
+            id: string;
+            productId: string;
+            size: string;
+            quantity: number;
+        };
+    };
+}
+
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
 // Generic API request function
@@ -53,7 +92,7 @@ export const productAPI = {
         return apiRequest<{
             success: boolean;
             data: {
-                products: any[];
+                products: Product[];
                 pagination: {
                     page: number;
                     limit: number;
@@ -69,7 +108,7 @@ export const productAPI = {
         const endpoint = `/api/customer/products/featured${limit ? `?limit=${limit}` : ''}`;
         return apiRequest<{
             success: boolean;
-            data: any[];
+            data: Product[];
         }>(endpoint);
     },
 
@@ -92,7 +131,7 @@ export const productAPI = {
         return apiRequest<{
             success: boolean;
             data: {
-                products: any[];
+                products: Product[];
                 pagination: {
                     page: number;
                     limit: number;
@@ -126,7 +165,7 @@ export const productAPI = {
         return apiRequest<{
             success: boolean;
             data: {
-                products: any[];
+                products: Product[];
                 pagination: {
                     page: number;
                     limit: number;
@@ -137,12 +176,42 @@ export const productAPI = {
         }>(endpoint);
     },
 
-    // Get single product
-    getProduct: async (id: string) => {
-        const endpoint = `/api/customer/products/${id}`;
+    // Get product by ID
+    getProduct: async (productId: string) => {
+        const endpoint = `/api/customer/products/${productId}`;
         return apiRequest<{
             success: boolean;
-            data: any;
+            data: Product;
+        }>(endpoint);
+    },
+
+    // Get products by brand
+    getProductsByBrand: async (brand: string, params?: {
+        page?: number;
+        limit?: number;
+        sortBy?: string;
+        sortOrder?: 'asc' | 'desc';
+    }) => {
+        const searchParams = new URLSearchParams();
+        if (params?.page) searchParams.append('page', params.page.toString());
+        if (params?.limit) searchParams.append('limit', params.limit.toString());
+        if (params?.sortBy) searchParams.append('sortBy', params.sortBy);
+        if (params?.sortOrder) searchParams.append('sortOrder', params.sortOrder);
+
+        const queryString = searchParams.toString();
+        const endpoint = `/api/customer/products/brand/${brand}${queryString ? `?${queryString}` : ''}`;
+
+        return apiRequest<{
+            success: boolean;
+            data: {
+                products: Product[];
+                pagination: {
+                    page: number;
+                    limit: number;
+                    total: number;
+                    pages: number;
+                };
+            };
         }>(endpoint);
     },
 };
@@ -150,14 +219,7 @@ export const productAPI = {
 // Auth API functions
 export const authAPI = {
     login: async (credentials: { email: string; password: string; rememberMe?: boolean }) => {
-        return apiRequest<{
-            success: boolean;
-            message: string;
-            data: {
-                user: any;
-                token: string;
-            };
-        }>('/api/auth/login', {
+        return apiRequest<AuthResponse>('/api/auth/login', {
             method: 'POST',
             body: JSON.stringify(credentials),
         });
@@ -170,11 +232,7 @@ export const authAPI = {
         password: string;
         confirmPassword: string;
     }) => {
-        return apiRequest<{
-            success: boolean;
-            message: string;
-            data: any;
-        }>('/api/auth/register', {
+        return apiRequest<RegisterResponse>('/api/auth/register', {
             method: 'POST',
             body: JSON.stringify(userData),
         });
@@ -185,13 +243,65 @@ export const authAPI = {
 export const cartAPI = {
     // Add to cart (when we implement user authentication)
     addToCart: async (productId: string, size: string, quantity: number) => {
-        return apiRequest<{
-            success: boolean;
-            message: string;
-            data: any;
-        }>('/api/cart/add', {
+        return apiRequest<CartResponse>('/api/cart/add', {
             method: 'POST',
             body: JSON.stringify({ productId, size, quantity }),
+        });
+    },
+};
+
+// Order API functions
+export const orderAPI = {
+    // Get orders
+    getOrders: async (params?: {
+        page?: number;
+        limit?: number;
+        status?: string;
+        sortBy?: string;
+        sortOrder?: 'asc' | 'desc';
+    }) => {
+        const searchParams = new URLSearchParams();
+        if (params?.page) searchParams.append('page', params.page.toString());
+        if (params?.limit) searchParams.append('limit', params.limit.toString());
+        if (params?.status) searchParams.append('status', params.status);
+        if (params?.sortBy) searchParams.append('sortBy', params.sortBy);
+        if (params?.sortOrder) searchParams.append('sortOrder', params.sortOrder);
+
+        const queryString = searchParams.toString();
+        const endpoint = `/api/customer/orders${queryString ? `?${queryString}` : ''}`;
+
+        return apiRequest<{
+            success: boolean;
+            data: {
+                orders: Order[];
+                pagination: {
+                    page: number;
+                    limit: number;
+                    total: number;
+                    pages: number;
+                };
+            };
+        }>(endpoint);
+    },
+
+    // Get order by ID
+    getOrder: async (orderId: string) => {
+        const endpoint = `/api/customer/orders/${orderId}`;
+        return apiRequest<{
+            success: boolean;
+            data: Order;
+        }>(endpoint);
+    },
+
+    // Create order
+    createOrder: async (orderData: CreateOrderData) => {
+        const endpoint = '/api/customer/orders';
+        return apiRequest<{
+            success: boolean;
+            data: Order;
+        }>(endpoint, {
+            method: 'POST',
+            body: JSON.stringify(orderData),
         });
     },
 };

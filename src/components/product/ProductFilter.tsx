@@ -94,9 +94,9 @@ export default memo(function ProductFilter({ products, onFilterChange, className
         onFilterChange(filtered);
     }, [filters, products, onFilterChange]);
 
-    const updateFilter = useCallback((key: keyof FilterState, value: any) => {
+    const updateFilter = (key: string, value: string | number | string[]) => {
         setFilters(prev => ({ ...prev, [key]: value }));
-    }, []);
+    };
 
     const toggleSize = useCallback((size: string) => {
         setFilters(prev => ({
@@ -133,6 +133,11 @@ export default memo(function ProductFilter({ products, onFilterChange, className
         filters.priceRange[0] > 0 ||
         filters.priceRange[1] < maxPrice
         , [filters, maxPrice]);
+
+    const handlePriceChange = (values: [number, number]) => {
+        setFilters(prev => ({ ...prev, priceRange: values }));
+        applyFilters();
+    };
 
     return (
         <div className={`bg-white rounded-lg shadow-md ${className}`}>
@@ -200,7 +205,7 @@ export default memo(function ProductFilter({ products, onFilterChange, className
                             min="0"
                             max={maxPrice}
                             value={filters.priceRange[1]}
-                            onChange={(e) => updateFilter('priceRange', [filters.priceRange[0], parseInt(e.target.value)])}
+                            onChange={(e) => handlePriceChange([filters.priceRange[0], parseInt(e.target.value)])}
                             className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
                         />
                         <div className="flex gap-2">
@@ -208,14 +213,14 @@ export default memo(function ProductFilter({ products, onFilterChange, className
                                 type="number"
                                 placeholder="Min"
                                 value={filters.priceRange[0]}
-                                onChange={(e) => updateFilter('priceRange', [parseInt(e.target.value) || 0, filters.priceRange[1]])}
+                                onChange={(e) => handlePriceChange([parseInt(e.target.value) || 0, filters.priceRange[1]])}
                                 className="w-20 px-2 py-1 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             />
                             <input
                                 type="number"
                                 placeholder="Max"
                                 value={filters.priceRange[1]}
-                                onChange={(e) => updateFilter('priceRange', [filters.priceRange[0], parseInt(e.target.value) || maxPrice])}
+                                onChange={(e) => handlePriceChange([filters.priceRange[0], parseInt(e.target.value) || maxPrice])}
                                 className="w-20 px-2 py-1 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             />
                         </div>

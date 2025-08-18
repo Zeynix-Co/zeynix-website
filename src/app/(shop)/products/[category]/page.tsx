@@ -136,8 +136,6 @@ export default function CategoryProductsPage() {
                     <div className="flex-1">
                         <ProductGrid
                             products={filteredProducts}
-                            title=""
-                            subtitle=""
                         />
                     </div>
                 </div>

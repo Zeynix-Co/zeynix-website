@@ -121,19 +121,19 @@ export default function SizeSelector({
                             <div className="space-y-2">
                                 <div className="grid grid-cols-3 gap-4 text-xs">
                                     <div>
-                                        <span className="font-medium">M:</span> Chest 38-40", Waist 32-34"
+                                        <span className="font-medium">M:</span> Chest 38-40&quot;, Waist 32-34&quot;
                                     </div>
                                     <div>
-                                        <span className="font-medium">L:</span> Chest 40-42", Waist 34-36"
+                                        <span className="font-medium">L:</span> Chest 40-42&quot;, Waist 34-36&quot;
                                     </div>
                                     <div>
-                                        <span className="font-medium">XL:</span> Chest 42-44", Waist 36-38"
+                                        <span className="font-medium">XL:</span> Chest 42-44&quot;, Waist 36-38&quot;
                                     </div>
                                     <div>
-                                        <span className="font-medium">XXL:</span> Chest 44-46", Waist 38-40"
+                                        <span className="font-medium">XXL:</span> Chest 44-46&quot;, Waist 38-40&quot;
                                     </div>
                                     <div>
-                                        <span className="font-medium">XXXL:</span> Chest 46-48", Waist 40-42"
+                                        <span className="font-medium">XXXL:</span> Chest 46-48&quot;, Waist 40-42&quot;
                                     </div>
                                 </div>
                                 <p className="text-gray-600 mt-2">

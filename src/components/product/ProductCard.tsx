@@ -49,7 +49,7 @@ export default function ProductCard({ product, onAddToCart, onAddToWishlist }: P
                     price: product.price,
                     discountPrice: product.originalPrice > product.price ? product.originalPrice : undefined
                 },
-                size: selectedSize as any,
+                size: selectedSize as 'M' | 'L' | 'XL' | 'XXL' | 'XXXL',
                 quantity: 1,
                 totalPrice: product.price * 1
             });

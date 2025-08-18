@@ -106,7 +106,7 @@ export default function SearchResultsPage() {
     useEffect(() => {
         if (filteredProducts.length > 0) {
             const sorted = [...filteredProducts].sort((a, b) => {
-                let aValue: any, bValue: any;
+                let aValue: string | number, bValue: string | number;
 
                 switch (sortBy) {
                     case 'price':
@@ -119,8 +119,8 @@ export default function SearchResultsPage() {
                         break;
                     case 'newest':
                         // Use a default date since launchDate doesn't exist
-                        aValue = new Date().getTime();
-                        bValue = new Date().getTime();
+                        aValue = new Date('2025-08-03').getTime();
+                        bValue = new Date('2025-08-03').getTime();
                         break;
                     case 'popularity':
                         aValue = a.rating || 0;
@@ -340,7 +340,7 @@ export default function SearchResultsPage() {
                                 <Search className="w-16 h-16 text-gray-300 mx-auto mb-4" />
                                 <h3 className="text-xl font-semibold text-gray-900 mb-2">No Products Found</h3>
                                 <p className="text-gray-600 mb-6">
-                                    Try adjusting your search terms or filters to find what you're looking for.
+                                    Try adjusting your search terms or filters to find what you&apos;re looking for.
                                 </p>
                                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
                                     <Button onClick={() => router.push('/products')}>

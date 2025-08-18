@@ -136,7 +136,7 @@ export default function CartPage() {
                             <div className="bg-white rounded-lg shadow-sm p-8 text-center">
                                 <ShoppingBag className={`w-20 h-20 ${colorClasses.secondary.text} mx-auto mb-4`} />
                                 <h3 className={`text-xl font-semibold ${colorClasses.primary.text} mb-2`}>Your cart is empty</h3>
-                                <p className="text-gray-700 mb-6">Looks like you haven't added any items to your cart yet.</p>
+                                <p className="text-gray-700 mb-6">Looks like you haven&apos;t added any items to your cart yet.</p>
                                 <Button onClick={handleContinueShopping} className="w-full max-w-xs">
                                     Start Shopping
                                 </Button>

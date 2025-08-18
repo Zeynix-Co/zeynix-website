@@ -50,10 +50,18 @@ interface ProductState {
     };
 }
 
+interface ProductFilters {
+    page?: number;
+    limit?: number;
+    category?: string;
+    status?: string;
+    search?: string;
+}
+
 interface ProductActions {
     // CRUD Operations
     createProduct: (productData: Omit<Product, '_id' | 'createdAt' | 'updatedAt'>, userId: string) => Promise<void>;
-    getAllProducts: (userId: string, filters?: any) => Promise<void>;
+    getAllProducts: (userId: string, filters?: ProductFilters) => Promise<void>;
     getProduct: (productId: string, userId: string) => Promise<void>;
     updateProduct: (productId: string, productData: Partial<Product>, userId: string) => Promise<void>;
     deleteProduct: (productId: string, userId: string) => Promise<void>;
@@ -127,7 +135,7 @@ const useProductStore = create<ProductState & ProductActions>()(
                 }
             },
 
-            getAllProducts: async (userId: string, filters: any = {}) => {
+            getAllProducts: async (userId: string, filters: ProductFilters = {}) => {
                 try {
                     set({ isLoading: true, error: null });
 

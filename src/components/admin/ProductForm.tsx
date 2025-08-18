@@ -98,7 +98,7 @@ export default function ProductForm({ productId, onSuccess }: ProductFormProps) 
     }, [currentProduct, productId]);
 
     // Handle input changes
-    const handleInputChange = (field: keyof ProductFormData, value: any) => {
+    const handleInputChange = (field: keyof ProductFormData, value: string | number | boolean | string[]) => {
         setFormData(prev => ({ ...prev, [field]: value }));
 
         // Clear error when user starts typing

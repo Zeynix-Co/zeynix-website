@@ -9,15 +9,34 @@ interface AdminUser {
     role: 'admin';
 }
 
+interface Order {
+    _id: string;
+    orderNumber: string;
+    user?: {
+        name: string;
+    };
+    status: 'pending' | 'confirmed' | 'delivered' | 'cancelled';
+    totalAmount: number;
+}
+
+interface Product {
+    _id: string;
+    title: string;
+    sizes: Array<{
+        size: string;
+        stock: number;
+    }>;
+}
+
 interface DashboardData {
-    counts: {
+    stats: {
         totalProducts: number;
         totalOrders: number;
         totalUsers: number;
         pendingOrders: number;
     };
-    recentOrders: any[];
-    lowStockProducts: any[];
+    recentOrders: Order[];
+    lowStockProducts: Product[];
 }
 
 interface AdminState {

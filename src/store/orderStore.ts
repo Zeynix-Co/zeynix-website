@@ -58,9 +58,17 @@ interface OrderState {
     };
 }
 
+interface OrderFilters {
+    page?: number;
+    limit?: number;
+    status?: string;
+    paymentStatus?: string;
+    search?: string;
+}
+
 interface OrderActions {
     // CRUD Operations
-    getAllOrders: (userId: string, filters?: any) => Promise<void>;
+    getAllOrders: (userId: string, filters?: OrderFilters) => Promise<void>;
     getOrder: (orderId: string, userId: string) => Promise<void>;
     updateOrderStatus: (orderId: string, status: string, userId: string) => Promise<void>;
 
@@ -191,10 +199,10 @@ const useOrderStore = create<OrderState & OrderActions>()(
                         // Update order status in list and current order
                         set(state => ({
                             orders: state.orders.map(o =>
-                                o._id === orderId ? { ...o, status: status as any } : o
+                                o._id === orderId ? { ...o, status: status as 'pending' | 'confirmed' | 'delivered' | 'cancelled' } : o
                             ),
                             currentOrder: state.currentOrder?._id === orderId
-                                ? { ...state.currentOrder, status: status as any }
+                                ? { ...state.currentOrder, status: status as 'pending' | 'confirmed' | 'delivered' | 'cancelled' }
                                 : state.currentOrder,
                             isLoading: false,
                             error: null

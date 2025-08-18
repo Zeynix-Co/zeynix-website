@@ -6,6 +6,30 @@ import { useAdminStore } from '@/store';
 import { Button } from '@/components/ui/Button';
 import { colorClasses } from '@/lib/constants';
 
+interface Order {
+    _id: string;
+    orderNumber: string;
+    user?: {
+        name: string;
+    };
+    status: 'pending' | 'confirmed' | 'delivered' | 'cancelled';
+    totalAmount: number;
+}
+
+interface Product {
+    _id: string;
+    title: string;
+    sizes: Array<{
+        size: string;
+        stock: number;
+    }>;
+}
+
+interface DashboardData {
+    recentOrders?: Order[];
+    lowStockProducts?: Product[];
+}
+
 export default function AdminDashboardPage() {
     const router = useRouter();
     const { user, dashboardData, getDashboardData, logout, isLoading } = useAdminStore();
@@ -223,7 +247,7 @@ export default function AdminDashboardPage() {
                                         </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200">
-                                        {dashboardData.recentOrders.map((order: any) => (
+                                        {dashboardData.recentOrders.map((order: Order) => (
                                             <tr key={order._id}>
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                                     {order.orderNumber}
@@ -260,12 +284,12 @@ export default function AdminDashboardPage() {
                                 Low Stock Alerts
                             </h3>
                             <div className="space-y-3">
-                                {dashboardData.lowStockProducts.map((product: any) => (
+                                {dashboardData.lowStockProducts.map((product: Product) => (
                                     <div key={product._id} className="flex items-center justify-between p-3 bg-red-50 rounded-lg">
                                         <div>
                                             <h4 className="text-sm font-medium text-gray-900">{product.title}</h4>
                                             <p className="text-sm text-gray-500">
-                                                Low stock sizes: {product.sizes.filter((s: any) => s.stock <= 5).map((s: any) => `${s.size}(${s.stock})`).join(', ')}
+                                                Low stock sizes: {product.sizes.filter((s) => s.stock <= 5).map((s) => `${s.size}(${s.stock})`).join(', ')}
                                             </p>
                                         </div>
                                         <Button

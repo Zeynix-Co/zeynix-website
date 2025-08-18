@@ -5,12 +5,15 @@ import { Menu, X, User, ShoppingCart, Heart, Package, LogOut } from 'lucide-reac
 import Link from 'next/link';
 import { colorClasses, navigation } from '@/lib/constants';
 
-interface MobileNavigationProps {
+interface NavigationProps {
     isOpen: boolean;
     onClose: () => void;
-    isAuthenticated?: boolean;
-    user?: any;
-    onLogout?: () => void;
+    isAuthenticated: boolean;
+    user: {
+        name: string;
+        email: string;
+    } | null;
+    onLogout: () => void;
 }
 
 export default function MobileNavigation({
@@ -19,7 +22,7 @@ export default function MobileNavigation({
     isAuthenticated = false,
     user,
     onLogout
-}: MobileNavigationProps) {
+}: NavigationProps) {
     return (
         <>
             {/* Overlay */}
