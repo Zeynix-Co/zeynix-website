@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Filter, X, Search as SearchIcon } from 'lucide-react';
 import { Product } from '@/data/products';
@@ -12,7 +12,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/Button';
 
-export default function ProductsPage() {
+function ProductsPageContent() {
     console.log('🔄 ProductsPage rendering');
 
     const [products, setProducts] = useState<Product[]>([]);
@@ -263,5 +263,13 @@ export default function ProductsPage() {
 
             <Footer />
         </div>
+    );
+}
+
+export default function ProductsPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <ProductsPageContent />
+        </Suspense>
     );
 } 

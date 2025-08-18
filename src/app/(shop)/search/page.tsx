@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Search, Filter, X, Grid, List, ChevronDown, ChevronUp } from 'lucide-react';
 import { productAPI } from '@/lib/api';
@@ -12,7 +12,7 @@ import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/Button';
 import { colorClasses } from '@/lib/constants';
 
-export default function SearchResultsPage() {
+function SearchResultsPageContent() {
     const searchParams = useSearchParams();
     const router = useRouter();
 
@@ -361,5 +361,13 @@ export default function SearchResultsPage() {
 
             <Footer />
         </div>
+    );
+}
+
+export default function SearchResultsPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <SearchResultsPageContent />
+        </Suspense>
     );
 }
