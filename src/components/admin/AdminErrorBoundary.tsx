@@ -9,7 +9,7 @@ interface Props {
 
 interface State {
     hasError: boolean;
-    error?: Error;
+    error?: string;
 }
 
 export default class AdminErrorBoundary extends Component<Props, State> {
@@ -19,7 +19,7 @@ export default class AdminErrorBoundary extends Component<Props, State> {
     }
 
     static getDerivedStateFromError(error: Error): State {
-        return { hasError: true, error };
+        return { hasError: true, error: error.message };
     }
 
     componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
@@ -64,7 +64,7 @@ export default class AdminErrorBoundary extends Component<Props, State> {
                                     Error Details
                                 </summary>
                                 <pre className="mt-2 text-xs text-red-600 bg-red-50 p-3 rounded overflow-auto">
-                                    {this.state.error.message}
+                                    {this.state.error}
                                 </pre>
                             </details>
                         )}
