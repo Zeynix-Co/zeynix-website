@@ -88,4 +88,77 @@ export const navigation = {
         { name: 'Orders', href: '/account/orders', icon: 'Package' },
         { name: 'Cart', href: '/cart', icon: 'ShoppingCart' },
     ],
-} as const; 
+} as const;
+
+// App configuration constants
+export const APP_CONFIG = {
+    name: 'Zeynix',
+    description: 'Premium Clothing Brand',
+    currency: '₹',
+    currencyCode: 'INR',
+    defaultLanguage: 'en',
+    defaultTimezone: 'Asia/Kolkata',
+};
+
+// Product constants
+export const PRODUCT_CONSTANTS = {
+    categories: ['casual', 'formal', 'ethnic', 'sports'],
+    sizes: ['M', 'L', 'XL', 'XXL', 'XXXL'],
+    productFits: ['OVERSIZED FIT', 'CASUAL FIT', 'FORMAL FIT', 'CLASSIC FIT', 'SLIM FIT'],
+    statuses: ['draft', 'published', 'archived'],
+    minImages: 2,
+    maxRating: 5,
+};
+
+// Order constants
+export const ORDER_CONSTANTS = {
+    statuses: ['pending', 'confirmed', 'delivered', 'cancelled'],
+    paymentMethods: ['razorpay', 'cod'],
+    deliveryPartners: ['dtdc'],
+};
+
+// Pagination constants
+export const PAGINATION = {
+    defaultLimit: 10,
+    limits: [10, 20, 50],
+    maxVisiblePages: 5,
+};
+
+// API constants
+export const API_CONFIG = {
+    baseUrl: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000',
+    timeout: 10000,
+    retries: 3,
+};
+
+// Validation constants
+export const VALIDATION = {
+    password: {
+        minLength: 6,
+        maxLength: 128,
+    },
+    name: {
+        minLength: 2,
+        maxLength: 50,
+    },
+    email: {
+        maxLength: 254,
+    },
+    phone: {
+        minLength: 10,
+        maxLength: 15,
+    },
+    product: {
+        title: {
+            minLength: 3,
+            maxLength: 100,
+        },
+        description: {
+            maxLength: 1000,
+        },
+        price: {
+            min: 0,
+            max: 100000,
+        },
+    },
+}; 

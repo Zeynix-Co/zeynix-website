@@ -1,14 +1,24 @@
 'use client';
 
 import { useState } from 'react';
-import { Search, User, ShoppingCart, Menu, Heart, Package, Clock6Icon } from 'lucide-react';
+import { Search, User, ShoppingCart, Menu, Heart, Package, Clock6Icon, LogOut, UserCheckIcon } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { colors, colorClasses, navigation } from '@/lib/constants';
 import MobileNavigation from './Navigation';
+import { useAuthStore } from '@/store';
+import CartIcon from '@/components/cart/CartIcon';
+import SearchBar from './SearchBar';
 
 export default function Header() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const { user, isAuthenticated, logout } = useAuthStore();
+
+    const handleLogout = () => {
+        logout();
+        // Redirect to home page after logout
+        window.location.href = '/';
+    };
 
     return (
         <>
@@ -30,31 +40,59 @@ export default function Header() {
                             </Link>
                         </div>
 
+                        {/* Enhanced Search Bar */}
                         <div className="w-full mx-4 max-w-md">
-                            <div className="relative">
-                                <Search className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${colorClasses.secondary.text} w-5 h-5`} />
-                                <input
-                                    type="text"
-                                    placeholder="Search"
-                                    className={`w-full ${colorClasses.light.bg} text-gray-700 px-10 py-2 rounded-lg focus:outline-none focus:ring-2 ${colorClasses.secondary.ring}`}
-                                />
-                            </div>
+                            <SearchBar />
                         </div>
 
                         {/* Desktop Navigation Icons - Hidden on mobile */}
                         <div className="hidden md:flex items-center space-x-6">
-                            {navigation.userMenu.map((item) => (
-                                <Link
-                                    key={item.name}
-                                    href={item.href}
-                                    className={`flex flex-row items-center space-x-2 ${colorClasses.secondary.text}`}
-                                >
-                                    {item.icon === 'User' && <User className="w-6 h-6 mb-1" />}
-                                    {item.icon === 'Package' && <Package className="w-6 h-6 mb-1" />}
-                                    {item.icon === 'ShoppingCart' && <ShoppingCart className="w-6 h-6 mb-1" />}
-                                    <span className="text-md">{item.name}</span>
-                                </Link>
-                            ))}
+                            {isAuthenticated ? (
+                                <>
+                                    {/* User is logged in */}
+                                    <Link
+                                        href="/account"
+                                        className={`flex flex-row items-center space-x-2 ${colorClasses.secondary.text}`}
+                                    >
+                                        <UserCheckIcon className={`w-6 h-6 mb-1 ${colorClasses.light.text}`} />
+                                        <span className="text-md">{user?.name || 'Account'}</span>
+                                    </Link>
+                                    <Link
+                                        href="/orders"
+                                        className={`flex flex-row items-center space-x-2 ${colorClasses.secondary.text}`}
+                                    >
+                                        <Package className={`w-6 h-6 mb-1 ${colorClasses.light.text}`} />
+                                        <span className="text-md">Orders</span>
+                                    </Link>
+                                    {/* Cart Icon - Only visible when authenticated */}
+                                    <CartIcon />
+                                    <button
+                                        onClick={handleLogout}
+                                        className={`flex flex-row items-center space-x-2 ${colorClasses.secondary.text} hover:opacity-80 transition-opacity`}
+                                    >
+                                        <LogOut className={`w-6 h-6 mb-1 ${colorClasses.light.text}`} />
+                                        <span className="text-md">Logout</span>
+                                    </button>
+                                </>
+                            ) : (
+                                <>
+                                    {/* User is not logged in */}
+                                    <Link
+                                        href="/login"
+                                        className={`flex flex-row items-center space-x-2 ${colorClasses.secondary.text}`}
+                                    >
+                                        <UserCheckIcon className={`w-6 h-6 mb-1 ${colorClasses.light.text}`} />
+                                        <span className="text-md">Login</span>
+                                    </Link>
+                                    <Link
+                                        href="/register"
+                                        className={`flex flex-row items-center space-x-2 ${colorClasses.secondary.text}`}
+                                    >
+                                        <User className={`w-6 h-6 mb-1 ${colorClasses.light.text}`} />
+                                        <span className="text-md">Register</span>
+                                    </Link>
+                                </>
+                            )}
                         </div>
 
                         {/* Mobile Hamburger Menu */}
@@ -100,6 +138,9 @@ export default function Header() {
             <MobileNavigation
                 isOpen={isMobileMenuOpen}
                 onClose={() => setIsMobileMenuOpen(false)}
+                isAuthenticated={isAuthenticated}
+                user={user}
+                onLogout={handleLogout}
             />
         </>
     );

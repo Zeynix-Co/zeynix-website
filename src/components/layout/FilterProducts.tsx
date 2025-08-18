@@ -1,11 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ChevronDown, Star, Heart, Filter } from 'lucide-react';
+import Link from 'next/link';
 import { colorClasses } from '@/lib/constants';
-import { mockProducts, calculateDiscount, Product } from '@/data/products';
+import { calculateDiscount, Product } from '@/data/products';
+import { productAPI } from '@/lib/api';
 
-const categories = ["All", "T-Shirts", "Shirts", "Jeans", "Pants", "Jackets"];
+const categories = ["All", "casual", "formal", "ethnic", "sports"];
 const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
 const priceRanges = [
     { label: "Under ₹500", min: 0, max: 500 },
@@ -18,9 +20,33 @@ export default function FilterProducts() {
     const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
     const [selectedPriceRange, setSelectedPriceRange] = useState<string>("");
     const [showMoreProducts, setShowMoreProducts] = useState(false);
+    const [products, setProducts] = useState<Product[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
-    const filteredProducts = mockProducts.filter(product => {
-        const categoryMatch = selectedCategory === "All" || product.category === selectedCategory;
+    // Fetch products from API
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                setIsLoading(true);
+                setError(null);
+                const response = await productAPI.getAllProducts({ limit: 50 });
+                if (response.success) {
+                    setProducts(response.data.products);
+                }
+            } catch (err) {
+                setError('Failed to load products');
+                console.error('Error fetching products:', err);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchProducts();
+    }, []);
+
+    const filteredProducts = products.filter(product => {
+        const categoryMatch = selectedCategory === "All" || product.category.toLowerCase() === selectedCategory.toLowerCase();
         const sizeMatch = selectedSizes.length === 0 || selectedSizes.some(size => product.size.includes(size));
         const priceMatch = !selectedPriceRange || (() => {
             const range = priceRanges.find(r => r.label === selectedPriceRange);
@@ -39,6 +65,29 @@ export default function FilterProducts() {
                 : [...prev, size]
         );
     };
+
+    if (isLoading) {
+        return (
+            <div className="flex justify-center items-center py-8">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                <span className="ml-2 text-gray-600">Loading products...</span>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="text-center py-8">
+                <p className="text-red-500 mb-2">{error}</p>
+                <button
+                    onClick={() => window.location.reload()}
+                    className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                >
+                    Try Again
+                </button>
+            </div>
+        );
+    }
 
     return (
         <div className="mx-auto">
@@ -137,7 +186,11 @@ export default function FilterProducts() {
                     {/* Products Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {displayedProducts.map(product => (
-                            <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                            <Link
+                                key={product.id}
+                                href={`/products/${product.category}/${product.id}`}
+                                className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
+                            >
                                 {/* Product Image */}
                                 <div className="relative h-64 bg-gray-200">
                                     {product.label && (
@@ -145,9 +198,25 @@ export default function FilterProducts() {
                                             {product.label}
                                         </div>
                                     )}
-                                    <div className="w-full h-full flex items-center justify-center text-gray-500">
-                                        Product Image {product.id}
-                                    </div>
+                                    {product.image ? (
+                                        <img
+                                            src={product.image}
+                                            alt={product.name}
+                                            className="w-full h-full object-cover"
+                                            onError={(e) => {
+                                                // Fallback to placeholder if image fails to load
+                                                const target = e.target as HTMLImageElement;
+                                                target.src = '/images/products/placeholder.jpg';
+                                            }}
+                                        />
+                                    ) : (
+                                        <div className="w-full h-full flex items-center justify-center text-gray-500">
+                                            <div className="text-center">
+                                                <div className="w-16 h-16 bg-gray-300 rounded-full mx-auto mb-2"></div>
+                                                <p className="text-sm">No Image</p>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
 
                                 {/* Product Details */}
@@ -173,10 +242,20 @@ export default function FilterProducts() {
                                                 {calculateDiscount(product.originalPrice, product.price)}% OFF
                                             </span>
                                         </div>
-                                        <Heart className="w-5 h-5 text-gray-400 hover:text-red-500 cursor-pointer" />
+                                        <div
+                                            className="w-5 h-5 text-gray-400 hover:text-red-500 cursor-pointer"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                e.stopPropagation();
+                                                // TODO: Add to wishlist functionality
+                                                console.log('Add to wishlist:', product.id);
+                                            }}
+                                        >
+                                            <Heart className="w-5 h-5" />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </Link>
                         ))}
                     </div>
 

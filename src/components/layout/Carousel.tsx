@@ -53,39 +53,56 @@ const carouselItems: CarouselItem[] = [
 
 export default function Carousel() {
     const [currentSlide, setCurrentSlide] = useState(0);
+    const [isTransitioning, setIsTransitioning] = useState(false);
 
     // Auto-advance carousel
     useEffect(() => {
         const timer = setInterval(() => {
-            setCurrentSlide((prev) => (prev + 1) % carouselItems.length);
+            if (!isTransitioning) {
+                setCurrentSlide((prev) => (prev + 1) % carouselItems.length);
+            }
         }, 5000); // Change slide every 5 seconds
 
         return () => clearInterval(timer);
-    }, []);
+    }, [isTransitioning]);
 
     const nextSlide = () => {
+        if (isTransitioning) return;
+        setIsTransitioning(true);
         setCurrentSlide((prev) => (prev + 1) % carouselItems.length);
+        setTimeout(() => setIsTransitioning(false), 500);
     };
 
     const prevSlide = () => {
+        if (isTransitioning) return;
+        setIsTransitioning(true);
         setCurrentSlide((prev) => (prev - 1 + carouselItems.length) % carouselItems.length);
+        setTimeout(() => setIsTransitioning(false), 500);
     };
 
     const goToSlide = (index: number) => {
+        if (isTransitioning || index === currentSlide) return;
+        setIsTransitioning(true);
         setCurrentSlide(index);
+        setTimeout(() => setIsTransitioning(false), 500);
     };
 
     return (
         <div className="relative w-full h-96 md:h-[520px] overflow-hidden">
-            {/* Carousel Slides */}
+            {/* Carousel Slides - Only render current slide */}
             <div className="relative w-full h-full">
-                {carouselItems.map((item, index) => (
-                    <div
-                        key={item.id}
-                        className={`absolute inset-0 transition-opacity duration-800 ${index === currentSlide ? 'opacity-100' : 'opacity-0'
-                            }`}
-                    >
-                        <div className="relative w-full h-full">
+                <div
+                    className="relative w-full h-full transition-transform duration-500 ease-in-out"
+                    style={{
+                        transform: `translateX(-${currentSlide * 100}%)`
+                    }}
+                >
+                    {carouselItems.map((item, index) => (
+                        <div
+                            key={item.id}
+                            className="absolute inset-0 w-full h-full"
+                            style={{ left: `${index * 100}%` }}
+                        >
                             <Image
                                 src={item.image}
                                 alt={item.title}
@@ -100,27 +117,32 @@ export default function Carousel() {
                                 <div className="text-center text-white px-6">
                                     <h2 className="text-3xl md:text-5xl font-bold mb-4">{item.title}</h2>
                                     <p className="text-lg md:text-xl mb-6">{item.subtitle}</p>
-                                    <button className={`${colorClasses.secondary.bg} ${colorClasses.primary.text} px-8 py-3 rounded-lg font-bold text-lg hover:${colorClasses.secondary.hover} transition-colors`}>
-                                        <Link href={item.link}>Shop Now</Link>
-                                    </button>
+                                    <Link
+                                        href={item.link}
+                                        className={`${colorClasses.secondary.bg} ${colorClasses.primary.text} px-8 py-3 rounded-lg font-bold text-lg hover:${colorClasses.secondary.hover} transition-colors inline-block`}
+                                    >
+                                        Shop Now
+                                    </Link>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
 
             {/* Navigation Arrows */}
             <button
                 onClick={prevSlide}
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 p-2 rounded-full shadow-lg transition-all duration-200 z-10"
+                disabled={isTransitioning}
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-80 p-2 rounded-full shadow-lg transition-all duration-200 z-10 disabled:opacity-50 disabled:cursor-not-allowed"
             >
                 <ChevronLeft className={`w-6 h-6 ${colorClasses.primary.text}`} />
             </button>
 
             <button
                 onClick={nextSlide}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 p-2 rounded-full shadow-lg transition-all duration-200 z-10"
+                disabled={isTransitioning}
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-80 p-2 rounded-full shadow-lg transition-all duration-200 z-10 disabled:opacity-50 disabled:cursor-not-allowed"
             >
                 <ChevronRight className={`w-6 h-6 ${colorClasses.primary.text}`} />
             </button>
@@ -131,10 +153,11 @@ export default function Carousel() {
                     <button
                         key={index}
                         onClick={() => goToSlide(index)}
+                        disabled={isTransitioning}
                         className={`w-3 h-3 rounded-full transition-all duration-200 ${index === currentSlide
                             ? `${colorClasses.secondary.bg} scale-125`
                             : 'bg-white bg-opacity-50 hover:bg-opacity-75'
-                            }`}
+                            } disabled:opacity-50 disabled:cursor-not-allowed`}
                     />
                 ))}
             </div>
