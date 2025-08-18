@@ -107,7 +107,7 @@ export default function AdminDashboardPage() {
                                     <dl>
                                         <dt className="text-sm font-medium text-gray-500 truncate">Total Products</dt>
                                         <dd className="text-lg font-medium text-gray-900">
-                                            {isLoadingData ? '...' : dashboardData?.counts?.totalProducts || 0}
+                                            {isLoadingData ? '...' : dashboardData?.stats?.totalProducts || 0}
                                         </dd>
                                     </dl>
                                 </div>
@@ -129,7 +129,7 @@ export default function AdminDashboardPage() {
                                     <dl>
                                         <dt className="text-sm font-medium text-gray-500 truncate">Total Orders</dt>
                                         <dd className="text-lg font-medium text-gray-900">
-                                            {isLoadingData ? '...' : dashboardData?.counts?.totalOrders || 0}
+                                            {isLoadingData ? '...' : dashboardData?.stats?.totalOrders || 0}
                                         </dd>
                                     </dl>
                                 </div>
@@ -151,7 +151,7 @@ export default function AdminDashboardPage() {
                                     <dl>
                                         <dt className="text-sm font-medium text-gray-500 truncate">Total Users</dt>
                                         <dd className="text-lg font-medium text-gray-900">
-                                            {isLoadingData ? '...' : dashboardData?.counts?.totalUsers || 0}
+                                            {isLoadingData ? '...' : dashboardData?.stats?.totalUsers || 0}
                                         </dd>
                                     </dl>
                                 </div>
@@ -173,7 +173,7 @@ export default function AdminDashboardPage() {
                                     <dl>
                                         <dt className="text-sm font-medium text-gray-500 truncate">Pending Orders</dt>
                                         <dd className="text-lg font-medium text-gray-900">
-                                            {isLoadingData ? '...' : dashboardData?.counts?.pendingOrders || 0}
+                                            {isLoadingData ? '...' : dashboardData?.stats?.pendingOrders || 0}
                                         </dd>
                                     </dl>
                                 </div>

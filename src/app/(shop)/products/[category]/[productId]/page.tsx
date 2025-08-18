@@ -355,7 +355,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                                 <RotateCcw className="w-6 h-6 text-purple-600" />
                                 <div>
                                     <p className="font-medium text-gray-900">Easy Returns</p>
-                                    <p className="text-sm text-gray-600">30 day return policy</p>
+                                    <p className="text-sm text-gray-600">7 day return policy</p>
                                 </div>
                             </div>
                         </div>
