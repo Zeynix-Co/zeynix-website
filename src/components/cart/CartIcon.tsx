@@ -16,7 +16,7 @@ export default function CartIcon() {
     return (
         <button
             onClick={handleCartClick}
-            className="relative flex items-center space-x-2 text-white hover:opacity-80 transition-opacity"
+            className="relative flex items-center space-x-2 text-white cursor-pointer hover:opacity-80 transition-opacity"
         >
             <ShoppingCart className={`w-6 h-6 ${colorClasses.light.text}`} />
             <span className={`text-md ${colorClasses.secondary.text}`}>Cart</span>

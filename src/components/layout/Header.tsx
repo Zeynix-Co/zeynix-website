@@ -52,14 +52,14 @@ export default function Header() {
                                     {/* User is logged in */}
                                     <Link
                                         href="/account"
-                                        className={`flex flex-row items-center space-x-2 ${colorClasses.secondary.text}`}
+                                        className={`flex flex-row items-center space-x-2 ${colorClasses.secondary.text} cursor-pointer hover:opacity-80 transition-opacity`}
                                     >
                                         <UserCheckIcon className={`w-6 h-6 mb-1 ${colorClasses.light.text}`} />
                                         <span className="text-md">{user?.name || 'Account'}</span>
                                     </Link>
                                     <Link
                                         href="/orders"
-                                        className={`flex flex-row items-center space-x-2 ${colorClasses.secondary.text}`}
+                                        className={`flex flex-row items-center space-x-2 ${colorClasses.secondary.text} cursor-pointer hover:opacity-80 transition-opacity`}
                                     >
                                         <Package className={`w-6 h-6 mb-1 ${colorClasses.light.text}`} />
                                         <span className="text-md">Orders</span>
@@ -68,7 +68,7 @@ export default function Header() {
                                     <CartIcon />
                                     <button
                                         onClick={handleLogout}
-                                        className={`flex flex-row items-center space-x-2 ${colorClasses.secondary.text} hover:opacity-80 transition-opacity`}
+                                        className={`flex flex-row items-center space-x-2 ${colorClasses.secondary.text} hover:opacity-80 transition-opacity cursor-pointer`}
                                     >
                                         <LogOut className={`w-6 h-6 mb-1 ${colorClasses.light.text}`} />
                                         <span className="text-md">Logout</span>
@@ -79,14 +79,14 @@ export default function Header() {
                                     {/* User is not logged in */}
                                     <Link
                                         href="/login"
-                                        className={`flex flex-row items-center space-x-2 ${colorClasses.secondary.text}`}
+                                        className={`flex flex-row items-center space-x-2 hover:opacity-80 transition-opacity cursor-pointer ${colorClasses.secondary.text}`}
                                     >
                                         <UserCheckIcon className={`w-6 h-6 mb-1 ${colorClasses.light.text}`} />
                                         <span className="text-md">Login</span>
                                     </Link>
                                     <Link
                                         href="/register"
-                                        className={`flex flex-row items-center space-x-2 ${colorClasses.secondary.text}`}
+                                        className={`flex flex-row items-center space-x-2 hover:opacity-80 transition-opacity cursor-pointer ${colorClasses.secondary.text}`}
                                     >
                                         <User className={`w-6 h-6 mb-1 ${colorClasses.light.text}`} />
                                         <span className="text-md">Register</span>

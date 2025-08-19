@@ -54,7 +54,7 @@ const useAuthStore = create<AuthState & AuthActions>()(
                 try {
                     set({ isLoading: true, error: null });
 
-                    const response = await fetch('http://localhost:8000/api/auth/login', {
+                    const response = await fetch('/api/auth/login', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -92,7 +92,7 @@ const useAuthStore = create<AuthState & AuthActions>()(
                 try {
                     set({ isLoading: true, error: null });
 
-                    const response = await fetch('http://localhost:8000/api/auth/register', {
+                    const response = await fetch('/api/auth/register', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -129,7 +129,7 @@ const useAuthStore = create<AuthState & AuthActions>()(
             logout: () => {
                 // Call logout API
                 if (get().token) {
-                    fetch('http://localhost:8000/api/auth/logout', {
+                    fetch('/api/auth/logout', {
                         method: 'POST',
                         headers: {
                             'Authorization': `Bearer ${get().token}`,
