@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import mongoose from 'mongoose';
 import { Product } from '@/lib/models/Product';
-import { transformProduct, getBaseProductFilter, ProductFilter } from '@/lib/utils/productTransformer';
+import { transformProduct, getBaseProductFilter } from '@/lib/utils/productTransformer';
 
 // Connect to MongoDB
 const connectDB = async () => {
@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
         const limit = parseInt(searchParams.get('limit') || '50');
 
         // Build filter - only active and published products
-        const filter: ProductFilter = { ...getBaseProductFilter() };
+        const filter: Record<string, any> = { ...getBaseProductFilter() };
         if (category && category !== 'all') filter.category = category;
         if (search) {
             filter.$or = [

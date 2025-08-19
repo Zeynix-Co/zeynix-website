@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import mongoose from 'mongoose';
 import { Product } from '@/lib/models/Product';
-import { transformProduct, getBaseProductFilter, ProductFilter } from '@/lib/utils/productTransformer';
+import { transformProduct, getBaseProductFilter } from '@/lib/utils/productTransformer';
 
 // Connect to MongoDB
 const connectDB = async () => {
@@ -34,19 +34,19 @@ export async function GET(
         const sortOrder = searchParams.get('sortOrder') === 'asc' ? 1 : -1;
 
         // Build filter - only active and published products in the specified category
-        const filter: ProductFilter = {
+        const filter = {
             ...getBaseProductFilter(),
             category: category.toLowerCase()
         };
 
         // Build sort object
-        let sort: Record<string, 1 | -1> = {};
+        let sort: Record<string, any> = {};
         switch (sortBy) {
             case 'price':
-                sort = { actualPrice: sortOrder as 1 | -1 };
+                sort = { actualPrice: sortOrder };
                 break;
             case 'rating':
-                sort = { rating: sortOrder as 1 | -1 };
+                sort = { rating: sortOrder };
                 break;
             case 'featured':
                 sort = { featured: -1, createdAt: -1 };

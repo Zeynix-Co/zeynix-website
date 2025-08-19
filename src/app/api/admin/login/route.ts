@@ -19,7 +19,7 @@ const connectDB = async () => {
     }
 };
 
-// POST /api/auth/login - User login
+// POST /api/admin/login - Admin login
 export async function POST(request: NextRequest) {
     try {
         await connectDB();
@@ -37,13 +37,13 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Find user by email
-        const user = await User.findOne({ email }).select('+password');
+        // Find user by email and ensure they are admin
+        const user = await User.findOne({ email, role: 'admin' }).select('+password');
         if (!user) {
             return NextResponse.json(
                 {
                     success: false,
-                    message: 'Invalid credentials'
+                    message: 'Invalid admin credentials'
                 },
                 { status: 401 }
             );
@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
             return NextResponse.json(
                 {
                     success: false,
-                    message: 'Account is deactivated'
+                    message: 'Admin account is deactivated'
                 },
                 { status: 401 }
             );
@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
             return NextResponse.json(
                 {
                     success: false,
-                    message: 'Invalid credentials'
+                    message: 'Invalid admin credentials'
                 },
                 { status: 401 }
             );
@@ -90,7 +90,7 @@ export async function POST(request: NextRequest) {
 
         return NextResponse.json({
             success: true,
-            message: 'Login successful',
+            message: 'Admin login successful',
             data: {
                 user: userResponse,
                 token
@@ -98,11 +98,11 @@ export async function POST(request: NextRequest) {
         });
 
     } catch (error) {
-        console.error('Login error:', error);
+        console.error('Admin login error:', error);
         return NextResponse.json(
             {
                 success: false,
-                message: 'Internal server error during login'
+                message: 'Internal server error during admin login'
             },
             { status: 500 }
         );

@@ -84,7 +84,7 @@ const useAdminStore = create<AdminState & AdminActions>()(
                 try {
                     set({ isLoading: true, error: null });
 
-                    const response = await fetch('http://localhost:8000/api/admin/login', {
+                    const response = await fetch('/api/admin/login', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -121,7 +121,7 @@ const useAdminStore = create<AdminState & AdminActions>()(
                 try {
                     set({ isLoading: true, error: null });
 
-                    const response = await fetch('http://localhost:8000/api/admin/setup', {
+                    const response = await fetch('/api/admin/setup', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -172,7 +172,7 @@ const useAdminStore = create<AdminState & AdminActions>()(
                         throw new Error('No user authenticated');
                     }
 
-                    const response = await fetch('http://localhost:8000/api/admin/dashboard', {
+                    const response = await fetch('/api/admin/dashboard', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

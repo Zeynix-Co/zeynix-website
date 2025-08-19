@@ -145,7 +145,7 @@ export default function RegisterForm() {
                             value={formData.email}
                             onChange={handleInputChange}
                             placeholder="Enter your email id"
-                            className={formErrors.name ? 'border-red-500' : `w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white ${colorClasses.light.bg} ${colorClasses.dark.text}`}
+                            className={formErrors.email ? 'border-red-500' : `w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white ${colorClasses.light.bg} ${colorClasses.dark.text}`}
                             disabled={isLoading}
                         />
                         {formErrors.email && (
@@ -165,7 +165,7 @@ export default function RegisterForm() {
                             value={formData.phone}
                             onChange={handleInputChange}
                             placeholder="Enter your phone number"
-                            className={formErrors.name ? 'border-red-500' : `w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white ${colorClasses.light.bg} ${colorClasses.dark.text}`}
+                            className={formErrors.phone ? 'border-red-500' : `w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white ${colorClasses.light.bg} ${colorClasses.dark.text}`}
                             disabled={isLoading}
                         />
                         {formErrors.phone && (
@@ -185,7 +185,7 @@ export default function RegisterForm() {
                             value={formData.password}
                             onChange={handleInputChange}
                             placeholder="Create a password"
-                            className={formErrors.name ? 'border-red-500' : `w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white ${colorClasses.light.bg} ${colorClasses.dark.text}`}
+                            className={formErrors.password ? 'border-red-500' : `w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white ${colorClasses.light.bg} ${colorClasses.dark.text}`}
                             disabled={isLoading}
                         />
                         {formErrors.password && (
@@ -205,7 +205,7 @@ export default function RegisterForm() {
                             value={formData.confirmPassword}
                             onChange={handleInputChange}
                             placeholder="Confirm your password"
-                            className={formErrors.name ? 'border-red-500' : `w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white ${colorClasses.light.bg} ${colorClasses.dark.text}`}
+                            className={formErrors.confirmPassword ? 'border-red-500' : `w-full px-2 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white ${colorClasses.light.bg} ${colorClasses.dark.text}`}
                             disabled={isLoading}
                         />
                         {formErrors.confirmPassword && (
