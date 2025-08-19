@@ -1,8 +1,8 @@
-import { IProduct } from '@/lib/models/Product';
+import mongoose from 'mongoose';
 
 // Interface for the raw product data from MongoDB
 interface RawProduct {
-    _id: any;
+    _id: mongoose.Types.ObjectId;
     title: string;
     brand?: string;
     description?: string;
