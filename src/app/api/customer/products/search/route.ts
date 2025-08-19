@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import mongoose from 'mongoose';
 import { Product } from '@/lib/models/Product';
-import { transformProduct, getBaseProductFilter } from '@/lib/utils/productTransformer';
+import { transformProduct, getBaseProductFilter, ProductFilter } from '@/lib/utils/productTransformer';
 
 // Connect to MongoDB
 const connectDB = async () => {
@@ -43,7 +43,7 @@ export async function GET(request: NextRequest) {
         }
 
         // Build search filter - only active and published products
-        const filter: Record<string, any> = {
+        const filter: ProductFilter = {
             ...getBaseProductFilter(),
             $or: [
                 { title: { $regex: query, $options: 'i' } },
