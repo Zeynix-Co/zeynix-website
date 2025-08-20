@@ -1,12 +1,13 @@
 import { create } from 'zustand';
 
 interface UploadedImage {
-    url: string;
+    secure_url: string;
     public_id: string;
     width: number;
     height: number;
     format: string;
-    size: number;
+    bytes: number;
+    original_filename: string;
 }
 
 interface UploadState {
@@ -17,27 +18,28 @@ interface UploadState {
 }
 
 interface UploadActions {
-    uploadImage: (file: File) => Promise<UploadedImage>;
-    uploadMultipleImages: (files: File[]) => Promise<UploadedImage[]>;
-    deleteImage: (publicId: string) => Promise<void>;
+    uploadImage: (file: File, userId: string) => Promise<UploadedImage>;
+    uploadMultipleImages: (files: File[], userId: string) => Promise<UploadedImage[]>;
+    deleteImage: (publicId: string, userId: string) => Promise<void>;
     clearError: () => void;
     resetUploadState: () => void;
 }
 
-const useUploadStore = create<UploadState & UploadActions>((set, get) => ({
+const useUploadStore = create<UploadState & UploadActions>((set) => ({
     isUploading: false,
     uploadProgress: 0,
     uploadedImages: [],
     error: null,
 
-    uploadImage: async (file: File): Promise<UploadedImage> => {
+    uploadImage: async (file: File, userId: string): Promise<UploadedImage> => {
         try {
             set({ isUploading: true, error: null, uploadProgress: 0 });
 
             const formData = new FormData();
             formData.append('image', file);
+            formData.append('userId', userId);
 
-            const response = await fetch('http://localhost:8000/api/admin/upload/image', {
+            const response = await fetch('/api/admin/upload/image', {
                 method: 'POST',
                 body: formData,
             });
@@ -67,7 +69,7 @@ const useUploadStore = create<UploadState & UploadActions>((set, get) => ({
         }
     },
 
-    uploadMultipleImages: async (files: File[]): Promise<UploadedImage[]> => {
+    uploadMultipleImages: async (files: File[], userId: string): Promise<UploadedImage[]> => {
         try {
             set({ isUploading: true, error: null, uploadProgress: 0 });
 
@@ -75,8 +77,9 @@ const useUploadStore = create<UploadState & UploadActions>((set, get) => ({
             files.forEach(file => {
                 formData.append('images', file);
             });
+            formData.append('userId', userId);
 
-            const response = await fetch('http://localhost:8000/api/admin/upload/multiple', {
+            const response = await fetch('/api/admin/upload/multiple', {
                 method: 'POST',
                 body: formData,
             });
@@ -106,16 +109,16 @@ const useUploadStore = create<UploadState & UploadActions>((set, get) => ({
         }
     },
 
-    deleteImage: async (publicId: string): Promise<void> => {
+    deleteImage: async (publicId: string, userId: string): Promise<void> => {
         try {
             set({ error: null });
 
-            const response = await fetch('http://localhost:8000/api/admin/upload/image', {
+            const response = await fetch('/api/admin/upload/image', {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ public_id: publicId }),
+                body: JSON.stringify({ public_id: publicId, userId }),
             });
 
             const data = await response.json();

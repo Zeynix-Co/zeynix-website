@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useOrderStore, useAdminStore } from '@/store';
+import { useAdminStore } from '@/store';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { colorClasses, ORDER_CONSTANTS, PAGINATION } from '@/lib/constants';
@@ -13,26 +13,24 @@ interface OrderListProps {
 
 export default function OrderList({ onViewOrder }: OrderListProps) {
     const router = useRouter();
-    const { user } = useAdminStore();
-    const {
-        orders,
-        pagination,
-        filters,
-        isLoading,
-        error,
-        getAllOrders,
-        updateOrderStatus,
-        setFilters,
-        clearError
-    } = useOrderStore();
+    const { user, ordersData, ordersLoading, error, getAllOrders, updateOrderStatus, clearError } = useAdminStore();
+
+    // Local state for filters
+    const [filters, setFilters] = useState({
+        status: 'all',
+        paymentStatus: 'all',
+        search: '',
+        page: 1,
+        limit: 10
+    });
 
     // Local state for search input
-    const [searchInput, setSearchInput] = useState(filters.search);
+    const [searchInput, setSearchInput] = useState('');
 
     // Load orders on component mount
     useEffect(() => {
         if (user) {
-            getAllOrders(user.id);
+            getAllOrders();
         }
     }, [user, getAllOrders]);
 
@@ -40,29 +38,32 @@ export default function OrderList({ onViewOrder }: OrderListProps) {
     useEffect(() => {
         const timer = setTimeout(() => {
             if (searchInput !== filters.search) {
-                setFilters({ search: searchInput, page: 1 });
+                const newFilters = { ...filters, search: searchInput, page: 1 };
+                setFilters(newFilters);
                 if (user) {
-                    getAllOrders(user.id, { search: searchInput, page: 1 });
+                    getAllOrders(newFilters);
                 }
             }
         }, 500);
 
         return () => clearTimeout(timer);
-    }, [searchInput, filters.search, setFilters, getAllOrders, user]);
+    }, [searchInput, filters.search, filters, getAllOrders, user]);
 
     // Handle filter changes
     const handleFilterChange = (filterType: 'status' | 'paymentStatus', value: string) => {
-        setFilters({ [filterType]: value, page: 1 });
+        const newFilters = { ...filters, [filterType]: value, page: 1 };
+        setFilters(newFilters);
         if (user) {
-            getAllOrders(user.id, { [filterType]: value, page: 1 });
+            getAllOrders(newFilters);
         }
     };
 
     // Handle pagination
     const handlePageChange = (page: number) => {
-        setFilters({ page });
+        const newFilters = { ...filters, page };
+        setFilters(newFilters);
         if (user) {
-            getAllOrders(user.id, { page });
+            getAllOrders(newFilters);
         }
     };
 
@@ -70,7 +71,7 @@ export default function OrderList({ onViewOrder }: OrderListProps) {
     const handleStatusUpdate = async (orderId: string, newStatus: string) => {
         try {
             if (user) {
-                await updateOrderStatus(orderId, newStatus, user.id);
+                await updateOrderStatus(orderId, newStatus);
             }
         } catch (error) {
             console.error('Failed to update order status:', error);
@@ -127,7 +128,7 @@ export default function OrderList({ onViewOrder }: OrderListProps) {
         });
     };
 
-    if (isLoading && orders.length === 0) {
+    if (ordersLoading && (!ordersData || ordersData.orders.length === 0)) {
         return (
             <div className="flex items-center justify-center h-64">
                 <div className="text-center">
@@ -144,7 +145,7 @@ export default function OrderList({ onViewOrder }: OrderListProps) {
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
                     <h2 className={`text-2xl font-bold ${colorClasses.primary.text}`}>
-                        Orders ({pagination.total})
+                        Orders ({ordersData?.pagination.totalOrders || 0})
                     </h2>
                     <p className="text-gray-600 mt-1">
                         Manage customer orders and track delivery status
@@ -213,11 +214,12 @@ export default function OrderList({ onViewOrder }: OrderListProps) {
                             Per Page
                         </label>
                         <select
-                            value={pagination.limit}
+                            value={filters.limit}
                             onChange={(e) => {
-                                setFilters({ limit: parseInt(e.target.value), page: 1 });
+                                const newFilters = { ...filters, limit: parseInt(e.target.value), page: 1 };
+                                setFilters(newFilters);
                                 if (user) {
-                                    getAllOrders(user.id, { limit: parseInt(e.target.value), page: 1 });
+                                    getAllOrders(newFilters);
                                 }
                             }}
                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-[#070F2B] bg-white"
@@ -246,7 +248,7 @@ export default function OrderList({ onViewOrder }: OrderListProps) {
             )}
 
             {/* Orders Table */}
-            {orders.length === 0 ? (
+            {!ordersData || ordersData.orders.length === 0 ? (
                 <div className="text-center py-12">
                     <div className="text-gray-400 text-6xl mb-4">📦</div>
                     <h3 className="text-lg font-medium text-gray-900 mb-2">No orders found</h3>
@@ -284,7 +286,7 @@ export default function OrderList({ onViewOrder }: OrderListProps) {
                                 </tr>
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-200">
-                                {orders.map((order) => (
+                                {ordersData?.orders.map((order) => (
                                     <tr key={order._id} className="hover:bg-gray-50">
                                         {/* Order Details */}
                                         <td className="px-6 py-4">
@@ -319,13 +321,13 @@ export default function OrderList({ onViewOrder }: OrderListProps) {
                                         {/* Customer */}
                                         <td className="px-6 py-4">
                                             <div className="text-sm font-medium text-gray-900">
-                                                {order.user.name}
+                                                {order.user?.name || 'N/A'}
                                             </div>
                                             <div className="text-sm text-gray-500">
-                                                {order.user.email}
+                                                {order.user?.email || 'N/A'}
                                             </div>
                                             <div className="text-sm text-gray-500">
-                                                {order.user.phone}
+                                                {order.user?.phone || 'N/A'}
                                             </div>
                                         </td>
 
@@ -339,7 +341,7 @@ export default function OrderList({ onViewOrder }: OrderListProps) {
                                                     value={order.status}
                                                     onChange={(e) => handleStatusUpdate(order._id, e.target.value)}
                                                     className="text-xs border border-gray-300 rounded px-2 py-1"
-                                                    disabled={isLoading}
+                                                    disabled={ordersLoading}
                                                 >
                                                     {ORDER_CONSTANTS.statuses.map(status => (
                                                         <option key={status} value={status}>
@@ -389,27 +391,27 @@ export default function OrderList({ onViewOrder }: OrderListProps) {
             )}
 
             {/* Pagination */}
-            {pagination.pages > 1 && (
+            {ordersData && ordersData.pagination.totalPages > 1 && (
                 <div className="flex items-center justify-center space-x-2">
                     <Button
-                        onClick={() => handlePageChange(pagination.page - 1)}
+                        onClick={() => handlePageChange(ordersData.pagination.currentPage - 1)}
                         variant="outline"
-                        disabled={pagination.page <= 1}
+                        disabled={ordersData.pagination.currentPage <= 1}
                         className="cursor-pointer"
                     >
                         Previous
                     </Button>
 
                     <div className="flex items-center space-x-1">
-                        {Array.from({ length: Math.min(5, pagination.pages) }, (_, i) => {
-                            const page = Math.max(1, Math.min(pagination.pages - 4, pagination.page - 2)) + i;
-                            if (page > pagination.pages) return null;
+                        {Array.from({ length: Math.min(5, ordersData.pagination.totalPages) }, (_, i) => {
+                            const page = Math.max(1, Math.min(ordersData.pagination.totalPages - 4, ordersData.pagination.currentPage - 2)) + i;
+                            if (page > ordersData.pagination.totalPages) return null;
 
                             return (
                                 <Button
                                     key={page}
                                     onClick={() => handlePageChange(page)}
-                                    variant={page === pagination.page ? "primary" : "outline"}
+                                    variant={page === ordersData.pagination.currentPage ? "primary" : "outline"}
                                     size="sm"
                                     className="cursor-pointer"
                                 >
@@ -420,9 +422,9 @@ export default function OrderList({ onViewOrder }: OrderListProps) {
                     </div>
 
                     <Button
-                        onClick={() => handlePageChange(pagination.page + 1)}
+                        onClick={() => handlePageChange(ordersData.pagination.currentPage + 1)}
                         variant="outline"
-                        disabled={pagination.page >= pagination.pages}
+                        disabled={ordersData.pagination.currentPage >= ordersData.pagination.totalPages}
                         className="cursor-pointer"
                     >
                         Next
@@ -431,7 +433,7 @@ export default function OrderList({ onViewOrder }: OrderListProps) {
             )}
 
             {/* Loading Overlay */}
-            {isLoading && orders.length > 0 && (
+            {ordersLoading && ordersData && ordersData.orders.length > 0 && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                     <div className="bg-white rounded-lg p-6 text-center">
                         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>

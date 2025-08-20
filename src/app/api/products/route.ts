@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
         const limit = parseInt(searchParams.get('limit') || '50');
 
         // Build filter - only active and published products
-        const filter: Record<string, any> = { ...getBaseProductFilter() };
+        const filter: Record<string, string | boolean | object> = { ...getBaseProductFilter() };
         if (category && category !== 'all') filter.category = category;
         if (search) {
             filter.$or = [

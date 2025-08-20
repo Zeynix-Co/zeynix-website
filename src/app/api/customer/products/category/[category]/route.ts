@@ -40,7 +40,7 @@ export async function GET(
         };
 
         // Build sort object
-        let sort: Record<string, any> = {};
+        let sort: Record<string, 1 | -1> = {};
         switch (sortBy) {
             case 'price':
                 sort = { actualPrice: sortOrder };

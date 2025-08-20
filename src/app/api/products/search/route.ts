@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
         }
 
         // Build search filter - only active and published products
-        const filter: Record<string, any> = {
+        const filter: Record<string, string | boolean | object> = {
             ...getBaseProductFilter(),
             $or: [
                 { title: { $regex: query, $options: 'i' } },

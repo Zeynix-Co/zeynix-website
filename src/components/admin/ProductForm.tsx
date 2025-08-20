@@ -417,6 +417,7 @@ export default function ProductForm({ productId, onSuccess }: ProductFormProps) 
                             onImagesChange={(newImages: string[]) => handleInputChange('images', newImages)}
                             disabled={isLoading}
                             maxImages={5}
+                            userId={user?.id || ''}
                         />
                         {formErrors.images && (
                             <p className="mt-1 text-sm text-red-600">{formErrors.images}</p>

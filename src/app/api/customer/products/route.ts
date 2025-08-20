@@ -32,13 +32,13 @@ export async function GET(request: NextRequest) {
 
         // Build filter - only active and published products
         const baseFilter = getBaseProductFilter();
-        const filter: Record<string, any> = { ...baseFilter };
+        const filter: Record<string, string | boolean> = { ...baseFilter };
         if (category && category !== 'all') {
             filter['category'] = category;
         }
 
         // Build sort object
-        let sort: Record<string, any> = {};
+        let sort: Record<string, 1 | -1> = {};
         switch (sortBy) {
             case 'price':
                 sort = { actualPrice: sortOrder };

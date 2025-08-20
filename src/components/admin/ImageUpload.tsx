@@ -10,13 +10,15 @@ interface ImageUploadProps {
     onImagesChange: (images: string[]) => void;
     disabled?: boolean;
     maxImages?: number;
+    userId: string;
 }
 
 export default function ImageUpload({
     images,
     onImagesChange,
     disabled = false,
-    maxImages = 5
+    maxImages = 5,
+    userId
 }: ImageUploadProps) {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const { uploadImage, isUploading, error, clearError } = useUploadStore();
@@ -45,8 +47,8 @@ export default function ImageUpload({
             clearError();
 
             for (const file of imageFiles) {
-                const uploadedImage = await uploadImage(file);
-                onImagesChange([...images, uploadedImage.url]);
+                const uploadedImage = await uploadImage(file, userId);
+                onImagesChange([...images, uploadedImage.secure_url]);
             }
 
             // Reset the file input to prevent the dialog from reopening
@@ -56,7 +58,7 @@ export default function ImageUpload({
         } catch (error) {
             console.error('Upload failed:', error);
         }
-    }, [images, onImagesChange, disabled, isUploading, maxImages, uploadImage, clearError]);
+    }, [images, onImagesChange, disabled, isUploading, maxImages, uploadImage, clearError, userId]);
 
     const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -175,8 +177,11 @@ export default function ImageUpload({
                                             target.nextElementSibling?.classList.remove('hidden');
                                         }}
                                     />
-                                    <div className="hidden w-full h-full flex items-center justify-center text-gray-400">
-                                        <span className="text-2xl">📷</span>
+                                    <div className="hidden w-full h-full flex items-center justify-center text-gray-400 bg-gray-100">
+                                        <div className="text-center">
+                                            <span className="text-2xl block mb-1">📷</span>
+                                            <span className="text-xs text-gray-500">Image failed to load</span>
+                                        </div>
                                     </div>
                                 </div>
 

@@ -99,7 +99,7 @@ const useProductStore = create<ProductState & ProductActions>()(
                 try {
                     set({ isLoading: true, error: null });
 
-                    const response = await fetch('http://localhost:8000/api/admin/products', {
+                    const response = await fetch('/api/admin/products', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -151,7 +151,7 @@ const useProductStore = create<ProductState & ProductActions>()(
                         search: mergedFilters.search || ''
                     });
 
-                    const response = await fetch(`http://localhost:8000/api/admin/products?${queryParams}`);
+                    const response = await fetch(`/api/admin/products?${queryParams}`);
 
                     const data = await response.json();
 
@@ -183,7 +183,7 @@ const useProductStore = create<ProductState & ProductActions>()(
                 try {
                     set({ isLoading: true, error: null });
 
-                    const response = await fetch(`http://localhost:8000/api/admin/products/${productId}?userId=${userId}`);
+                    const response = await fetch(`/api/admin/products/${productId}?userId=${userId}`);
 
                     const data = await response.json();
 
@@ -213,7 +213,7 @@ const useProductStore = create<ProductState & ProductActions>()(
                 try {
                     set({ isLoading: true, error: null });
 
-                    const response = await fetch(`http://localhost:8000/api/admin/products/${productId}`, {
+                    const response = await fetch(`/api/admin/products/${productId}`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
@@ -256,7 +256,7 @@ const useProductStore = create<ProductState & ProductActions>()(
                 try {
                     set({ isLoading: true, error: null });
 
-                    const response = await fetch(`http://localhost:8000/api/admin/products/${productId}?userId=${userId}`, {
+                    const response = await fetch(`/api/admin/products/${productId}?userId=${userId}`, {
                         method: 'DELETE',
                     });
 
@@ -290,7 +290,7 @@ const useProductStore = create<ProductState & ProductActions>()(
                 try {
                     set({ isLoading: true, error: null });
 
-                    const response = await fetch(`http://localhost:8000/api/admin/products/${productId}/toggle-status`, {
+                    const response = await fetch(`/api/admin/products/${productId}/toggle-status`, {
                         method: 'PATCH',
                         headers: {
                             'Content-Type': 'application/json',

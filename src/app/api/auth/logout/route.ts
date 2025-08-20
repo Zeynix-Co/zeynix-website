@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 // POST /api/auth/logout - User logout
-export async function POST(request: NextRequest) {
+export async function POST() {
     try {
         // In a stateless JWT system, logout is handled client-side
         // The server can't invalidate JWT tokens, so we just return success
