@@ -14,10 +14,6 @@
         {
             "src": "/api/(.*)",
             "dest": "backend/index.js"
-        },
-        {
-            "src": "/(.*)",
-            "dest": "/$1"
         }
     ],
     "env": {
