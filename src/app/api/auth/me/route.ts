@@ -1,37 +1,33 @@
 import { NextRequest, NextResponse } from 'next/server';
+import connectDB from '@/lib/config/database';
+import { protect } from '@/lib/middleware/auth';
 
 // GET /api/auth/me - Get current user info
 export async function GET(request: NextRequest) {
     try {
-        // Get token from cookie
-        const token = request.cookies.get('token')?.value;
+        await connectDB();
 
-        if (!token) {
+        // Authenticate user
+        const { user, error } = await protect(request);
+        if (error || !user) {
             return NextResponse.json(
-                { success: false, message: 'No token provided' },
+                { success: false, message: error || 'Authentication required' },
                 { status: 401 }
             );
         }
 
-        // Make request to backend API
-        const backendUrl = process.env.BACKEND_URL || 'http://localhost:8000';
-        const response = await fetch(`${backendUrl}/api/auth/me`, {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
+        return NextResponse.json({
+            success: true,
+            data: {
+                user: {
+                    id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    phone: user.phone,
+                    role: user.role
+                }
             }
         });
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            return NextResponse.json(
-                { success: false, message: errorData.message || 'Authentication failed' },
-                { status: response.status }
-            );
-        }
-
-        const data = await response.json();
-        return NextResponse.json(data);
 
     } catch (error) {
         console.error('Auth check error:', error);

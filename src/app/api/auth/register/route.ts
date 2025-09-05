@@ -1,8 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
+import connectDB from '@/lib/config/database';
+import { User } from '@/lib/models/User';
+import { generateToken, setTokenCookie } from '@/lib/middleware/auth';
 
 // POST /api/auth/register - User registration
 export async function POST(request: NextRequest) {
     try {
+        await connectDB();
+        
         const { name, email, phone, password, confirmPassword } = await request.json();
 
         // Validate input
@@ -16,44 +21,64 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Make request to backend API
-        const backendUrl = process.env.BACKEND_URL || 'http://localhost:8000';
-        const response = await fetch(`${backendUrl}/api/auth/register`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ name, email, phone, password, confirmPassword })
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json();
+        // Check if passwords match
+        if (password !== confirmPassword) {
             return NextResponse.json(
-                { success: false, message: errorData.message || 'Registration failed' },
-                { status: response.status }
+                {
+                    success: false,
+                    message: 'Passwords do not match'
+                },
+                { status: 400 }
             );
         }
 
-        const data = await response.json();
+        // Check if user already exists
+        const existingUser = await User.findOne({
+            $or: [{ email }, { phone }]
+        });
+
+        if (existingUser) {
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: 'User with this email or phone already exists'
+                },
+                { status: 400 }
+            );
+        }
+
+        // Create new user
+        const user = new User({
+            name,
+            email,
+            phone,
+            password,
+            role: 'user'
+        });
+
+        await user.save();
+
+        // Generate JWT token
+        const token = generateToken(user._id.toString(), false);
 
         // Create response with user data
         const nextResponse = NextResponse.json({
             success: true,
             message: 'Registration successful',
             data: {
-                user: data.data.user,
-                token: data.data.token
+                user: {
+                    id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    phone: user.phone,
+                    role: user.role
+                },
+                token
             }
         }, { status: 201 });
 
-        // Set JWT token as HTTP-only cookie from backend response
-        nextResponse.cookies.set('token', data.data.token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'lax',
-            maxAge: 7 * 24 * 60 * 60, // 7 days
-            path: '/'
-        });
+        // Set JWT token as HTTP-only cookie
+        nextResponse.headers.set('Set-Cookie', setTokenCookie(token, false));
 
         return nextResponse;
 

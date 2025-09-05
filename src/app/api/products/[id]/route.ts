@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
+import connectDB from '@/lib/config/database';
+import { Product } from '@/lib/models/Product';
 
 // GET /api/products/[id] - Get product by ID
 export async function GET(
@@ -6,26 +8,30 @@ export async function GET(
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        await connectDB();
         const { id } = await params;
 
-        // Make request to backend API
-        const backendUrl = process.env.BACKEND_URL || 'http://localhost:8000';
-        const response = await fetch(`${backendUrl}/api/customer/products/${id}`, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
+        const product = await Product.findById(id);
 
-        if (!response.ok) {
-            const errorData = await response.json();
+        if (!product) {
             return NextResponse.json(
-                { success: false, message: errorData.message || 'Failed to fetch product' },
-                { status: response.status }
+                { success: false, message: 'Product not found' },
+                { status: 404 }
             );
         }
 
-        const data = await response.json();
-        return NextResponse.json(data);
+        // Check if product is active and published
+        if (!product.isActive || product.status !== 'published') {
+            return NextResponse.json(
+                { success: false, message: 'Product not available' },
+                { status: 404 }
+            );
+        }
+
+        return NextResponse.json({
+            success: true,
+            data: product
+        });
 
     } catch (error) {
         console.error('Get product error:', error);

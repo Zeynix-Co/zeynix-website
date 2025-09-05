@@ -1,33 +1,31 @@
 import { NextRequest, NextResponse } from 'next/server';
+import connectDB from '@/lib/config/database';
+import { Product } from '@/lib/models/Product';
 
 // GET /api/products/featured - Get featured products
 export async function GET(request: NextRequest) {
     try {
+        await connectDB();
+
         const { searchParams } = new URL(request.url);
-        const limit = searchParams.get('limit') || '8';
+        const limit = parseInt(searchParams.get('limit') || '8');
 
-        // Build query string
-        const queryParams = new URLSearchParams();
-        if (limit) queryParams.append('limit', limit);
+        // Get featured products
+        const products = await Product.find({
+            isActive: true,
+            status: 'published',
+            featured: true
+        })
+        .sort({ createdAt: -1 })
+        .limit(limit);
 
-        // Make request to backend API
-        const backendUrl = process.env.BACKEND_URL || 'http://localhost:8000';
-        const response = await fetch(`${backendUrl}/api/customer/products/featured?${queryParams.toString()}`, {
-            headers: {
-                'Content-Type': 'application/json'
+        return NextResponse.json({
+            success: true,
+            data: {
+                products,
+                count: products.length
             }
         });
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            return NextResponse.json(
-                { success: false, message: errorData.message || 'Failed to fetch featured products' },
-                { status: response.status }
-            );
-        }
-
-        const data = await response.json();
-        return NextResponse.json(data);
 
     } catch (error) {
         console.error('Get featured products error:', error);

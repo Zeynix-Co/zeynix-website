@@ -1,9 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
+import connectDB from '@/lib/config/database';
+import { User } from '@/lib/models/User';
+import { generateToken, setTokenCookie } from '@/lib/middleware/auth';
 
 // POST /api/auth/login - User login
 export async function POST(request: NextRequest) {
     try {
-        const { email, password } = await request.json();
+        await connectDB();
+        
+        const { email, password, rememberMe } = await request.json();
 
         // Validate input
         if (!email || !password) {
@@ -16,44 +21,62 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Make request to backend API
-        const backendUrl = process.env.BACKEND_URL || 'http://localhost:8000';
-        const response = await fetch(`${backendUrl}/api/auth/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email, password })
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json();
+        // Find user by email
+        const user = await User.findOne({ email }).select('+password');
+        if (!user) {
             return NextResponse.json(
-                { success: false, message: errorData.message || 'Login failed' },
-                { status: response.status }
+                {
+                    success: false,
+                    message: 'Invalid email or password'
+                },
+                { status: 401 }
             );
         }
 
-        const data = await response.json();
+        // Check if user is active
+        if (!user.isActive) {
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: 'Account is deactivated'
+                },
+                { status: 401 }
+            );
+        }
+
+        // Verify password
+        const isPasswordValid = await user.comparePassword(password);
+        if (!isPasswordValid) {
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: 'Invalid email or password'
+                },
+                { status: 401 }
+            );
+        }
+
+        // Generate JWT token
+        const token = generateToken(user._id.toString(), rememberMe);
 
         // Create response with user data
         const nextResponse = NextResponse.json({
             success: true,
             message: 'Login successful',
             data: {
-                user: data.data.user,
-                token: data.data.token
+                user: {
+                    id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    phone: user.phone,
+                    role: user.role
+                },
+                token
             }
         });
 
-        // Set JWT token as HTTP-only cookie from backend response
-        nextResponse.cookies.set('token', data.data.token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'lax',
-            maxAge: 7 * 24 * 60 * 60, // 7 days
-            path: '/'
-        });
+        // Set JWT token as HTTP-only cookie
+        nextResponse.headers.set('Set-Cookie', setTokenCookie(token, rememberMe));
 
         return nextResponse;
 
