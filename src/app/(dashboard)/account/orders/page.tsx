@@ -201,7 +201,7 @@ export default function OrdersPage() {
                             <Package className="w-16 h-16 text-gray-400 mx-auto mb-4" />
                             <h2 className="text-xl font-semibold text-gray-900 mb-2">No Orders Yet</h2>
                             <p className="text-gray-600 mb-6">
-                                You haven't placed any orders yet. Start shopping to see your orders here.
+                                You haven&apos;t placed any orders yet. Start shopping to see your orders here.
                             </p>
                             <Button onClick={() => router.push('/products')}>
                                 Start Shopping

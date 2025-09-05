@@ -143,7 +143,7 @@ export default function CheckoutForm({ onOrderCreated }: CheckoutFormProps) {
                 // Create detailed product information
                 const productDetails = items.map((item, index) => {
                     // Generate product URL - try to get category from product or default to 'casual'
-                    const category = item.product.category || 'casual';
+                    const category = 'casual'; // Default category since cart items don't store category
                     const productUrl = `${window.location.origin}/products/${category}/${item.product.id}`;
 
                     // Get product image with fallback
@@ -446,7 +446,7 @@ Thank you!`;
                                 WhatsApp Order Confirmation
                             </h4>
                             <p className="text-sm text-green-700 mt-1">
-                                After creating your order, you'll be redirected to WhatsApp with complete order details including product images, links, and your delivery address.
+                                After creating your order, you&apos;ll be redirected to WhatsApp with complete order details including product images, links, and your delivery address.
                             </p>
                         </div>
                     </div>

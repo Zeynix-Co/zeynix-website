@@ -3,10 +3,10 @@ import { NextRequest, NextResponse } from 'next/server';
 // GET /api/orders/[id] - Get order by ID
 export async function GET(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const orderId = params.id;
+        const { id: orderId } = await params;
 
         // Verify authentication - get token from Authorization header or cookies
         const authHeader = request.headers.get('authorization');
@@ -55,10 +55,10 @@ export async function GET(
 // PUT /api/orders/[id] - Update order
 export async function PUT(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const orderId = params.id;
+        const { id: orderId } = await params;
         const body = await request.json();
 
         // Verify authentication - get token from Authorization header or cookies
@@ -110,10 +110,10 @@ export async function PUT(
 // DELETE /api/orders/[id] - Delete order
 export async function DELETE(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const orderId = params.id;
+        const { id: orderId } = await params;
 
         // Verify authentication - get token from Authorization header or cookies
         const authHeader = request.headers.get('authorization');

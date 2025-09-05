@@ -7,6 +7,7 @@ export interface IOrder extends Document {
         productId: mongoose.Types.ObjectId;
         productTitle: string;
         productImage: string;
+        productBrand?: string;
         size: string;
         quantity: number;
         price: number;

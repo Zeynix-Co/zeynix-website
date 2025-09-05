@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useWishlistStore, useAuthStore, useCartStore } from '@/store';
+import type { WishlistItem } from '@/store/wishlistStore';
 import { Button } from '@/components/ui/Button';
 import { colorClasses } from '@/lib/constants';
 import Link from 'next/link';
@@ -25,12 +26,12 @@ export default function WishlistPage() {
         return null;
     }
 
-    const handleAddToCart = async (item: any) => {
+    const handleAddToCart = async (item: WishlistItem) => {
         setAddingToCart(item.id);
         try {
             addToCart({
                 product: item.product,
-                size: item.size,
+                size: item.size as 'M' | 'L' | 'XL' | 'XXL' | 'XXXL',
                 quantity: 1,
                 totalPrice: item.product.discountPrice || item.product.price
             });

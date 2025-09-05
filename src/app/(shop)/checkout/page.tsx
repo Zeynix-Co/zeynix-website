@@ -76,7 +76,7 @@ export default function CheckoutPage() {
                         </h1>
 
                         <p className="text-gray-600 mb-6 max-w-md mx-auto">
-                            Your order has been created and saved. We'll process it once payment integration is available.
+                            Your order has been created and saved. We&apos;ll process it once payment integration is available.
                         </p>
 
                         <div className="bg-gray-50 rounded-lg p-4 mb-6">
@@ -92,11 +92,11 @@ export default function CheckoutPage() {
                         </div>
 
                         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-8">
-                            <h3 className="font-medium text-blue-800 mb-2">What's Next?</h3>
+                            <h3 className="font-medium text-blue-800 mb-2">What&apos;s Next?</h3>
                             <ul className="text-sm text-blue-700 space-y-1 text-left max-w-md mx-auto">
                                 <li>• Your order is saved in our system</li>
                                 <li>• Payment integration will be available soon</li>
-                                <li>• You'll receive updates via email</li>
+                                <li>• You&apos;ll receive updates via email</li>
                                 <li>• Track your order in your account</li>
                             </ul>
                         </div>

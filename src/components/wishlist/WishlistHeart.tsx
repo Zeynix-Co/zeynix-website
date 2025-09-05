@@ -33,7 +33,12 @@ export default function WishlistHeart({ product, size, className = '' }: Wishlis
         if (isWishlisted) {
             removeFromWishlist(product.id, size);
         } else {
-            addToWishlist(product, size);
+            addToWishlist({
+                ...product,
+                originalPrice: product.originalPrice || product.price,
+                discountPrice: product.discountPrice || product.price,
+                category: product.category || 'casual'
+            }, size);
         }
 
         // Reset animation after a short delay

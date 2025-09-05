@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-interface WishlistItem {
+export interface WishlistItem {
     id: string;
     product: {
         id: string;
@@ -25,7 +25,7 @@ interface WishlistState {
 
 interface WishlistActions {
     // Core actions
-    addToWishlist: (product: any, size: string) => void;
+    addToWishlist: (product: WishlistItem['product'], size: string) => void;
     removeFromWishlist: (productId: string, size: string) => void;
     clearWishlist: () => void;
 

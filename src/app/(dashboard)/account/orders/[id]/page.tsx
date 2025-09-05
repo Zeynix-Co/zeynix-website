@@ -251,7 +251,10 @@ export default function OrderDetailPage() {
                                                 className="w-full h-full object-cover"
                                                 onError={(e) => {
                                                     e.currentTarget.style.display = 'none';
-                                                    e.currentTarget.nextElementSibling.style.display = 'flex';
+                                                    const nextElement = e.currentTarget.nextElementSibling;
+                                                    if (nextElement) {
+                                                        (nextElement as HTMLElement).style.display = 'flex';
+                                                    }
                                                 }}
                                             />
                                         ) : null}
@@ -272,7 +275,7 @@ export default function OrderDetailPage() {
                                         </p>
                                     </div>
                                     <div className="text-right">
-                                        <p className="font-medium text-gray-900">{formatPrice(item.totalPrice)}</p>
+                                        <p className="font-medium text-gray-900">{formatPrice(item.total)}</p>
                                     </div>
                                 </div>
                             ))}

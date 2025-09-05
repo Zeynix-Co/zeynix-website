@@ -2,10 +2,12 @@ export interface OrderItem {
     productId: string;
     productTitle: string;
     productImage: string;
+    productBrand?: string;
     size: string;
     quantity: number;
     price: number;
     total: number;
+    totalPrice?: number; // Alternative name for total
 }
 
 export interface ShippingAddress {
