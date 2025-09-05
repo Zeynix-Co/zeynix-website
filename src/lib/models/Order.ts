@@ -1,19 +1,26 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
 export interface IOrder extends Document {
-    userId: mongoose.Types.ObjectId;
+    user: mongoose.Types.ObjectId;
     orderNumber: string;
     items: Array<{
-        productId: mongoose.Types.ObjectId;
+        product: mongoose.Types.ObjectId;
         productTitle: string;
         productImage: string;
         productBrand?: string;
         size: string;
         quantity: number;
         price: number;
-        total: number;
+        totalPrice: number;
     }>;
+    status: 'pending' | 'confirmed' | 'delivered' | 'cancelled';
     totalAmount: number;
+    deliveryAddress: {
+        street: string;
+        city: string;
+        state: string;
+        pincode: string;
+    };
     shippingAddress: {
         firstName: string;
         lastName: string;
@@ -26,29 +33,32 @@ export interface IOrder extends Document {
         pincode: string;
         country: string;
     };
-    status: 'pending_payment' | 'confirmed' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
-    paymentStatus: 'pending' | 'completed' | 'failed' | 'refunded';
+    deliveryInstructions?: string;
+    expectedDelivery: Date;
     paymentMethod: string;
-    trackingNumber?: string;
-    estimatedDelivery?: Date;
-    notes?: string;
+    paymentStatus: 'pending' | 'completed' | 'failed' | 'refunded';
+    razorpayOrderId?: string;
+    razorpayPaymentId?: string;
+    isActive: boolean;
     createdAt: Date;
     updatedAt: Date;
+    updateStatus(newStatus: string): Promise<IOrder>;
+    cancelOrder(): Promise<IOrder>;
 }
 
 const OrderSchema = new Schema<IOrder>({
-    userId: {
+    user: {
         type: Schema.Types.ObjectId,
         ref: 'User',
-        required: true
+        required: [true, 'User is required']
     },
     orderNumber: {
         type: String,
-        required: true,
-        unique: true
+        unique: true,
+        required: true
     },
     items: [{
-        productId: {
+        product: {
             type: Schema.Types.ObjectId,
             ref: 'Product',
             required: true
@@ -61,6 +71,10 @@ const OrderSchema = new Schema<IOrder>({
             type: String,
             required: true
         },
+        productBrand: {
+            type: String,
+            default: 'Zeynix'
+        },
         size: {
             type: String,
             required: true,
@@ -69,23 +83,47 @@ const OrderSchema = new Schema<IOrder>({
         quantity: {
             type: Number,
             required: true,
-            min: 1
+            min: [1, 'Quantity must be at least 1']
         },
         price: {
             type: Number,
             required: true,
-            min: 0
+            min: [0, 'Price cannot be negative']
         },
-        total: {
+        totalPrice: {
             type: Number,
             required: true,
-            min: 0
+            min: [0, 'Total price cannot be negative']
         }
     }],
+    status: {
+        type: String,
+        enum: ['pending', 'confirmed', 'delivered', 'cancelled'],
+        default: 'pending'
+    },
     totalAmount: {
         type: Number,
         required: true,
-        min: 0
+        min: [0, 'Total amount cannot be negative']
+    },
+    deliveryAddress: {
+        street: {
+            type: String,
+            required: [true, 'Street address is required']
+        },
+        city: {
+            type: String,
+            required: [true, 'City is required']
+        },
+        state: {
+            type: String,
+            required: [true, 'State is required']
+        },
+        pincode: {
+            type: String,
+            required: [true, 'Pincode is required'],
+            match: [/^[0-9]{6}$/, 'Please enter a valid 6-digit pincode']
+        }
     },
     shippingAddress: {
         firstName: {
@@ -110,7 +148,7 @@ const OrderSchema = new Schema<IOrder>({
         },
         addressLine2: {
             type: String,
-            required: false
+            default: ''
         },
         city: {
             type: String,
@@ -126,47 +164,100 @@ const OrderSchema = new Schema<IOrder>({
         },
         country: {
             type: String,
-            required: true,
             default: 'India'
         }
     },
-    status: {
+    deliveryInstructions: {
         type: String,
-        required: true,
-        enum: ['pending_payment', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled'],
-        default: 'pending_payment'
+        maxlength: [200, 'Delivery instructions cannot exceed 200 characters']
     },
-    paymentStatus: {
-        type: String,
-        required: true,
-        enum: ['pending', 'completed', 'failed', 'refunded'],
-        default: 'pending'
+    expectedDelivery: {
+        type: Date,
+        required: true
     },
     paymentMethod: {
         type: String,
-        required: true,
-        default: 'pending_integration'
+        default: 'razorpay'
     },
-    trackingNumber: {
+    paymentStatus: {
         type: String,
-        required: false
+        enum: ['pending', 'completed', 'failed', 'refunded'],
+        default: 'pending'
     },
-    estimatedDelivery: {
-        type: Date,
-        required: false
+    razorpayOrderId: {
+        type: String
     },
-    notes: {
-        type: String,
-        required: false
+    razorpayPaymentId: {
+        type: String
+    },
+    isActive: {
+        type: Boolean,
+        default: true
     }
 }, {
     timestamps: true
 });
 
-// Indexes for better query performance
-OrderSchema.index({ userId: 1, createdAt: -1 });
-OrderSchema.index({ orderNumber: 1 });
-OrderSchema.index({ status: 1 });
-OrderSchema.index({ paymentStatus: 1 });
+// Generate order number before saving
+OrderSchema.pre('save', async function (next) {
+    if (this.isNew) {
+        const date = new Date();
+        const year = date.getFullYear().toString().slice(-2);
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+
+        // Get count of orders for today
+        const todayOrders = await (this.constructor as typeof Order).countDocuments({
+            createdAt: {
+                $gte: new Date(date.getFullYear(), date.getMonth(), date.getDate()),
+                $lt: new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1)
+            }
+        });
+
+        const orderCount = (todayOrders + 1).toString().padStart(3, '0');
+        this.orderNumber = `ZNX${year}${month}${day}${orderCount}`;
+    }
+    next();
+});
+
+// Calculate total amount before saving
+OrderSchema.pre('save', function (next) {
+    if (this.items && this.items.length > 0) {
+        this.totalAmount = this.items.reduce((total, item) => total + item.totalPrice, 0);
+    }
+    next();
+});
+
+// Set expected delivery time (30-45 minutes from now)
+OrderSchema.pre('save', function (next) {
+    if (this.isNew && !this.expectedDelivery) {
+        const now = new Date();
+        const deliveryTime = new Date(now.getTime() + (45 * 60 * 1000)); // 45 minutes
+        this.expectedDelivery = deliveryTime;
+    }
+    next();
+});
+
+// Method to update order status
+OrderSchema.methods.updateStatus = function (newStatus: string) {
+    this.status = newStatus as 'pending' | 'confirmed' | 'delivered' | 'cancelled';
+    return this.save();
+};
+
+// Method to cancel order
+OrderSchema.methods.cancelOrder = function () {
+    this.status = 'cancelled';
+    this.isActive = false;
+    return this.save();
+};
+
+// Virtual for order summary
+OrderSchema.virtual('itemCount').get(function () {
+    return this.items.reduce((total, item) => total + item.quantity, 0);
+});
+
+// Ensure virtual fields are serialized
+OrderSchema.set('toJSON', { virtuals: true });
+OrderSchema.set('toObject', { virtuals: true });
 
 export const Order = mongoose.models.Order || mongoose.model<IOrder>('Order', OrderSchema);

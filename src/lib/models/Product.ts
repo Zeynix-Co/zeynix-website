@@ -87,7 +87,7 @@ const productSchema = new Schema<IProduct>({
             type: Number,
             required: true,
             min: [0, 'Stock cannot be negative'],
-            default: 0
+            default: 100
         },
         inStock: {
             type: Boolean,
@@ -123,5 +123,41 @@ productSchema.pre('save', function (next) {
     }
     next();
 });
+
+// Virtual for checking if product has discount
+productSchema.virtual('hasDiscount').get(function () {
+    return (this.discount || 0) > 0;
+});
+
+// Virtual for final price
+productSchema.virtual('finalPrice').get(function () {
+    return this.discountPrice || this.actualPrice;
+});
+
+// Method to check if product is in stock
+productSchema.methods.isInStock = function (size: string) {
+    const sizeData = this.sizes.find((s: { size: string; inStock: boolean; stock: number }) => s.size === size);
+    return sizeData && sizeData.inStock && sizeData.stock > 0;
+};
+
+// Method to update stock
+productSchema.methods.updateStock = function (size: string, quantity: number, operation: 'decrease' | 'increase' = 'decrease') {
+    const sizeData = this.sizes.find((s: { size: string; inStock: boolean; stock: number }) => s.size === size);
+    if (sizeData) {
+        if (operation === 'decrease') {
+            sizeData.stock = Math.max(0, sizeData.stock - quantity);
+        } else if (operation === 'increase') {
+            sizeData.stock += quantity;
+        }
+
+        sizeData.inStock = sizeData.stock > 0;
+        return true;
+    }
+    return false;
+};
+
+// Ensure virtual fields are serialized
+productSchema.set('toJSON', { virtuals: true });
+productSchema.set('toObject', { virtuals: true });
 
 export const Product = mongoose.models.Product || mongoose.model<IProduct>('Product', productSchema);

@@ -1,4 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+import connectDB from '@/lib/config/database';
+import { protect } from '@/lib/middleware/auth';
+import { Order } from '@/lib/models/Order';
 
 // GET /api/orders/[id] - Get order by ID
 export async function GET(
@@ -6,47 +9,45 @@ export async function GET(
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        await connectDB();
         const { id: orderId } = await params;
 
-        // Verify authentication - get token from Authorization header or cookies
-        const authHeader = request.headers.get('authorization');
-        const token = authHeader?.startsWith('Bearer ')
-            ? authHeader.split(' ')[1]
-            : request.cookies.get('token')?.value;
-        if (!token) {
+        // Authenticate user
+        const { user, error } = await protect(request);
+        if (error || !user) {
             return NextResponse.json(
-                { success: false, message: 'Authentication required' },
+                { success: false, message: error || 'Authentication required' },
                 { status: 401 }
             );
         }
 
-        // Make request to backend API
-        const backendUrl = process.env.BACKEND_URL || 'http://localhost:8000';
-        const response = await fetch(`${backendUrl}/api/orders/${orderId}`, {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
-        });
+        const order = await Order.findById(orderId)
+            .populate('items.product', 'title images');
 
-        if (!response.ok) {
-            const errorData = await response.json();
+        if (!order) {
             return NextResponse.json(
-                { success: false, message: errorData.message || 'Failed to fetch order' },
-                { status: response.status }
+                { success: false, message: 'Order not found' },
+                { status: 404 }
             );
         }
 
-        const data = await response.json();
-        return NextResponse.json(data);
+        // Verify order belongs to this user
+        if (order.user.toString() !== user._id.toString()) {
+            return NextResponse.json(
+                { success: false, message: 'Access denied' },
+                { status: 403 }
+            );
+        }
+
+        return NextResponse.json({
+            success: true,
+            data: order
+        });
 
     } catch (error) {
         console.error('Get order error:', error);
         return NextResponse.json(
-            {
-                success: false,
-                message: 'Internal server error getting order'
-            },
+            { success: false, message: 'Internal server error getting order' },
             { status: 500 }
         );
     }
@@ -58,50 +59,52 @@ export async function PUT(
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        await connectDB();
         const { id: orderId } = await params;
         const body = await request.json();
 
-        // Verify authentication - get token from Authorization header or cookies
-        const authHeader = request.headers.get('authorization');
-        const token = authHeader?.startsWith('Bearer ')
-            ? authHeader.split(' ')[1]
-            : request.cookies.get('token')?.value;
-        if (!token) {
+        // Authenticate user
+        const { user, error } = await protect(request);
+        if (error || !user) {
             return NextResponse.json(
-                { success: false, message: 'Authentication required' },
+                { success: false, message: error || 'Authentication required' },
                 { status: 401 }
             );
         }
 
-        // Make request to backend API
-        const backendUrl = process.env.BACKEND_URL || 'http://localhost:8000';
-        const response = await fetch(`${backendUrl}/api/orders/${orderId}`, {
-            method: 'PUT',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(body)
-        });
+        const order = await Order.findById(orderId);
 
-        if (!response.ok) {
-            const errorData = await response.json();
+        if (!order) {
             return NextResponse.json(
-                { success: false, message: errorData.message || 'Failed to update order' },
-                { status: response.status }
+                { success: false, message: 'Order not found' },
+                { status: 404 }
             );
         }
 
-        const data = await response.json();
-        return NextResponse.json(data);
+        // Verify order belongs to this user
+        if (order.user.toString() !== user._id.toString()) {
+            return NextResponse.json(
+                { success: false, message: 'Access denied' },
+                { status: 403 }
+            );
+        }
+
+        // Update order
+        const updatedOrder = await Order.findByIdAndUpdate(
+            orderId,
+            body,
+            { new: true, runValidators: true }
+        ).populate('items.product', 'title images');
+
+        return NextResponse.json({
+            success: true,
+            data: updatedOrder
+        });
 
     } catch (error) {
         console.error('Update order error:', error);
         return NextResponse.json(
-            {
-                success: false,
-                message: 'Internal server error updating order'
-            },
+            { success: false, message: 'Internal server error updating order' },
             { status: 500 }
         );
     }
@@ -113,48 +116,47 @@ export async function DELETE(
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        await connectDB();
         const { id: orderId } = await params;
 
-        // Verify authentication - get token from Authorization header or cookies
-        const authHeader = request.headers.get('authorization');
-        const token = authHeader?.startsWith('Bearer ')
-            ? authHeader.split(' ')[1]
-            : request.cookies.get('token')?.value;
-        if (!token) {
+        // Authenticate user
+        const { user, error } = await protect(request);
+        if (error || !user) {
             return NextResponse.json(
-                { success: false, message: 'Authentication required' },
+                { success: false, message: error || 'Authentication required' },
                 { status: 401 }
             );
         }
 
-        // Make request to backend API
-        const backendUrl = process.env.BACKEND_URL || 'http://localhost:8000';
-        const response = await fetch(`${backendUrl}/api/orders/${orderId}`, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
-        });
+        const order = await Order.findById(orderId);
 
-        if (!response.ok) {
-            const errorData = await response.json();
+        if (!order) {
             return NextResponse.json(
-                { success: false, message: errorData.message || 'Failed to delete order' },
-                { status: response.status }
+                { success: false, message: 'Order not found' },
+                { status: 404 }
             );
         }
 
-        const data = await response.json();
-        return NextResponse.json(data);
+        // Verify order belongs to this user
+        if (order.user.toString() !== user._id.toString()) {
+            return NextResponse.json(
+                { success: false, message: 'Access denied' },
+                { status: 403 }
+            );
+        }
+
+        // Delete order
+        await Order.findByIdAndDelete(orderId);
+
+        return NextResponse.json({
+            success: true,
+            message: 'Order deleted successfully'
+        });
 
     } catch (error) {
         console.error('Delete order error:', error);
         return NextResponse.json(
-            {
-                success: false,
-                message: 'Internal server error deleting order'
-            },
+            { success: false, message: 'Internal server error deleting order' },
             { status: 500 }
         );
     }

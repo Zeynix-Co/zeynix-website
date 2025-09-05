@@ -9,11 +9,7 @@ const app = express();
 
 // CORS configuration
 app.use(cors({
-    origin: [
-        process.env.FRONTEND_URL || 'http://localhost:3000',
-        'https://zeynix.in',
-        'https://www.zeynix.in'
-    ],
+    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
     credentials: true, // Allow cookies to be sent
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization']
