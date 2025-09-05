@@ -6,7 +6,8 @@ const User = require('../models/User');
 // @access  Private (Admin only)
 const getAllOrders = async (req, res) => {
     try {
-        const { userId } = req.query;
+        // Get user ID from JWT token (set by auth middleware)
+        const userId = req.user._id;
 
         // Verify admin user
         const user = await User.findById(userId);
@@ -74,7 +75,8 @@ const getAllOrders = async (req, res) => {
 // @access  Private (Admin only)
 const getOrder = async (req, res) => {
     try {
-        const { userId } = req.query;
+        // Get user ID from JWT token (set by auth middleware)
+        const userId = req.user._id;
         const { id } = req.params;
 
         // Verify admin user
@@ -116,7 +118,9 @@ const getOrder = async (req, res) => {
 // @access  Private (Admin only)
 const updateOrderStatus = async (req, res) => {
     try {
-        const { userId, status } = req.body;
+        // Get user ID from JWT token (set by auth middleware)
+        const userId = req.user._id;
+        const { status } = req.body;
         const { id } = req.params;
 
         // Verify admin user

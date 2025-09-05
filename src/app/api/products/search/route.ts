@@ -1,75 +1,45 @@
 import { NextRequest, NextResponse } from 'next/server';
-import mongoose from 'mongoose';
-import { Product } from '@/lib/models/Product';
-import { transformProduct, getBaseProductFilter } from '@/lib/utils/productTransformer';
-
-// Connect to MongoDB
-const connectDB = async () => {
-    try {
-        if (mongoose.connection.readyState === 1) {
-            return; // Already connected
-        }
-
-        await mongoose.connect(process.env.MONGODB_URI!);
-        console.log('✅ MongoDB Connected');
-    } catch (error) {
-        console.error('❌ MongoDB connection failed:', error);
-        throw error;
-    }
-};
 
 // GET /api/products/search - Search products
 export async function GET(request: NextRequest) {
     try {
-        await connectDB();
-
         const { searchParams } = new URL(request.url);
-        const query = searchParams.get('q');
+        const q = searchParams.get('q');
         const category = searchParams.get('category');
-        const limit = parseInt(searchParams.get('limit') || '10');
+        const minPrice = searchParams.get('minPrice');
+        const maxPrice = searchParams.get('maxPrice');
+        const size = searchParams.get('size');
+        const page = searchParams.get('page') || '1';
+        const limit = searchParams.get('limit') || '20';
 
-        if (!query || query.trim() === '') {
+        // Build query string
+        const queryParams = new URLSearchParams();
+        if (q) queryParams.append('q', q);
+        if (category && category !== 'all') queryParams.append('category', category);
+        if (minPrice) queryParams.append('minPrice', minPrice);
+        if (maxPrice) queryParams.append('maxPrice', maxPrice);
+        if (size) queryParams.append('size', size);
+        if (page) queryParams.append('page', page);
+        if (limit) queryParams.append('limit', limit);
+
+        // Make request to backend API
+        const backendUrl = process.env.BACKEND_URL || 'http://localhost:8000';
+        const response = await fetch(`${backendUrl}/api/customer/products/search?${queryParams.toString()}`, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
             return NextResponse.json(
-                {
-                    success: false,
-                    message: 'Search query is required'
-                },
-                { status: 400 }
+                { success: false, message: errorData.message || 'Failed to search products' },
+                { status: response.status }
             );
         }
 
-        // Build search filter - only active and published products
-        const filter: Record<string, string | boolean | object> = {
-            ...getBaseProductFilter(),
-            $or: [
-                { title: { $regex: query, $options: 'i' } },
-                { description: { $regex: query, $options: 'i' } },
-                { brand: { $regex: query, $options: 'i' } },
-                { category: { $regex: query, $options: 'i' } }
-            ]
-        };
-
-        // Add category filter if specified
-        if (category && category !== 'all') {
-            filter.category = category;
-        }
-
-        // Execute search
-        const products = await Product.find(filter)
-            .limit(limit)
-            .sort({ rating: -1, createdAt: -1 });
-
-        // Transform products for frontend
-        const transformedProducts = products.map(transformProduct);
-
-        return NextResponse.json({
-            success: true,
-            data: {
-                products: transformedProducts,
-                query,
-                total: transformedProducts.length
-            }
-        });
+        const data = await response.json();
+        return NextResponse.json(data);
 
     } catch (error) {
         console.error('Search products error:', error);

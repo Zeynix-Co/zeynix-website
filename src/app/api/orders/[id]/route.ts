@@ -1,15 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-// GET /api/admin/orders/[id] - Get order by ID (admin)
+// GET /api/orders/[id] - Get order by ID
 export async function GET(
     request: NextRequest,
-    { params }: { params: Promise<{ id: string }> }
+    { params }: { params: { id: string } }
 ) {
     try {
-        const { id } = await params;
+        const orderId = params.id;
 
-        // Verify authentication
-        const token = request.cookies.get('token')?.value;
+        // Verify authentication - get token from Authorization header or cookies
+        const authHeader = request.headers.get('authorization');
+        const token = authHeader?.startsWith('Bearer ')
+            ? authHeader.split(' ')[1]
+            : request.cookies.get('token')?.value;
         if (!token) {
             return NextResponse.json(
                 { success: false, message: 'Authentication required' },
@@ -19,7 +22,7 @@ export async function GET(
 
         // Make request to backend API
         const backendUrl = process.env.BACKEND_URL || 'http://localhost:8000';
-        const response = await fetch(`${backendUrl}/api/admin/orders/${id}`, {
+        const response = await fetch(`${backendUrl}/api/orders/${orderId}`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
@@ -38,28 +41,31 @@ export async function GET(
         return NextResponse.json(data);
 
     } catch (error) {
-        console.error('Get admin order error:', error);
+        console.error('Get order error:', error);
         return NextResponse.json(
             {
                 success: false,
-                message: 'Internal server error getting admin order'
+                message: 'Internal server error getting order'
             },
             { status: 500 }
         );
     }
 }
 
-// PUT /api/admin/orders/[id] - Update order (admin)
+// PUT /api/orders/[id] - Update order
 export async function PUT(
     request: NextRequest,
-    { params }: { params: Promise<{ id: string }> }
+    { params }: { params: { id: string } }
 ) {
     try {
-        const { id } = await params;
+        const orderId = params.id;
         const body = await request.json();
 
-        // Verify authentication
-        const token = request.cookies.get('token')?.value;
+        // Verify authentication - get token from Authorization header or cookies
+        const authHeader = request.headers.get('authorization');
+        const token = authHeader?.startsWith('Bearer ')
+            ? authHeader.split(' ')[1]
+            : request.cookies.get('token')?.value;
         if (!token) {
             return NextResponse.json(
                 { success: false, message: 'Authentication required' },
@@ -69,7 +75,7 @@ export async function PUT(
 
         // Make request to backend API
         const backendUrl = process.env.BACKEND_URL || 'http://localhost:8000';
-        const response = await fetch(`${backendUrl}/api/admin/orders/${id}`, {
+        const response = await fetch(`${backendUrl}/api/orders/${orderId}`, {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -90,27 +96,30 @@ export async function PUT(
         return NextResponse.json(data);
 
     } catch (error) {
-        console.error('Update admin order error:', error);
+        console.error('Update order error:', error);
         return NextResponse.json(
             {
                 success: false,
-                message: 'Internal server error updating admin order'
+                message: 'Internal server error updating order'
             },
             { status: 500 }
         );
     }
 }
 
-// DELETE /api/admin/orders/[id] - Delete order (admin)
+// DELETE /api/orders/[id] - Delete order
 export async function DELETE(
     request: NextRequest,
-    { params }: { params: Promise<{ id: string }> }
+    { params }: { params: { id: string } }
 ) {
     try {
-        const { id } = await params;
+        const orderId = params.id;
 
-        // Verify authentication
-        const token = request.cookies.get('token')?.value;
+        // Verify authentication - get token from Authorization header or cookies
+        const authHeader = request.headers.get('authorization');
+        const token = authHeader?.startsWith('Bearer ')
+            ? authHeader.split(' ')[1]
+            : request.cookies.get('token')?.value;
         if (!token) {
             return NextResponse.json(
                 { success: false, message: 'Authentication required' },
@@ -120,7 +129,7 @@ export async function DELETE(
 
         // Make request to backend API
         const backendUrl = process.env.BACKEND_URL || 'http://localhost:8000';
-        const response = await fetch(`${backendUrl}/api/admin/orders/${id}`, {
+        const response = await fetch(`${backendUrl}/api/orders/${orderId}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -140,11 +149,11 @@ export async function DELETE(
         return NextResponse.json(data);
 
     } catch (error) {
-        console.error('Delete admin order error:', error);
+        console.error('Delete order error:', error);
         return NextResponse.json(
             {
                 success: false,
-                message: 'Internal server error deleting admin order'
+                message: 'Internal server error deleting order'
             },
             { status: 500 }
         );

@@ -1,85 +1,41 @@
 import { NextRequest, NextResponse } from 'next/server';
-import mongoose from 'mongoose';
-import { Product } from '@/lib/models/Product';
-import { transformProduct, getBaseProductFilter } from '@/lib/utils/productTransformer';
-
-// Connect to MongoDB
-const connectDB = async () => {
-    try {
-        if (mongoose.connection.readyState === 1) {
-            return; // Already connected
-        }
-
-        await mongoose.connect(process.env.MONGODB_URI!);
-        console.log('✅ MongoDB Connected');
-    } catch (error) {
-        console.error('❌ MongoDB connection failed:', error);
-        throw error;
-    }
-};
 
 // GET /api/customer/products - Get all active products (public)
 export async function GET(request: NextRequest) {
     try {
-        await connectDB();
-
         const { searchParams } = new URL(request.url);
-        const page = parseInt(searchParams.get('page') || '1');
-        const limit = parseInt(searchParams.get('limit') || '20');
+        const page = searchParams.get('page') || '1';
+        const limit = searchParams.get('limit') || '20';
         const category = searchParams.get('category');
         const sortBy = searchParams.get('sortBy') || 'createdAt';
-        const sortOrder = searchParams.get('sortOrder') === 'asc' ? 1 : -1;
+        const sortOrder = searchParams.get('sortOrder') || 'desc';
 
-        // Build filter - only active and published products
-        const baseFilter = getBaseProductFilter();
-        const filter: Record<string, string | boolean> = { ...baseFilter };
-        if (category && category !== 'all') {
-            filter['category'] = category;
-        }
+        // Build query string
+        const queryParams = new URLSearchParams();
+        if (page) queryParams.append('page', page);
+        if (limit) queryParams.append('limit', limit);
+        if (category && category !== 'all') queryParams.append('category', category);
+        if (sortBy) queryParams.append('sortBy', sortBy);
+        if (sortOrder) queryParams.append('sortOrder', sortOrder);
 
-        // Build sort object
-        let sort: Record<string, 1 | -1> = {};
-        switch (sortBy) {
-            case 'price':
-                sort = { actualPrice: sortOrder };
-                break;
-            case 'rating':
-                sort = { rating: sortOrder };
-                break;
-            case 'featured':
-                sort = { featured: -1, createdAt: -1 };
-                break;
-            case 'newest':
-                sort = { createdAt: -1 };
-                break;
-            default:
-                sort = { createdAt: -1 };
-        }
-
-        // Execute query
-        const products = await Product.find(filter)
-            .sort(sort)
-            .skip((page - 1) * limit)
-            .limit(limit);
-
-        // Get total count
-        const total = await Product.countDocuments(filter);
-
-        // Transform products for frontend
-        const transformedProducts = products.map(transformProduct);
-
-        return NextResponse.json({
-            success: true,
-            data: {
-                products: transformedProducts,
-                pagination: {
-                    page,
-                    limit,
-                    total,
-                    pages: Math.ceil(total / limit)
-                }
+        // Make request to backend API
+        const backendUrl = process.env.BACKEND_URL || 'http://localhost:8000';
+        const response = await fetch(`${backendUrl}/api/customer/products?${queryParams.toString()}`, {
+            headers: {
+                'Content-Type': 'application/json'
             }
         });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            return NextResponse.json(
+                { success: false, message: errorData.message || 'Failed to fetch products' },
+                { status: response.status }
+            );
+        }
+
+        const data = await response.json();
+        return NextResponse.json(data);
 
     } catch (error) {
         console.error('Get public products error:', error);

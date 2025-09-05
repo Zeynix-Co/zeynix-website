@@ -25,8 +25,7 @@ export default function SizeSelector({
     const [showSizeGuide, setShowSizeGuide] = useState(false);
 
     const getSizeStatus = (size: Size) => {
-        if (!size.inStock) return 'out-of-stock';
-        if (size.stock <= 5) return 'low-stock';
+        // Always show as in stock for now
         return 'in-stock';
     };
 
@@ -44,16 +43,8 @@ export default function SizeSelector({
     };
 
     const getSizeStatusText = (status: string, stock: number) => {
-        switch (status) {
-            case 'out-of-stock':
-                return 'Out of Stock';
-            case 'low-stock':
-                return `Only ${stock} left`;
-            case 'in-stock':
-                return stock > 10 ? 'In Stock' : `${stock} available`;
-            default:
-                return '';
-        }
+        // Always show as in stock for now
+        return 'In Stock';
     };
 
     return (
@@ -148,7 +139,7 @@ export default function SizeSelector({
             {/* Stock Information */}
             <div className="text-sm text-gray-600">
                 <p>• Select your size to see availability</p>
-                <p>• Free returns within 30 days</p>
+                <p>• Free returns within 30-45 mins</p>
             </div>
         </div>
     );

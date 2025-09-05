@@ -88,6 +88,7 @@ interface DashboardData {
 
 interface AdminState {
     user: AdminUser | null;
+    token: string | null;
     isAuthenticated: boolean;
     isLoading: boolean;
     error: string | null;
@@ -99,7 +100,8 @@ interface AdminState {
 
 interface AdminActions {
     // Authentication Actions
-    login: (email: string, password: string) => Promise<void>;
+
+    login: (email: string, password: string, rememberMe?: boolean) => Promise<void>;
     logout: () => void;
     setupFirstAdmin: (userData: SetupAdminData) => Promise<void>;
 
@@ -148,6 +150,7 @@ const useAdminStore = create<AdminState & AdminActions>()(
         (set, get) => ({
             // Initial state
             user: null,
+            token: null,
             isAuthenticated: false,
             isLoading: false,
             error: null,
@@ -157,7 +160,7 @@ const useAdminStore = create<AdminState & AdminActions>()(
             ordersLoading: false,
 
             // Actions
-            login: async (email: string, password: string) => {
+            login: async (email: string, password: string, rememberMe = false) => {
                 try {
                     set({ isLoading: true, error: null });
 
@@ -166,7 +169,7 @@ const useAdminStore = create<AdminState & AdminActions>()(
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({ email, password }),
+                        body: JSON.stringify({ email, password, rememberMe }),
                     });
 
                     const data = await response.json();
@@ -178,6 +181,7 @@ const useAdminStore = create<AdminState & AdminActions>()(
                     if (data.success) {
                         set({
                             user: data.data.user,
+                            token: data.data.token,
                             isAuthenticated: true,
                             isLoading: false,
                             error: null,
@@ -215,6 +219,7 @@ const useAdminStore = create<AdminState & AdminActions>()(
                     if (data.success) {
                         set({
                             user: data.data.user,
+                            token: data.data.token,
                             isAuthenticated: true,
                             isLoading: false,
                             error: null,
@@ -235,6 +240,7 @@ const useAdminStore = create<AdminState & AdminActions>()(
                 // Clear local state
                 set({
                     user: null,
+                    token: null,
                     isAuthenticated: false,
                     error: null,
                     dashboardData: null,
@@ -306,7 +312,9 @@ const useAdminStore = create<AdminState & AdminActions>()(
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${get().token}`,
                         },
+                        credentials: 'include',
                     });
 
                     const data = await response.json();
@@ -434,6 +442,7 @@ const useAdminStore = create<AdminState & AdminActions>()(
                         headers: {
                             'Content-Type': 'application/json',
                         },
+                        credentials: 'include', // Include cookies for authentication
                         body: JSON.stringify({ userId: user.id, updateData }),
                     });
 
@@ -449,17 +458,20 @@ const useAdminStore = create<AdminState & AdminActions>()(
 
                         if (ordersData) {
                             const updatedOrders = ordersData.orders.map(order =>
-                                order._id === orderId ? data.data.order : order
+                                order._id === orderId ? { ...order, ...updateData } : order
                             );
-                            set({ ordersData: { ...ordersData, orders: updatedOrders } });
+                            set({
+                                ordersData: { ...ordersData, orders: updatedOrders },
+                                ordersLoading: false,
+                            });
                         }
 
-                        // Update selected order if it matches
                         if (selectedOrder && selectedOrder._id === orderId) {
-                            set({ selectedOrder: data.data.order });
+                            set({
+                                selectedOrder: { ...selectedOrder, ...updateData },
+                                ordersLoading: false,
+                            });
                         }
-
-                        set({ ordersLoading: false });
                     } else {
                         throw new Error(data.message || 'Failed to update order');
                     }
@@ -487,6 +499,7 @@ const useAdminStore = create<AdminState & AdminActions>()(
                         headers: {
                             'Content-Type': 'application/json',
                         },
+                        credentials: 'include', // Include cookies for authentication
                         body: JSON.stringify({ userId: user.id }),
                     });
 

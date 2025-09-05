@@ -80,7 +80,7 @@ const useCartStore = create<CartState & CartActions>()(
                             ? {
                                 ...i,
                                 quantity: i.quantity + item.quantity,
-                                totalPrice: (i.quantity + item.quantity) * (i.product.discountPrice || i.product.price)
+                                totalPrice: (i.quantity + item.quantity) * ((i.product.discountPrice && i.product.discountPrice < i.product.price) ? i.product.discountPrice : i.product.price)
                             }
                             : i
                     );
@@ -90,7 +90,7 @@ const useCartStore = create<CartState & CartActions>()(
                     const newItem = {
                         ...item,
                         id: `${item.product.id}-${item.size}-${Date.now()}`,
-                        totalPrice: item.quantity * (item.product.discountPrice || item.product.price)
+                        totalPrice: item.quantity * ((item.product.discountPrice && item.product.discountPrice < item.product.price) ? item.product.discountPrice : item.product.price)
                     };
                     set({ items: [...items, newItem] });
                 }
@@ -124,7 +124,7 @@ const useCartStore = create<CartState & CartActions>()(
                         ? {
                             ...i,
                             quantity,
-                            totalPrice: quantity * (i.product.discountPrice || i.product.price)
+                            totalPrice: quantity * ((i.product.discountPrice && i.product.discountPrice < i.product.price) ? i.product.discountPrice : i.product.price)
                         }
                         : i
                 );
@@ -136,7 +136,13 @@ const useCartStore = create<CartState & CartActions>()(
             },
 
             clearCart: () => {
-                set({ items: [], totalItems: 0, totalAmount: 0 });
+                set({
+                    items: [],
+                    savedForLater: [],
+                    totalItems: 0,
+                    totalAmount: 0,
+                    savedItemsCount: 0
+                });
             },
 
             // Saved for later operations
@@ -220,7 +226,13 @@ const useCartStore = create<CartState & CartActions>()(
 
             getTotalAmount: () => {
                 const { items } = get();
-                const amount = items.reduce((total, item) => total + item.totalPrice, 0);
+                const amount = items.reduce((total, item) => {
+                    // Use discounted price if available and less than original price
+                    const price = (item.product.discountPrice && item.product.discountPrice < item.product.price)
+                        ? item.product.discountPrice
+                        : item.product.price;
+                    return total + (price * item.quantity);
+                }, 0);
                 set({ totalAmount: amount });
                 return amount;
             },
@@ -243,6 +255,14 @@ const useCartStore = create<CartState & CartActions>()(
                 items: state.items,
                 savedForLater: state.savedForLater,
             }),
+            onRehydrateStorage: () => (state) => {
+                if (state) {
+                    // Recalculate totals after rehydration
+                    state.getItemCount();
+                    state.getTotalAmount();
+                    state.getSavedItemsCount();
+                }
+            },
         }
     )
 );

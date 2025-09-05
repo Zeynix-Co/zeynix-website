@@ -34,7 +34,10 @@ export default function CartPage() {
     };
 
     const getDiscountedPrice = (originalPrice: number, discountPrice?: number) => {
-        return discountPrice || originalPrice;
+        if (discountPrice && discountPrice < originalPrice) {
+            return discountPrice;
+        }
+        return originalPrice;
     };
 
     const handleCheckout = () => {
@@ -173,7 +176,7 @@ export default function CartPage() {
                                                         {item.product.discountPrice && item.product.discountPrice < item.product.price ? (
                                                             <div className="flex items-center space-x-3">
                                                                 <span className={`text-xl font-semibold ${colorClasses.primary.text}`}>
-                                                                    {formatPrice(getDiscountedPrice(item.product.price, item.product.discountPrice))}
+                                                                    {formatPrice(item.product.discountPrice)}
                                                                 </span>
                                                                 <span className="text-sm text-gray-500 line-through">
                                                                     {formatPrice(item.product.price)}
@@ -260,7 +263,7 @@ export default function CartPage() {
                                                         {item.product.discountPrice && item.product.discountPrice < item.product.price ? (
                                                             <div className="flex items-center space-x-3">
                                                                 <span className={`text-lg font-semibold ${colorClasses.primary.text}`}>
-                                                                    {formatPrice(getDiscountedPrice(item.product.price, item.product.discountPrice))}
+                                                                    {formatPrice(item.product.discountPrice)}
                                                                 </span>
                                                                 <span className="text-sm text-gray-500 line-through">
                                                                     {formatPrice(item.product.price)}

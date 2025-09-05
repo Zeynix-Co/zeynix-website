@@ -3,14 +3,22 @@ import { NextRequest, NextResponse } from 'next/server';
 // POST /api/auth/logout - User logout
 export async function POST() {
     try {
-        // In a stateless JWT system, logout is handled client-side
-        // The server can't invalidate JWT tokens, so we just return success
-        // The client should remove the token from storage
-
-        return NextResponse.json({
+        // Create response
+        const response = NextResponse.json({
             success: true,
             message: 'Logout successful'
         });
+
+        // Clear JWT token cookie
+        response.cookies.set('token', '', {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'lax',
+            maxAge: 0, // Expire immediately
+            path: '/'
+        });
+
+        return response;
 
     } catch (error) {
         console.error('Logout error:', error);

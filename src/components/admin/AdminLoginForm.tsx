@@ -15,6 +15,7 @@ export default function AdminLoginForm() {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
+        rememberMe: false,
     });
 
     const [formErrors, setFormErrors] = useState<{
@@ -24,10 +25,10 @@ export default function AdminLoginForm() {
 
     // Handle input changes
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
+        const { name, value, type, checked } = e.target;
         setFormData(prev => ({
             ...prev,
-            [name]: value
+            [name]: type === 'checkbox' ? checked : value
         }));
 
         // Clear error when user starts typing
@@ -66,7 +67,7 @@ export default function AdminLoginForm() {
         if (!validateForm()) return;
 
         try {
-            await login(formData.email, formData.password);
+            await login(formData.email, formData.password, formData.rememberMe);
             // Redirect immediately after successful login
             router.push('/admin/dashboard');
         } catch (error) {
@@ -128,6 +129,22 @@ export default function AdminLoginForm() {
                         {formErrors.password && (
                             <p className="mt-1 text-sm text-red-600">{formErrors.password}</p>
                         )}
+                    </div>
+
+                    {/* Remember Me Checkbox */}
+                    <div className="flex items-center">
+                        <input
+                            id="rememberMe"
+                            name="rememberMe"
+                            type="checkbox"
+                            checked={formData.rememberMe}
+                            onChange={handleInputChange}
+                            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                            disabled={isLoading}
+                        />
+                        <label htmlFor="rememberMe" className="ml-2 block text-sm text-gray-700 cursor-pointer">
+                            Remember me
+                        </label>
                     </div>
 
                     {/* Submit Button */}

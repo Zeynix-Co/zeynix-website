@@ -279,7 +279,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                                     ))}
                                 </div>
                                 <span className="text-sm text-gray-600">
-                                    {product.rating} ({Math.floor(Math.random() * 100) + 50} reviews)
+                                    {product.rating} (0 reviews)
                                 </span>
                             </div>
                         </div>

@@ -8,6 +8,7 @@ import { colors, colorClasses, navigation } from '@/lib/constants';
 import MobileNavigation from './Navigation';
 import { useAuthStore } from '@/store';
 import CartIcon from '@/components/cart/CartIcon';
+import WishlistIcon from '@/components/wishlist/WishlistIcon';
 import SearchBar from './SearchBar';
 
 export default function Header() {
@@ -66,6 +67,8 @@ export default function Header() {
                                     </Link>
                                     {/* Cart Icon - Only visible when authenticated */}
                                     <CartIcon />
+                                    {/* Wishlist Icon - Only visible when authenticated */}
+                                    <WishlistIcon />
                                     <button
                                         onClick={handleLogout}
                                         className={`flex flex-row items-center space-x-2 ${colorClasses.secondary.text} hover:opacity-80 transition-opacity cursor-pointer`}

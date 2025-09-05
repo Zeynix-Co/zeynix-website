@@ -1,33 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import mongoose from 'mongoose';
-import { User } from '@/lib/models/User';
-import jwt from 'jsonwebtoken';
-import env from '@/lib/config/env';
-
-// Connect to MongoDB
-const connectDB = async () => {
-    try {
-        if (mongoose.connection.readyState === 1) {
-            return; // Already connected
-        }
-
-        await mongoose.connect(env.MONGODB_URI);
-        console.log('✅ MongoDB Connected');
-    } catch (error) {
-        console.error('❌ MongoDB connection failed:', error);
-        throw error;
-    }
-};
 
 // POST /api/auth/register - User registration
 export async function POST(request: NextRequest) {
     try {
-        await connectDB();
-
-        const { name, email, phone, password } = await request.json();
+        const { name, email, phone, password, confirmPassword } = await request.json();
 
         // Validate input
-        if (!name || !email || !phone || !password) {
+        if (!name || !email || !phone || !password || !confirmPassword) {
             return NextResponse.json(
                 {
                     success: false,
@@ -37,72 +16,49 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Check if user already exists
-        const existingUser = await User.findOne({
-            $or: [{ email }, { phone }]
+        // Make request to backend API
+        const backendUrl = process.env.BACKEND_URL || 'http://localhost:8000';
+        const response = await fetch(`${backendUrl}/api/auth/register`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name, email, phone, password, confirmPassword })
         });
 
-        if (existingUser) {
+        if (!response.ok) {
+            const errorData = await response.json();
             return NextResponse.json(
-                {
-                    success: false,
-                    message: existingUser.email === email
-                        ? 'Email already registered'
-                        : 'Phone number already registered'
-                },
-                { status: 400 }
+                { success: false, message: errorData.message || 'Registration failed' },
+                { status: response.status }
             );
         }
 
-        // Create new user
-        const user = await User.create({
-            name,
-            email,
-            phone,
-            password,
-            role: 'user',
-            isActive: true
-        });
+        const data = await response.json();
 
-        // Generate JWT token for auto-login
-        const token = jwt.sign(
-            { userId: user._id, role: user.role },
-            env.JWT_SECRET,
-            { expiresIn: '7d' }
-        );
-
-        // Remove password from response
-        const userResponse = {
-            id: user._id,
-            name: user.name,
-            email: user.email,
-            phone: user.phone,
-            role: user.role
-        };
-
-        return NextResponse.json({
+        // Create response with user data
+        const nextResponse = NextResponse.json({
             success: true,
             message: 'Registration successful',
             data: {
-                user: userResponse,
-                token
+                user: data.data.user,
+                token: data.data.token
             }
         }, { status: 201 });
 
+        // Set JWT token as HTTP-only cookie from backend response
+        nextResponse.cookies.set('token', data.data.token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'lax',
+            maxAge: 7 * 24 * 60 * 60, // 7 days
+            path: '/'
+        });
+
+        return nextResponse;
+
     } catch (error) {
         console.error('Registration error:', error);
-
-        if (error instanceof Error && error.name === 'ValidationError') {
-            return NextResponse.json(
-                {
-                    success: false,
-                    message: 'Validation error',
-                    errors: [error.message]
-                },
-                { status: 400 }
-            );
-        }
-
         return NextResponse.json(
             {
                 success: false,

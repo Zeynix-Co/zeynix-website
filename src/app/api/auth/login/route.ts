@@ -1,29 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import mongoose from 'mongoose';
-import { User } from '@/lib/models/User';
-import jwt from 'jsonwebtoken';
-import env from '@/lib/config/env';
-
-// Connect to MongoDB
-const connectDB = async () => {
-    try {
-        if (mongoose.connection.readyState === 1) {
-            return; // Already connected
-        }
-
-        await mongoose.connect(env.MONGODB_URI);
-        console.log('✅ MongoDB Connected');
-    } catch (error) {
-        console.error('❌ MongoDB connection failed:', error);
-        throw error;
-    }
-};
 
 // POST /api/auth/login - User login
 export async function POST(request: NextRequest) {
     try {
-        await connectDB();
-
         const { email, password } = await request.json();
 
         // Validate input
@@ -37,65 +16,46 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Find user by email
-        const user = await User.findOne({ email }).select('+password');
-        if (!user) {
+        // Make request to backend API
+        const backendUrl = process.env.BACKEND_URL || 'http://localhost:8000';
+        const response = await fetch(`${backendUrl}/api/auth/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password })
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
             return NextResponse.json(
-                {
-                    success: false,
-                    message: 'Invalid credentials'
-                },
-                { status: 401 }
+                { success: false, message: errorData.message || 'Login failed' },
+                { status: response.status }
             );
         }
 
-        // Check if user is active
-        if (!user.isActive) {
-            return NextResponse.json(
-                {
-                    success: false,
-                    message: 'Account is deactivated'
-                },
-                { status: 401 }
-            );
-        }
+        const data = await response.json();
 
-        // Verify password
-        const isPasswordValid = await user.comparePassword(password);
-        if (!isPasswordValid) {
-            return NextResponse.json(
-                {
-                    success: false,
-                    message: 'Invalid credentials'
-                },
-                { status: 401 }
-            );
-        }
-
-        // Generate JWT token
-        const token = jwt.sign(
-            { userId: user._id, role: user.role },
-            env.JWT_SECRET,
-            { expiresIn: '7d' }
-        );
-
-        // Remove password from response
-        const userResponse = {
-            id: user._id,
-            name: user.name,
-            email: user.email,
-            phone: user.phone,
-            role: user.role
-        };
-
-        return NextResponse.json({
+        // Create response with user data
+        const nextResponse = NextResponse.json({
             success: true,
             message: 'Login successful',
             data: {
-                user: userResponse,
-                token
+                user: data.data.user,
+                token: data.data.token
             }
         });
+
+        // Set JWT token as HTTP-only cookie from backend response
+        nextResponse.cookies.set('token', data.data.token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'lax',
+            maxAge: 7 * 24 * 60 * 60, // 7 days
+            path: '/'
+        });
+
+        return nextResponse;
 
     } catch (error) {
         console.error('Login error:', error);

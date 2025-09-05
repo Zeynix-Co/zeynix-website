@@ -6,13 +6,13 @@ const {
     updateOrderStatus
 } = require('../controllers/orderController');
 
-// Get all orders with filters and pagination
+// Get all orders with filters and pagination (admin)
 router.get('/', getAllOrders);
 
-// Get a specific order by ID
+// Get a specific order by ID (admin)
 router.get('/:id', getOrder);
 
-// Update order status
+// Update order status (admin only)
 router.patch('/:id/status', updateOrderStatus);
 
 module.exports = router;

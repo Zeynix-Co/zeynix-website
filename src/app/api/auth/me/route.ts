@@ -1,17 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-// GET /api/products/[id] - Get product by ID
-export async function GET(
-    request: NextRequest,
-    { params }: { params: Promise<{ id: string }> }
-) {
+// GET /api/auth/me - Get current user info
+export async function GET(request: NextRequest) {
     try {
-        const { id } = await params;
+        // Get token from cookie
+        const token = request.cookies.get('token')?.value;
+
+        if (!token) {
+            return NextResponse.json(
+                { success: false, message: 'No token provided' },
+                { status: 401 }
+            );
+        }
 
         // Make request to backend API
         const backendUrl = process.env.BACKEND_URL || 'http://localhost:8000';
-        const response = await fetch(`${backendUrl}/api/customer/products/${id}`, {
+        const response = await fetch(`${backendUrl}/api/auth/me`, {
             headers: {
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             }
         });
@@ -19,7 +25,7 @@ export async function GET(
         if (!response.ok) {
             const errorData = await response.json();
             return NextResponse.json(
-                { success: false, message: errorData.message || 'Failed to fetch product' },
+                { success: false, message: errorData.message || 'Authentication failed' },
                 { status: response.status }
             );
         }
@@ -28,11 +34,11 @@ export async function GET(
         return NextResponse.json(data);
 
     } catch (error) {
-        console.error('Get product error:', error);
+        console.error('Auth check error:', error);
         return NextResponse.json(
             {
                 success: false,
-                message: 'Internal server error getting product'
+                message: 'Internal server error checking authentication'
             },
             { status: 500 }
         );

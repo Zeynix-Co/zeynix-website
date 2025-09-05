@@ -17,6 +17,19 @@ const orderSchema = new mongoose.Schema({
             ref: 'Product',
             required: true
         },
+        // Product snapshot at time of order
+        productTitle: {
+            type: String,
+            required: true
+        },
+        productImage: {
+            type: String,
+            required: true
+        },
+        productBrand: {
+            type: String,
+            default: 'Zeynix'
+        },
         size: {
             type: String,
             required: true,
@@ -65,6 +78,49 @@ const orderSchema = new mongoose.Schema({
             type: String,
             required: [true, 'Pincode is required'],
             match: [/^[0-9]{6}$/, 'Please enter a valid 6-digit pincode']
+        }
+    },
+    // Complete shipping information for frontend compatibility
+    shippingAddress: {
+        firstName: {
+            type: String,
+            required: true
+        },
+        lastName: {
+            type: String,
+            required: true
+        },
+        phone: {
+            type: String,
+            required: true
+        },
+        email: {
+            type: String,
+            required: true
+        },
+        addressLine1: {
+            type: String,
+            required: true
+        },
+        addressLine2: {
+            type: String,
+            default: ''
+        },
+        city: {
+            type: String,
+            required: true
+        },
+        state: {
+            type: String,
+            required: true
+        },
+        pincode: {
+            type: String,
+            required: true
+        },
+        country: {
+            type: String,
+            default: 'India'
         }
     },
     deliveryInstructions: {

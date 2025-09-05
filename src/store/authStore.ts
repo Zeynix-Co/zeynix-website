@@ -22,6 +22,7 @@ interface AuthActions {
     login: (email: string, password: string, rememberMe?: boolean) => Promise<void>;
     register: (userData: RegisterData) => Promise<void>;
     logout: () => void;
+    checkAuth: () => Promise<void>;
     clearError: () => void;
     setLoading: (loading: boolean) => void;
 
@@ -126,15 +127,15 @@ const useAuthStore = create<AuthState & AuthActions>()(
                 }
             },
 
-            logout: () => {
-                // Call logout API
-                if (get().token) {
-                    fetch('/api/auth/logout', {
+            logout: async () => {
+                try {
+                    // Call logout API to clear cookie
+                    await fetch('/api/auth/logout', {
                         method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer ${get().token}`,
-                        },
-                    }).catch(console.error); // Don't block logout on API failure
+                        credentials: 'include',
+                    });
+                } catch (error) {
+                    console.error('Logout API error:', error);
                 }
 
                 // Clear local state
@@ -144,6 +145,53 @@ const useAuthStore = create<AuthState & AuthActions>()(
                     isAuthenticated: false,
                     error: null,
                 });
+            },
+
+            checkAuth: async () => {
+                try {
+                    const response = await fetch('/api/auth/me', {
+                        credentials: 'include',
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.success) {
+                            // Get token from cookies for Authorization header
+                            const token = document.cookie
+                                .split('; ')
+                                .find(row => row.startsWith('token='))
+                                ?.split('=')[1];
+
+                            set({
+                                user: data.data.user,
+                                token: token || null,
+                                isAuthenticated: true,
+                                error: null,
+                            });
+                        } else {
+                            set({
+                                user: null,
+                                token: null,
+                                isAuthenticated: false,
+                                error: null,
+                            });
+                        }
+                    } else {
+                        set({
+                            user: null,
+                            token: null,
+                            isAuthenticated: false,
+                            error: null,
+                        });
+                    }
+                } catch (error) {
+                    set({
+                        user: null,
+                        token: null,
+                        isAuthenticated: false,
+                        error: null,
+                    });
+                }
             },
 
             clearError: () => set({ error: null }),
@@ -156,9 +204,14 @@ const useAuthStore = create<AuthState & AuthActions>()(
             name: 'auth-storage', // localStorage key
             partialize: (state) => ({
                 user: state.user,
-                token: state.token,
                 isAuthenticated: state.isAuthenticated,
             }),
+            onRehydrateStorage: () => (state) => {
+                if (state) {
+                    // Check authentication status when store rehydrates
+                    state.checkAuth();
+                }
+            },
         }
     )
 );

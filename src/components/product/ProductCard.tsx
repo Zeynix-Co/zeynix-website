@@ -8,7 +8,8 @@ import { Heart, ShoppingCart, Star, Eye } from 'lucide-react';
 import { Product } from '@/data/products';
 import { colorClasses, APP_CONFIG } from '@/lib/constants';
 import useCartStore from '@/store/cartStore';
-import { useAuthStore } from '@/store';
+import { useAuthStore, useWishlistStore } from '@/store';
+import WishlistHeart from '@/components/wishlist/WishlistHeart';
 
 interface ProductCardProps {
     product: Product;
@@ -20,9 +21,9 @@ export default function ProductCard({ product, onAddToCart, onAddToWishlist }: P
     const router = useRouter();
     const { addToCart, isInCart } = useCartStore();
     const { isAuthenticated } = useAuthStore();
+    const { isInWishlist } = useWishlistStore();
 
     const [selectedSize, setSelectedSize] = useState<string>(product.size[0]);
-    const [isWishlisted, setIsWishlisted] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
     const [isAddingToCart, setIsAddingToCart] = useState(false);
 
@@ -33,7 +34,7 @@ export default function ProductCard({ product, onAddToCart, onAddToWishlist }: P
             return;
         }
 
-        if (!product.inStock) return;
+        // Always allow adding to cart for now
 
         setIsAddingToCart(true);
 
@@ -46,8 +47,8 @@ export default function ProductCard({ product, onAddToCart, onAddToWishlist }: P
                     id: product.id,
                     title: product.name,
                     images: product.images,
-                    price: product.price,
-                    discountPrice: product.originalPrice > product.price ? product.originalPrice : undefined
+                    price: product.originalPrice, // This should be the original price
+                    discountPrice: product.price // This should be the discounted price
                 },
                 size: selectedSize as 'M' | 'L' | 'XL' | 'XXL' | 'XXXL',
                 quantity: 1,
@@ -62,17 +63,7 @@ export default function ProductCard({ product, onAddToCart, onAddToWishlist }: P
         }
     };
 
-    const handleAddToWishlist = () => {
-        if (!isAuthenticated) {
-            router.push('/login');
-            return;
-        }
-
-        setIsWishlisted(!isWishlisted);
-        if (onAddToWishlist) {
-            onAddToWishlist(product);
-        }
-    };
+    // Remove old wishlist handling - now handled by WishlistHeart component
 
     const discountPercentage = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
     const isAlreadyInCart = isInCart(product.id, selectedSize);
@@ -110,12 +101,19 @@ export default function ProductCard({ product, onAddToCart, onAddToWishlist }: P
                 {/* Quick Actions Overlay */}
                 <div className={`absolute inset-0 bg-black/20 flex items-center justify-center gap-2 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'
                     }`}>
-                    <button
-                        onClick={handleAddToWishlist}
-                        className={`p-2 rounded-full ${isWishlisted ? 'bg-red-500 text-white' : 'bg-white text-gray-700'} hover:scale-110 transition-all duration-200`}
-                    >
-                        <Heart className="w-5 h-5" fill={isWishlisted ? 'currentColor' : 'none'} />
-                    </button>
+                    <WishlistHeart
+                        product={{
+                            id: product.id,
+                            title: product.name,
+                            images: product.images,
+                            price: product.price,
+                            originalPrice: product.originalPrice,
+                            discountPrice: product.price,
+                            category: product.category,
+                            brand: 'Zeynix'
+                        }}
+                        size={selectedSize}
+                    />
 
                     <Link
                         href={`/products/${product.category.toLowerCase()}/${product.id}`}
@@ -125,12 +123,7 @@ export default function ProductCard({ product, onAddToCart, onAddToWishlist }: P
                     </Link>
                 </div>
 
-                {/* Stock Status */}
-                {!product.inStock && (
-                    <div className="absolute bottom-3 left-3 bg-red-500 text-white text-xs font-medium px-2 py-1 rounded">
-                        Out of Stock
-                    </div>
-                )}
+                {/* Stock Status - Always show as available for now */}
             </div>
 
             {/* Product Info */}
@@ -180,14 +173,12 @@ export default function ProductCard({ product, onAddToCart, onAddToWishlist }: P
                 {/* Add to Cart Button */}
                 <button
                     onClick={handleAddToCart}
-                    disabled={!product.inStock || isAddingToCart || isAlreadyInCart}
+                    disabled={isAddingToCart || isAlreadyInCart}
                     className={`w-full py-2 px-4 rounded-md font-medium transition-all duration-200 ${isAlreadyInCart
                         ? 'bg-green-600 text-white cursor-not-allowed'
-                        : !product.inStock
-                            ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                            : isAddingToCart
-                                ? 'bg-blue-600 text-white cursor-wait'
-                                : `${colorClasses.secondary.bg} text-gray-900 hover:opacity-90 hover:scale-105`
+                        : isAddingToCart
+                            ? 'bg-blue-600 text-white cursor-wait'
+                            : `${colorClasses.secondary.bg} text-gray-900 hover:opacity-90 hover:scale-105`
                         }`}
                 >
                     {isAlreadyInCart ? (
@@ -195,8 +186,6 @@ export default function ProductCard({ product, onAddToCart, onAddToWishlist }: P
                             <ShoppingCart className="w-4 h-4" />
                             Already in Cart
                         </div>
-                    ) : !product.inStock ? (
-                        'Out of Stock'
                     ) : isAddingToCart ? (
                         <div className="flex items-center justify-center gap-2">
                             <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>

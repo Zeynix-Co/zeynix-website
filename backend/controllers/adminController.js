@@ -1,13 +1,32 @@
 const User = require('../models/User');
 const Product = require('../models/Product');
 const Order = require('../models/Order');
+const jwt = require('jsonwebtoken');
+
+// Generate JWT Token
+const generateToken = (id, rememberMe = false) => {
+    const expiresIn = rememberMe ? '30d' : '24h';
+    return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn });
+};
+
+// Set token cookie
+const setTokenCookie = (res, token, rememberMe = false) => {
+    const options = {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: rememberMe ? 30 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000 // 30 days or 24 hours
+    };
+
+    res.cookie('token', token, options);
+};
 
 // @desc    Admin login
 // @route   POST /api/admin/login
 // @access  Public
 const adminLogin = async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { email, password, rememberMe } = req.body;
 
         // Validation
         if (!email || !password) {
@@ -50,6 +69,12 @@ const adminLogin = async (req, res) => {
             });
         }
 
+        // Generate token
+        const token = generateToken(user._id, rememberMe);
+
+        // Set cookie
+        setTokenCookie(res, token, rememberMe);
+
         res.status(200).json({
             success: true,
             message: 'Admin login successful',
@@ -60,7 +85,8 @@ const adminLogin = async (req, res) => {
                     email: user.email,
                     phone: user.phone,
                     role: user.role
-                }
+                },
+                token
             }
         });
 
@@ -183,6 +209,12 @@ const setupFirstAdmin = async (req, res) => {
             role: 'admin'
         });
 
+        // Generate token (default to rememberMe for admin setup)
+        const token = generateToken(adminUser._id, true);
+
+        // Set cookie
+        setTokenCookie(res, token, true);
+
         res.status(201).json({
             success: true,
             message: 'First admin account created successfully',
@@ -193,7 +225,8 @@ const setupFirstAdmin = async (req, res) => {
                     email: adminUser.email,
                     phone: adminUser.phone,
                     role: adminUser.role
-                }
+                },
+                token
             }
         });
 

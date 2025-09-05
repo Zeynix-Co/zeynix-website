@@ -1,44 +1,33 @@
 import { NextRequest, NextResponse } from 'next/server';
-import mongoose from 'mongoose';
-import { Product } from '@/lib/models/Product';
-import { transformProduct, getBaseProductFilter } from '@/lib/utils/productTransformer';
-
-// Connect to MongoDB
-const connectDB = async () => {
-    try {
-        if (mongoose.connection.readyState === 1) {
-            return; // Already connected
-        }
-
-        await mongoose.connect(process.env.MONGODB_URI!);
-        console.log('✅ MongoDB Connected');
-    } catch (error) {
-        console.error('❌ MongoDB connection failed:', error);
-        throw error;
-    }
-};
 
 // GET /api/products/featured - Get featured products
 export async function GET(request: NextRequest) {
     try {
-        await connectDB();
-
         const { searchParams } = new URL(request.url);
-        const limit = parseInt(searchParams.get('limit') || '8');
+        const limit = searchParams.get('limit') || '8';
 
-        // Get featured products - only active and published
-        const filter = { ...getBaseProductFilter(), featured: true };
-        const products = await Product.find(filter)
-            .sort({ rating: -1, createdAt: -1 })
-            .limit(limit);
+        // Build query string
+        const queryParams = new URLSearchParams();
+        if (limit) queryParams.append('limit', limit);
 
-        // Transform products for frontend
-        const transformedProducts = products.map(transformProduct);
-
-        return NextResponse.json({
-            success: true,
-            data: transformedProducts
+        // Make request to backend API
+        const backendUrl = process.env.BACKEND_URL || 'http://localhost:8000';
+        const response = await fetch(`${backendUrl}/api/customer/products/featured?${queryParams.toString()}`, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
         });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            return NextResponse.json(
+                { success: false, message: errorData.message || 'Failed to fetch featured products' },
+                { status: response.status }
+            );
+        }
+
+        const data = await response.json();
+        return NextResponse.json(data);
 
     } catch (error) {
         console.error('Get featured products error:', error);
