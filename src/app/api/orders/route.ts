@@ -12,6 +12,12 @@ export async function POST(request: NextRequest) {
         console.log('🔍 Order Creation Debug:');
         console.log('JWT_SECRET:', process.env.JWT_SECRET ? '✅ Set' : '❌ Missing');
         console.log('MONGODB_URI:', process.env.MONGODB_URI ? '✅ Set' : '❌ Missing');
+        
+        // Debug request headers
+        console.log('📋 Request Headers:');
+        console.log('Authorization:', request.headers.get('authorization'));
+        console.log('Cookie:', request.headers.get('cookie'));
+        console.log('Content-Type:', request.headers.get('content-type'));
 
         // Authenticate user
         const { user, error } = await protect(request);

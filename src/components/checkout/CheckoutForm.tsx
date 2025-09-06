@@ -131,7 +131,15 @@ export default function CheckoutForm({ onOrderCreated }: CheckoutFormProps) {
 
             const result = await response.json();
 
-            console.log('Order creation response:', { status: response.status, result });
+            if (!response.ok) {
+                console.error('Order creation failed:', result);
+                if (response.status === 401) {
+                    alert('Please log in to create an order. You will be redirected to the login page.');
+                    router.push('/login');
+                    return;
+                }
+                throw new Error(result.message || `Order creation failed with status ${response.status}`);
+            }
 
             if (result.success) {
                 // Clear cart after successful order
@@ -203,8 +211,7 @@ Thank you!`;
             }
         } catch (error) {
             console.error('Order creation failed:', error);
-            const errorMessage = error instanceof Error ? error.message : 'Failed to create order. Please try again.';
-            alert(`Order creation failed: ${errorMessage}`);
+            alert('Failed to create order. Please try again.');
         } finally {
             setIsSubmitting(false);
         }
