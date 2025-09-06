@@ -43,7 +43,8 @@ export const protect = async (req: NextRequest): Promise<{ user: AuthenticatedRe
 
         try {
             // Verify token
-            const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: string };
+            const jwtSecret = process.env.JWT_SECRET || 'fallback-secret-change-in-production';
+            const decoded = jwt.verify(token, jwtSecret) as { id: string };
 
             // Get user from token
             const user = await User.findById(decoded.id).select('-password');
@@ -106,7 +107,8 @@ export const optionalAuth = async (req: NextRequest): Promise<{ user: Authentica
 
         if (token) {
             try {
-                const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: string };
+                const jwtSecret = process.env.JWT_SECRET || 'fallback-secret-change-in-production';
+                const decoded = jwt.verify(token, jwtSecret) as { id: string };
                 const user = await User.findById(decoded.id).select('-password');
 
                 if (user && user.isActive) {
@@ -126,11 +128,15 @@ export const optionalAuth = async (req: NextRequest): Promise<{ user: Authentica
 // Utility function to generate JWT token
 export const generateToken = (id: string, rememberMe: boolean = false): string => {
     const expiresIn = rememberMe ? '30d' : '1d';
-    return jwt.sign({ id }, process.env.JWT_SECRET!, { expiresIn });
+    const jwtSecret = process.env.JWT_SECRET || 'fallback-secret-change-in-production';
+    return jwt.sign({ id }, jwtSecret, { expiresIn });
 };
 
 // Utility function to set token cookie
 export const setTokenCookie = (token: string, rememberMe: boolean = false) => {
     const maxAge = rememberMe ? 30 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000; // 30 days or 1 day
-    return `token=${token}; HttpOnly; Secure; SameSite=Strict; Max-Age=${maxAge}`;
+    const isProduction = process.env.NODE_ENV === 'production';
+    const secureFlag = isProduction ? 'Secure' : '';
+    const sameSite = isProduction ? 'SameSite=Strict' : 'SameSite=Lax';
+    return `token=${token}; HttpOnly; ${secureFlag}; ${sameSite}; Max-Age=${maxAge}`;
 };

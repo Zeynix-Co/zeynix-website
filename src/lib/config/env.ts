@@ -11,6 +11,15 @@ export const env = {
     CLOUDINARY_UPLOAD_PRESET: process.env.CLOUDINARY_UPLOAD_PRESET || ''
 };
 
+// Debug function to check environment variables
+export const debugEnv = () => {
+    console.log('🔍 Environment Variables Debug:');
+    console.log('MONGODB_URI:', process.env.MONGODB_URI ? '✅ Set' : '❌ Missing');
+    console.log('JWT_SECRET:', process.env.JWT_SECRET ? '✅ Set' : '❌ Missing');
+    console.log('NODE_ENV:', process.env.NODE_ENV || 'development');
+    console.log('CLOUDINARY_CLOUD_NAME:', process.env.CLOUDINARY_CLOUD_NAME ? '✅ Set' : '❌ Missing');
+};
+
 // Validate required environment variables
 export const validateEnv = () => {
     const required = ['MONGODB_URI', 'JWT_SECRET'];

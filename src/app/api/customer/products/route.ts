@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/config/database';
 import { Product } from '@/lib/models/Product';
+import { transformProduct } from '@/lib/utils/productTransformer';
 
 // GET /api/customer/products - Get all active products (public)
 export async function GET(request: NextRequest) {
@@ -15,11 +16,11 @@ export async function GET(request: NextRequest) {
         const sortOrder = searchParams.get('sortOrder') || 'desc';
 
         // Build filter - only active and published products
-        const filter: { isActive: boolean; status: string; category?: string } = { 
-            isActive: true, 
-            status: 'published' 
+        const filter: { isActive: boolean; status: string; category?: string } = {
+            isActive: true,
+            status: 'published'
         };
-        
+
         if (category && category !== 'all') {
             filter.category = category;
         }
@@ -37,10 +38,13 @@ export async function GET(request: NextRequest) {
         // Get total count
         const total = await Product.countDocuments(filter);
 
+        // Transform products for frontend
+        const transformedProducts = products.map(transformProduct);
+
         return NextResponse.json({
             success: true,
             data: {
-                products,
+                products: transformedProducts,
                 pagination: {
                     page,
                     limit,

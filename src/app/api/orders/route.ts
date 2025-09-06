@@ -8,14 +8,22 @@ export async function POST(request: NextRequest) {
     try {
         await connectDB();
 
+        // Debug environment variables
+        console.log('🔍 Order Creation Debug:');
+        console.log('JWT_SECRET:', process.env.JWT_SECRET ? '✅ Set' : '❌ Missing');
+        console.log('MONGODB_URI:', process.env.MONGODB_URI ? '✅ Set' : '❌ Missing');
+
         // Authenticate user
         const { user, error } = await protect(request);
         if (error || !user) {
+            console.error('❌ Authentication failed:', error);
             return NextResponse.json(
                 { success: false, message: error || 'Authentication required' },
                 { status: 401 }
             );
         }
+
+        console.log('✅ User authenticated:', user.email);
 
         const { items, totalAmount, shippingAddress } = await request.json();
 
