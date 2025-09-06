@@ -124,13 +124,14 @@ export default function CheckoutForm({ onOrderCreated }: CheckoutFormProps) {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${useAuthStore.getState().token}`,
                 },
                 credentials: 'include', // Include cookies for authentication
                 body: JSON.stringify(orderData),
             });
 
             const result = await response.json();
+
+            console.log('Order creation response:', { status: response.status, result });
 
             if (result.success) {
                 // Clear cart after successful order
@@ -202,7 +203,8 @@ Thank you!`;
             }
         } catch (error) {
             console.error('Order creation failed:', error);
-            alert('Failed to create order. Please try again.');
+            const errorMessage = error instanceof Error ? error.message : 'Failed to create order. Please try again.';
+            alert(`Order creation failed: ${errorMessage}`);
         } finally {
             setIsSubmitting(false);
         }
