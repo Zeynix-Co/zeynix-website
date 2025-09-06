@@ -137,6 +137,7 @@ export const setTokenCookie = (token: string, rememberMe: boolean = false) => {
     const maxAge = rememberMe ? 30 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000; // 30 days or 1 day
     const isProduction = process.env.NODE_ENV === 'production';
     const secureFlag = isProduction ? 'Secure' : '';
-    const sameSite = isProduction ? 'SameSite=Strict' : 'SameSite=Lax';
-    return `token=${token}; HttpOnly; ${secureFlag}; ${sameSite}; Max-Age=${maxAge}`;
+    const sameSite = 'SameSite=Lax'; // Use Lax for both production and development
+    const domain = isProduction ? '; Domain=.zeynix.in' : ''; // Set domain for production
+    return `token=${token}; HttpOnly; ${secureFlag}; ${sameSite}; Path=/; ${domain} Max-Age=${maxAge}`;
 };

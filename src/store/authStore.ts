@@ -60,6 +60,7 @@ const useAuthStore = create<AuthState & AuthActions>()(
                         headers: {
                             'Content-Type': 'application/json',
                         },
+                        credentials: 'include', // Include cookies for authentication
                         body: JSON.stringify({ email, password, rememberMe }),
                     });
 
@@ -77,6 +78,11 @@ const useAuthStore = create<AuthState & AuthActions>()(
                             isLoading: false,
                             error: null,
                         });
+                        
+                        // Verify authentication status after login
+                        setTimeout(() => {
+                            get().checkAuth();
+                        }, 100);
                     } else {
                         throw new Error(data.message || 'Login failed');
                     }
@@ -98,6 +104,7 @@ const useAuthStore = create<AuthState & AuthActions>()(
                         headers: {
                             'Content-Type': 'application/json',
                         },
+                        credentials: 'include', // Include cookies for authentication
                         body: JSON.stringify(userData),
                     });
 
@@ -115,6 +122,11 @@ const useAuthStore = create<AuthState & AuthActions>()(
                             isLoading: false,
                             error: null,
                         });
+                        
+                        // Verify authentication status after registration
+                        setTimeout(() => {
+                            get().checkAuth();
+                        }, 100);
                     } else {
                         throw new Error(data.message || 'Registration failed');
                     }

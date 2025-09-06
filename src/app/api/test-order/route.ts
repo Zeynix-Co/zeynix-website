@@ -6,14 +6,14 @@ import { Order } from '@/lib/models/Order';
 export async function GET(request: NextRequest) {
     try {
         await connectDB();
-        
+
         // Test database connection
         const productCount = await Product.countDocuments();
         const orderCount = await Order.countDocuments();
-        
+
         // Get a sample product
         const sampleProduct = await Product.findOne();
-        
+
         return NextResponse.json({
             success: true,
             data: {

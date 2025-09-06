@@ -93,6 +93,13 @@ export default function CheckoutForm({ onOrderCreated }: CheckoutFormProps) {
             return;
         }
 
+        // Debug authentication status
+        console.log('🔍 Checkout Debug:');
+        console.log('User:', user);
+        console.log('Is Authenticated:', useAuthStore.getState().isAuthenticated);
+        console.log('Token:', useAuthStore.getState().token);
+        console.log('Cookies:', document.cookie);
+
         setIsSubmitting(true);
 
         try {
