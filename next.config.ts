@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
-    domains: [],
+    domains: ['res.cloudinary.com'],
   },
   experimental: {
     optimizePackageImports: ['lucide-react'],
