@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store';
 import { useCartStore } from '@/store';
@@ -46,6 +46,11 @@ export default function CheckoutForm({ onOrderCreated }: CheckoutFormProps) {
     });
 
     const [errors, setErrors] = useState<Partial<AddressForm>>({});
+
+    // Refresh auth state when component mounts
+    useEffect(() => {
+        useAuthStore.getState().checkAuth();
+    }, []);
 
     const validateForm = (): boolean => {
         const newErrors: Partial<AddressForm> = {};
@@ -99,6 +104,13 @@ export default function CheckoutForm({ onOrderCreated }: CheckoutFormProps) {
         console.log('Is Authenticated:', useAuthStore.getState().isAuthenticated);
         console.log('Token:', useAuthStore.getState().token);
         console.log('Cookies:', document.cookie);
+
+        // Check if user is properly authenticated
+        if (!user || !useAuthStore.getState().isAuthenticated) {
+            alert('Please log in to create an order. You will be redirected to the login page.');
+            router.push('/login');
+            return;
+        }
 
         setIsSubmitting(true);
 

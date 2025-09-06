@@ -71,9 +71,20 @@ const useAuthStore = create<AuthState & AuthActions>()(
                     }
 
                     if (data.success) {
+                        // Get token from cookies after login
+                        const token = document.cookie
+                            .split('; ')
+                            .find(row => row.startsWith('token='))
+                            ?.split('=')[1];
+
+                        console.log('🔍 Login Debug:');
+                        console.log('Response token:', data.data.token);
+                        console.log('Cookie token:', token);
+                        console.log('All cookies:', document.cookie);
+
                         set({
                             user: data.data.user,
-                            token: data.data.token,
+                            token: token || data.data.token, // Use cookie token if available, fallback to response token
                             isAuthenticated: true,
                             isLoading: false,
                             error: null,
@@ -161,6 +172,16 @@ const useAuthStore = create<AuthState & AuthActions>()(
 
             checkAuth: async () => {
                 try {
+                    // Get token from cookies first
+                    const token = document.cookie
+                        .split('; ')
+                        .find(row => row.startsWith('token='))
+                        ?.split('=')[1];
+
+                    console.log('🔍 CheckAuth Debug:');
+                    console.log('Cookie token:', token);
+                    console.log('All cookies:', document.cookie);
+
                     const response = await fetch('/api/auth/me', {
                         credentials: 'include',
                     });
@@ -168,18 +189,13 @@ const useAuthStore = create<AuthState & AuthActions>()(
                     if (response.ok) {
                         const data = await response.json();
                         if (data.success) {
-                            // Get token from cookies for Authorization header
-                            const token = document.cookie
-                                .split('; ')
-                                .find(row => row.startsWith('token='))
-                                ?.split('=')[1];
-
                             set({
                                 user: data.data.user,
                                 token: token || null,
                                 isAuthenticated: true,
                                 error: null,
                             });
+                            console.log('✅ Auth check successful, token:', token);
                         } else {
                             set({
                                 user: null,
@@ -187,6 +203,7 @@ const useAuthStore = create<AuthState & AuthActions>()(
                                 isAuthenticated: false,
                                 error: null,
                             });
+                            console.log('❌ Auth check failed - no success');
                         }
                     } else {
                         set({
@@ -195,8 +212,10 @@ const useAuthStore = create<AuthState & AuthActions>()(
                             isAuthenticated: false,
                             error: null,
                         });
+                        console.log('❌ Auth check failed - response not ok:', response.status);
                     }
                 } catch (error) {
+                    console.error('❌ Auth check error:', error);
                     set({
                         user: null,
                         token: null,
