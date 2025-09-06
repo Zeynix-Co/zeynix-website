@@ -2,47 +2,49 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/config/database';
 import { protect } from '@/lib/middleware/auth';
 
-// GET /api/auth/me - Get current user info
 export async function GET(request: NextRequest) {
     try {
         await connectDB();
-
+        
         // Debug request headers
-        console.log('🔍 Auth/me Debug:');
+        console.log('🔍 Test Auth Debug:');
         console.log('Authorization:', request.headers.get('authorization'));
         console.log('Cookie:', request.headers.get('cookie'));
-        console.log('User-Agent:', request.headers.get('user-agent'));
-
-        // Authenticate user
+        console.log('All Headers:', Object.fromEntries(request.headers.entries()));
+        
+        // Try to authenticate
         const { user, error } = await protect(request);
+        
         if (error || !user) {
-            console.error('❌ Auth/me failed:', error);
-            return NextResponse.json(
-                { success: false, message: error || 'Authentication required' },
-                { status: 401 }
-            );
+            return NextResponse.json({
+                success: false,
+                message: error || 'Authentication failed',
+                debug: {
+                    hasAuthHeader: !!request.headers.get('authorization'),
+                    hasCookie: !!request.headers.get('cookie'),
+                    cookieValue: request.headers.get('cookie'),
+                    error: error
+                }
+            }, { status: 401 });
         }
-
+        
         return NextResponse.json({
             success: true,
+            message: 'Authentication successful',
             data: {
                 user: {
                     id: user._id,
                     name: user.name,
                     email: user.email,
-                    phone: user.phone,
                     role: user.role
                 }
             }
         });
-
+        
     } catch (error) {
-        console.error('Auth check error:', error);
+        console.error('Test auth error:', error);
         return NextResponse.json(
-            {
-                success: false,
-                message: 'Internal server error checking authentication'
-            },
+            { success: false, message: 'Test failed', error: error instanceof Error ? error.message : 'Unknown error' },
             { status: 500 }
         );
     }

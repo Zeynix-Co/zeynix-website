@@ -59,6 +59,13 @@ export async function POST(request: NextRequest) {
         // Generate JWT token
         const token = generateToken(user._id.toString(), rememberMe);
 
+        // Debug token generation
+        console.log('🔍 Login Debug:');
+        console.log('User ID:', user._id.toString());
+        console.log('Remember Me:', rememberMe);
+        console.log('Token generated:', token ? '✅ Yes' : '❌ No');
+        console.log('JWT Secret:', process.env.JWT_SECRET ? '✅ Set' : '❌ Missing');
+
         // Create response with user data
         const nextResponse = NextResponse.json({
             success: true,
@@ -76,7 +83,9 @@ export async function POST(request: NextRequest) {
         });
 
         // Set JWT token as HTTP-only cookie
-        nextResponse.headers.set('Set-Cookie', setTokenCookie(token, rememberMe));
+        const cookieString = setTokenCookie(token, rememberMe);
+        console.log('Cookie string:', cookieString);
+        nextResponse.headers.set('Set-Cookie', cookieString);
 
         return nextResponse;
 

@@ -138,6 +138,5 @@ export const setTokenCookie = (token: string, rememberMe: boolean = false) => {
     const isProduction = process.env.NODE_ENV === 'production';
     const secureFlag = isProduction ? 'Secure' : '';
     const sameSite = 'SameSite=Lax'; // Use Lax for both production and development
-    const domain = isProduction ? '; Domain=.zeynix.in' : ''; // Set domain for production
-    return `token=${token}; HttpOnly; ${secureFlag}; ${sameSite}; Path=/; ${domain} Max-Age=${maxAge}`;
+    return `token=${token}; HttpOnly; ${secureFlag}; ${sameSite}; Path=/; Max-Age=${maxAge}`;
 };
