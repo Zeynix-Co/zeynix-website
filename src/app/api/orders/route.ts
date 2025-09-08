@@ -138,10 +138,21 @@ export async function POST(request: NextRequest) {
             shippingAddress: shippingAddress
         });
 
+        // Generate fallback order number
+        const generateOrderNumber = () => {
+            const date = new Date();
+            const year = date.getFullYear().toString().slice(-2);
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const day = date.getDate().toString().padStart(2, '0');
+            const timestamp = Date.now().toString().slice(-6);
+            return `ZNX${year}${month}${day}${timestamp}`;
+        };
+
         const order = new Order({
             user: user._id,
             items: orderItems,
             totalAmount: finalTotalAmount,
+            orderNumber: generateOrderNumber(), // Set fallback order number
             deliveryAddress: {
                 street: shippingAddress.addressLine1,
                 city: shippingAddress.city,

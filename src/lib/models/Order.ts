@@ -55,7 +55,7 @@ const OrderSchema = new Schema<IOrder>({
     orderNumber: {
         type: String,
         unique: true,
-        required: true
+        required: false // Will be set by pre-save hook
     },
     items: [{
         product: {
@@ -200,24 +200,56 @@ const OrderSchema = new Schema<IOrder>({
 
 // Generate order number before saving
 OrderSchema.pre('save', async function (next) {
-    if (this.isNew) {
-        const date = new Date();
-        const year = date.getFullYear().toString().slice(-2);
-        const month = (date.getMonth() + 1).toString().padStart(2, '0');
-        const day = date.getDate().toString().padStart(2, '0');
+    if (this.isNew && !this.orderNumber) {
+        try {
+            console.log('🔢 Generating order number...');
+            const date = new Date();
+            const year = date.getFullYear().toString().slice(-2);
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const day = date.getDate().toString().padStart(2, '0');
 
-        // Get count of orders for today
-        const todayOrders = await (this.constructor as typeof Order).countDocuments({
-            createdAt: {
-                $gte: new Date(date.getFullYear(), date.getMonth(), date.getDate()),
-                $lt: new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1)
+            // Get count of orders for today with error handling
+            let todayOrders = 0;
+            try {
+                todayOrders = await (this.constructor as typeof Order).countDocuments({
+                    createdAt: {
+                        $gte: new Date(date.getFullYear(), date.getMonth(), date.getDate()),
+                        $lt: new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1)
+                    }
+                });
+                console.log('📊 Today orders count:', todayOrders);
+            } catch (countError) {
+                console.error('❌ Error counting today orders:', countError);
+                // Fallback: use timestamp-based order number
+                const timestamp = Date.now().toString().slice(-6);
+                this.orderNumber = `ZNX${year}${month}${day}${timestamp}`;
+                console.log('✅ Fallback order number generated:', this.orderNumber);
+                return next();
             }
-        });
 
-        const orderCount = (todayOrders + 1).toString().padStart(3, '0');
-        this.orderNumber = `ZNX${year}${month}${day}${orderCount}`;
+            const orderCount = (todayOrders + 1).toString().padStart(3, '0');
+            this.orderNumber = `ZNX${year}${month}${day}${orderCount}`;
+            console.log('✅ Order number generated:', this.orderNumber);
+        } catch (error) {
+            console.error('❌ Error generating order number:', error);
+            // Ultimate fallback: use timestamp
+            const timestamp = Date.now().toString().slice(-6);
+            this.orderNumber = `ZNX${timestamp}`;
+            console.log('✅ Ultimate fallback order number:', this.orderNumber);
+        }
     }
     next();
+});
+
+// Ensure orderNumber is always set after saving
+OrderSchema.post('save', function (doc) {
+    if (!doc.orderNumber) {
+        console.error('❌ Order saved without orderNumber!');
+        // Generate emergency order number
+        const timestamp = Date.now().toString().slice(-6);
+        doc.orderNumber = `ZNX${timestamp}`;
+        doc.save().catch(err => console.error('Failed to save emergency order number:', err));
+    }
 });
 
 // Calculate total amount before saving
