@@ -7,7 +7,7 @@ import { Product } from '@/lib/models/Product';
 export async function POST(request: NextRequest) {
     try {
         console.log('🚀 Starting order creation process...');
-        
+
         // Connect to database with error handling
         try {
             await connectDB();
@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
         console.log('🔍 Order Creation Debug:');
         console.log('JWT_SECRET:', process.env.JWT_SECRET ? '✅ Set' : '❌ Missing');
         console.log('MONGODB_URI:', process.env.MONGODB_URI ? '✅ Set' : '❌ Missing');
-        
+
         // Debug request headers
         console.log('📋 Request Headers:');
         console.log('Authorization:', request.headers.get('authorization'));
@@ -212,12 +212,12 @@ export async function POST(request: NextRequest) {
             message: error instanceof Error ? error.message : 'Unknown error',
             stack: error instanceof Error ? error.stack : 'No stack trace'
         });
-        
+
         // Return more specific error message
         const errorMessage = error instanceof Error ? error.message : 'Internal server error creating order';
         return NextResponse.json(
-            { 
-                success: false, 
+            {
+                success: false,
                 message: errorMessage,
                 error: process.env.NODE_ENV === 'development' ? error : undefined
             },
