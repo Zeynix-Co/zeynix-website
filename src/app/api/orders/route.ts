@@ -6,7 +6,19 @@ import { Product } from '@/lib/models/Product';
 
 export async function POST(request: NextRequest) {
     try {
-        await connectDB();
+        console.log('🚀 Starting order creation process...');
+        
+        // Connect to database with error handling
+        try {
+            await connectDB();
+            console.log('✅ Database connected successfully');
+        } catch (dbError) {
+            console.error('❌ Database connection failed:', dbError);
+            return NextResponse.json(
+                { success: false, message: 'Database connection failed' },
+                { status: 500 }
+            );
+        }
 
         // Debug environment variables
         console.log('🔍 Order Creation Debug:');
@@ -31,7 +43,20 @@ export async function POST(request: NextRequest) {
 
         console.log('✅ User authenticated:', user.email);
 
-        const { items, totalAmount, shippingAddress } = await request.json();
+        // Parse request body with error handling
+        let requestBody;
+        try {
+            requestBody = await request.json();
+            console.log('📋 Request body parsed successfully');
+        } catch (parseError) {
+            console.error('❌ Failed to parse request body:', parseError);
+            return NextResponse.json(
+                { success: false, message: 'Invalid JSON in request body' },
+                { status: 400 }
+            );
+        }
+
+        const { items, totalAmount, shippingAddress } = requestBody;
 
         // Validate required fields
         if (!items || !Array.isArray(items) || items.length === 0) {
@@ -106,6 +131,13 @@ export async function POST(request: NextRequest) {
         const finalTotalAmount = totalAmount;
 
         // Create order
+        console.log('📦 Creating order with data:', {
+            userId: user._id,
+            itemCount: orderItems.length,
+            totalAmount: finalTotalAmount,
+            shippingAddress: shippingAddress
+        });
+
         const order = new Order({
             user: user._id,
             items: orderItems,
@@ -135,21 +167,30 @@ export async function POST(request: NextRequest) {
             expectedDelivery: new Date(Date.now() + (45 * 60 * 1000)) // 45 minutes from now
         });
 
+        console.log('💾 Saving order to database...');
         await order.save();
+        console.log('✅ Order saved successfully with ID:', order._id);
 
         // Update product stock
+        console.log('📉 Updating product stock...');
         for (const item of items) {
-            await Product.findByIdAndUpdate(
-                item.productId,
-                {
-                    $inc: {
-                        [`sizes.$[size].stock`]: -item.quantity
+            try {
+                const updateResult = await Product.findByIdAndUpdate(
+                    item.productId,
+                    {
+                        $inc: {
+                            [`sizes.$[size].stock`]: -item.quantity
+                        }
+                    },
+                    {
+                        arrayFilters: [{ 'size.size': item.size }]
                     }
-                },
-                {
-                    arrayFilters: [{ 'size.size': item.size }]
-                }
-            );
+                );
+                console.log(`✅ Stock updated for product ${item.productId}, size ${item.size}, quantity: -${item.quantity}`);
+            } catch (stockError) {
+                console.error(`❌ Failed to update stock for product ${item.productId}:`, stockError);
+                // Don't fail the order if stock update fails - just log it
+            }
         }
 
         // Return success response
@@ -165,9 +206,21 @@ export async function POST(request: NextRequest) {
         }, { status: 201 });
 
     } catch (error) {
-        console.error('Create order error:', error);
+        console.error('❌ Create order error:', error);
+        console.error('Error details:', {
+            name: error instanceof Error ? error.name : 'Unknown',
+            message: error instanceof Error ? error.message : 'Unknown error',
+            stack: error instanceof Error ? error.stack : 'No stack trace'
+        });
+        
+        // Return more specific error message
+        const errorMessage = error instanceof Error ? error.message : 'Internal server error creating order';
         return NextResponse.json(
-            { success: false, message: 'Internal server error creating order' },
+            { 
+                success: false, 
+                message: errorMessage,
+                error: process.env.NODE_ENV === 'development' ? error : undefined
+            },
             { status: 500 }
         );
     }
