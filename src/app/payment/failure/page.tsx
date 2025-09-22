@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuthStore } from '@/store';
 import Header from '@/components/layout/Header';
@@ -9,7 +9,7 @@ import { XCircle, ArrowLeft, RefreshCw, Package } from 'lucide-react';
 import { colorClasses } from '@/lib/constants';
 import Link from 'next/link';
 
-export default function PaymentFailurePage() {
+function PaymentFailureContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const { isAuthenticated } = useAuthStore();
@@ -160,5 +160,33 @@ export default function PaymentFailurePage() {
 
             <Footer />
         </div>
+    );
+}
+
+// Loading fallback component
+function PaymentFailureLoading() {
+    return (
+        <div className="min-h-screen bg-gray-50">
+            <Header />
+            <main className="max-w-4xl mx-auto px-4 py-8">
+                <div className="text-center">
+                    <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <RefreshCw className="w-12 h-12 text-gray-400 animate-spin" />
+                    </div>
+                    <h1 className="text-3xl font-bold text-gray-900 mb-2">Loading...</h1>
+                    <p className="text-gray-600">Please wait while we load your payment details.</p>
+                </div>
+            </main>
+            <Footer />
+        </div>
+    );
+}
+
+// Main component with Suspense wrapper
+export default function PaymentFailurePage() {
+    return (
+        <Suspense fallback={<PaymentFailureLoading />}>
+            <PaymentFailureContent />
+        </Suspense>
     );
 }
