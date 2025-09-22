@@ -6,6 +6,8 @@ import Link from 'next/link';
 import { calculateDiscount } from '@/data/products';
 import { productAPI } from '@/lib/api';
 import { Product } from '@/data/products';
+import { useWishlistStore } from '@/store';
+import WishlistConfirmationModal from '@/components/wishlist/WishlistConfirmationModal';
 
 export default function ProductCarousel() {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -16,12 +18,45 @@ export default function ProductCarousel() {
     const [isTransitioning, setIsTransitioning] = useState(false);
     const [touchStart, setTouchStart] = useState<number | null>(null);
     const [touchEnd, setTouchEnd] = useState<number | null>(null);
+    const [showWishlistModal, setShowWishlistModal] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
     const carouselRef = useRef<HTMLDivElement>(null);
 
-    // Constants for carousel dimensions
-    const CARD_WIDTH = 320; // w-80 = 320px
-    const GAP = 16; // gap-4 = 16px
+    // Wishlist functionality
+    const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlistStore();
+
+    // Constants for carousel dimensions - responsive
+    const CARD_WIDTH = 280; // Reduced from 320px for better mobile view
+    const GAP = 12; // gap-3 = 12px
     const TOTAL_WIDTH = CARD_WIDTH + GAP;
+
+    // Wishlist toggle function
+    const handleWishlistToggle = (e: React.MouseEvent, product: Product) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const defaultSize = product.size?.[0] || 'M';
+        const isWishlisted = isInWishlist(product.id, defaultSize);
+
+        if (isWishlisted) {
+            removeFromWishlist(product.id, defaultSize);
+        } else {
+            addToWishlist({
+                id: product.id,
+                title: product.name,
+                images: product.images || [product.image],
+                price: product.price,
+                originalPrice: product.originalPrice,
+                discountPrice: product.price,
+                category: product.category,
+                brand: product.brand || 'Zeynix'
+            }, defaultSize);
+
+            // Show confirmation modal
+            setSelectedProduct(product);
+            setShowWishlistModal(true);
+        }
+    };
 
     // Fetch featured products from API
     useEffect(() => {
@@ -183,10 +218,11 @@ export default function ProductCarousel() {
                     <Link
                         key={`${product.id || index}-${index}`}
                         href={`/products/${product.category || 'casual'}/${product.id || 'unknown'}`}
-                        className="flex-shrink-0 w-80 bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
+                        className="flex-shrink-0 w-70 bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
+                        style={{ width: `${CARD_WIDTH}px` }}
                     >
                         {/* Product Image */}
-                        <div className="relative h-64 bg-gray-200">
+                        <div className="relative h-48 bg-gray-200">
                             {product.label && (
                                 <div className="absolute top-2 left-2 bg-gray-800 text-white text-xs px-2 py-1 rounded">
                                     {product.label}
@@ -214,42 +250,45 @@ export default function ProductCarousel() {
                         </div>
 
                         {/* Product Details */}
-                        <div className="p-4">
+                        <div className="p-3">
                             {/* Rating */}
-                            <div className="flex items-center mb-2">
-                                <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                                <span className="text-sm text-gray-600 ml-1">{product.rating || 0}</span>
+                            <div className="flex items-center mb-1">
+                                <Star className="w-3 h-3 text-yellow-400 fill-current" />
+                                <span className="text-xs text-gray-600 ml-1">{product.rating || 0}</span>
                             </div>
 
                             {/* Brand and Name */}
                             <div className="mb-2">
-                                <p className="font-semibold text-sm text-gray-800">{product.brand || 'Zeynix'}</p>
-                                <p className="text-sm text-gray-600 truncate">{product.name || 'Product'}</p>
+                                <p className="font-semibold text-xs text-gray-800">{product.brand || 'Zeynix'}</p>
+                                <p className="text-xs text-gray-600 truncate">{product.name || 'Product'}</p>
                             </div>
 
                             {/* Price and Like */}
                             <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-2">
-                                    <span className="font-bold text-lg text-black">₹{product.price || 0}</span>
+                                <div className="flex flex-col gap-1">
+                                    <span className="font-bold text-sm text-black">₹{product.price || 0}</span>
                                     {product.originalPrice && (
-                                        <>
-                                            <span className="text-sm text-gray-500 line-through">₹{product.originalPrice}</span>
+                                        <div className="flex items-center gap-1">
+                                            <span className="text-xs text-gray-500 line-through">₹{product.originalPrice}</span>
                                             <span className="text-xs text-green-600 font-semibold">
                                                 {calculateDiscount(product.originalPrice, product.price)}% OFF
                                             </span>
-                                        </>
+                                        </div>
                                     )}
                                 </div>
                                 <div
-                                    className="w-5 h-5 text-gray-400 hover:text-red-500 cursor-pointer"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        e.stopPropagation();
-                                        // TODO: Add to wishlist functionality
-                                        console.log('Add to wishlist:', product.id);
-                                    }}
+                                    className={`w-5 h-5 cursor-pointer transition-colors touch-manipulation ${isInWishlist(product.id, product.size?.[0] || 'M')
+                                        ? 'text-red-500'
+                                        : 'text-gray-400 hover:text-red-500'
+                                        }`}
+                                    onClick={(e) => handleWishlistToggle(e, product)}
                                 >
-                                    <Heart className="w-5 h-5" />
+                                    <Heart
+                                        className={`w-5 h-5 ${isInWishlist(product.id, product.size?.[0] || 'M')
+                                            ? 'fill-current'
+                                            : 'fill-none'
+                                            }`}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -292,6 +331,17 @@ export default function ProductCarousel() {
                     />
                 ))}
             </div>
+
+            {/* Wishlist Confirmation Modal */}
+            <WishlistConfirmationModal
+                isOpen={showWishlistModal}
+                onClose={() => setShowWishlistModal(false)}
+                onGoToWishlist={() => {
+                    setShowWishlistModal(false);
+                    window.location.href = '/wishlist';
+                }}
+                productName={selectedProduct?.name || ''}
+            />
         </div>
     );
 } 

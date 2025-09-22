@@ -156,15 +156,17 @@ export default function CheckoutPage() {
                 </div>
 
                 {/* Checkout Content */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-8">
                     {/* Checkout Form - Takes 2 columns on large screens */}
-                    <div className="lg:col-span-2">
+                    <div className="lg:col-span-2 order-2 lg:order-1">
                         <CheckoutForm onOrderCreated={handleOrderCreated} />
                     </div>
 
                     {/* Order Summary - Takes 1 column on large screens */}
-                    <div className="lg:col-span-1">
-                        <OrderSummary />
+                    <div className="lg:col-span-1 order-1 lg:order-2">
+                        <div className="sticky top-4 lg:top-8">
+                            <OrderSummary />
+                        </div>
                     </div>
                 </div>
 

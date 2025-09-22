@@ -11,6 +11,8 @@ import AddToCartButton from '@/components/cart/AddToCartButton';
 import SizeSelector from '@/components/product/SizeSelector';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import { useWishlistStore } from '@/store';
+import WishlistConfirmationModal from '@/components/wishlist/WishlistConfirmationModal';
 
 interface ProductDetailPageProps {
     params: Promise<{
@@ -25,12 +27,15 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const [isWishlisted, setIsWishlisted] = useState(false);
+    const [showWishlistModal, setShowWishlistModal] = useState(false);
 
     const resolvedParams = useParams();
     const category = resolvedParams.category as string;
     const productId = resolvedParams.productId as string;
     const router = useRouter();
+
+    // Wishlist functionality
+    const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlistStore();
 
     // Fetch product details
     useEffect(() => {
@@ -82,8 +87,37 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
     };
 
     const toggleWishlist = () => {
-        setIsWishlisted(!isWishlisted);
-        // TODO: Implement wishlist API call
+        if (!product) return;
+
+        const defaultSize = selectedSize || product.size[0] || 'M';
+        const isWishlisted = isInWishlist(product.id, defaultSize);
+
+        if (isWishlisted) {
+            removeFromWishlist(product.id, defaultSize);
+        } else {
+            addToWishlist({
+                id: product.id,
+                title: product.name,
+                images: product.images || [product.image],
+                price: product.price,
+                originalPrice: product.originalPrice,
+                discountPrice: product.price,
+                category: product.category,
+                brand: product.brand || 'Zeynix'
+            }, defaultSize);
+
+            // Show confirmation modal
+            setShowWishlistModal(true);
+        }
+    };
+
+    const handleGoToWishlist = () => {
+        setShowWishlistModal(false);
+        router.push('/wishlist');
+    };
+
+    const handleCloseModal = () => {
+        setShowWishlistModal(false);
     };
 
     const shareProduct = () => {
@@ -247,12 +281,15 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                                 <div className="flex items-center space-x-2">
                                     <button
                                         onClick={toggleWishlist}
-                                        className={`p-2 rounded-full transition-colors ${isWishlisted
+                                        className={`p-2 rounded-full transition-colors touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center ${product && isInWishlist(product.id, selectedSize || product.size[0] || 'M')
                                             ? 'text-red-500 bg-red-50'
                                             : 'text-gray-400 hover:text-red-500 hover:bg-red-50'
                                             }`}
                                     >
-                                        <Heart className={`w-6 h-6 ${isWishlisted ? 'fill-current' : ''}`} />
+                                        <Heart className={`w-6 h-6 ${product && isInWishlist(product.id, selectedSize || product.size[0] || 'M')
+                                            ? 'fill-current'
+                                            : ''
+                                            }`} />
                                     </button>
                                     <button
                                         onClick={shareProduct}
@@ -382,6 +419,14 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
             </div>
 
             <Footer />
+
+            {/* Wishlist Confirmation Modal */}
+            <WishlistConfirmationModal
+                isOpen={showWishlistModal}
+                onClose={handleCloseModal}
+                onGoToWishlist={handleGoToWishlist}
+                productName={product?.name || ''}
+            />
         </div>
     );
 } 

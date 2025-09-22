@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, memo } from 'react';
+import { useState, memo, useEffect, useRef } from 'react';
 import { Grid, List, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
 import { Product } from '@/data/products';
 import ProductCard from './ProductCard';
@@ -12,6 +12,8 @@ interface ProductGridProps {
     onLoadMore?: () => void;
     hasMore?: boolean;
     className?: string;
+    enableInfiniteScroll?: boolean;
+    productsPerPage?: number;
 }
 
 type ViewMode = 'grid' | 'list';
@@ -21,16 +23,58 @@ export default memo(function ProductGrid({
     isLoading = false,
     onLoadMore,
     hasMore = false,
-    className = ''
+    className = '',
+    enableInfiniteScroll = false,
+    productsPerPage = 12
 }: ProductGridProps) {
     const [viewMode, setViewMode] = useState<ViewMode>('grid');
     const [currentPage, setCurrentPage] = useState(1);
-    const productsPerPage = viewMode === 'grid' ? 12 : 8;
+    const [displayedProducts, setDisplayedProducts] = useState<Product[]>([]);
+    const loadMoreRef = useRef<HTMLDivElement>(null);
+    const observerRef = useRef<IntersectionObserver | null>(null);
+
+    // Update displayed products when products change
+    useEffect(() => {
+        if (enableInfiniteScroll) {
+            setDisplayedProducts(products);
+        } else {
+            const totalPages = Math.ceil(products.length / productsPerPage);
+            const startIndex = (currentPage - 1) * productsPerPage;
+            const endIndex = startIndex + productsPerPage;
+            setDisplayedProducts(products.slice(startIndex, endIndex));
+        }
+    }, [products, currentPage, enableInfiniteScroll, productsPerPage]);
+
+    // Infinite scroll setup
+    useEffect(() => {
+        if (!enableInfiniteScroll || !onLoadMore || !hasMore) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting && !isLoading) {
+                    onLoadMore();
+                }
+            },
+            { threshold: 0.1 }
+        );
+
+        observerRef.current = observer;
+
+        if (loadMoreRef.current) {
+            observer.observe(loadMoreRef.current);
+        }
+
+        return () => {
+            if (observerRef.current) {
+                observerRef.current.disconnect();
+            }
+        };
+    }, [enableInfiniteScroll, onLoadMore, hasMore, isLoading]);
 
     const totalPages = Math.ceil(products.length / productsPerPage);
     const startIndex = (currentPage - 1) * productsPerPage;
     const endIndex = startIndex + productsPerPage;
-    const currentProducts = products.slice(startIndex, endIndex);
+    const currentProducts = enableInfiniteScroll ? displayedProducts : products.slice(startIndex, endIndex);
 
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
@@ -112,10 +156,10 @@ export default memo(function ProductGrid({
                 </div>
             </div>
 
-            {/* Products Grid/List */}
+            {/* Products Grid/List - Mobile optimized */}
             <div className={`
                 ${viewMode === 'grid'
-                    ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'
+                    ? 'grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-6'
                     : 'space-y-4'
                 }
             `}>
@@ -127,8 +171,20 @@ export default memo(function ProductGrid({
                 ))}
             </div>
 
-            {/* Pagination */}
-            {totalPages > 1 && (
+            {/* Infinite Scroll Trigger */}
+            {enableInfiniteScroll && hasMore && (
+                <div ref={loadMoreRef} className="h-10 flex items-center justify-center">
+                    {isLoading && (
+                        <div className="flex items-center gap-2">
+                            <Loader2 className="w-5 h-5 animate-spin text-blue-600" />
+                            <span className="text-gray-600">Loading more products...</span>
+                        </div>
+                    )}
+                </div>
+            )}
+
+            {/* Pagination - Only show if not using infinite scroll */}
+            {!enableInfiniteScroll && totalPages > 1 && (
                 <div className="flex items-center justify-center space-x-2 mt-8">
                     {/* Previous Page */}
                     <button
@@ -177,8 +233,8 @@ export default memo(function ProductGrid({
                 </div>
             )}
 
-            {/* Load More Button (Alternative to pagination) */}
-            {hasMore && onLoadMore && (
+            {/* Load More Button (Alternative to pagination) - Only if not using infinite scroll */}
+            {!enableInfiniteScroll && hasMore && onLoadMore && (
                 <div className="text-center mt-8">
                     <Button
                         onClick={handleLoadMore}

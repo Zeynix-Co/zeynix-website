@@ -1,30 +1,17 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { useWishlistStore, useAuthStore, useCartStore } from '@/store';
+import { useState } from 'react';
+import { useWishlistStore, useCartStore } from '@/store';
 import type { WishlistItem } from '@/store/wishlistStore';
 import { Button } from '@/components/ui/Button';
 import { colorClasses } from '@/lib/constants';
 import Link from 'next/link';
+import ProtectedRoute from '@/components/auth/ProtectedRoute';
 
-export default function WishlistPage() {
-    const router = useRouter();
-    const { isAuthenticated } = useAuthStore();
+function WishlistPageContent() {
     const { items, removeFromWishlist, clearWishlist, isLoading } = useWishlistStore();
     const { addToCart } = useCartStore();
     const [addingToCart, setAddingToCart] = useState<string | null>(null);
-
-    useEffect(() => {
-        if (!isAuthenticated) {
-            router.push('/login?redirect=/wishlist');
-            return;
-        }
-    }, [isAuthenticated, router]);
-
-    if (!isAuthenticated) {
-        return null;
-    }
 
     const handleAddToCart = async (item: WishlistItem) => {
         setAddingToCart(item.id);
@@ -106,8 +93,8 @@ export default function WishlistPage() {
                             </Button>
                         </div>
 
-                        {/* Items Grid */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        {/* Items Grid - 2 columns on mobile, more on larger screens */}
+                        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-6">
                             {items.map((item) => (
                                 <div key={item.id} className="bg-white rounded-lg shadow-sm border overflow-hidden">
                                     {/* Product Image */}
@@ -119,30 +106,30 @@ export default function WishlistPage() {
                                         />
                                         <button
                                             onClick={() => handleRemoveFromWishlist(item.product.id, item.size)}
-                                            className="absolute top-2 right-2 p-2 bg-white/80 backdrop-blur-sm rounded-full shadow-md hover:shadow-lg transition-all duration-200 text-red-500 hover:bg-red-50"
+                                            className="absolute top-1 right-1 md:top-2 md:right-2 p-1 md:p-2 bg-white/80 backdrop-blur-sm rounded-full shadow-md hover:shadow-lg transition-all duration-200 text-red-500 hover:bg-red-50 min-w-[32px] min-h-[32px] md:min-w-[40px] md:min-h-[40px] flex items-center justify-center"
                                             aria-label="Remove from wishlist"
                                         >
-                                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                            <svg className="w-3 h-3 md:w-4 md:h-4" fill="currentColor" viewBox="0 0 24 24">
                                                 <path d="M6 18L18 6M6 6l12 12" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
                                             </svg>
                                         </button>
                                     </div>
 
                                     {/* Product Info */}
-                                    <div className="p-4">
-                                        <h3 className="font-medium text-gray-900 mb-1 line-clamp-2">
+                                    <div className="p-2 md:p-4">
+                                        <h3 className="font-medium text-gray-900 mb-1 line-clamp-2 text-xs md:text-sm">
                                             {item.product.title}
                                         </h3>
-                                        <p className="text-sm text-gray-600 mb-2">
+                                        <p className="text-xs text-gray-600 mb-2">
                                             Size: {item.size}
                                         </p>
-                                        <div className="flex items-center justify-between mb-3">
-                                            <div className="flex items-center space-x-2">
-                                                <span className="text-lg font-semibold text-gray-900">
+                                        <div className="flex items-center justify-between mb-2 md:mb-3">
+                                            <div className="flex flex-col md:flex-row md:items-center space-y-1 md:space-y-0 md:space-x-2">
+                                                <span className="text-sm md:text-lg font-semibold text-gray-900">
                                                     ₹{item.product.discountPrice || item.product.price}
                                                 </span>
                                                 {item.product.originalPrice && item.product.originalPrice > item.product.discountPrice && (
-                                                    <span className="text-sm text-gray-500 line-through">
+                                                    <span className="text-xs text-gray-500 line-through">
                                                         ₹{item.product.originalPrice}
                                                     </span>
                                                 )}
@@ -153,15 +140,15 @@ export default function WishlistPage() {
                                         <Button
                                             onClick={() => handleAddToCart(item)}
                                             disabled={addingToCart === item.id}
-                                            className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                                            className="w-full bg-blue-600 hover:bg-blue-700 text-white text-xs md:text-sm py-2 md:py-3 min-h-[36px] md:min-h-[40px]"
                                         >
                                             {addingToCart === item.id ? (
                                                 <div className="flex items-center justify-center">
-                                                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                                                    Adding...
+                                                    <div className="animate-spin rounded-full h-3 w-3 md:h-4 md:w-4 border-b-2 border-white mr-1 md:mr-2"></div>
+                                                    <span className="text-xs md:text-sm">Adding...</span>
                                                 </div>
                                             ) : (
-                                                'Add to Cart'
+                                                <span className="text-xs md:text-sm">Add to Cart</span>
                                             )}
                                         </Button>
                                     </div>
@@ -172,5 +159,13 @@ export default function WishlistPage() {
                 )}
             </div>
         </div>
+    );
+}
+
+export default function WishlistPage() {
+    return (
+        <ProtectedRoute>
+            <WishlistPageContent />
+        </ProtectedRoute>
     );
 }

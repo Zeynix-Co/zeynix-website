@@ -131,9 +131,9 @@ export default function CartPage() {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-8">
                     {/* Cart Items Section */}
-                    <div className="lg:col-span-2">
+                    <div className="lg:col-span-2 order-2 lg:order-1">
                         {totalItems === 0 ? (
                             /* Empty Cart */
                             <div className="bg-white rounded-lg shadow-sm p-8 text-center">
@@ -153,60 +153,60 @@ export default function CartPage() {
 
                                 <div className="divide-y">
                                     {items.map((item) => (
-                                        <div key={item.id} className="p-6">
-                                            <div className="flex space-x-4">
+                                        <div key={item.id} className="p-3 lg:p-6">
+                                            <div className="flex space-x-3 lg:space-x-4">
                                                 {/* Product Image */}
                                                 <div className="flex-shrink-0">
                                                     <img
                                                         src={item.product.images[0] || '/images/products/placeholder.jpg'}
                                                         alt={item.product.title}
-                                                        className="w-24 h-24 object-cover rounded-lg"
+                                                        className="w-20 h-20 lg:w-24 lg:h-24 object-cover rounded-lg"
                                                     />
                                                 </div>
 
                                                 {/* Product Details */}
                                                 <div className="flex-1 min-w-0">
-                                                    <h4 className={`text-lg font-medium ${colorClasses.primary.text}`}>
+                                                    <h4 className={`text-base lg:text-lg font-medium ${colorClasses.primary.text} line-clamp-2`}>
                                                         {item.product.title}
                                                     </h4>
-                                                    <p className={`text-sm ${colorClasses.secondary.text} mt-1 font-medium`}>Size: {item.size}</p>
+                                                    <p className={`text-xs lg:text-sm ${colorClasses.secondary.text} mt-1 font-medium`}>Size: {item.size}</p>
 
                                                     {/* Price */}
-                                                    <div className="mt-3">
+                                                    <div className="mt-2 lg:mt-3">
                                                         {item.product.discountPrice && item.product.discountPrice < item.product.price ? (
-                                                            <div className="flex items-center space-x-3">
-                                                                <span className={`text-xl font-semibold ${colorClasses.primary.text}`}>
+                                                            <div className="flex items-center space-x-2 lg:space-x-3">
+                                                                <span className={`text-lg lg:text-xl font-semibold ${colorClasses.primary.text}`}>
                                                                     {formatPrice(item.product.discountPrice)}
                                                                 </span>
-                                                                <span className="text-sm text-gray-500 line-through">
+                                                                <span className="text-xs lg:text-sm text-gray-500 line-through">
                                                                     {formatPrice(item.product.price)}
                                                                 </span>
                                                             </div>
                                                         ) : (
-                                                            <span className={`text-xl font-semibold ${colorClasses.primary.text}`}>
+                                                            <span className={`text-lg lg:text-xl font-semibold ${colorClasses.primary.text}`}>
                                                                 {formatPrice(item.product.price)}
                                                             </span>
                                                         )}
                                                     </div>
 
                                                     {/* Quantity Controls */}
-                                                    <div className="flex items-center justify-between mt-4">
-                                                        <div className="flex items-center space-x-3">
-                                                            <span className={`text-sm font-medium ${colorClasses.primary.text}`}>Quantity:</span>
-                                                            <div className="flex items-center space-x-2 border rounded-lg">
+                                                    <div className="flex items-center justify-between mt-3 lg:mt-4">
+                                                        <div className="flex items-center space-x-2 lg:space-x-3">
+                                                            <span className={`text-xs lg:text-sm font-medium ${colorClasses.primary.text}`}>Qty:</span>
+                                                            <div className="flex items-center border rounded-lg">
                                                                 <button
                                                                     onClick={() => updateQuantity(item.product.id, item.size, item.quantity - 1)}
-                                                                    className={`p-2 hover:${colorClasses.light.bg} rounded-l-lg transition-colors`}
+                                                                    className={`p-2 lg:p-2 hover:${colorClasses.light.bg} rounded-l-lg transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center`}
                                                                     disabled={item.quantity <= 1}
                                                                 >
                                                                     <Minus className={`w-4 h-4 ${colorClasses.primary.text}`} />
                                                                 </button>
-                                                                <span className={`w-12 text-center text-sm font-medium py-2 ${colorClasses.primary.text}`}>
+                                                                <span className={`w-12 text-center text-sm font-medium py-2 ${colorClasses.primary.text} min-h-[44px] flex items-center justify-center`}>
                                                                     {item.quantity}
                                                                 </span>
                                                                 <button
                                                                     onClick={() => updateQuantity(item.product.id, item.size, item.quantity + 1)}
-                                                                    className={`p-2 hover:${colorClasses.light.bg} rounded-r-lg transition-colors`}
+                                                                    className={`p-2 lg:p-2 hover:${colorClasses.light.bg} rounded-r-lg transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center`}
                                                                 >
                                                                     <Plus className={`w-4 h-4 ${colorClasses.primary.text}`} />
                                                                 </button>
@@ -214,17 +214,17 @@ export default function CartPage() {
                                                         </div>
 
                                                         {/* Actions */}
-                                                        <div className="flex items-center space-x-3">
+                                                        <div className="flex items-center space-x-2 lg:space-x-3">
                                                             <button
                                                                 onClick={() => moveToSaved(item.product.id, item.size)}
-                                                                className={`p-2 text-gray-400 hover:text-red-500 transition-colors`}
+                                                                className={`p-2 text-gray-400 hover:text-red-500 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center`}
                                                                 title="Save for later"
                                                             >
                                                                 <Heart className="w-5 h-5" />
                                                             </button>
                                                             <button
                                                                 onClick={() => removeFromCart(item.product.id, item.size)}
-                                                                className={`p-2 text-gray-400 hover:text-red-500 transition-colors`}
+                                                                className={`p-2 text-gray-400 hover:text-red-500 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center`}
                                                                 title="Remove item"
                                                             >
                                                                 <Trash2 className="w-5 h-5" />
@@ -302,8 +302,8 @@ export default function CartPage() {
 
                     {/* Cart Summary Sidebar */}
                     {totalItems > 0 && (
-                        <div className="lg:col-span-1">
-                            <div className="bg-white rounded-lg shadow-sm p-6 sticky top-8">
+                        <div className="lg:col-span-1 order-1 lg:order-2">
+                            <div className="bg-white rounded-lg shadow-sm p-4 lg:p-6 sticky top-4 lg:top-8">
                                 <h3 className={`text-lg font-semibold ${colorClasses.primary.text} mb-4`}>Order Summary</h3>
 
                                 {/* Summary Details */}
@@ -328,7 +328,7 @@ export default function CartPage() {
                                 <div className="space-y-3">
                                     <Button
                                         onClick={handleCheckout}
-                                        className="w-full"
+                                        className="w-full min-h-[48px] text-base font-medium"
                                         disabled={totalItems === 0}
                                     >
                                         Proceed to Checkout
@@ -336,13 +336,13 @@ export default function CartPage() {
                                     <Button
                                         onClick={handleContinueShopping}
                                         variant="outline"
-                                        className="w-full"
+                                        className="w-full min-h-[48px] text-base"
                                     >
                                         Continue Shopping
                                     </Button>
                                     <button
                                         onClick={clearCart}
-                                        className="w-full text-sm text-red-600 hover:text-red-700 py-2 border border-red-200 hover:border-red-300 rounded-lg transition-colors"
+                                        className="w-full text-sm text-red-600 hover:text-red-700 py-3 min-h-[44px] border border-red-200 hover:border-red-300 rounded-lg transition-colors"
                                     >
                                         Clear Cart
                                     </button>

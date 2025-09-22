@@ -7,7 +7,8 @@ import { useCartStore } from '@/store';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { colorClasses } from '@/lib/constants';
-import { MapPin, User, Phone, Mail, Home, Building, Navigation } from 'lucide-react';
+import { MapPin, User, Phone, Mail, Home, Building, Navigation, CreditCard, MessageCircle } from 'lucide-react';
+import PaytmPayment from '@/components/payment/PaytmPayment';
 
 interface AddressForm {
     firstName: string;
@@ -32,6 +33,9 @@ export default function CheckoutForm({ onOrderCreated }: CheckoutFormProps) {
     const { items, totalAmount, clearCart } = useCartStore();
 
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [paymentMethod, setPaymentMethod] = useState<'whatsapp' | 'paytm'>('paytm');
+    const [orderCreated, setOrderCreated] = useState(false);
+    const [createdOrderId, setCreatedOrderId] = useState<string | null>(null);
     const [formData, setFormData] = useState<AddressForm>({
         firstName: user?.name?.split(' ')[0] || '',
         lastName: user?.name?.split(' ').slice(1).join(' ') || '',
@@ -161,37 +165,41 @@ export default function CheckoutForm({ onOrderCreated }: CheckoutFormProps) {
             }
 
             if (result.success) {
-                // Clear cart after successful order
-                clearCart();
+                setCreatedOrderId(result.data.id);
+                setOrderCreated(true);
 
-                // Create enhanced WhatsApp message with order details
-                const order = result.data;
-                const address = `${formData.addressLine1}, ${formData.city}, ${formData.state} - ${formData.pincode}`;
+                if (paymentMethod === 'whatsapp') {
+                    // Clear cart after successful order
+                    clearCart();
 
-                // Create detailed product information
-                const productDetails = items.map((item, index) => {
-                    // Generate product URL - try to get category from product or default to 'casual'
-                    const category = 'casual'; // Default category since cart items don't store category
-                    const productUrl = `${window.location.origin}/products/${category}/${item.product.id}`;
+                    // Create enhanced WhatsApp message with order details
+                    const order = result.data;
+                    const address = `${formData.addressLine1}, ${formData.city}, ${formData.state} - ${formData.pincode}`;
 
-                    // Get product image with fallback
-                    const productImage = item.product.images && item.product.images.length > 0
-                        ? item.product.images[0]
-                        : `${window.location.origin}/images/placeholder.jpg`;
+                    // Create detailed product information
+                    const productDetails = items.map((item, index) => {
+                        // Generate product URL - try to get category from product or default to 'casual'
+                        const category = 'casual'; // Default category since cart items don't store category
+                        const productUrl = `${window.location.origin}/products/${category}/${item.product.id}`;
 
-                    // Calculate item total
-                    const itemTotal = (item.product.discountPrice || item.product.price) * item.quantity;
+                        // Get product image with fallback
+                        const productImage = item.product.images && item.product.images.length > 0
+                            ? item.product.images[0]
+                            : `${window.location.origin}/images/placeholder.jpg`;
 
-                    return `${index + 1}. *${item.product.title}*
+                        // Calculate item total
+                        const itemTotal = (item.product.discountPrice || item.product.price) * item.quantity;
+
+                        return `${index + 1}. *${item.product.title}*
    Size: ${item.size}
    Quantity: ${item.quantity}
    Price: ₹${item.product.discountPrice || item.product.price} each
    Total: ₹${itemTotal}
    Link: ${productUrl}
    Image: ${productImage}`;
-                }).join('\n\n');
+                    }).join('\n\n');
 
-                const whatsappMessage = `*New Order Request*
+                    const whatsappMessage = `*New Order Request*
 
 Hello Zeynix Team,
 
@@ -216,15 +224,16 @@ Please confirm availability and provide delivery timeline.
 
 Thank you!`;
 
-                const encodedMessage = encodeURIComponent(whatsappMessage);
-                const whatsappUrl = `https://wa.me/7420930845?text=${encodedMessage}`;
+                    const encodedMessage = encodeURIComponent(whatsappMessage);
+                    const whatsappUrl = `https://wa.me/7420930845?text=${encodedMessage}`;
 
+                    // Redirect to WhatsApp
+                    window.open(whatsappUrl, '_blank');
 
-                // Redirect to WhatsApp
-                window.open(whatsappUrl, '_blank');
-
-                // Also call the original callback for any additional handling
-                onOrderCreated(result.data.id);
+                    // Also call the original callback for any additional handling
+                    onOrderCreated(result.data.id);
+                }
+                // For Paytm payment, we'll show the payment component
             } else {
                 throw new Error(result.message || 'Failed to create order');
             }
@@ -450,35 +459,125 @@ Thank you!`;
                     </div>
                 </div>
 
-                {/* Submit Button */}
-                <div className="pt-4">
-                    <Button
-                        type="submit"
-                        disabled={isSubmitting}
-                        className="w-full py-3 text-lg"
-                    >
-                        {isSubmitting ? 'Creating Order...' : 'Create Order'}
-                    </Button>
-                </div>
+                {/* Payment Method Selection */}
+                {!orderCreated && (
+                    <div className="pt-4">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Choose Payment Method</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                            <label className={`flex items-center p-4 border rounded-lg cursor-pointer transition-colors ${paymentMethod === 'paytm'
+                                    ? 'border-blue-500 bg-blue-50'
+                                    : 'border-gray-200 hover:border-gray-300'
+                                }`}>
+                                <input
+                                    type="radio"
+                                    name="paymentMethod"
+                                    value="paytm"
+                                    checked={paymentMethod === 'paytm'}
+                                    onChange={(e) => setPaymentMethod(e.target.value as 'paytm')}
+                                    className="sr-only"
+                                />
+                                <div className="flex items-center flex-1">
+                                    <div className={`mr-4 ${paymentMethod === 'paytm' ? 'text-blue-600' : 'text-gray-400'}`}>
+                                        <CreditCard className="w-6 h-6" />
+                                    </div>
+                                    <div className="flex-1">
+                                        <div className="font-medium text-gray-900">Online Payment</div>
+                                        <div className="text-sm text-gray-500">Pay using UPI, Cards, Net Banking</div>
+                                    </div>
+                                </div>
+                                {paymentMethod === 'paytm' && (
+                                    <div className="w-5 h-5 bg-blue-600 rounded-full flex items-center justify-center">
+                                        <div className="w-2 h-2 bg-white rounded-full"></div>
+                                    </div>
+                                )}
+                            </label>
 
-                {/* Payment Notice */}
-                <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                    <div className="flex items-center">
-                        <div className="flex-shrink-0">
-                            <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                                <span className="text-green-600 text-sm font-medium">💬</span>
-                            </div>
-                        </div>
-                        <div className="ml-3">
-                            <h4 className="text-sm font-medium text-green-800">
-                                WhatsApp Order Confirmation
-                            </h4>
-                            <p className="text-sm text-green-700 mt-1">
-                                After creating your order, you&apos;ll be redirected to WhatsApp with complete order details including product images, links, and your delivery address.
-                            </p>
+                            <label className={`flex items-center p-4 border rounded-lg cursor-pointer transition-colors ${paymentMethod === 'whatsapp'
+                                    ? 'border-blue-500 bg-blue-50'
+                                    : 'border-gray-200 hover:border-gray-300'
+                                }`}>
+                                <input
+                                    type="radio"
+                                    name="paymentMethod"
+                                    value="whatsapp"
+                                    checked={paymentMethod === 'whatsapp'}
+                                    onChange={(e) => setPaymentMethod(e.target.value as 'whatsapp')}
+                                    className="sr-only"
+                                />
+                                <div className="flex items-center flex-1">
+                                    <div className={`mr-4 ${paymentMethod === 'whatsapp' ? 'text-blue-600' : 'text-gray-400'}`}>
+                                        <MessageCircle className="w-6 h-6" />
+                                    </div>
+                                    <div className="flex-1">
+                                        <div className="font-medium text-gray-900">WhatsApp Order</div>
+                                        <div className="text-sm text-gray-500">Confirm via WhatsApp</div>
+                                    </div>
+                                </div>
+                                {paymentMethod === 'whatsapp' && (
+                                    <div className="w-5 h-5 bg-blue-600 rounded-full flex items-center justify-center">
+                                        <div className="w-2 h-2 bg-white rounded-full"></div>
+                                    </div>
+                                )}
+                            </label>
                         </div>
                     </div>
-                </div>
+                )}
+
+                {/* Submit Button */}
+                {!orderCreated && (
+                    <div className="pt-4">
+                        <Button
+                            type="submit"
+                            disabled={isSubmitting}
+                            className="w-full py-3 text-lg"
+                        >
+                            {isSubmitting ? 'Creating Order...' : 'Create Order'}
+                        </Button>
+                    </div>
+                )}
+
+                {/* Paytm Payment Component */}
+                {orderCreated && paymentMethod === 'paytm' && createdOrderId && (
+                    <div className="pt-6">
+                        <PaytmPayment
+                            orderId={createdOrderId}
+                            amount={totalAmount}
+                            onPaymentSuccess={(transactionId) => {
+                                console.log('Payment successful:', transactionId);
+                                clearCart();
+                                onOrderCreated(createdOrderId);
+                            }}
+                            onPaymentFailure={(error) => {
+                                console.error('Payment failed:', error);
+                                alert('Payment failed. Please try again.');
+                            }}
+                        />
+                    </div>
+                )}
+
+                {/* Payment Notice */}
+                {!orderCreated && (
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <div className="flex items-center">
+                            <div className="flex-shrink-0">
+                                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                                    <span className="text-blue-600 text-sm font-medium">💳</span>
+                                </div>
+                            </div>
+                            <div className="ml-3">
+                                <h4 className="text-sm font-medium text-blue-800">
+                                    {paymentMethod === 'paytm' ? 'Secure Online Payment' : 'WhatsApp Order Confirmation'}
+                                </h4>
+                                <p className="text-sm text-blue-700 mt-1">
+                                    {paymentMethod === 'paytm'
+                                        ? 'Pay securely using UPI, Cards, Net Banking, or Paytm Wallet. Your payment is protected by Paytm\'s 256-bit SSL encryption.'
+                                        : 'After creating your order, you\'ll be redirected to WhatsApp with complete order details including product images, links, and your delivery address.'
+                                    }
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </form>
         </div>
     );

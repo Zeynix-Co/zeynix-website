@@ -27,16 +27,16 @@ export default function Footer() {
                     {/* Customer Service */}
                     <div>
                         <h3 className={`${colorClasses.secondary.text} font-bold text-lg mb-2`}>CUSTOMER SERVICE</h3>
-                        <ul className="space-y-2 text-sm">
+                        <ul className="md:space-y-2 md:text-sm text-sm">
                             <li><Link href="/contact" className={`hover:${colorClasses.secondary.text} transition-colors`}>Contact Us</Link></li>
                             <li><Link href="/track-order" className={`hover:${colorClasses.secondary.text} transition-colors`}>Track Order</Link></li>
-                            <li><Link href="/return" className={`hover:${colorClasses.secondary.text} transition-colors`}>Return Order</Link></li>
+                            <li><Link href="/return" className={`hover:${colorClasses.secondary.text} transition-colors`}>Replace Order</Link></li>
                             <li><Link href="/cancel" className={`hover:${colorClasses.secondary.text} transition-colors`}>Cancel Order</Link></li>
                         </ul>
                         <div className="mt-1 space-y-2 text-sm">
                             <div className="flex items-center space-x-2">
                                 <Truck className={`w-4 h-4 ${colorClasses.secondary.text}`} />
-                                <span>7 Days Return Policy*</span>
+                                <span>7 Days Replacement Policy*</span>
                             </div>
                         </div>
                     </div>
@@ -59,13 +59,15 @@ export default function Footer() {
                             <div className="space-y-2 text-sm">
                                 <div className="flex items-center space-x-2">
                                     <MapPin className={`w-4 h-4 ${colorClasses.secondary.text}`} />
-                                    <a target='_blank' href='https://www.instagram.com/_zeynix._/'>
-                                        <span>Visit us</span></a>
+                                    <a target='_blank' href='https://maps.app.goo.gl/LF462YENpvCbvLCk8' rel='noopener noreferrer'>
+                                        <span>Visit Store</span>
+                                    </a>
                                 </div>
                                 <div className="flex items-center space-x-2">
                                     <Instagram className={`w-4 h-4 ${colorClasses.secondary.text}`} />
-                                    <a target='_blank' href='https://www.instagram.com/_zeynix._/'>
-                                        <span>Follow us</span></a>
+                                    <a target='_blank' href='https://www.instagram.com/zeynix.in?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==' rel='noopener noreferrer'>
+                                        <span>Follow Us</span>
+                                    </a>
                                 </div>
                             </div>
                         </div>
