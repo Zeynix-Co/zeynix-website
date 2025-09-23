@@ -195,8 +195,8 @@ export default function CheckoutForm({ onOrderCreated }: CheckoutFormProps) {
    Quantity: ${item.quantity}
    Price: ₹${item.product.discountPrice || item.product.price} each
    Total: ₹${itemTotal}
-   Link: ${productUrl}
-   Image: ${productImage}`;
+   Image: ${productImage}
+   Link: ${productUrl}`;
                     }).join('\n\n');
 
                     const whatsappMessage = `*New Order Request*
@@ -465,8 +465,8 @@ Thank you!`;
                         <h3 className="text-lg font-semibold text-gray-900 mb-4">Choose Payment Method</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                             <label className={`flex items-center p-4 border rounded-lg cursor-pointer transition-colors ${paymentMethod === 'paytm'
-                                    ? 'border-blue-500 bg-blue-50'
-                                    : 'border-gray-200 hover:border-gray-300'
+                                ? 'border-blue-500 bg-blue-50'
+                                : 'border-gray-200 hover:border-gray-300'
                                 }`}>
                                 <input
                                     type="radio"
@@ -493,8 +493,8 @@ Thank you!`;
                             </label>
 
                             <label className={`flex items-center p-4 border rounded-lg cursor-pointer transition-colors ${paymentMethod === 'whatsapp'
-                                    ? 'border-blue-500 bg-blue-50'
-                                    : 'border-gray-200 hover:border-gray-300'
+                                ? 'border-blue-500 bg-blue-50'
+                                : 'border-gray-200 hover:border-gray-300'
                                 }`}>
                                 <input
                                     type="radio"
