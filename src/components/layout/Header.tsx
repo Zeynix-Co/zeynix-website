@@ -31,7 +31,7 @@ export default function Header() {
                         <div className="flex items-center space-x-4">
                             <Link href="/" className=" items-center">
                                 <Image
-                                    src="/images/logos/logo.jpg"
+                                    src="/images/logos/zeynix-logo-rbg.png"
                                     alt="Zeynix Logo"
                                     width={200}
                                     height={200}

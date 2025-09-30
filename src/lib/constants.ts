@@ -72,7 +72,7 @@ export const brand = {
     name: 'ZEYNIX',
     description: 'Your fashion destination for trendy clothing and accessories.',
     tagline: 'Fashion Forward, Always.',
-    logo: '/images/logos/logo.jpg',
+    logo: '/images/logos/zeynix-logo-rbg.png',
 } as const;
 
 // Navigation items
@@ -81,7 +81,6 @@ export const navigation = {
         { name: 'Formal', href: '/products/formal' },
         { name: 'Casual', href: '/products/casual' },
         { name: 'Ethnic', href: '/products/ethnic' },
-        { name: 'Sports', href: '/products/sports' },
     ],
     userMenu: [
         { name: 'Login', href: '/login', icon: 'User' },
@@ -102,7 +101,7 @@ export const APP_CONFIG = {
 
 // Product constants
 export const PRODUCT_CONSTANTS = {
-    categories: ['casual', 'formal', 'ethnic', 'sports'],
+    categories: ['casual', 'formal', 'ethnic'],
     sizes: ['M', 'L', 'XL', 'XXL', 'XXXL'],
     productFits: ['OVERSIZED FIT', 'CASUAL FIT', 'FORMAL FIT', 'CLASSIC FIT', 'SLIM FIT'],
     statuses: ['draft', 'published', 'archived'],

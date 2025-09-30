@@ -145,7 +145,7 @@ export default function OrderList({ onViewOrder }: OrderListProps) {
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
                     <h2 className={`text-2xl font-bold ${colorClasses.primary.text}`}>
-                        Orders ({ordersData?.pagination.totalOrders || 0})
+                        Orders ({ordersData?.pagination.total || 0})
                     </h2>
                     <p className="text-gray-600 mt-1">
                         Manage customer orders and track delivery status

@@ -1,4 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
+import connectDB from '@/lib/config/database';
+import { protect } from '@/lib/middleware/auth';
+import { Order } from '@/lib/models/Order';
+import { User } from '@/lib/models/User';
 
 // GET /api/admin/orders/[id] - Get order by ID (admin)
 export async function GET(
@@ -6,36 +10,43 @@ export async function GET(
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const { id } = await params;
+        await connectDB();
 
-        // Verify authentication
-        const token = request.cookies.get('token')?.value;
-        if (!token) {
+        // Authenticate user
+        const { user, error } = await protect(request);
+        if (error || !user) {
             return NextResponse.json(
-                { success: false, message: 'Authentication required' },
+                { success: false, message: error || 'Authentication required' },
                 { status: 401 }
             );
         }
 
-        // Make request to backend API
-        const backendUrl = process.env.BACKEND_URL || 'http://localhost:8000';
-        const response = await fetch(`${backendUrl}/api/admin/orders/${id}`, {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json();
+        // Verify admin user
+        const adminUser = await User.findById(user._id);
+        if (!adminUser || adminUser.role !== 'admin') {
             return NextResponse.json(
-                { success: false, message: errorData.message || 'Failed to fetch order' },
-                { status: response.status }
+                { success: false, message: 'Access denied. Admin role required.' },
+                { status: 401 }
             );
         }
 
-        const data = await response.json();
-        return NextResponse.json(data);
+        const { id } = await params;
+
+        const order = await Order.findById(id)
+            .populate('user', 'name email phone')
+            .populate('items.product', 'title images actualPrice');
+
+        if (!order) {
+            return NextResponse.json(
+                { success: false, message: 'Order not found' },
+                { status: 404 }
+            );
+        }
+
+        return NextResponse.json({
+            success: true,
+            data: order
+        });
 
     } catch (error) {
         console.error('Get admin order error:', error);
@@ -55,39 +66,51 @@ export async function PUT(
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const { id } = await params;
-        const body = await request.json();
+        await connectDB();
 
-        // Verify authentication
-        const token = request.cookies.get('token')?.value;
-        if (!token) {
+        // Authenticate user
+        const { user, error } = await protect(request);
+        if (error || !user) {
             return NextResponse.json(
-                { success: false, message: 'Authentication required' },
+                { success: false, message: error || 'Authentication required' },
                 { status: 401 }
             );
         }
 
-        // Make request to backend API
-        const backendUrl = process.env.BACKEND_URL || 'http://localhost:8000';
-        const response = await fetch(`${backendUrl}/api/admin/orders/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(body)
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json();
+        // Verify admin user
+        const adminUser = await User.findById(user._id);
+        if (!adminUser || adminUser.role !== 'admin') {
             return NextResponse.json(
-                { success: false, message: errorData.message || 'Failed to update order' },
-                { status: response.status }
+                { success: false, message: 'Access denied. Admin role required.' },
+                { status: 401 }
             );
         }
 
-        const data = await response.json();
-        return NextResponse.json(data);
+        const { id } = await params;
+        const updateData = await request.json();
+
+        // Check if order exists
+        const existingOrder = await Order.findById(id);
+        if (!existingOrder) {
+            return NextResponse.json(
+                { success: false, message: 'Order not found' },
+                { status: 404 }
+            );
+        }
+
+        // Update order
+        const updatedOrder = await Order.findByIdAndUpdate(
+            id,
+            updateData,
+            { new: true }
+        ).populate('user', 'name email phone')
+            .populate('items.product', 'title images actualPrice');
+
+        return NextResponse.json({
+            success: true,
+            message: 'Order updated successfully',
+            data: updatedOrder
+        });
 
     } catch (error) {
         console.error('Update admin order error:', error);
@@ -107,37 +130,47 @@ export async function DELETE(
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const { id } = await params;
+        await connectDB();
 
-        // Verify authentication
-        const token = request.cookies.get('token')?.value;
-        if (!token) {
+        // Authenticate user
+        const { user, error } = await protect(request);
+        if (error || !user) {
             return NextResponse.json(
-                { success: false, message: 'Authentication required' },
+                { success: false, message: error || 'Authentication required' },
                 { status: 401 }
             );
         }
 
-        // Make request to backend API
-        const backendUrl = process.env.BACKEND_URL || 'http://localhost:8000';
-        const response = await fetch(`${backendUrl}/api/admin/orders/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json();
+        // Verify admin user
+        const adminUser = await User.findById(user._id);
+        if (!adminUser || adminUser.role !== 'admin') {
             return NextResponse.json(
-                { success: false, message: errorData.message || 'Failed to delete order' },
-                { status: response.status }
+                { success: false, message: 'Access denied. Admin role required.' },
+                { status: 401 }
             );
         }
 
-        const data = await response.json();
-        return NextResponse.json(data);
+        const { id } = await params;
+
+        // Check if order exists
+        const order = await Order.findById(id);
+        if (!order) {
+            return NextResponse.json(
+                { success: false, message: 'Order not found' },
+                { status: 404 }
+            );
+        }
+
+        // Soft delete - mark as inactive
+        await Order.findByIdAndUpdate(id, {
+            isActive: false,
+            status: 'cancelled'
+        });
+
+        return NextResponse.json({
+            success: true,
+            message: 'Order deleted successfully'
+        });
 
     } catch (error) {
         console.error('Delete admin order error:', error);

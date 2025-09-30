@@ -6,6 +6,7 @@ import { useAuthStore } from '@/store';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { colorClasses } from '@/lib/constants';
+import { CheckCircle, XCircle } from 'lucide-react';
 
 
 export default function LoginForm() {
@@ -23,6 +24,12 @@ export default function LoginForm() {
         email?: string;
         password?: string;
     }>({});
+
+    // Forgot password state
+    const [showForgotPassword, setShowForgotPassword] = useState(false);
+    const [forgotPasswordEmail, setForgotPasswordEmail] = useState('');
+    const [forgotPasswordLoading, setForgotPasswordLoading] = useState(false);
+    const [forgotPasswordMessage, setForgotPasswordMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
     // Handle input changes
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,6 +80,48 @@ export default function LoginForm() {
         } catch (error) {
             // Error is handled by the store
             console.error('Login failed:', error);
+        }
+    };
+
+    // Handle forgot password
+    const handleForgotPassword = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if (!forgotPasswordEmail.trim()) {
+            setForgotPasswordMessage({ type: 'error', text: 'Please enter your email address' });
+            return;
+        }
+
+        if (!/\S+@\S+\.\S+/.test(forgotPasswordEmail)) {
+            setForgotPasswordMessage({ type: 'error', text: 'Please enter a valid email address' });
+            return;
+        }
+
+        setForgotPasswordLoading(true);
+        setForgotPasswordMessage(null);
+
+        try {
+            const response = await fetch('/api/auth/forgot-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email: forgotPasswordEmail }),
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                setForgotPasswordMessage({ type: 'success', text: result.message });
+                setForgotPasswordEmail('');
+            } else {
+                setForgotPasswordMessage({ type: 'error', text: result.message });
+            }
+        } catch (error) {
+            console.error('Forgot password error:', error);
+            setForgotPasswordMessage({ type: 'error', text: 'An error occurred. Please try again.' });
+        } finally {
+            setForgotPasswordLoading(false);
         }
     };
 
@@ -131,20 +180,30 @@ export default function LoginForm() {
                         )}
                     </div>
 
-                    {/* Remember Me Checkbox */}
-                    <div className="flex items-center">
-                        <input
-                            id="rememberMe"
-                            name="rememberMe"
-                            type="checkbox"
-                            checked={formData.rememberMe}
-                            onChange={handleInputChange}
-                            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    {/* Remember Me and Forgot Password */}
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center">
+                            <input
+                                id="rememberMe"
+                                name="rememberMe"
+                                type="checkbox"
+                                checked={formData.rememberMe}
+                                onChange={handleInputChange}
+                                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                disabled={isLoading}
+                            />
+                            <label htmlFor="rememberMe" className="ml-2 block text-sm text-gray-700 cursor-pointer">
+                                Remember me
+                            </label>
+                        </div>
+                        <button
+                            type="button"
+                            onClick={() => setShowForgotPassword(true)}
+                            className="text-sm text-blue-600 hover:text-blue-500 cursor-pointer"
                             disabled={isLoading}
-                        />
-                        <label htmlFor="rememberMe" className="ml-2 block text-sm text-gray-700 cursor-pointer">
-                            Remember me
-                        </label>
+                        >
+                            Forgot password?
+                        </button>
                     </div>
 
                     {/* Submit Button */}
@@ -170,6 +229,87 @@ export default function LoginForm() {
                     </p>
                 </div>
             </div>
+
+            {/* Forgot Password Modal */}
+            {showForgotPassword && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+                    <div className="bg-white rounded-lg shadow-xl p-6 max-w-md w-full">
+                        <div className="flex justify-between items-center mb-4">
+                            <h3 className={`text-lg font-semibold ${colorClasses.primary.text}`}>
+                                Reset Password
+                            </h3>
+                            <button
+                                onClick={() => {
+                                    setShowForgotPassword(false);
+                                    setForgotPasswordMessage(null);
+                                    setForgotPasswordEmail('');
+                                }}
+                                className="text-gray-400 hover:text-gray-600"
+                            >
+                                <XCircle className="w-6 h-6" />
+                            </button>
+                        </div>
+
+                        <p className="text-gray-600 text-sm mb-4">
+                            Enter your email address and we&apos;ll send you a link to reset your password.
+                        </p>
+
+                        {/* Message */}
+                        {forgotPasswordMessage && (
+                            <div className={`mb-4 p-3 rounded-lg flex items-center gap-2 ${forgotPasswordMessage.type === 'success'
+                                ? 'bg-green-50 text-green-800 border border-green-200'
+                                : 'bg-red-50 text-red-800 border border-red-200'
+                                }`}>
+                                {forgotPasswordMessage.type === 'success' ? (
+                                    <CheckCircle className="w-4 h-4 text-green-600" />
+                                ) : (
+                                    <XCircle className="w-4 h-4 text-red-600" />
+                                )}
+                                <p className="text-sm">{forgotPasswordMessage.text}</p>
+                            </div>
+                        )}
+
+                        <form onSubmit={handleForgotPassword} className="space-y-4">
+                            <div>
+                                <label htmlFor="forgotEmail" className={`block text-sm font-medium mb-1 ${colorClasses.primary.text}`}>
+                                    Email Address
+                                </label>
+                                <Input
+                                    id="forgotEmail"
+                                    type="email"
+                                    value={forgotPasswordEmail}
+                                    onChange={(e) => setForgotPasswordEmail(e.target.value)}
+                                    placeholder="Enter your email"
+                                    className="w-full"
+                                    disabled={forgotPasswordLoading}
+                                />
+                            </div>
+
+                            <div className="flex gap-3">
+                                <Button
+                                    type="button"
+                                    onClick={() => {
+                                        setShowForgotPassword(false);
+                                        setForgotPasswordMessage(null);
+                                        setForgotPasswordEmail('');
+                                    }}
+                                    className="flex-1 bg-gray-500 hover:bg-gray-600 text-white"
+                                    disabled={forgotPasswordLoading}
+                                >
+                                    Cancel
+                                </Button>
+                                <Button
+                                    type="submit"
+                                    className="flex-1"
+                                    disabled={forgotPasswordLoading}
+                                >
+                                    {forgotPasswordLoading ? 'Sending...' : 'Send Reset Link'}
+                                </Button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
         </div>
     );
 } 

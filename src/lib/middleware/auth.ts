@@ -44,10 +44,11 @@ export const protect = async (req: NextRequest): Promise<{ user: AuthenticatedRe
         try {
             // Verify token
             const jwtSecret = process.env.JWT_SECRET || 'fallback-secret-change-in-production';
-            const decoded = jwt.verify(token, jwtSecret) as { id: string };
+            const decoded = jwt.verify(token, jwtSecret) as { userId?: string; id?: string };
 
-            // Get user from token
-            const user = await User.findById(decoded.id).select('-password');
+            // Get user from token (handle both userId and id fields)
+            const userId = decoded.userId || decoded.id;
+            const user = await User.findById(userId).select('-password');
 
             if (!user) {
                 return { user: null, error: 'Token is not valid. User not found.' };

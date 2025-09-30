@@ -8,7 +8,11 @@ export const env = {
     CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME || '',
     CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY || '',
     CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET || '',
-    CLOUDINARY_UPLOAD_PRESET: process.env.CLOUDINARY_UPLOAD_PRESET || ''
+    CLOUDINARY_UPLOAD_PRESET: process.env.CLOUDINARY_UPLOAD_PRESET || '',
+    EMAIL_USER: process.env.EMAIL_USER || '',
+    EMAIL_PASSWORD: process.env.EMAIL_PASSWORD || '',
+    CLIENT_URL: process.env.CLIENT_URL || 'http://localhost:3001',
+    RESEND_API_KEY: process.env.RESEND_API_KEY || ''
 };
 
 // Debug function to check environment variables
@@ -18,6 +22,10 @@ export const debugEnv = () => {
     console.log('JWT_SECRET:', process.env.JWT_SECRET ? '✅ Set' : '❌ Missing');
     console.log('NODE_ENV:', process.env.NODE_ENV || 'development');
     console.log('CLOUDINARY_CLOUD_NAME:', process.env.CLOUDINARY_CLOUD_NAME ? '✅ Set' : '❌ Missing');
+    console.log('EMAIL_USER:', process.env.EMAIL_USER ? '✅ Set' : '❌ Missing');
+    console.log('EMAIL_PASSWORD:', process.env.EMAIL_PASSWORD ? '✅ Set' : '❌ Missing');
+    console.log('CLIENT_URL:', process.env.CLIENT_URL || 'http://localhost:3001');
+    console.log('RESEND_API_KEY:', process.env.RESEND_API_KEY ? '✅ Set' : '❌ Missing');
 };
 
 // Validate required environment variables

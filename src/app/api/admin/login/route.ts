@@ -88,7 +88,8 @@ export async function POST(request: NextRequest) {
             role: user.role
         };
 
-        return NextResponse.json({
+        // Create response with cookie
+        const response = NextResponse.json({
             success: true,
             message: 'Admin login successful',
             data: {
@@ -96,6 +97,16 @@ export async function POST(request: NextRequest) {
                 token
             }
         });
+
+        // Set cookie
+        response.cookies.set('token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'lax',
+            maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+        });
+
+        return response;
 
     } catch (error) {
         console.error('Admin login error:', error);

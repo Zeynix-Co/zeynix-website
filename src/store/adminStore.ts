@@ -58,7 +58,7 @@ interface OrdersData {
     pagination: {
         currentPage: number;
         totalPages: number;
-        totalOrders: number;
+        total: number;
         hasNext: boolean;
         hasPrev: boolean;
         limit: number;
@@ -312,7 +312,6 @@ const useAdminStore = create<AdminState & AdminActions>()(
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${get().token}`,
                         },
                         credentials: 'include',
                     });
@@ -521,7 +520,7 @@ const useAdminStore = create<AdminState & AdminActions>()(
                                     orders: updatedOrders,
                                     pagination: {
                                         ...ordersData.pagination,
-                                        totalOrders: ordersData.pagination.totalOrders - 1
+                                        total: ordersData.pagination.total - 1
                                     }
                                 }
                             });

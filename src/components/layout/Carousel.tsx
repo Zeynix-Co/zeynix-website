@@ -40,14 +40,6 @@ const carouselItems: CarouselItem[] = [
         subtitle: 'Traditional and modern ethnic wear',
         link: '/products/ethnic',
         category: 'Ethnic'
-    },
-    {
-        id: 4,
-        image: images.banners.sportsWear,
-        title: 'Sports Wear',
-        subtitle: 'Performance wear for active lifestyle',
-        link: '/products/sports',
-        category: 'Sports Wear'
     }
 ];
 

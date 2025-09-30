@@ -116,7 +116,9 @@ const useOrderStore = create<OrderState & OrderActions>()(
                         search: mergedFilters.search || ''
                     });
 
-                    const response = await fetch(`http://localhost:8000/api/admin/orders?${queryParams}`);
+                    const response = await fetch(`/api/admin/orders?${queryParams}`, {
+                        credentials: 'include',
+                    });
 
                     const data = await response.json();
 
@@ -148,7 +150,9 @@ const useOrderStore = create<OrderState & OrderActions>()(
                 try {
                     set({ isLoading: true, error: null });
 
-                    const response = await fetch(`http://localhost:8000/api/admin/orders/${orderId}?userId=${userId}`);
+                    const response = await fetch(`/api/admin/orders/${orderId}?userId=${userId}`, {
+                        credentials: 'include',
+                    });
 
                     const data = await response.json();
 
@@ -178,11 +182,12 @@ const useOrderStore = create<OrderState & OrderActions>()(
                 try {
                     set({ isLoading: true, error: null });
 
-                    const response = await fetch(`http://localhost:8000/api/admin/orders/${orderId}/status`, {
+                    const response = await fetch(`/api/admin/orders/${orderId}/status`, {
                         method: 'PATCH',
                         headers: {
                             'Content-Type': 'application/json',
                         },
+                        credentials: 'include',
                         body: JSON.stringify({
                             status,
                             userId

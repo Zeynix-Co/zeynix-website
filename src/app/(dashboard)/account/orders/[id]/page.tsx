@@ -37,9 +37,6 @@ export default function OrderDetailPage() {
             setError(null);
 
             const response = await fetch(`/api/orders/${orderId}`, {
-                headers: {
-                    'Authorization': `Bearer ${useAuthStore.getState().token}`,
-                },
                 credentials: 'include',
             });
             const result: OrderResponse = await response.json();

@@ -150,6 +150,13 @@ export default function MobileNavigation({
                                 {category.name}
                             </Link>
                         ))}
+                        <Link
+                            href="/products"
+                            className={`block p-3 hover:bg-yellow-50 rounded-lg ${colorClasses.primary.text} font-medium`}
+                            onClick={onClose}
+                        >
+                            View All
+                        </Link>
                     </div>
                 </div>
             </div>

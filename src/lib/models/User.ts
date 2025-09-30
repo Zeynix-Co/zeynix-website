@@ -8,12 +8,15 @@ export interface IUser extends Document {
     phone: string;
     password: string;
     rememberToken?: string;
+    resetPasswordToken?: string;
+    resetPasswordExpires?: Date;
     role: 'user' | 'admin';
     isActive: boolean;
     createdAt: Date;
     updatedAt: Date;
     comparePassword(candidatePassword: string): Promise<boolean>;
     generateRememberToken(): string;
+    generatePasswordResetToken(): string;
 }
 
 const userSchema = new Schema<IUser>({
@@ -46,6 +49,14 @@ const userSchema = new Schema<IUser>({
     },
     rememberToken: {
         type: String,
+        select: false
+    },
+    resetPasswordToken: {
+        type: String,
+        select: false
+    },
+    resetPasswordExpires: {
+        type: Date,
         select: false
     },
     role: {
@@ -83,6 +94,14 @@ userSchema.methods.comparePassword = async function (candidatePassword: string):
 userSchema.methods.generateRememberToken = function (): string {
     const token = crypto.randomBytes(32).toString('hex');
     this.rememberToken = token;
+    return token;
+};
+
+// Method to generate password reset token
+userSchema.methods.generatePasswordResetToken = function (): string {
+    const token = crypto.randomBytes(32).toString('hex');
+    this.resetPasswordToken = token;
+    this.resetPasswordExpires = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
     return token;
 };
 

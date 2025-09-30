@@ -73,9 +73,12 @@ export default function AddToCartButton({ product, size, disabled = false }: Add
 
     if (isAdded) {
         return (
-            <Button disabled className="w-full bg-green-600 hover:bg-green-700">
-                <Check className="w-4 h-4 mr-2" />
-                Added to Cart!
+            <Button
+                onClick={() => router.push('/cart')}
+                className="w-full bg-green-600 hover:bg-green-700 cursor-pointer"
+            >
+                <ShoppingCart className="w-4 h-4 mr-2" />
+                GO TO CART
             </Button>
         );
     }
