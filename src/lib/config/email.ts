@@ -1,8 +1,13 @@
 import { Resend } from 'resend';
 import env from './env';
 
-// Initialize Resend
-const resend = new Resend(env.RESEND_API_KEY);
+// Initialize Resend only when API key is available
+const getResendClient = () => {
+    if (!env.RESEND_API_KEY) {
+        throw new Error('RESEND_API_KEY is not configured');
+    }
+    return new Resend(env.RESEND_API_KEY);
+};
 
 // Send password reset email
 export const sendPasswordResetEmail = async (
@@ -13,6 +18,7 @@ export const sendPasswordResetEmail = async (
     try {
         const resetUrl = `${env.CLIENT_URL}/reset-password?token=${resetToken}&type=${isAdmin ? 'admin' : 'user'}`;
 
+        const resend = getResendClient();
         const { data, error } = await resend.emails.send({
             from: 'Zeynix <noreply@zeynix.in>', // Using your verified domain
             to: [to],
@@ -90,6 +96,7 @@ export const sendPasswordResetSuccessEmail = async (
     isAdmin: boolean = false
 ) => {
     try {
+        const resend = getResendClient();
         const { data, error } = await resend.emails.send({
             from: 'Zeynix <noreply@zeynix.in>', // Using your verified domain
             to: [to],
