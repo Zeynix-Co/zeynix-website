@@ -58,6 +58,7 @@ export default function CheckoutForm({ onOrderCreated }: CheckoutFormProps) {
 
     const validateForm = (): boolean => {
         const newErrors: Partial<AddressForm> = {};
+        const requiredFields: (keyof AddressForm)[] = ['firstName', 'lastName', 'phone', 'email', 'addressLine1', 'city', 'state', 'pincode'];
 
         if (!formData.firstName.trim()) newErrors.firstName = 'First name is required';
         if (!formData.lastName.trim()) newErrors.lastName = 'Last name is required';
@@ -84,6 +85,26 @@ export default function CheckoutForm({ onOrderCreated }: CheckoutFormProps) {
         }
 
         setErrors(newErrors);
+
+        // Auto-scroll to first error field
+        if (Object.keys(newErrors).length > 0) {
+            // Find the first field with an error in the required order
+            const firstErrorField = requiredFields.find(field => newErrors[field]);
+            if (firstErrorField) {
+                // Scroll to the first error field
+                setTimeout(() => {
+                    const element = document.querySelector(`[name="${firstErrorField}"]`) as HTMLElement;
+                    if (element) {
+                        element.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
+                        });
+                        element.focus();
+                    }
+                }, 100);
+            }
+        }
+
         return Object.keys(newErrors).length === 0;
     };
 
@@ -271,6 +292,7 @@ Thank you!`;
                         </label>
                         <Input
                             type="text"
+                            name="firstName"
                             value={formData.firstName}
                             onChange={(e) => handleInputChange('firstName', e.target.value)}
                             className={errors.firstName ? 'border-red-500' : ''}
@@ -288,6 +310,7 @@ Thank you!`;
                         </label>
                         <Input
                             type="text"
+                            name="lastName"
                             value={formData.lastName}
                             onChange={(e) => handleInputChange('lastName', e.target.value)}
                             className={errors.lastName ? 'border-red-500' : ''}
@@ -307,6 +330,7 @@ Thank you!`;
                         </label>
                         <Input
                             type="tel"
+                            name="phone"
                             value={formData.phone}
                             onChange={(e) => handleInputChange('phone', e.target.value)}
                             className={errors.phone ? 'border-red-500' : ''}
@@ -324,6 +348,7 @@ Thank you!`;
                         </label>
                         <Input
                             type="email"
+                            name="email"
                             value={formData.email}
                             onChange={(e) => handleInputChange('email', e.target.value)}
                             className={errors.email ? 'border-red-500' : ''}
@@ -343,6 +368,7 @@ Thank you!`;
                     </label>
                     <Input
                         type="text"
+                        name="addressLine1"
                         value={formData.addressLine1}
                         onChange={(e) => handleInputChange('addressLine1', e.target.value)}
                         className={errors.addressLine1 ? 'border-red-500' : ''}
@@ -374,6 +400,7 @@ Thank you!`;
                         </label>
                         <Input
                             type="text"
+                            name="city"
                             value={formData.city}
                             onChange={(e) => handleInputChange('city', e.target.value)}
                             className={errors.city ? 'border-red-500' : ''}
@@ -391,6 +418,7 @@ Thank you!`;
                         </label>
                         <Input
                             type="text"
+                            name="state"
                             value={formData.state}
                             onChange={(e) => handleInputChange('state', e.target.value)}
                             className={errors.state ? 'border-red-500' : ''}
@@ -408,6 +436,7 @@ Thank you!`;
                         </label>
                         <Input
                             type="text"
+                            name="pincode"
                             value={formData.pincode}
                             onChange={(e) => handleInputChange('pincode', e.target.value)}
                             className={errors.pincode ? 'border-red-500' : ''}
