@@ -64,9 +64,12 @@ export default function AddToCartButton({ product, size, disabled = false }: Add
 
     if (isAlreadyInCart) {
         return (
-            <Button disabled className="w-full bg-green-600 hover:bg-green-700">
-                <Check className="w-4 h-4 mr-2" />
-                Already in Cart
+            <Button
+                onClick={() => router.push('/cart')}
+                className="w-full bg-green-600 hover:bg-green-700 cursor-pointer"
+            >
+                <ShoppingCart className="w-4 h-4 mr-2" />
+                Go to Cart
             </Button>
         );
     }
@@ -78,7 +81,7 @@ export default function AddToCartButton({ product, size, disabled = false }: Add
                 className="w-full bg-green-600 hover:bg-green-700 cursor-pointer"
             >
                 <ShoppingCart className="w-4 h-4 mr-2" />
-                GO TO CART
+                Go to Cart
             </Button>
         );
     }
