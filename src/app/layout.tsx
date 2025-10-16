@@ -12,7 +12,7 @@ const afacad = Afacad({
 export const metadata: Metadata = {
   title: "Zeynix - Wear The Luxury",
   description: "Your fashion destination for trendy clothing and accessories. Shop the latest trends in men's, women's, and kids' fashion.",
-  keywords: "fashion, clothing, men's fashion, women's fashion, kids fashion, online shopping",
+  keywords: "zeynix, top, top brand in india, top brand of clothing, top brand of clothing in india, top brand in India, zeynix clothing, fashion, clothing, men's fashion, women's fashion, kids fashion, online shopping",
   icons: {
     icon: [
       {
