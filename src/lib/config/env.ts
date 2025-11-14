@@ -4,7 +4,7 @@ export const env = {
     JWT_SECRET: process.env.JWT_SECRET || 'fallback-secret-change-in-production',
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET || 'fallback-nextauth-secret',
     NEXTAUTH_URL: process.env.NEXTAUTH_URL || 'http://localhost:3000',
-    NODE_ENV: process.env.NODE_ENV || 'development',
+    NODE_ENV: 'production',
     CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME || '',
     CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY || '',
     CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET || '',
