@@ -2,7 +2,22 @@ import crypto from 'crypto';
 import { getRazorpayInstance, getRazorpayConfig, CURRENCY, PAYMENT_STATUS } from '@/lib/config/razorpay';
 import connectDB from '@/lib/config/database';
 import { Order } from '@/lib/models/Order';
-import { User } from '@/lib/models/User';
+
+// Razorpay order interface
+interface RazorpayOrder {
+    id: string;
+    entity: string;
+    amount: number;
+    amount_paid: number;
+    amount_due: number;
+    currency: string;
+    receipt: string;
+    offer_id: string | null;
+    status: string;
+    attempts: number;
+    notes: Record<string, string>;
+    created_at: number;
+}
 
 // Convert amount from rupees to paise (Razorpay requires amount in smallest currency unit)
 export const convertRupeesToPaise = (amount: number): number => {
@@ -24,10 +39,9 @@ export const createRazorpayOrder = async (orderData: {
     customerEmail: string;
     customerMobile: string;
     orderNotes?: Record<string, string>;
-}): Promise<{ success: boolean; order?: any; error?: string }> => {
+}): Promise<{ success: boolean; order?: RazorpayOrder; error?: string }> => {
     try {
         const razorpay = getRazorpayInstance();
-        const config = getRazorpayConfig();
 
         // Convert amount to paise
         const amountInPaise = convertRupeesToPaise(orderData.amount);
@@ -99,7 +113,7 @@ export const verifyAndUpdateOrderPayment = async (paymentData: {
 }): Promise<{
     success: boolean;
     isValid?: boolean;
-    order?: any;
+    order?: ReturnType<typeof Order.findOne> extends Promise<infer T> ? T : never;
     error?: string;
 }> => {
     try {

@@ -13,10 +13,54 @@ interface RazorpayPaymentProps {
     onPaymentFailure?: (error: string) => void;
 }
 
+// Razorpay payment response interface
+interface RazorpayPaymentResponse {
+    razorpay_order_id: string;
+    razorpay_payment_id: string;
+    razorpay_signature: string;
+}
+
+interface RazorpayPaymentError {
+    error?: {
+        description?: string;
+        code?: string;
+        source?: string;
+        step?: string;
+        reason?: string;
+    };
+}
+
+interface RazorpayOptions {
+    key: string;
+    amount: number;
+    currency: string;
+    name: string;
+    description: string;
+    order_id: string;
+    handler: (response: RazorpayPaymentResponse) => void | Promise<void>;
+    prefill?: Record<string, unknown>;
+    notes?: Record<string, string>;
+    theme?: {
+        color?: string;
+    };
+    modal?: {
+        ondismiss?: () => void;
+    };
+}
+
+interface RazorpayInstance {
+    open: () => void;
+    on: (event: string, handler: (response: RazorpayPaymentError) => void) => void;
+}
+
+interface RazorpayConstructor {
+    new(options: RazorpayOptions): RazorpayInstance;
+}
+
 // Extend Window interface for Razorpay
 declare global {
     interface Window {
-        Razorpay: any;
+        Razorpay: RazorpayConstructor;
     }
 }
 
@@ -29,8 +73,6 @@ export default function RazorpayPayment({
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [razorpayKey, setRazorpayKey] = useState<string | null>(null);
-    const [razorpayOrderId, setRazorpayOrderId] = useState<string | null>(null);
 
     // Load Razorpay checkout script
     useEffect(() => {
@@ -83,8 +125,6 @@ export default function RazorpayPayment({
 
             // Extract Razorpay order details
             const { razorpayOrderId: orderIdFromAPI, key, razorpayAmount, currency, receipt } = data.data;
-            setRazorpayOrderId(orderIdFromAPI);
-            setRazorpayKey(key);
 
             // Step 2: Initialize Razorpay checkout
             if (!window.Razorpay) {
@@ -98,7 +138,7 @@ export default function RazorpayPayment({
                 name: 'Zeynix',
                 description: `Order #${receipt || orderId}`,
                 order_id: orderIdFromAPI, // Razorpay order ID - when provided, amount must match
-                handler: async function (response: any) {
+                handler: async function (response: RazorpayPaymentResponse) {
                     // Payment successful - verify on server
                     try {
                         setLoading(true);
@@ -168,7 +208,7 @@ export default function RazorpayPayment({
 
             // Step 4: Open Razorpay checkout
             const razorpay = new window.Razorpay(options);
-            razorpay.on('payment.failed', function (response: any) {
+            razorpay.on('payment.failed', function (response: RazorpayPaymentError) {
                 // Payment failed
                 setLoading(false);
                 const errorMessage = response.error?.description || 'Payment failed';
