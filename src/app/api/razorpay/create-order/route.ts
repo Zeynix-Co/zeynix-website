@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
                     { status: 404 }
                 );
             }
-
+            
             // Use discountPrice if available, otherwise use actualPrice
             const itemPrice = product.discountPrice || product.actualPrice;
             totalAmountFromDiscountPrice += itemPrice * orderItem.quantity;
