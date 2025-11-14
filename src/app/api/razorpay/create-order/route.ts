@@ -6,6 +6,7 @@ import { Product } from '@/lib/models/Product';
 import { protect } from '@/lib/middleware/auth';
 import { createRazorpayOrder } from '@/lib/utils/razorpay';
 import { getRazorpayConfig } from '@/lib/config/razorpay';
+import { debugEnv } from '@/lib/config/env';
 
 export async function POST(request: NextRequest) {
     try {
@@ -29,6 +30,24 @@ export async function POST(request: NextRequest) {
 
         // Connect to database
         await connectDB();
+
+        // Debug environment configuration in production (without exposing values)
+        if (process.env.NODE_ENV === 'production') {
+            try {
+                debugEnv();
+                const config = getRazorpayConfig();
+                console.log('🔍 Razorpay Env Presence:', {
+                    KEY_ID: Boolean(config.KEY_ID),
+                    KEY_SECRET: Boolean(config.KEY_SECRET),
+                    RAZORPAY_KEY_ID_LIVE: Boolean(process.env.RAZORPAY_KEY_ID_LIVE),
+                    RAZORPAY_KEY_ID: Boolean(process.env.RAZORPAY_KEY_ID),
+                    RAZORPAY_KEY_SECRET_LIVE: Boolean(process.env.RAZORPAY_KEY_SECRET_LIVE),
+                    RAZORPAY_KEY_SECRET: Boolean(process.env.RAZORPAY_KEY_SECRET)
+                });
+            } catch (e) {
+                console.log('🔍 Razorpay config check failed:', e instanceof Error ? e.message : String(e));
+            }
+        }
 
         // Find the order by MongoDB _id
         const order = await Order.findOne({
