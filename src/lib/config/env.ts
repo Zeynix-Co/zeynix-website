@@ -12,7 +12,10 @@ export const env = {
     EMAIL_USER: process.env.EMAIL_USER || '',
     EMAIL_PASSWORD: process.env.EMAIL_PASSWORD || '',
     CLIENT_URL: process.env.CLIENT_URL || 'http://localhost:3001',
-    RESEND_API_KEY: process.env.RESEND_API_KEY || ''
+    RESEND_API_KEY: process.env.RESEND_API_KEY || '',
+    // Razorpay Configuration (Live API Only)
+    RAZORPAY_KEY_ID_LIVE: process.env.RAZORPAY_KEY_ID_LIVE || '',
+    RAZORPAY_KEY_SECRET_LIVE: process.env.RAZORPAY_KEY_SECRET_LIVE || ''
 };
 
 // Debug function to check environment variables
@@ -26,6 +29,8 @@ export const debugEnv = () => {
     console.log('EMAIL_PASSWORD:', process.env.EMAIL_PASSWORD ? '✅ Set' : '❌ Missing');
     console.log('CLIENT_URL:', process.env.CLIENT_URL || 'http://localhost:3001');
     console.log('RESEND_API_KEY:', process.env.RESEND_API_KEY ? '✅ Set' : '❌ Missing');
+    console.log('RAZORPAY_KEY_ID_LIVE:', process.env.RAZORPAY_KEY_ID_LIVE ? '✅ Set' : '❌ Missing');
+    console.log('RAZORPAY_KEY_SECRET_LIVE:', process.env.RAZORPAY_KEY_SECRET_LIVE ? '✅ Set' : '❌ Missing');
 };
 
 // Validate required environment variables

@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { colorClasses } from '@/lib/constants';
 import { MapPin, User, Phone, Mail, Home, Building, Navigation, CreditCard, MessageCircle } from 'lucide-react';
-import PaytmPayment from '@/components/payment/PaytmPayment';
+import RazorpayPayment from '@/components/payment/RazorpayPayment';
 
 interface AddressForm {
     firstName: string;
@@ -33,7 +33,7 @@ export default function CheckoutForm({ onOrderCreated }: CheckoutFormProps) {
     const { items, totalAmount, clearCart } = useCartStore();
 
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [paymentMethod, setPaymentMethod] = useState<'whatsapp' | 'paytm'>('paytm');
+    const [paymentMethod, setPaymentMethod] = useState<'whatsapp' | 'razorpay'>('razorpay');
     const [orderCreated, setOrderCreated] = useState(false);
     const [createdOrderId, setCreatedOrderId] = useState<string | null>(null);
     const [formData, setFormData] = useState<AddressForm>({
@@ -493,20 +493,20 @@ Thank you!`;
                     <div className="pt-4">
                         <h3 className="text-lg font-semibold text-gray-900 mb-4">Choose Payment Method</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                            <label className={`flex items-center p-4 border rounded-lg cursor-pointer transition-colors ${paymentMethod === 'paytm'
+                            <label className={`flex items-center p-4 border rounded-lg cursor-pointer transition-colors ${paymentMethod === 'razorpay'
                                 ? 'border-blue-500 bg-blue-50'
                                 : 'border-gray-200 hover:border-gray-300'
                                 }`}>
                                 <input
                                     type="radio"
                                     name="paymentMethod"
-                                    value="paytm"
-                                    checked={paymentMethod === 'paytm'}
-                                    onChange={(e) => setPaymentMethod(e.target.value as 'paytm')}
+                                    value="razorpay"
+                                    checked={paymentMethod === 'razorpay'}
+                                    onChange={(e) => setPaymentMethod(e.target.value as 'razorpay')}
                                     className="sr-only"
                                 />
                                 <div className="flex items-center flex-1">
-                                    <div className={`mr-4 ${paymentMethod === 'paytm' ? 'text-blue-600' : 'text-gray-400'}`}>
+                                    <div className={`mr-4 ${paymentMethod === 'razorpay' ? 'text-blue-600' : 'text-gray-400'}`}>
                                         <CreditCard className="w-6 h-6" />
                                     </div>
                                     <div className="flex-1">
@@ -514,7 +514,7 @@ Thank you!`;
                                         <div className="text-sm text-gray-500">Pay using UPI, Cards, Net Banking</div>
                                     </div>
                                 </div>
-                                {paymentMethod === 'paytm' && (
+                                {paymentMethod === 'razorpay' && (
                                     <div className="w-5 h-5 bg-blue-600 rounded-full flex items-center justify-center">
                                         <div className="w-2 h-2 bg-white rounded-full"></div>
                                     </div>
@@ -565,14 +565,14 @@ Thank you!`;
                     </div>
                 )}
 
-                {/* Paytm Payment Component */}
-                {orderCreated && paymentMethod === 'paytm' && createdOrderId && (
+                {/* Razorpay Payment Component */}
+                {orderCreated && paymentMethod === 'razorpay' && createdOrderId && (
                     <div className="pt-6">
-                        <PaytmPayment
+                        <RazorpayPayment
                             orderId={createdOrderId}
                             amount={totalAmount}
-                            onPaymentSuccess={(transactionId) => {
-                                console.log('Payment successful:', transactionId);
+                            onPaymentSuccess={(razorpayOrderId, razorpayPaymentId) => {
+                                console.log('Payment successful:', { razorpayOrderId, razorpayPaymentId });
                                 clearCart();
                                 onOrderCreated(createdOrderId);
                             }}
@@ -595,11 +595,11 @@ Thank you!`;
                             </div>
                             <div className="ml-3">
                                 <h4 className="text-sm font-medium text-blue-800">
-                                    {paymentMethod === 'paytm' ? 'Secure Online Payment' : 'WhatsApp Order Confirmation'}
+                                    {paymentMethod === 'razorpay' ? 'Secure Online Payment' : 'WhatsApp Order Confirmation'}
                                 </h4>
                                 <p className="text-sm text-blue-700 mt-1">
-                                    {paymentMethod === 'paytm'
-                                        ? 'Pay securely using UPI, Cards, Net Banking, or Paytm Wallet. Your payment is protected by Paytm\'s 256-bit SSL encryption.'
+                                    {paymentMethod === 'razorpay'
+                                        ? 'Pay securely using UPI, Cards, Net Banking, or Wallets. Your payment is protected by Razorpay\'s 256-bit SSL encryption.'
                                         : 'After creating your order, you\'ll be redirected to WhatsApp with complete order details including product images, links, and your delivery address.'
                                     }
                                 </p>

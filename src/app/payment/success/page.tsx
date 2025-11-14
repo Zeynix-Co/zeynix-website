@@ -12,7 +12,9 @@ import Link from 'next/link';
 
 interface PaymentSuccessData {
     orderId: string;
-    transactionId: string;
+    transactionId?: string; // For backward compatibility
+    razorpayOrderId?: string;
+    razorpayPaymentId?: string;
     amount: number;
     paymentStatus: string;
     orderStatus: string;
@@ -53,7 +55,7 @@ function PaymentSuccessContent() {
 
     const fetchPaymentStatus = async () => {
         try {
-            const response = await fetch(`/api/paytm/status?orderId=${orderId}`);
+            const response = await fetch(`/api/razorpay/verify-payment?orderId=${orderId}`);
             const data = await response.json();
 
             if (data.success) {
@@ -155,8 +157,16 @@ function PaymentSuccessContent() {
 
                         <div>
                             <label className="block text-sm font-medium text-gray-500 mb-1">Transaction ID</label>
-                            <p className="text-lg font-mono text-gray-900">{paymentData.transactionId}</p>
+                            <p className="text-lg font-mono text-gray-900">
+                                {paymentData.razorpayPaymentId || paymentData.transactionId || 'N/A'}
+                            </p>
                         </div>
+                        {paymentData.razorpayOrderId && (
+                            <div>
+                                <label className="block text-sm font-medium text-gray-500 mb-1">Razorpay Order ID</label>
+                                <p className="text-lg font-mono text-gray-900">{paymentData.razorpayOrderId}</p>
+                            </div>
+                        )}
 
                         <div>
                             <label className="block text-sm font-medium text-gray-500 mb-1">Amount Paid</label>
@@ -165,7 +175,7 @@ function PaymentSuccessContent() {
 
                         <div>
                             <label className="block text-sm font-medium text-gray-500 mb-1">Payment Method</label>
-                            <p className="text-lg text-gray-900">Paytm</p>
+                            <p className="text-lg text-gray-900">Razorpay</p>
                         </div>
 
                         <div>
