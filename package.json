@@ -18,7 +18,7 @@
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.535.0",
     "mongoose": "^8.17.2",
-    "next": "15.4.4",
+    "next": "15.4.10",
     "nodemailer": "^7.0.6",
     "react": "19.1.0",
     "react-dom": "19.1.0",
