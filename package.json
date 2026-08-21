@@ -18,11 +18,11 @@
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.535.0",
     "mongoose": "^8.17.2",
-    "next": "15.4.4",
+    "next": "^16.3.2",
     "nodemailer": "^7.0.6",
+    "razorpay": "^2.9.2",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "razorpay": "^2.9.2",
     "resend": "^6.1.1",
     "tailwind-merge": "^3.3.1",
     "zustand": "^5.0.7"
@@ -37,7 +37,7 @@
     "@types/react-dom": "^19.1.7",
     "concurrently": "^9.2.0",
     "eslint": "^9",
-    "eslint-config-next": "15.4.4",
+    "eslint-config-next": "^16.3.2",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
