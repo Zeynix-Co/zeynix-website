@@ -146,7 +146,8 @@ export default function CheckoutForm({ onOrderCreated }: CheckoutFormProps) {
                     productId: item.product.id,
                     size: item.size,
                     quantity: item.quantity,
-                    price: item.product.discountPrice || item.product.price
+                    price: item.product.discountPrice || item.product.price,
+                    customization: item.customization || undefined
                 })),
                 totalAmount,
                 shippingAddress: {

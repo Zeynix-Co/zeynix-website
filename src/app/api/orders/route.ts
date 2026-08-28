@@ -123,7 +123,8 @@ export async function POST(request: NextRequest) {
                 size: item.size,
                 quantity: item.quantity,
                 price: itemPrice,
-                totalPrice: itemTotal
+                totalPrice: itemTotal,
+                customization: item.customization || undefined
             });
         }
 

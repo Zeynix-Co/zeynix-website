@@ -70,27 +70,26 @@ export default function ProductCard({ product, onAddToCart, onAddToWishlist }: P
 
     return (
         <div
-            className="group bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden"
+            className="group bg-white rounded-xl hover:-translate-y-1.5 hover:shadow-[0_15px_35px_rgba(7,15,43,0.1)] transition-all duration-500 ease-out border border-gray-100 overflow-hidden flex flex-col justify-between"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
             {/* Product Image Container */}
-            <div className="relative aspect-square overflow-hidden bg-gray-100">
+            <div className="relative aspect-square overflow-hidden bg-gray-50">
                 {/* Loading Skeleton */}
-                <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-pulse" />
+                <div className="absolute inset-0 bg-gradient-to-r from-gray-150 via-gray-250 to-gray-150 animate-pulse" />
 
                 <Image
                     src={product.image}
                     alt={product.name}
                     fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-300 relative z-10"
+                    className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out relative z-10"
                     sizes="(max-width: 640px) 50vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 20vw"
                     priority={false}
                     loading="lazy"
                     placeholder="blur"
                     blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
                     onLoad={() => {
-                        // Hide skeleton when image loads
                         const skeleton = document.querySelector('.animate-pulse');
                         if (skeleton) {
                             skeleton.classList.add('opacity-0');
@@ -98,34 +97,30 @@ export default function ProductCard({ product, onAddToCart, onAddToWishlist }: P
                     }}
                 />
 
-                {/* Category Badge */}
-                <div className="absolute top-3 left-3 bg-gray-800 text-white text-xs font-medium px-2 py-1 rounded">
-                    {product.category.toUpperCase()}
-                </div>
 
                 {/* Discount Badge */}
                 {discountPercentage > 0 && (
-                    <div className="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                    <div className="absolute top-3 right-3 bg-red-600 text-white text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full z-20 shadow-md border border-red-500">
                         -{discountPercentage}%
                     </div>
                 )}
 
                 {/* Label Badge */}
                 {product.label && (
-                    <div className="absolute bottom-3 left-3 bg-black/80 text-white text-xs font-medium px-2 py-1 rounded">
+                    <div className="absolute bottom-3 left-3 bg-[#B5945B] text-white text-[8px] font-black uppercase tracking-widest px-2.5 py-1 rounded z-20 shadow-md">
                         {product.label}
                     </div>
                 )}
 
                 {/* New Arrival Badge */}
                 {product.featured && (
-                    <div className="absolute bottom-3 right-3 bg-green-500 text-white text-xs font-medium px-2 py-1 rounded-full">
+                    <div className="absolute bottom-3 right-3 bg-green-600 text-white text-[8px] font-black uppercase tracking-widest px-2.5 py-1 rounded z-20 shadow-md">
                         NEW
                     </div>
                 )}
 
                 {/* Quick Actions Overlay */}
-                <div className={`absolute inset-0 bg-black/20 flex items-center justify-center gap-3 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'
+                <div className={`absolute inset-0 bg-black/20 flex items-center justify-center gap-3 transition-opacity duration-300 z-20 ${isHovered ? 'opacity-100' : 'opacity-0'
                     }`}>
                     <WishlistHeart
                         product={{
@@ -139,89 +134,95 @@ export default function ProductCard({ product, onAddToCart, onAddToWishlist }: P
                             brand: 'Zeynix'
                         }}
                         size={selectedSize}
-                        className="min-w-[44px] min-h-[44px] p-3"
+                        className="min-w-[44px] min-h-[44px] p-3 shadow-lg"
                     />
 
                     <Link
                         href={`/products/${product.category.toLowerCase()}/${product.id}`}
-                        className="min-w-[44px] min-h-[44px] p-3 rounded-full bg-white text-gray-700 hover:scale-110 transition-all duration-200 flex items-center justify-center"
+                        className="min-w-[44px] min-h-[44px] p-3 rounded-full bg-white text-gray-700 hover:scale-110 active:scale-95 transition-all duration-200 flex items-center justify-center shadow-lg"
                     >
-                        <Eye className="w-5 h-5" />
+                        <Eye className="w-5 h-5 text-[#070F2B]" />
                     </Link>
                 </div>
-
-                {/* Stock Status - Always show as available for now */}
             </div>
 
             {/* Product Info */}
-            <div className="p-4">
-                {/* Brand and Category */}
-                <div className="flex items-center justify-between mb-2">
-                    <div className="text-xs font-semibold text-blue-600 uppercase tracking-wide">
-                        {product.brand}
-                    </div>
-                    <div className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
-                        {product.category}
-                    </div>
-                </div>
-
-                {/* Product Name */}
-                <Link href={`/products/${product.category.toLowerCase()}/${product.id}`}>
-                    <h3 className={`font-semibold ${colorClasses.primary.text} mb-2 line-clamp-2 hover:${colorClasses.secondary.text} transition-colors`}>
-                        {product.name}
-                    </h3>
-                </Link>
-
-                {/* Rating */}
-                <div className="flex items-center gap-1 mb-3">
-                    <div className="flex items-center">
-                        {[...Array(5)].map((_, i) => (
-                            <Star
-                                key={i}
-                                className={`w-4 h-4 ${i < Math.floor(product.rating)
-                                    ? 'text-yellow-400 fill-current'
-                                    : 'text-gray-300'
-                                    }`}
-                            />
-                        ))}
-                    </div>
-                    <span className={`text-sm ${colorClasses.primary.text} ml-1`}>
-                        ({product.rating})
-                    </span>
-                </div>
-
-                {/* Price */}
-                <div className="flex items-center gap-2 mb-2">
-                    <span className={`text-lg font-bold ${colorClasses.primary.text}`}>
-                        {APP_CONFIG.currency}{product.price}
-                    </span>
-                    {discountPercentage > 0 && (
-                        <span className="text-sm text-gray-500 line-through">
-                            {APP_CONFIG.currency}{product.originalPrice}
+            <div className="p-4 flex-1 flex flex-col justify-between">
+                <div>
+                    {/* Brand and Category */}
+                    <div className="flex items-center justify-between mb-1.5">
+                        <div className="text-[10px] font-black text-[#B5945B] uppercase tracking-widest">
+                            {product.brand || 'Zeynix'}
+                        </div>
+                        <span className="text-[9px] font-bold text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full uppercase tracking-wider">
+                            {product.category}
                         </span>
-                    )}
-                </div>
+                    </div>
 
-                {/* Available Sizes */}
-                <div className="mb-3">
-                    <div className="text-xs text-gray-500 mb-1">Available Sizes:</div>
-                    <div className="flex flex-wrap gap-1">
-                        {product.size.slice(0, 4).map((size) => (
-                            <span
-                                key={size}
-                                className={`text-xs px-2 py-1 rounded border ${selectedSize === size
-                                        ? 'bg-blue-100 text-blue-800 border-blue-300'
-                                        : 'bg-gray-50 text-gray-600 border-gray-200'
-                                    }`}
-                            >
-                                {size}
-                            </span>
-                        ))}
-                        {product.size.length > 4 && (
-                            <span className="text-xs px-2 py-1 rounded bg-gray-100 text-gray-500 border border-gray-200">
-                                +{product.size.length - 4}
+                    {/* Product Name */}
+                    <Link href={`/products/${product.category.toLowerCase()}/${product.id}`}>
+                        <h3 className="font-extrabold uppercase tracking-wide text-xs text-[#070F2B] hover:text-[#B5945B] transition-colors duration-300 line-clamp-1 mb-2">
+                            {product.name}
+                        </h3>
+                    </Link>
+
+                    {/* Rating */}
+                    <div className="flex items-center gap-1 mb-2.5">
+                        <div className="flex items-center">
+                            {[...Array(5)].map((_, i) => (
+                                <Star
+                                    key={i}
+                                    className={`w-3 h-3 ${i < Math.floor(product.rating)
+                                        ? 'text-yellow-400 fill-current'
+                                        : 'text-gray-200'
+                                        }`}
+                                />
+                            ))}
+                        </div>
+                        <span className="text-[10px] font-bold text-[#070F2B]/60 ml-0.5">
+                            ({product.rating})
+                        </span>
+                    </div>
+
+                    {/* Price */}
+                    <div className="flex items-center gap-2 mb-3">
+                        <span className="text-sm font-black text-[#070F2B]">
+                            {APP_CONFIG.currency}{product.price}
+                        </span>
+                        {discountPercentage > 0 && (
+                            <span className="text-[11px] text-gray-400 line-through font-semibold">
+                                {APP_CONFIG.currency}{product.originalPrice}
                             </span>
                         )}
+                    </div>
+
+                    {/* Available Sizes */}
+                    <div className="mb-4">
+                        <div className="text-[9px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Select Size:</div>
+                        <div className="flex flex-wrap gap-1.5">
+                            {product.size.slice(0, 4).map((size) => (
+                                <button
+                                    key={size}
+                                    type="button"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        setSelectedSize(size);
+                                    }}
+                                    className={`text-[10px] font-black px-2.5 py-1 rounded transition-all duration-200 cursor-pointer border ${selectedSize === size
+                                            ? 'bg-[#070F2B] text-white border-[#070F2B] scale-105 shadow-sm'
+                                            : 'bg-gray-50 text-gray-600 border-gray-200 hover:border-[#070F2B]/40'
+                                        }`}
+                                >
+                                    {size}
+                                </button>
+                            ))}
+                            {product.size.length > 4 && (
+                                <span className="text-[10px] font-bold px-2.5 py-1 rounded bg-gray-100 text-gray-500 border border-gray-200">
+                                    +{product.size.length - 4}
+                                </span>
+                            )}
+                        </div>
                     </div>
                 </div>
 
@@ -229,26 +230,27 @@ export default function ProductCard({ product, onAddToCart, onAddToWishlist }: P
                 <button
                     onClick={handleAddToCart}
                     disabled={isAddingToCart || isAlreadyInCart}
-                    className={`w-full min-h-[44px] py-3 px-4 rounded-md font-medium transition-all duration-200 touch-manipulation ${isAlreadyInCart
-                        ? 'bg-green-600 text-white cursor-not-allowed'
-                        : isAddingToCart
-                            ? 'bg-blue-600 text-white cursor-wait'
-                            : `${colorClasses.secondary.bg} text-gray-900 hover:opacity-90 hover:scale-105 active:scale-95`
-                        }`}
+                    className={`w-full min-h-[42px] py-2.5 px-4 rounded-none font-bold uppercase tracking-wider text-[10px] transition-all duration-300 active:scale-95 cursor-pointer ${
+                        isAlreadyInCart
+                            ? 'bg-green-700 text-white cursor-not-allowed'
+                            : isAddingToCart
+                                ? 'bg-[#070F2B] text-white cursor-wait opacity-80'
+                                : 'bg-[#070F2B] text-white hover:bg-[#B5945B] hover:text-[#070F2B] border border-[#070F2B] hover:border-[#B5945B] shadow-[2px_2px_0px_#B5945B] hover:shadow-[0px_0px_0px_#B5945B]'
+                    }`}
                 >
                     {isAlreadyInCart ? (
-                        <div className="flex items-center justify-center gap-2">
-                            <ShoppingCart className="w-4 h-4" />
-                            Already in Cart
+                        <div className="flex items-center justify-center gap-1.5">
+                            <ShoppingCart className="w-3.5 h-3.5" />
+                            In Cart
                         </div>
                     ) : isAddingToCart ? (
-                        <div className="flex items-center justify-center gap-2">
-                            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        <div className="flex items-center justify-center gap-1.5">
+                            <div className="w-3.5 h-3.5 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
                             Adding...
                         </div>
                     ) : (
-                        <div className="flex items-center justify-center gap-2">
-                            <ShoppingCart className="w-4 h-4" />
+                        <div className="flex items-center justify-center gap-1.5">
+                            <ShoppingCart className="w-3.5 h-3.5" />
                             {isAuthenticated ? 'Add to Cart' : 'Login to Add'}
                         </div>
                     )}
@@ -256,4 +258,4 @@ export default function ProductCard({ product, onAddToCart, onAddToWishlist }: P
             </div>
         </div>
     );
-} 
+}

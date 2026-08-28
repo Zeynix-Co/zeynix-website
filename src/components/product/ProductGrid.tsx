@@ -145,13 +145,13 @@ export default memo(function ProductGrid({
 
                 {/* Sort Options */}
                 <div className="flex items-center space-x-2">
-                    <span className="text-sm text-gray-600">Sort by:</span>
-                    <select className="text-sm border border-gray-300 rounded-md px-2 py-1 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                        <option value="featured">Featured</option>
-                        <option value="price-low">Price: Low to High</option>
-                        <option value="price-high">Price: High to Low</option>
-                        <option value="rating">Highest Rated</option>
-                        <option value="newest">Newest First</option>
+                    <span className="text-[10px] font-black uppercase tracking-wider text-[#070F2B]/60">Sort by:</span>
+                    <select className="text-[11px] font-black text-[#070F2B] bg-white border border-gray-200 rounded-xl px-3 py-1.5 focus:outline-none focus:border-[#070F2B] cursor-pointer shadow-xs">
+                        <option value="featured" className="text-[#070F2B] bg-white">Featured</option>
+                        <option value="price-low" className="text-[#070F2B] bg-white">Price: Low to High</option>
+                        <option value="price-high" className="text-[#070F2B] bg-white">Price: High to Low</option>
+                        <option value="rating" className="text-[#070F2B] bg-white">Highest Rated</option>
+                        <option value="newest" className="text-[#070F2B] bg-white">Newest First</option>
                     </select>
                 </div>
             </div>

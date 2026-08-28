@@ -75,63 +75,72 @@ export default function CategoryProductsPage() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-[#FAF6F0] text-[#070F2B] font-sans">
             <Header />
 
-            <main className="max-w-7xl mx-auto px-4 py-8">
+            <main className="max-w-6xl mx-auto px-4 py-8 md:py-12">
                 {/* Breadcrumb */}
-                <nav className="flex items-center gap-2 text-sm text-gray-600 mb-6">
-                    <Link href="/" className="hover:text-gray-900">Home</Link>
+                <nav className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-[#070F2B]/60 mb-6">
+                    <Link href="/" className="hover:text-[#B5945B] transition-colors">Home</Link>
                     <span>/</span>
-                    <Link href="/products" className="hover:text-gray-900">Products</Link>
+                    <Link href="/products" className="hover:text-[#B5945B] transition-colors">Products</Link>
                     <span>/</span>
-                    <span className="text-gray-900">{getCategoryTitle(category)}</span>
+                    <span className="text-[#070F2B]">{getCategoryTitle(category)}</span>
                 </nav>
 
-                {/* Page Header */}
-                <div className="mb-8">
-                    <div className="flex items-center gap-4 mb-4">
-                        <Link
-                            href="/products"
-                            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                        >
-                            <ArrowLeft className="w-5 h-5" />
-                        </Link>
-                        <div>
-                            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                {/* Category Hero Banner */}
+                <div className="relative w-full bg-[#070F2B] text-white rounded-2xl overflow-hidden py-12 px-8 md:px-16 mb-10 shadow-[0_15px_30px_rgba(7,15,43,0.2)] border border-white/5 select-none">
+                    {/* Gold brush stroke / vectors inside banner */}
+                    <div className="absolute top-0 right-0 w-48 h-full opacity-[0.12] pointer-events-none">
+                        <svg className="w-full h-full text-[#B5945B] fill-current" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                            <path d="M 40 0 C 60 20, 80 50, 100 100 L 100 0 Z" />
+                            <path d="M 0 100 C 40 80, 80 60, 100 100 Z" opacity="0.5" />
+                        </svg>
+                    </div>
+                    
+                    <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                        <div className="space-y-3.5">
+                            <div className="flex items-center gap-3">
+                                <Link
+                                    href="/"
+                                    className="flex items-center gap-1.5 px-3.5 py-1 bg-[#FFCB05] text-[#070F2B] hover:bg-white hover:scale-105 border border-[#FFCB05] rounded-full transition-all duration-300 font-black uppercase tracking-wider text-[8.5px] shadow-md cursor-pointer"
+                                >
+                                    <ArrowLeft className="w-3 h-3 text-[#070F2B]" />
+                                    Back to Home
+                                </Link>
+                                <span className="text-[9px] font-black uppercase tracking-widest text-[#FAF6F0]/60 bg-white/5 py-1 px-3 rounded-full border border-white/10">
+                                    {category} Collection
+                                </span>
+                            </div>
+                            <h1 className="text-3xl md:text-5xl font-black uppercase tracking-tight text-[#FAF6F0]">
                                 {getCategoryTitle(category)}
                             </h1>
-                            <p className="text-gray-600">{getCategoryDescription(category)}</p>
+                            <p className="text-xs md:text-sm text-white/60 font-semibold max-w-lg leading-relaxed">
+                                {getCategoryDescription(category)}
+                            </p>
                         </div>
-                    </div>
-
-                    {/* Results Summary */}
-                    <div className="text-sm text-gray-500">
-                        Showing {filteredProducts.length} of {products.length} products
+                        
+                        {/* stats badge */}
+                        <div className="bg-white/5 backdrop-blur-xs border border-white/10 p-5 rounded-xl shrink-0 text-left md:text-right shadow-sm">
+                            <span className="text-[9px] text-[#B5945B] font-bold uppercase tracking-wider block">Exclusive Zeynix Wear</span>
+                            <span className="text-2xl font-black text-[#FAF6F0] block mt-0.5">{filteredProducts.length} Items</span>
+                            <span className="text-[9.5px] text-white/40 block">Premium Fit & Fabric Quality</span>
+                        </div>
                     </div>
                 </div>
 
                 {/* Controls Bar */}
-                <div className="flex justify-between items-center mb-6">
+                <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4 mb-8">
                     <button
                         onClick={toggleFilters}
-                        className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                        className="flex items-center justify-center gap-2 px-5 py-2.5 bg-[#070F2B] text-white border border-[#070F2B] rounded-xl hover:bg-[#B5945B] hover:border-[#B5945B] hover:text-[#070F2B] font-bold uppercase tracking-wider text-[10px] shadow-[2px_2px_0px_#B5945B] hover:shadow-[0px_0px_0px_#B5945B] transition-all cursor-pointer"
                     >
-                        <Filter className="w-4 h-4" />
-                        {showFilters ? 'Hide Filters' : 'Show Filters'}
+                        <Filter className="w-3.5 h-3.5" />
+                        {showFilters ? 'Hide Filters' : 'Filter & Sort'}
                     </button>
                 </div>
 
                 <div className="flex flex-col lg:flex-row gap-8">
-                    {/* Filters Sidebar */}
-                    {/* <div className={`lg:w-80 ${showFilters ? 'block' : 'hidden lg:block'}`}>
-                        <ProductFilter
-                            products={products}
-                            onFilterChange={handleFilterChange}
-                            className="sticky top-8"
-                        />
-                    </div> */}
-
                     {/* Products Grid */}
                     <div className="flex-1">
                         <ProductGrid
@@ -142,8 +151,8 @@ export default function CategoryProductsPage() {
 
                 {/* Mobile Filter Overlay */}
                 {showFilters && (
-                    <div className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-50">
-                        <div className="absolute right-0 top-0 h-full w-80 bg-white p-4 overflow-y-auto">
+                    <div className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-50 animate-in fade-in duration-300">
+                        <div className="absolute right-0 top-0 h-full w-80 bg-white p-4 overflow-y-auto shadow-2xl">
                             <div className="flex justify-between items-center mb-4">
                                 <h3 className="text-lg font-semibold">Filters</h3>
                                 <button
@@ -153,10 +162,6 @@ export default function CategoryProductsPage() {
                                     <X className="w-5 h-5" />
                                 </button>
                             </div>
-                            {/* <ProductFilter
-                                products={products}
-                                onFilterChange={handleFilterChange}
-                            /> */}
                         </div>
                     </div>
                 )}

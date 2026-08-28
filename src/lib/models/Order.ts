@@ -12,6 +12,18 @@ export interface IOrder extends Document {
         quantity: number;
         price: number;
         totalPrice: number;
+        customization?: {
+            fit: string;
+            color: string;
+            customImage?: string;
+            customText?: string;
+            textColor?: string;
+            textFont?: string;
+            textSize?: string;
+            placement: string;
+            customizationPrice: number;
+            basePrice: number;
+        };
     }>;
     status: 'pending' | 'confirmed' | 'delivered' | 'cancelled';
     totalAmount: number;
@@ -78,7 +90,7 @@ const OrderSchema = new Schema<IOrder>({
         size: {
             type: String,
             required: true,
-            enum: ['M', 'L', 'XL', 'XXL', 'XXXL']
+            enum: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL']
         },
         quantity: {
             type: Number,
@@ -94,6 +106,18 @@ const OrderSchema = new Schema<IOrder>({
             type: Number,
             required: true,
             min: [0, 'Total price cannot be negative']
+        },
+        customization: {
+            fit: { type: String },
+            color: { type: String },
+            customImage: { type: String },
+            customText: { type: String },
+            textColor: { type: String },
+            textFont: { type: String },
+            textSize: { type: String },
+            placement: { type: String },
+            customizationPrice: { type: Number },
+            basePrice: { type: Number }
         }
     }],
     status: {

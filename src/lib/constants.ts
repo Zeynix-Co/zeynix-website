@@ -78,9 +78,10 @@ export const brand = {
 // Navigation items
 export const navigation = {
     categories: [
-        { name: 'Formal', href: '/products/formal' },
-        { name: 'Casual', href: '/products/casual' },
-        { name: 'Ethnic', href: '/products/ethnic' },
+        { name: 'Shop Fits', href: '/products/casual' },
+        { name: 'Print Atelier', href: '/contact' },
+        { name: 'Our Story', href: '/about' },
+        { name: 'Contact Us', href: '/contact' },
     ],
     userMenu: [
         { name: 'Login', href: '/login', icon: 'User' },

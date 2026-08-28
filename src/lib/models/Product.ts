@@ -12,7 +12,7 @@ export interface IProduct extends Document {
     rating: number;
     totalRatings: number;
     sizes: Array<{
-        size: 'M' | 'L' | 'XL' | 'XXL' | 'XXXL';
+        size: 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL';
         stock: number;
         inStock: boolean;
     }>;
@@ -81,7 +81,7 @@ const productSchema = new Schema<IProduct>({
         size: {
             type: String,
             required: true,
-            enum: ['M', 'L', 'XL', 'XXL', 'XXXL']
+            enum: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL']
         },
         stock: {
             type: Number,

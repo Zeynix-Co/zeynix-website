@@ -170,21 +170,35 @@ export default function CartPage() {
                                                         {item.product.title}
                                                     </h4>
                                                     <p className={`text-xs lg:text-sm ${colorClasses.secondary.text} mt-1 font-medium`}>Size: {item.size}</p>
+                                                    
+                                                    {item.customization && (
+                                                        <div className="text-[11px] text-gray-500 mt-1.5 space-y-0.5 border-l-2 border-[#FFCB05] pl-2">
+                                                            <p><span className="font-semibold text-gray-700">Fit:</span> {item.customization.fit}</p>
+                                                            <p><span className="font-semibold text-gray-700">Color:</span> {item.customization.color}</p>
+                                                            <p><span className="font-semibold text-gray-700">Placement:</span> {item.customization.placement}</p>
+                                                            {item.customization.customText && (
+                                                                <p><span className="font-semibold text-gray-700">Text:</span> &quot;{item.customization.customText}&quot; (<span style={{ color: item.customization.textColor }}>Color</span>, {item.customization.textFont})</p>
+                                                            )}
+                                                            {item.customization.customImage && (
+                                                                <p><span className="font-semibold text-gray-700">Logo:</span> Custom Image Uploaded</p>
+                                                            )}
+                                                        </div>
+                                                    )}
 
                                                     {/* Price */}
                                                     <div className="mt-2 lg:mt-3">
                                                         {item.product.discountPrice && item.product.discountPrice < item.product.price ? (
                                                             <div className="flex items-center space-x-2 lg:space-x-3">
                                                                 <span className={`text-lg lg:text-xl font-semibold ${colorClasses.primary.text}`}>
-                                                                    {formatPrice(item.product.discountPrice)}
+                                                                    {formatPrice(item.product.discountPrice + (item.customization?.customizationPrice || 0))}
                                                                 </span>
                                                                 <span className="text-xs lg:text-sm text-gray-500 line-through">
-                                                                    {formatPrice(item.product.price)}
+                                                                    {formatPrice(item.product.price + (item.customization?.customizationPrice || 0))}
                                                                 </span>
                                                             </div>
                                                         ) : (
                                                             <span className={`text-lg lg:text-xl font-semibold ${colorClasses.primary.text}`}>
-                                                                {formatPrice(item.product.price)}
+                                                                {formatPrice(item.product.price + (item.customization?.customizationPrice || 0))}
                                                             </span>
                                                         )}
                                                     </div>
@@ -195,7 +209,7 @@ export default function CartPage() {
                                                             <span className={`text-xs lg:text-sm font-medium ${colorClasses.primary.text}`}>Qty:</span>
                                                             <div className="flex items-center border rounded-lg">
                                                                 <button
-                                                                    onClick={() => updateQuantity(item.product.id, item.size, item.quantity - 1)}
+                                                                    onClick={() => updateQuantity(item.product.id, item.size, item.quantity - 1, item.id)}
                                                                     className={`p-2 lg:p-2 hover:${colorClasses.light.bg} rounded-l-lg transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center`}
                                                                     disabled={item.quantity <= 1}
                                                                 >
@@ -205,7 +219,7 @@ export default function CartPage() {
                                                                     {item.quantity}
                                                                 </span>
                                                                 <button
-                                                                    onClick={() => updateQuantity(item.product.id, item.size, item.quantity + 1)}
+                                                                    onClick={() => updateQuantity(item.product.id, item.size, item.quantity + 1, item.id)}
                                                                     className={`p-2 lg:p-2 hover:${colorClasses.light.bg} rounded-r-lg transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center`}
                                                                 >
                                                                     <Plus className={`w-4 h-4 ${colorClasses.primary.text}`} />
@@ -216,14 +230,14 @@ export default function CartPage() {
                                                         {/* Actions */}
                                                         <div className="flex items-center space-x-2 lg:space-x-3">
                                                             <button
-                                                                onClick={() => moveToSaved(item.product.id, item.size)}
+                                                                onClick={() => moveToSaved(item.product.id, item.size, item.id)}
                                                                 className={`p-2 text-gray-400 hover:text-red-500 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center`}
                                                                 title="Save for later"
                                                             >
                                                                 <Heart className="w-5 h-5" />
                                                             </button>
                                                             <button
-                                                                onClick={() => removeFromCart(item.product.id, item.size)}
+                                                                onClick={() => removeFromCart(item.product.id, item.size, item.id)}
                                                                 className={`p-2 text-gray-400 hover:text-red-500 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center`}
                                                                 title="Remove item"
                                                             >
@@ -259,33 +273,40 @@ export default function CartPage() {
                                                         {item.product.title}
                                                     </h4>
                                                     <p className={`text-sm ${colorClasses.secondary.text} mt-1 font-medium`}>Size: {item.size}</p>
+                                                    {item.customization && (
+                                                        <div className="text-[11px] text-gray-500 mt-1.5 space-y-0.5 border-l-2 border-[#FFCB05] pl-2">
+                                                            <p><span className="font-semibold text-gray-700">Fit:</span> {item.customization.fit}</p>
+                                                            <p><span className="font-semibold text-gray-700">Color:</span> {item.customization.color}</p>
+                                                            <p><span className="font-semibold text-gray-700">Placement:</span> {item.customization.placement}</p>
+                                                        </div>
+                                                    )}
                                                     <div className="mt-3">
                                                         {item.product.discountPrice && item.product.discountPrice < item.product.price ? (
                                                             <div className="flex items-center space-x-3">
                                                                 <span className={`text-lg font-semibold ${colorClasses.primary.text}`}>
-                                                                    {formatPrice(item.product.discountPrice)}
+                                                                    {formatPrice(item.product.discountPrice + (item.customization?.customizationPrice || 0))}
                                                                 </span>
                                                                 <span className="text-sm text-gray-500 line-through">
-                                                                    {formatPrice(item.product.price)}
+                                                                    {formatPrice(item.product.price + (item.customization?.customizationPrice || 0))}
                                                                 </span>
                                                             </div>
                                                         ) : (
                                                             <span className={`text-lg font-semibold ${colorClasses.primary.text}`}>
-                                                                {formatPrice(item.product.price)}
+                                                                {formatPrice(item.product.price + (item.customization?.customizationPrice || 0))}
                                                             </span>
                                                         )}
                                                     </div>
                                                 </div>
                                                 <div className="flex flex-col space-y-3">
                                                     <button
-                                                        onClick={() => moveToCart(item.product.id, item.size)}
+                                                        onClick={() => moveToCart(item.product.id, item.size, item.id)}
                                                         className={`p-3 ${colorClasses.secondary.text} hover:${colorClasses.secondary.bg} hover:${colorClasses.primary.text} rounded-lg transition-colors`}
                                                         title="Move to cart"
                                                     >
                                                         <ArrowRight className="w-5 h-5" />
                                                     </button>
                                                     <button
-                                                        onClick={() => removeFromSaved(item.product.id, item.size)}
+                                                        onClick={() => removeFromSaved(item.product.id, item.size, item.id)}
                                                         className="p-3 text-gray-400 hover:text-red-500 rounded-lg transition-colors"
                                                         title="Remove from saved"
                                                     >

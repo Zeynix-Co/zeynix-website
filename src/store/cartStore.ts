@@ -10,9 +10,21 @@ interface CartItem {
         price: number;
         discountPrice?: number;
     };
-    size: 'M' | 'L' | 'XL' | 'XXL' | 'XXXL';
+    size: 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL';
     quantity: number;
     totalPrice: number;
+    customization?: {
+        fit: string;
+        color: string;
+        customImage?: string;
+        customText?: string;
+        textColor?: string;
+        textFont?: string;
+        textSize?: string;
+        placement: string;
+        customizationPrice: number;
+        basePrice: number;
+    };
 }
 
 interface SavedItem {
@@ -24,9 +36,21 @@ interface SavedItem {
         price: number;
         discountPrice?: number;
     };
-    size: 'M' | 'L' | 'XL' | 'XXL' | 'XXXL';
+    size: 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL';
     quantity: number;
     totalPrice: number;
+    customization?: {
+        fit: string;
+        color: string;
+        customImage?: string;
+        customText?: string;
+        textColor?: string;
+        textFont?: string;
+        textSize?: string;
+        placement: string;
+        customizationPrice: number;
+        basePrice: number;
+    };
 }
 
 interface CartState {
@@ -40,20 +64,20 @@ interface CartState {
 interface CartActions {
     // Cart operations
     addToCart: (item: Omit<CartItem, 'id'>) => void;
-    removeFromCart: (productId: string, size: string) => void;
-    updateQuantity: (productId: string, size: string, quantity: number) => void;
+    removeFromCart: (productId: string, size: string, customizationId?: string) => void;
+    updateQuantity: (productId: string, size: string, quantity: number, customizationId?: string) => void;
     clearCart: () => void;
 
     // Saved for later operations
-    moveToSaved: (productId: string, size: string) => void;
-    moveToCart: (productId: string, size: string) => void;
-    removeFromSaved: (productId: string, size: string) => void;
+    moveToSaved: (productId: string, size: string, customizationId?: string) => void;
+    moveToCart: (productId: string, size: string, customizationId?: string) => void;
+    removeFromSaved: (productId: string, size: string, customizationId?: string) => void;
 
     // Utility
     getItemCount: () => number;
     getTotalAmount: () => number;
     getSavedItemsCount: () => number;
-    isInCart: (productId: string, size: string) => boolean;
+    isInCart: (productId: string, size: string, customization?: any) => boolean;
 }
 
 const useCartStore = create<CartState & CartActions>()(
@@ -70,27 +94,36 @@ const useCartStore = create<CartState & CartActions>()(
             addToCart: (item) => {
                 const { items } = get();
                 const existingItem = items.find(
-                    (i) => i.product.id === item.product.id && i.size === item.size
+                    (i) => i.product.id === item.product.id && 
+                           i.size === item.size && 
+                           JSON.stringify(i.customization) === JSON.stringify(item.customization)
                 );
+
+                const itemUnitPrice = item.customization
+                    ? (item.customization.basePrice + item.customization.customizationPrice)
+                    : ((item.product.discountPrice && item.product.discountPrice < item.product.price) ? item.product.discountPrice : item.product.price);
 
                 if (existingItem) {
                     // Update existing item
                     const updatedItems = items.map((i) =>
-                        i.product.id === item.product.id && i.size === item.size
+                        i.product.id === item.product.id && 
+                        i.size === item.size && 
+                        JSON.stringify(i.customization) === JSON.stringify(item.customization)
                             ? {
                                 ...i,
                                 quantity: i.quantity + item.quantity,
-                                totalPrice: (i.quantity + item.quantity) * ((i.product.discountPrice && i.product.discountPrice < i.product.price) ? i.product.discountPrice : i.product.price)
+                                totalPrice: (i.quantity + item.quantity) * itemUnitPrice
                             }
                             : i
                     );
                     set({ items: updatedItems });
                 } else {
                     // Add new item
+                    const customSuffix = item.customization ? `-custom-${Date.now()}` : '';
                     const newItem = {
                         ...item,
-                        id: `${item.product.id}-${item.size}-${Date.now()}`,
-                        totalPrice: item.quantity * ((item.product.discountPrice && item.product.discountPrice < item.product.price) ? item.product.discountPrice : item.product.price)
+                        id: `${item.product.id}-${item.size}${customSuffix}-${Date.now()}`,
+                        totalPrice: item.quantity * itemUnitPrice
                     };
                     set({ items: [...items, newItem] });
                 }
@@ -100,10 +133,15 @@ const useCartStore = create<CartState & CartActions>()(
                 get().getTotalAmount();
             },
 
-            removeFromCart: (productId, size) => {
+            removeFromCart: (productId, size, customizationId) => {
                 const { items } = get();
                 const updatedItems = items.filter(
-                    (i) => !(i.product.id === productId && i.size === size)
+                    (i) => {
+                        if (customizationId) {
+                            return i.id !== customizationId;
+                        }
+                        return !(i.product.id === productId && i.size === size);
+                    }
                 );
                 set({ items: updatedItems });
 
@@ -112,22 +150,31 @@ const useCartStore = create<CartState & CartActions>()(
                 get().getTotalAmount();
             },
 
-            updateQuantity: (productId, size, quantity) => {
+            updateQuantity: (productId, size, quantity, customizationId) => {
                 if (quantity <= 0) {
-                    get().removeFromCart(productId, size);
+                    get().removeFromCart(productId, size, customizationId);
                     return;
                 }
 
                 const { items } = get();
-                const updatedItems = items.map((i) =>
-                    i.product.id === productId && i.size === size
-                        ? {
+                const updatedItems = items.map((i) => {
+                    const match = customizationId 
+                        ? i.id === customizationId
+                        : (i.product.id === productId && i.size === size);
+
+                    if (match) {
+                        const itemUnitPrice = i.customization
+                            ? (i.customization.basePrice + i.customization.customizationPrice)
+                            : ((i.product.discountPrice && i.product.discountPrice < i.product.price) ? i.product.discountPrice : i.product.price);
+
+                        return {
                             ...i,
                             quantity,
-                            totalPrice: quantity * ((i.product.discountPrice && i.product.discountPrice < i.product.price) ? i.product.discountPrice : i.product.price)
-                        }
-                        : i
-                );
+                            totalPrice: quantity * itemUnitPrice
+                        };
+                    }
+                    return i;
+                });
                 set({ items: updatedItems });
 
                 // Recalculate totals
@@ -146,16 +193,16 @@ const useCartStore = create<CartState & CartActions>()(
             },
 
             // Saved for later operations
-            moveToSaved: (productId, size) => {
+            moveToSaved: (productId, size, customizationId) => {
                 const { items, savedForLater } = get();
                 const item = items.find(
-                    (i) => i.product.id === productId && i.size === size
+                    (i) => customizationId ? i.id === customizationId : (i.product.id === productId && i.size === size)
                 );
 
                 if (item) {
                     // Remove from cart
                     const updatedItems = items.filter(
-                        (i) => !(i.product.id === productId && i.size === size)
+                        (i) => customizationId ? i.id !== customizationId : !(i.product.id === productId && i.size === size)
                     );
 
                     // Add to saved for later
@@ -175,16 +222,16 @@ const useCartStore = create<CartState & CartActions>()(
                 }
             },
 
-            moveToCart: (productId, size) => {
+            moveToCart: (productId, size, customizationId) => {
                 const { items, savedForLater } = get();
                 const savedItem = savedForLater.find(
-                    (i) => i.product.id === productId && i.size === size
+                    (i) => customizationId ? i.id === customizationId : (i.product.id === productId && i.size === size)
                 );
 
                 if (savedItem) {
                     // Remove from saved for later
                     const updatedSaved = savedForLater.filter(
-                        (i) => !(i.product.id === productId && i.size === size)
+                        (i) => customizationId ? i.id !== customizationId : !(i.product.id === productId && i.size === size)
                     );
 
                     // Add to cart
@@ -204,10 +251,10 @@ const useCartStore = create<CartState & CartActions>()(
                 }
             },
 
-            removeFromSaved: (productId, size) => {
+            removeFromSaved: (productId, size, customizationId) => {
                 const { savedForLater } = get();
                 const updatedSaved = savedForLater.filter(
-                    (i) => !(i.product.id === productId && i.size === size)
+                    (i) => customizationId ? i.id !== customizationId : !(i.product.id === productId && i.size === size)
                 );
                 set({ savedForLater: updatedSaved });
 
@@ -227,10 +274,11 @@ const useCartStore = create<CartState & CartActions>()(
             getTotalAmount: () => {
                 const { items } = get();
                 const amount = items.reduce((total, item) => {
-                    // Use discounted price if available and less than original price
-                    const price = (item.product.discountPrice && item.product.discountPrice < item.product.price)
-                        ? item.product.discountPrice
-                        : item.product.price;
+                    const price = item.customization
+                        ? (item.customization.basePrice + item.customization.customizationPrice)
+                        : ((item.product.discountPrice && item.product.discountPrice < item.product.price)
+                            ? item.product.discountPrice
+                            : item.product.price);
                     return total + (price * item.quantity);
                 }, 0);
                 set({ totalAmount: amount });
@@ -244,9 +292,11 @@ const useCartStore = create<CartState & CartActions>()(
                 return count;
             },
 
-            isInCart: (productId, size) => {
+            isInCart: (productId, size, customization) => {
                 const { items } = get();
-                return items.some((i) => i.product.id === productId && i.size === size);
+                return items.some((i) => i.product.id === productId && 
+                                         i.size === size && 
+                                         JSON.stringify(i.customization) === JSON.stringify(customization));
             },
         }),
         {
