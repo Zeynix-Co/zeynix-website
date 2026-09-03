@@ -70,7 +70,7 @@ export default function ProductCard({ product, onAddToCart, onAddToWishlist }: P
 
     return (
         <div
-            className="group bg-white rounded-xl hover:-translate-y-1.5 hover:shadow-[0_15px_35px_rgba(7,15,43,0.1)] transition-all duration-500 ease-out border border-gray-100 overflow-hidden flex flex-col justify-between"
+            className="group bg-white rounded-xl hover:-translate-y-1.5 hover:shadow-[0_15px_35px_rgba(7,15,43,0.1)] transition-all duration-500 ease-out border border-gray-100 overflow-hidden flex flex-col justify-between h-full"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
@@ -100,27 +100,27 @@ export default function ProductCard({ product, onAddToCart, onAddToWishlist }: P
 
                 {/* Discount Badge */}
                 {discountPercentage > 0 && (
-                    <div className="absolute top-3 right-3 bg-red-600 text-white text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full z-20 shadow-md border border-red-500">
+                    <div className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 bg-red-600 text-white text-[8px] sm:text-[9px] font-black uppercase tracking-wider px-1.5 sm:px-2 py-0.5 rounded-full z-20 shadow-md border border-red-500">
                         -{discountPercentage}%
                     </div>
                 )}
 
                 {/* Label Badge */}
                 {product.label && (
-                    <div className="absolute bottom-3 left-3 bg-[#B5945B] text-white text-[8px] font-black uppercase tracking-widest px-2.5 py-1 rounded z-20 shadow-md">
+                    <div className="absolute bottom-2.5 left-2.5 sm:bottom-3 sm:left-3 bg-[#B5945B] text-white text-[7px] sm:text-[8px] font-black uppercase tracking-widest px-2 sm:px-2.5 py-0.5 sm:py-1 rounded z-20 shadow-md">
                         {product.label}
                     </div>
                 )}
 
                 {/* New Arrival Badge */}
                 {product.featured && (
-                    <div className="absolute bottom-3 right-3 bg-green-600 text-white text-[8px] font-black uppercase tracking-widest px-2.5 py-1 rounded z-20 shadow-md">
+                    <div className="absolute bottom-2.5 right-2.5 sm:bottom-3 sm:right-3 bg-green-600 text-white text-[7px] sm:text-[8px] font-black uppercase tracking-widest px-2 sm:px-2.5 py-0.5 sm:py-1 rounded z-20 shadow-md">
                         NEW
                     </div>
                 )}
 
                 {/* Quick Actions Overlay */}
-                <div className={`absolute inset-0 bg-black/20 flex items-center justify-center gap-3 transition-opacity duration-300 z-20 ${isHovered ? 'opacity-100' : 'opacity-0'
+                <div className={`absolute inset-0 bg-black/20 flex items-center justify-center gap-2 sm:gap-3 transition-opacity duration-300 z-20 ${isHovered ? 'opacity-100' : 'opacity-0'
                     }`}>
                     <WishlistHeart
                         product={{
@@ -134,72 +134,72 @@ export default function ProductCard({ product, onAddToCart, onAddToWishlist }: P
                             brand: 'Zeynix'
                         }}
                         size={selectedSize}
-                        className="min-w-[44px] min-h-[44px] p-3 shadow-lg"
+                        className="min-w-[38px] min-h-[38px] sm:min-w-[44px] sm:min-h-[44px] p-2.5 sm:p-3 shadow-lg"
                     />
 
                     <Link
                         href={`/products/${product.category.toLowerCase()}/${product.id}`}
-                        className="min-w-[44px] min-h-[44px] p-3 rounded-full bg-white text-gray-700 hover:scale-110 active:scale-95 transition-all duration-200 flex items-center justify-center shadow-lg"
+                        className="min-w-[38px] min-h-[38px] sm:min-w-[44px] sm:min-h-[44px] p-2.5 sm:p-3 rounded-full bg-white text-gray-700 hover:scale-110 active:scale-95 transition-all duration-200 flex items-center justify-center shadow-lg"
                     >
-                        <Eye className="w-5 h-5 text-[#070F2B]" />
+                        <Eye className="w-4 h-4 sm:w-5 sm:h-5 text-[#070F2B]" />
                     </Link>
                 </div>
             </div>
 
             {/* Product Info */}
-            <div className="p-4 flex-1 flex flex-col justify-between">
+            <div className="p-2.5 sm:p-4 flex-1 flex flex-col justify-between">
                 <div>
                     {/* Brand and Category */}
-                    <div className="flex items-center justify-between mb-1.5">
-                        <div className="text-[10px] font-black text-[#B5945B] uppercase tracking-widest">
+                    <div className="flex items-center justify-between mb-1 sm:mb-1.5 gap-1">
+                        <div className="text-[9px] sm:text-[10px] font-black text-[#B5945B] uppercase tracking-widest truncate">
                             {product.brand || 'Zeynix'}
                         </div>
-                        <span className="text-[9px] font-bold text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full uppercase tracking-wider">
+                        <span className="text-[8px] sm:text-[9px] font-bold text-gray-400 bg-gray-100 px-1.5 sm:px-2 py-0.5 rounded-full uppercase tracking-wider shrink-0">
                             {product.category}
                         </span>
                     </div>
 
                     {/* Product Name */}
                     <Link href={`/products/${product.category.toLowerCase()}/${product.id}`}>
-                        <h3 className="font-extrabold uppercase tracking-wide text-xs text-[#070F2B] hover:text-[#B5945B] transition-colors duration-300 line-clamp-1 mb-2">
+                        <h3 className="font-extrabold uppercase tracking-wide text-[11px] sm:text-xs text-[#070F2B] hover:text-[#B5945B] transition-colors duration-300 line-clamp-1 mb-1.5 sm:mb-2">
                             {product.name}
                         </h3>
                     </Link>
 
                     {/* Rating */}
-                    <div className="flex items-center gap-1 mb-2.5">
+                    <div className="flex items-center gap-1 mb-2 sm:mb-2.5">
                         <div className="flex items-center">
                             {[...Array(5)].map((_, i) => (
                                 <Star
                                     key={i}
-                                    className={`w-3 h-3 ${i < Math.floor(product.rating)
+                                    className={`w-2.5 h-2.5 sm:w-3 sm:h-3 ${i < Math.floor(product.rating)
                                         ? 'text-yellow-400 fill-current'
                                         : 'text-gray-200'
                                         }`}
                                 />
                             ))}
                         </div>
-                        <span className="text-[10px] font-bold text-[#070F2B]/60 ml-0.5">
+                        <span className="text-[9px] sm:text-[10px] font-bold text-[#070F2B]/60 ml-0.5">
                             ({product.rating})
                         </span>
                     </div>
 
                     {/* Price */}
-                    <div className="flex items-center gap-2 mb-3">
-                        <span className="text-sm font-black text-[#070F2B]">
+                    <div className="flex items-center gap-1.5 sm:gap-2 mb-2.5 sm:mb-3">
+                        <span className="text-xs sm:text-sm font-black text-[#070F2B]">
                             {APP_CONFIG.currency}{product.price}
                         </span>
                         {discountPercentage > 0 && (
-                            <span className="text-[11px] text-gray-400 line-through font-semibold">
+                            <span className="text-[10px] sm:text-[11px] text-gray-400 line-through font-semibold">
                                 {APP_CONFIG.currency}{product.originalPrice}
                             </span>
                         )}
                     </div>
 
                     {/* Available Sizes */}
-                    <div className="mb-4">
-                        <div className="text-[9px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Select Size:</div>
-                        <div className="flex flex-wrap gap-1.5">
+                    <div className="mb-3 sm:mb-4">
+                        <div className="text-[8px] sm:text-[9px] font-bold text-gray-400 uppercase tracking-wider mb-1">Select Size:</div>
+                        <div className="flex flex-wrap gap-1 sm:gap-1.5">
                             {product.size.slice(0, 4).map((size) => (
                                 <button
                                     key={size}
@@ -209,8 +209,8 @@ export default function ProductCard({ product, onAddToCart, onAddToWishlist }: P
                                         e.stopPropagation();
                                         setSelectedSize(size);
                                     }}
-                                    className={`text-[10px] font-black px-2.5 py-1 rounded transition-all duration-200 cursor-pointer border ${selectedSize === size
-                                            ? 'bg-[#070F2B] text-white border-[#070F2B] scale-105 shadow-sm'
+                                    className={`text-[9px] sm:text-[10px] font-black px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded transition-all duration-200 cursor-pointer border min-w-[24px] sm:min-w-[28px] text-center ${selectedSize === size
+                                            ? 'bg-[#070F2B] text-white border-[#070F2B] scale-105 shadow-xs'
                                             : 'bg-gray-50 text-gray-600 border-gray-200 hover:border-[#070F2B]/40'
                                         }`}
                                 >
@@ -218,7 +218,7 @@ export default function ProductCard({ product, onAddToCart, onAddToWishlist }: P
                                 </button>
                             ))}
                             {product.size.length > 4 && (
-                                <span className="text-[10px] font-bold px-2.5 py-1 rounded bg-gray-100 text-gray-500 border border-gray-200">
+                                <span className="text-[8px] sm:text-[9px] font-bold px-1.5 sm:px-2 py-0.5 sm:py-1 rounded bg-gray-100 text-gray-500 border border-gray-200 flex items-center justify-center">
                                     +{product.size.length - 4}
                                 </span>
                             )}
@@ -230,7 +230,7 @@ export default function ProductCard({ product, onAddToCart, onAddToWishlist }: P
                 <button
                     onClick={handleAddToCart}
                     disabled={isAddingToCart || isAlreadyInCart}
-                    className={`w-full min-h-[42px] py-2.5 px-4 rounded-none font-bold uppercase tracking-wider text-[10px] transition-all duration-300 active:scale-95 cursor-pointer ${
+                    className={`w-full min-h-[38px] sm:min-h-[42px] py-2 sm:py-2.5 px-2 sm:px-4 rounded-none font-bold uppercase tracking-wide sm:tracking-wider text-[9px] sm:text-[10px] transition-all duration-300 active:scale-95 cursor-pointer ${
                         isAlreadyInCart
                             ? 'bg-green-700 text-white cursor-not-allowed'
                             : isAddingToCart
@@ -239,19 +239,19 @@ export default function ProductCard({ product, onAddToCart, onAddToWishlist }: P
                     }`}
                 >
                     {isAlreadyInCart ? (
-                        <div className="flex items-center justify-center gap-1.5">
-                            <ShoppingCart className="w-3.5 h-3.5" />
-                            In Cart
+                        <div className="flex items-center justify-center gap-1 sm:gap-1.5 truncate">
+                            <ShoppingCart className="w-3.5 h-3.5 shrink-0" />
+                            <span>In Cart</span>
                         </div>
                     ) : isAddingToCart ? (
-                        <div className="flex items-center justify-center gap-1.5">
-                            <div className="w-3.5 h-3.5 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
-                            Adding...
+                        <div className="flex items-center justify-center gap-1 sm:gap-1.5 truncate">
+                            <div className="w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin shrink-0"></div>
+                            <span>Adding...</span>
                         </div>
                     ) : (
-                        <div className="flex items-center justify-center gap-1.5">
-                            <ShoppingCart className="w-3.5 h-3.5" />
-                            {isAuthenticated ? 'Add to Cart' : 'Login to Add'}
+                        <div className="flex items-center justify-center gap-1 sm:gap-1.5 truncate">
+                            <ShoppingCart className="w-3.5 h-3.5 shrink-0" />
+                            <span className="truncate">{isAuthenticated ? 'Add to Cart' : 'Login to Add'}</span>
                         </div>
                     )}
                 </button>

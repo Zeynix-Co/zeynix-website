@@ -183,8 +183,8 @@ export default function CustomizePage() {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                     
                     {/* Left Column: Live Interactive Mockup (6 Cols) */}
-                    <div className="lg:col-span-7 bg-[#070F2B] text-white rounded-3xl p-6 md:p-10 shadow-2xl flex flex-col items-center justify-center relative min-h-[480px] lg:min-h-[580px] lg:sticky lg:top-24 border border-white/10">
-                        <span className="absolute top-4 left-6 text-xs font-bold tracking-widest text-white/40 uppercase">
+                    <div className="lg:col-span-7 bg-[#070F2B] text-white rounded-3xl p-4 sm:p-6 md:p-10 shadow-2xl flex flex-col items-center justify-center relative min-h-[360px] sm:min-h-[480px] lg:min-h-[580px] lg:sticky lg:top-24 border border-white/10">
+                        <span className="absolute top-4 left-6 text-[10px] sm:text-xs font-bold tracking-widest text-white/40 uppercase">
                             LIVE PREVIEW &bull; {placement.name}
                         </span>
 

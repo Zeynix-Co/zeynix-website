@@ -7,6 +7,8 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { colorClasses } from '@/lib/constants';
 import { User, Package, Settings, LogOut, Edit3, Lock, MapPin } from 'lucide-react';
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
 
 export default function UserDashboardPage() {
@@ -113,62 +115,66 @@ export default function UserDashboardPage() {
 
     return (
         <ProtectedRoute>
-            <div className="min-h-screen bg-gray-50">
-                <div className="max-w-7xl mx-auto px-4 py-8">
+            <div className="min-h-screen bg-gray-50 flex flex-col">
+                <Header />
+
+                <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-8">
                     {/* Header */}
-                    <div className="mb-8">
-                        <h1 className="text-3xl font-bold text-gray-900">My Account</h1>
-                        <p className="text-gray-600">Manage your profile, orders, and account settings</p>
+                    <div className="mb-6 sm:mb-8">
+                        <h1 className="text-2xl sm:text-3xl font-black text-[#070F2B] uppercase tracking-tight">My Account</h1>
+                        <p className="text-xs sm:text-sm text-gray-500 mt-1">Manage your profile, orders, and account settings</p>
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-                        {/* Sidebar Navigation */}
+                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
+                        {/* Sidebar / Top Tab Navigation */}
                         <div className="lg:col-span-1">
-                            <div className="bg-white rounded-lg shadow p-6">
-                                <div className="space-y-4">
+                            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-3 sm:p-5">
+                                <div className="grid grid-cols-3 lg:flex lg:flex-col gap-2">
                                     <button
                                         onClick={() => setActiveTab('profile')}
-                                        className={`w-full flex items-center space-x-3 p-3 rounded-lg transition-colors ${activeTab === 'profile'
-                                            ? `${colorClasses.primary.bg} text-white`
+                                        className={`flex items-center justify-center lg:justify-start gap-2 p-2.5 sm:p-3 rounded-xl transition-all cursor-pointer font-bold text-xs ${activeTab === 'profile'
+                                            ? 'bg-[#070F2B] text-white shadow-xs'
                                             : 'text-gray-700 hover:bg-gray-100'
                                             }`}
                                     >
-                                        <User className="w-5 h-5" />
-                                        <span>Profile</span>
+                                        <User className="w-4 h-4 shrink-0" />
+                                        <span className="truncate">Profile</span>
                                     </button>
 
                                     <button
                                         onClick={() => setActiveTab('orders')}
-                                        className={`w-full flex items-center space-x-3 p-3 rounded-lg transition-colors ${activeTab === 'orders'
-                                            ? `${colorClasses.primary.bg} text-white`
+                                        className={`flex items-center justify-center lg:justify-start gap-2 p-2.5 sm:p-3 rounded-xl transition-all cursor-pointer font-bold text-xs ${activeTab === 'orders'
+                                            ? 'bg-[#070F2B] text-white shadow-xs'
                                             : 'text-gray-700 hover:bg-gray-100'
                                             }`}
                                     >
-                                        <Package className="w-5 h-5" />
-                                        <span>Orders</span>
+                                        <Package className="w-4 h-4 shrink-0" />
+                                        <span className="truncate">Orders</span>
                                     </button>
 
                                     <button
                                         onClick={() => setActiveTab('settings')}
-                                        className={`w-full flex items-center space-x-3 p-3 rounded-lg transition-colors ${activeTab === 'settings'
-                                            ? `${colorClasses.primary.bg} text-white`
+                                        className={`flex items-center justify-center lg:justify-start gap-2 p-2.5 sm:p-3 rounded-xl transition-all cursor-pointer font-bold text-xs ${activeTab === 'settings'
+                                            ? 'bg-[#070F2B] text-white shadow-xs'
                                             : 'text-gray-700 hover:bg-gray-100'
                                             }`}
                                     >
-                                        <Settings className="w-5 h-5" />
-                                        <span>Settings</span>
+                                        <Settings className="w-4 h-4 shrink-0" />
+                                        <span className="truncate">Settings</span>
                                     </button>
                                 </div>
 
-                                <hr className="my-6" />
+                                <div className="hidden lg:block">
+                                    <hr className="my-5 border-gray-100" />
 
-                                <button
-                                    onClick={handleLogout}
-                                    className="w-full flex items-center space-x-3 p-3 text-red-600 hover:bg-red-50 rounded-lg transition-colors transition-colors"
-                                >
-                                    <LogOut className="w-5 h-5" />
-                                    <span>Logout</span>
-                                </button>
+                                    <button
+                                        onClick={handleLogout}
+                                        className="w-full flex items-center space-x-3 p-3 text-red-600 hover:bg-red-50 rounded-xl transition-colors cursor-pointer font-bold text-xs"
+                                    >
+                                        <LogOut className="w-4 h-4" />
+                                        <span>Logout</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
@@ -422,7 +428,9 @@ export default function UserDashboardPage() {
                             )}
                         </div>
                     </div>
-                </div>
+                </main>
+
+                <Footer />
             </div>
         </ProtectedRoute>
     );

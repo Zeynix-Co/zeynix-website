@@ -83,17 +83,25 @@ export default function CartPage() {
                     </div>
 
                     {/* Login Required Message */}
-                    <div className="bg-white rounded-lg shadow-sm p-8 text-center">
-                        <Lock className={`w-20 h-20 ${colorClasses.secondary.text} mx-auto mb-4`} />
-                        <h3 className={`text-xl font-semibold ${colorClasses.primary.text} mb-2`}>Login Required</h3>
-                        <p className="text-gray-700 mb-6">Please login to view and manage your shopping cart.</p>
+                    <div className="bg-white rounded-2xl shadow-[0_10px_30px_rgba(7,15,43,0.06)] border border-gray-100 p-6 sm:p-10 text-center max-w-lg mx-auto">
+                        <div className="w-16 h-16 rounded-2xl bg-[#070F2B]/5 flex items-center justify-center mx-auto mb-4 text-[#B5945B]">
+                            <Lock className="w-8 h-8" />
+                        </div>
+                        <h3 className={`text-xl font-extrabold uppercase tracking-wide ${colorClasses.primary.text} mb-2`}>Login Required</h3>
+                        <p className="text-xs sm:text-sm text-gray-500 mb-6 leading-relaxed">Please log in to your Zeynix account to view and manage your shopping cart.</p>
                         <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                            <Button onClick={handleLogin} className="w-full sm:w-auto">
+                            <button
+                                onClick={handleLogin}
+                                className="w-full sm:w-auto bg-[#070F2B] text-white py-3 px-8 font-bold uppercase tracking-wider text-xs shadow-[3px_3px_0px_#B5945B] hover:shadow-[0px_0px_0px_#B5945B] hover:bg-[#B5945B] hover:text-[#070F2B] transition-all duration-300 cursor-pointer border border-[#070F2B] hover:border-[#B5945B]"
+                            >
                                 Login to Continue
-                            </Button>
-                            <Button onClick={handleContinueShopping} variant="outline" className="w-full sm:w-auto">
+                            </button>
+                            <button
+                                onClick={handleContinueShopping}
+                                className="w-full sm:w-auto bg-white text-[#070F2B] py-3 px-8 font-bold uppercase tracking-wider text-xs border border-gray-300 hover:border-[#070F2B] transition-colors cursor-pointer"
+                            >
                                 Continue Shopping
-                            </Button>
+                            </button>
                         </div>
                     </div>
                 </main>
@@ -125,24 +133,27 @@ export default function CartPage() {
                             <ArrowLeft className={`w-5 h-5 ${colorClasses.primary.text}`} />
                         </Link>
                         <div>
-                            <h1 className={`text-3xl font-bold ${colorClasses.primary.text}`}>Shopping Cart</h1>
-                            <p className={`text-gray-700 mt-1`}>Review your items and proceed to checkout</p>
+                            <h1 className={`text-2xl sm:text-3xl font-bold ${colorClasses.primary.text}`}>Shopping Cart</h1>
+                            <p className="text-xs sm:text-sm text-gray-600 mt-1">Review your items and proceed to checkout</p>
                         </div>
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-8">
-                    {/* Cart Items Section */}
-                    <div className="lg:col-span-2 order-2 lg:order-1">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+                    {/* Cart Items Section - Order 1 on Mobile & Desktop */}
+                    <div className="lg:col-span-2 order-1">
                         {totalItems === 0 ? (
                             /* Empty Cart */
-                            <div className="bg-white rounded-lg shadow-sm p-8 text-center">
-                                <ShoppingBag className={`w-20 h-20 ${colorClasses.secondary.text} mx-auto mb-4`} />
+                            <div className="bg-white rounded-2xl shadow-sm p-8 text-center border border-gray-100">
+                                <ShoppingBag className={`w-16 h-16 sm:w-20 sm:h-20 ${colorClasses.secondary.text} mx-auto mb-4`} />
                                 <h3 className={`text-xl font-semibold ${colorClasses.primary.text} mb-2`}>Your cart is empty</h3>
-                                <p className="text-gray-700 mb-6">Looks like you haven&apos;t added any items to your cart yet.</p>
-                                <Button onClick={handleContinueShopping} className="w-full max-w-xs">
+                                <p className="text-gray-600 mb-6 text-sm">Looks like you haven&apos;t added any items to your cart yet.</p>
+                                <button
+                                    onClick={handleContinueShopping}
+                                    className="w-full max-w-xs mx-auto bg-[#070F2B] text-white py-3.5 px-6 font-bold uppercase tracking-wider text-xs shadow-[3px_3px_0px_#B5945B] hover:bg-[#B5945B] hover:text-[#070F2B] transition-all cursor-pointer border border-[#070F2B]"
+                                >
                                     Start Shopping
-                                </Button>
+                                </button>
                             </div>
                         ) : (
                             /* Cart Items */
@@ -321,49 +332,48 @@ export default function CartPage() {
                         )}
                     </div>
 
-                    {/* Cart Summary Sidebar */}
+                    {/* Cart Summary Sidebar - Order 2 on Mobile & Desktop */}
                     {totalItems > 0 && (
-                        <div className="lg:col-span-1 order-1 lg:order-2">
-                            <div className="bg-white rounded-lg shadow-sm p-4 lg:p-6 sticky top-4 lg:top-8">
-                                <h3 className={`text-lg font-semibold ${colorClasses.primary.text} mb-4`}>Order Summary</h3>
+                        <div className="lg:col-span-1 order-2">
+                            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-6 sticky top-4 lg:top-8">
+                                <h3 className={`text-base font-extrabold uppercase tracking-wide ${colorClasses.primary.text} mb-4`}>Order Summary</h3>
 
                                 {/* Summary Details */}
                                 <div className="space-y-3 mb-6">
-                                    <div className="flex justify-between text-sm">
-                                        <span className={`${colorClasses.primary.text}`}>Subtotal ({totalItems} items)</span>
-                                        <span className={`font-medium ${colorClasses.primary.text}`}>{formatPrice(totalAmount)}</span>
+                                    <div className="flex justify-between text-xs sm:text-sm">
+                                        <span className="text-gray-600">Subtotal ({totalItems} items)</span>
+                                        <span className="font-bold text-[#070F2B]">{formatPrice(totalAmount)}</span>
                                     </div>
-                                    <div className="flex justify-between text-sm">
-                                        <span className={`${colorClasses.primary.text}`}>Shipping</span>
-                                        <span className="text-green-600 font-medium">Free</span>
+                                    <div className="flex justify-between text-xs sm:text-sm">
+                                        <span className="text-gray-600">Shipping</span>
+                                        <span className="text-green-600 font-bold uppercase tracking-wider text-xs">Free</span>
                                     </div>
-                                    <div className="border-t pt-3">
-                                        <div className="flex justify-between font-semibold text-lg">
-                                            <span className={`${colorClasses.primary.text}`}>Total</span>
-                                            <span className={`${colorClasses.primary.text}`}>{formatPrice(totalAmount)}</span>
+                                    <div className="border-t border-gray-100 pt-3">
+                                        <div className="flex justify-between font-extrabold text-base sm:text-lg">
+                                            <span className="text-[#070F2B]">Total</span>
+                                            <span className="text-[#070F2B]">{formatPrice(totalAmount)}</span>
                                         </div>
                                     </div>
                                 </div>
 
                                 {/* Action Buttons */}
-                                <div className="space-y-3">
-                                    <Button
+                                <div className="space-y-2.5">
+                                    <button
                                         onClick={handleCheckout}
-                                        className="w-full min-h-[48px] text-base font-medium"
                                         disabled={totalItems === 0}
+                                        className="w-full min-h-[48px] py-3.5 px-6 bg-[#070F2B] text-white font-bold uppercase tracking-wider text-xs shadow-[3px_3px_0px_#B5945B] hover:shadow-[0px_0px_0px_#B5945B] hover:bg-[#B5945B] hover:text-[#070F2B] border border-[#070F2B] hover:border-[#B5945B] transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed text-center"
                                     >
-                                        Proceed to Checkout
-                                    </Button>
-                                    <Button
+                                        Proceed to Checkout &rarr;
+                                    </button>
+                                    <button
                                         onClick={handleContinueShopping}
-                                        variant="outline"
-                                        className="w-full min-h-[48px] text-base"
+                                        className="w-full min-h-[44px] py-3 px-6 bg-white text-[#070F2B] font-bold uppercase tracking-wider text-xs border border-gray-300 hover:border-[#070F2B] transition-colors cursor-pointer text-center"
                                     >
                                         Continue Shopping
-                                    </Button>
+                                    </button>
                                     <button
                                         onClick={clearCart}
-                                        className="w-full text-sm text-red-600 hover:text-red-700 py-3 min-h-[44px] border border-red-200 hover:border-red-300 rounded-lg transition-colors"
+                                        className="w-full text-xs font-bold uppercase tracking-wider text-red-500 hover:text-red-700 py-2.5 transition-colors cursor-pointer text-center"
                                     >
                                         Clear Cart
                                     </button>

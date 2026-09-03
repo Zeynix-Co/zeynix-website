@@ -184,11 +184,11 @@ export default function FilterProducts() {
             <div className="md:hidden mb-4">
                 <button
                     onClick={openMobileFilters}
-                    className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50 transition-colors"
+                    className="flex items-center gap-2 px-4 py-2.5 bg-white border border-[#070F2B]/15 rounded-xl shadow-xs hover:border-[#070F2B] transition-colors cursor-pointer text-[#070F2B]"
                 >
-                    <Filter className="w-4 h-4 text-gray-900" />
-                    <span className="text-gray-900">Filters</span>
-                    <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
+                    <Filter className="w-4 h-4 text-[#070F2B]" />
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#070F2B]">Filters</span>
+                    <span className="bg-[#070F2B] text-[#FFCB05] text-[10px] font-black px-2 py-0.5 rounded-full">
                         {[selectedCategory !== "All" ? 1 : 0, selectedSizes.length, selectedPriceRange ? 1 : 0].reduce((a, b) => a + b, 0)}
                     </span>
                 </button>
@@ -402,61 +402,63 @@ export default function FilterProducts() {
                 {/* Overlay */}
                 {showMobileFilters && (
                     <div
-                        className="fixed inset-0 backdrop-blur-sm bg-opacity-50 z-40"
+                        className="fixed inset-0 backdrop-blur-sm bg-black/60 z-40 transition-opacity duration-300"
                         onClick={closeMobileFilters}
                     />
                 )}
 
                 {/* Mobile Filter Drawer */}
-                <div className={`fixed top-0 right-0 h-full w-80 bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out overflow-x-hidden ${showMobileFilters ? 'translate-x-0' : 'translate-x-full'
-                    }`}>
-                    <div className="p-6">
-                        {/* Close Button */}
-                        <div className="flex justify-end mb-6">
-                            <button
-                                onClick={closeMobileFilters}
-                                className="p-2 rounded-full"
-                            >
-                                <X className="w-6 h-6 text-gray-900" />
-                            </button>
+                <div className={`fixed top-0 right-0 h-[100dvh] max-h-[100dvh] w-[85vw] max-w-xs bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col overflow-hidden border-l border-gray-100 ${
+                    showMobileFilters ? 'translate-x-0' : 'translate-x-full'
+                }`}>
+                    {/* Header (Pinned Top) */}
+                    <div className="shrink-0 flex items-center justify-between p-5 border-b border-gray-100">
+                        <div className="flex items-center gap-2">
+                            <Filter className="w-4 h-4 text-[#070F2B]" />
+                            <h3 className="text-base font-extrabold uppercase tracking-wide text-[#070F2B]">Filters</h3>
                         </div>
+                        <button
+                            onClick={closeMobileFilters}
+                            className="p-1.5 rounded-full hover:bg-gray-100 text-[#070F2B] transition-colors cursor-pointer"
+                            aria-label="Close filters"
+                        >
+                            <X className="w-5 h-5" />
+                        </button>
+                    </div>
 
-                        {/* Header */}
-                        <div className="mb-6">
-                            <h3 className="text-lg font-semibold text-gray-900">Filters</h3>
-                        </div>
-
+                    {/* Filter Options (Scrollable Body) */}
+                    <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-6">
                         {/* Category Filter */}
-                        <div className="mb-6">
-                            <h4 className="font-medium mb-3 text-gray-900">Category</h4>
-                            <div className="space-y-2">
+                        <div>
+                            <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-3">Category</h4>
+                            <div className="space-y-2.5">
                                 {categories.map(category => (
-                                    <label key={category} className="flex items-center gap-2 cursor-pointer text-gray-900">
+                                    <label key={category} className="flex items-center gap-2.5 cursor-pointer text-[#070F2B] hover:text-[#B5945B] transition-colors">
                                         <input
                                             type="radio"
                                             name="category"
                                             value={category}
                                             checked={selectedCategory === category}
                                             onChange={(e) => setSelectedCategory(e.target.value)}
-                                            className="w-4 h-4 text-blue-600"
+                                            className="w-4 h-4 accent-[#070F2B] cursor-pointer"
                                         />
-                                        <span className="text-sm text-gray-900">{category}</span>
+                                        <span className="text-sm font-semibold capitalize">{category}</span>
                                     </label>
                                 ))}
                             </div>
                         </div>
 
                         {/* Size Filter */}
-                        <div className="mb-6">
-                            <h4 className="font-medium mb-3 text-gray-900">Size</h4>
+                        <div>
+                            <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-3">Size</h4>
                             <div className="grid grid-cols-3 gap-2">
                                 {sizes.map(size => (
                                     <button
                                         key={size}
                                         onClick={() => toggleSize(size)}
-                                        className={`px-3 py-2 text-sm rounded border transition-colors ${selectedSizes.includes(size)
-                                            ? 'bg-blue-600 text-white border-blue-600'
-                                            : 'bg-white text-gray-900 border-gray-300 hover:border-blue-600'
+                                        className={`py-2 px-2 text-xs font-bold rounded-lg border transition-all cursor-pointer ${selectedSizes.includes(size)
+                                            ? 'bg-[#070F2B] text-white border-[#070F2B] shadow-xs'
+                                            : 'bg-white text-gray-700 border-gray-200 hover:border-[#070F2B]'
                                             }`}
                                     >
                                         {size}
@@ -466,45 +468,45 @@ export default function FilterProducts() {
                         </div>
 
                         {/* Price Range Filter */}
-                        <div className="mb-6">
-                            <h4 className="font-medium mb-3 text-gray-900">Price Range</h4>
-                            <div className="space-y-2">
+                        <div>
+                            <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-3">Price Range</h4>
+                            <div className="space-y-2.5">
                                 {priceRanges.map(range => (
-                                    <label key={range.label} className="flex items-center gap-2 cursor-pointer text-gray-900">
+                                    <label key={range.label} className="flex items-center gap-2.5 cursor-pointer text-[#070F2B] hover:text-[#B5945B] transition-colors">
                                         <input
                                             type="radio"
                                             name="priceRange"
                                             value={range.label}
                                             checked={selectedPriceRange === range.label}
                                             onChange={(e) => setSelectedPriceRange(e.target.value)}
-                                            className="w-4 h-4 text-blue-600"
+                                            className="w-4 h-4 accent-[#070F2B] cursor-pointer"
                                         />
-                                        <span className="text-sm text-gray-900">{range.label}</span>
+                                        <span className="text-sm font-semibold">{range.label}</span>
                                     </label>
                                 ))}
                             </div>
                         </div>
+                    </div>
 
-                        {/* Action Buttons */}
-                        <div className="space-y-3">
-                            <button
-                                onClick={() => {
-                                    setSelectedCategory("All");
-                                    setSelectedSizes([]);
-                                    setSelectedPriceRange("");
-                                }}
-                                className="w-full py-2 px-4 border border-gray-300 rounded-md text-sm text-gray-900 hover:border-blue-600 transition-colors"
-                            >
-                                Clear Filters
-                            </button>
+                    {/* Action Buttons (Pinned Bottom) */}
+                    <div className="shrink-0 p-4 border-t border-gray-100 bg-gray-50 flex gap-2.5">
+                        <button
+                            onClick={() => {
+                                setSelectedCategory("All");
+                                setSelectedSizes([]);
+                                setSelectedPriceRange("");
+                            }}
+                            className="flex-1 py-2.5 px-3 border border-gray-300 rounded-lg text-xs font-bold uppercase tracking-wider text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer text-center"
+                        >
+                            Clear
+                        </button>
 
-                            <button
-                                onClick={closeMobileFilters}
-                                className="w-full py-2 px-4 rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors"
-                            >
-                                Apply Filters
-                            </button>
-                        </div>
+                        <button
+                            onClick={closeMobileFilters}
+                            className="flex-1 py-2.5 px-3 bg-[#070F2B] text-white rounded-lg text-xs font-bold uppercase tracking-wider hover:bg-[#B5945B] hover:text-[#070F2B] transition-colors cursor-pointer text-center shadow-sm"
+                        >
+                            Apply
+                        </button>
                     </div>
                 </div>
             </>

@@ -343,7 +343,7 @@ export default function SearchBar() {
     };
 
     return (
-        <div className="relative w-full max-w-md" ref={searchRef}>
+        <div className="relative w-full max-w-2xl mx-auto" ref={searchRef}>
             <div className="relative">
                 <Search className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${colorClasses.secondary.text} w-5 h-5`} />
                 <input

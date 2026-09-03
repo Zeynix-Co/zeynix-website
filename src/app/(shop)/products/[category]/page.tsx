@@ -78,9 +78,9 @@ export default function CategoryProductsPage() {
         <div className="min-h-screen bg-[#FAF6F0] text-[#070F2B] font-sans">
             <Header />
 
-            <main className="max-w-6xl mx-auto px-4 py-8 md:py-12">
+            <main className="max-w-6xl mx-auto px-3 sm:px-4 py-6 md:py-12">
                 {/* Breadcrumb */}
-                <nav className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-[#070F2B]/60 mb-6">
+                <nav className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-[#070F2B]/60 mb-5">
                     <Link href="/" className="hover:text-[#B5945B] transition-colors">Home</Link>
                     <span>/</span>
                     <Link href="/products" className="hover:text-[#B5945B] transition-colors">Products</Link>
@@ -89,7 +89,7 @@ export default function CategoryProductsPage() {
                 </nav>
 
                 {/* Category Hero Banner */}
-                <div className="relative w-full bg-[#070F2B] text-white rounded-2xl overflow-hidden py-12 px-8 md:px-16 mb-10 shadow-[0_15px_30px_rgba(7,15,43,0.2)] border border-white/5 select-none">
+                <div className="relative w-full bg-[#070F2B] text-white rounded-2xl overflow-hidden py-8 px-5 sm:py-12 sm:px-8 md:px-16 mb-8 shadow-[0_15px_30px_rgba(7,15,43,0.2)] border border-white/5 select-none">
                     {/* Gold brush stroke / vectors inside banner */}
                     <div className="absolute top-0 right-0 w-48 h-full opacity-[0.12] pointer-events-none">
                         <svg className="w-full h-full text-[#B5945B] fill-current" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
@@ -98,33 +98,33 @@ export default function CategoryProductsPage() {
                         </svg>
                     </div>
                     
-                    <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-                        <div className="space-y-3.5">
-                            <div className="flex items-center gap-3">
+                    <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5 sm:gap-6">
+                        <div className="space-y-3">
+                            <div className="flex items-center gap-2.5">
                                 <Link
                                     href="/"
-                                    className="flex items-center gap-1.5 px-3.5 py-1 bg-[#FFCB05] text-[#070F2B] hover:bg-white hover:scale-105 border border-[#FFCB05] rounded-full transition-all duration-300 font-black uppercase tracking-wider text-[8.5px] shadow-md cursor-pointer"
+                                    className="flex items-center gap-1.5 px-3 py-1 bg-[#FFCB05] text-[#070F2B] hover:bg-white hover:scale-105 border border-[#FFCB05] rounded-full transition-all duration-300 font-black uppercase tracking-wider text-[8.5px] shadow-xs cursor-pointer"
                                 >
                                     <ArrowLeft className="w-3 h-3 text-[#070F2B]" />
-                                    Back to Home
+                                    Home
                                 </Link>
                                 <span className="text-[9px] font-black uppercase tracking-widest text-[#FAF6F0]/60 bg-white/5 py-1 px-3 rounded-full border border-white/10">
-                                    {category} Collection
+                                    {category}
                                 </span>
                             </div>
-                            <h1 className="text-3xl md:text-5xl font-black uppercase tracking-tight text-[#FAF6F0]">
+                            <h1 className="text-2xl sm:text-3xl md:text-5xl font-black uppercase tracking-tight text-[#FAF6F0]">
                                 {getCategoryTitle(category)}
                             </h1>
-                            <p className="text-xs md:text-sm text-white/60 font-semibold max-w-lg leading-relaxed">
+                            <p className="text-xs sm:text-sm text-white/60 font-semibold max-w-lg leading-relaxed">
                                 {getCategoryDescription(category)}
                             </p>
                         </div>
                         
                         {/* stats badge */}
-                        <div className="bg-white/5 backdrop-blur-xs border border-white/10 p-5 rounded-xl shrink-0 text-left md:text-right shadow-sm">
+                        <div className="bg-white/5 backdrop-blur-xs border border-white/10 p-4 sm:p-5 rounded-xl shrink-0 text-left md:text-right shadow-xs">
                             <span className="text-[9px] text-[#B5945B] font-bold uppercase tracking-wider block">Exclusive Zeynix Wear</span>
-                            <span className="text-2xl font-black text-[#FAF6F0] block mt-0.5">{filteredProducts.length} Items</span>
-                            <span className="text-[9.5px] text-white/40 block">Premium Fit & Fabric Quality</span>
+                            <span className="text-xl sm:text-2xl font-black text-[#FAF6F0] block mt-0.5">{filteredProducts.length} Items</span>
+                            <span className="text-[9px] text-white/40 block">Premium Fit & Fabric Quality</span>
                         </div>
                     </div>
                 </div>

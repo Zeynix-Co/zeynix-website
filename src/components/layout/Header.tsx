@@ -58,8 +58,8 @@ export default function Header() {
                         : 'bg-[#070F2B] py-2 border-white/5'
                 }`}
             >
-                <div className="container mx-auto px-4 md:px-8">
-                    <div className="flex items-center justify-between gap-4">
+                <div className="container mx-auto px-3 sm:px-4 md:px-8">
+                    <div className="flex items-center justify-between gap-2 sm:gap-4">
                         {/* Logo (Left) */}
                         <div className="flex items-center shrink-0">
                             <Link href="/" className="flex items-center">
@@ -68,7 +68,7 @@ export default function Header() {
                                     alt="Zeynix Logo"
                                     width={200}
                                     height={65}
-                                    className="h-14 md:h-20 w-auto rounded-lg object-contain"
+                                    className="h-11 sm:h-14 md:h-20 w-auto rounded-lg object-contain"
                                     priority
                                 />
                             </Link>
@@ -88,29 +88,29 @@ export default function Header() {
                         </nav>
 
                         {/* Actions (Desktop & Mobile Right) */}
-                        <div className="flex items-center space-x-2 md:space-x-4 shrink-0">
+                        <div className="flex items-center space-x-1 sm:space-x-2 md:space-x-4 shrink-0">
                             
                             {/* Unified Search Toggle Icon (Desktop & Mobile) */}
                             <button
                                 onClick={() => setIsSearchOpen(!isSearchOpen)}
-                                className="p-2 text-white hover:text-[#FFCB05] transition-colors focus:outline-none cursor-pointer"
+                                className="p-1.5 sm:p-2 text-white hover:text-[#FFCB05] transition-colors focus:outline-none cursor-pointer"
                                 aria-label="Toggle Search"
                             >
-                                {isSearchOpen ? <X className="w-6 h-6" /> : <Search className="w-6 h-6" />}
+                                {isSearchOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Search className="w-5 h-5 sm:w-6 sm:h-6" />}
                             </button>
 
                             {/* Wishlist Icon */}
                             <WishlistIcon 
                                 showText={false} 
-                                className="relative p-2 text-white hover:text-[#FFCB05] transition-colors duration-200 cursor-pointer" 
-                                iconClassName="w-6 h-6" 
+                                className="relative p-1.5 sm:p-2 text-white hover:text-[#FFCB05] transition-colors duration-200 cursor-pointer" 
+                                iconClassName="w-5 h-5 sm:w-6 sm:h-6" 
                             />
 
                             {/* Cart Icon */}
                             <CartIcon 
                                 showText={false} 
-                                className="relative p-2 text-white hover:text-[#FFCB05] transition-colors duration-200 flex items-center cursor-pointer" 
-                                iconClassName="w-6 h-6" 
+                                className="relative p-1.5 sm:p-2 text-white hover:text-[#FFCB05] transition-colors duration-200 flex items-center cursor-pointer" 
+                                iconClassName="w-5 h-5 sm:w-6 sm:h-6" 
                             />
 
                             {/* Divider (Desktop Only) */}

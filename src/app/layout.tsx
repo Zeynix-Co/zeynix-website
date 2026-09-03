@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Afacad } from "next/font/google";
 import "./globals.css";
 
@@ -8,6 +8,13 @@ const afacad = Afacad({
   variable: "--font-afacad",
   display: "swap",
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: "#070F2B",
+};
 
 export const metadata: Metadata = {
   title: "Zeynix - Wear The Luxury",

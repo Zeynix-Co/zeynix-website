@@ -99,8 +99,8 @@ export default function RegisterForm() {
     };
 
     return (
-        <div className="md:w-full max-w-md w-5/6 mx-auto">
-            <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="w-full max-w-md px-4 sm:px-0 mx-auto">
+            <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 border border-gray-100">
                 <h2 className={`text-2xl font-bold text-center mb-6 ${colorClasses.primary.text}`}>
                     Create Account
                 </h2>

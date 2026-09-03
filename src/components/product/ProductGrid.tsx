@@ -113,39 +113,41 @@ export default memo(function ProductGrid({
     return (
         <div className={className}>
             {/* View Mode Toggle & Results Info */}
-            <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center space-x-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5 sm:mb-6">
+                <div className="flex items-center justify-between sm:justify-start space-x-3 sm:space-x-4">
                     {/* View Mode Toggle */}
                     <div className="flex items-center bg-gray-100 rounded-lg p-1">
                         <button
                             onClick={() => setViewMode('grid')}
-                            className={`p-2 rounded-md transition-colors ${viewMode === 'grid'
-                                ? 'bg-white text-blue-600 shadow-sm'
+                            className={`p-1.5 sm:p-2 rounded-md transition-colors cursor-pointer ${viewMode === 'grid'
+                                ? 'bg-[#070F2B] text-white shadow-xs'
                                 : 'text-gray-600 hover:text-gray-900'
                                 }`}
+                            aria-label="Grid view"
                         >
                             <Grid className="w-4 h-4" />
                         </button>
                         <button
                             onClick={() => setViewMode('list')}
-                            className={`p-2 rounded-md transition-colors ${viewMode === 'list'
-                                ? 'bg-white text-blue-600 shadow-sm'
+                            className={`p-1.5 sm:p-2 rounded-md transition-colors cursor-pointer ${viewMode === 'list'
+                                ? 'bg-[#070F2B] text-white shadow-xs'
                                 : 'text-gray-600 hover:text-gray-900'
                                 }`}
+                            aria-label="List view"
                         >
                             <List className="w-4 h-4" />
                         </button>
                     </div>
 
                     {/* Results Count */}
-                    <span className="text-sm text-gray-600">
-                        Showing {startIndex + 1}-{Math.min(endIndex, products.length)} of {products.length} products
+                    <span className="text-xs sm:text-sm text-gray-600">
+                        {startIndex + 1}-{Math.min(endIndex, products.length)} of {products.length} items
                     </span>
                 </div>
 
                 {/* Sort Options */}
-                <div className="flex items-center space-x-2">
-                    <span className="text-[10px] font-black uppercase tracking-wider text-[#070F2B]/60">Sort by:</span>
+                <div className="flex items-center justify-end space-x-2">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-[#070F2B]/60">Sort:</span>
                     <select className="text-[11px] font-black text-[#070F2B] bg-white border border-gray-200 rounded-xl px-3 py-1.5 focus:outline-none focus:border-[#070F2B] cursor-pointer shadow-xs">
                         <option value="featured" className="text-[#070F2B] bg-white">Featured</option>
                         <option value="price-low" className="text-[#070F2B] bg-white">Price: Low to High</option>
@@ -159,7 +161,7 @@ export default memo(function ProductGrid({
             {/* Products Grid/List - Mobile optimized */}
             <div className={`
                 ${viewMode === 'grid'
-                    ? 'grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-6'
+                    ? 'grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2.5 sm:gap-4 md:gap-6'
                     : 'space-y-4'
                 }
             `}>

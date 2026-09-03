@@ -46,11 +46,11 @@ function ProductsPageContent() {
         <div className="min-h-screen bg-gray-50">
             <Header />
 
-            <main className="max-w-7xl mx-auto px-4 py-8">
+            <main className="max-w-7xl mx-auto px-3 sm:px-4 py-6 sm:py-8">
                 {/* Page Header */}
-                <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-gray-900 mb-2">All Products</h1>
-                    <p className="text-gray-600">Discover our latest collection of premium clothing</p>
+                <div className="mb-6 sm:mb-8">
+                    <h1 className="text-2xl sm:text-3xl font-black text-[#070F2B] uppercase tracking-tight mb-1">All Products</h1>
+                    <p className="text-xs sm:text-sm text-gray-500 font-semibold">Discover our latest collection of premium clothing</p>
                 </div>
 
                 {/* Search Bar */}

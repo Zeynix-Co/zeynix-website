@@ -127,19 +127,19 @@ export default function CheckoutPage() {
         <div className="min-h-screen bg-gray-50">
             <Header />
 
-            <main className="max-w-7xl mx-auto px-4 py-8">
+            <main className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-8">
                 {/* Breadcrumb */}
-                <nav className="flex items-center gap-2 text-sm text-gray-600 mb-6">
+                <nav className="flex items-center gap-2 text-xs text-gray-500 mb-5">
                     <Link href="/" className="hover:text-gray-900">Home</Link>
                     <span>/</span>
                     <Link href="/cart" className="hover:text-gray-900">Cart</Link>
                     <span>/</span>
-                    <span className="text-gray-900">Checkout</span>
+                    <span className="text-gray-900 font-semibold">Checkout</span>
                 </nav>
 
                 {/* Page Header */}
-                <div className="mb-8">
-                    <div className="flex items-center gap-4 mb-4">
+                <div className="mb-6 sm:mb-8">
+                    <div className="flex items-center gap-3 sm:gap-4 mb-2">
                         <Link
                             href="/cart"
                             className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
@@ -147,8 +147,8 @@ export default function CheckoutPage() {
                             <ArrowLeft className="w-5 h-5" />
                         </Link>
                         <div>
-                            <h1 className="text-3xl font-bold text-gray-900">Checkout</h1>
-                            <p className="text-gray-600 mt-1">
+                            <h1 className="text-2xl sm:text-3xl font-black text-[#070F2B] uppercase tracking-tight">Checkout</h1>
+                            <p className="text-xs sm:text-sm text-gray-500 mt-0.5">
                                 Complete your order - {totalItems} item{totalItems !== 1 ? 's' : ''} in cart
                             </p>
                         </div>
@@ -156,14 +156,14 @@ export default function CheckoutPage() {
                 </div>
 
                 {/* Checkout Content */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-8">
-                    {/* Checkout Form - Takes 2 columns on large screens */}
-                    <div className="lg:col-span-2 order-2 lg:order-1">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+                    {/* Checkout Form */}
+                    <div className="lg:col-span-2 order-1">
                         <CheckoutForm onOrderCreated={handleOrderCreated} />
                     </div>
 
-                    {/* Order Summary - Takes 1 column on large screens */}
-                    <div className="lg:col-span-1 order-1 lg:order-2">
+                    {/* Order Summary */}
+                    <div className="lg:col-span-1 order-2">
                         <div className="sticky top-4 lg:top-8">
                             <OrderSummary />
                         </div>

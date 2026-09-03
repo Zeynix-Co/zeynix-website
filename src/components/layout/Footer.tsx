@@ -12,10 +12,10 @@ export default function Footer() {
             <div className="container mx-auto px-4 md:px-8 max-w-6xl">
                 
                 {/* Footer Main Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12 text-sm">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 mb-12 text-sm">
                     
                     {/* Brand Column (Left) */}
-                    <div className="md:col-span-3 space-y-4">
+                    <div className="sm:col-span-2 lg:col-span-3 space-y-4">
                         <span className="font-extrabold text-lg tracking-widest block text-white">
                             ZEYNIX
                         </span>
@@ -51,7 +51,7 @@ export default function Footer() {
                     </div>
 
                     {/* Column 1: Shop (Atelier Fits) */}
-                    <div className="md:col-span-2">
+                    <div className="sm:col-span-1 lg:col-span-2">
                         <h4 className="font-extrabold tracking-widest text-xs text-[#FFCB05] uppercase mb-4">
                             Shop Fits
                         </h4>
@@ -64,7 +64,7 @@ export default function Footer() {
                     </div>
 
                     {/* Column 2: Customer Care */}
-                    <div className="md:col-span-2">
+                    <div className="sm:col-span-1 lg:col-span-2">
                         <h4 className="font-extrabold tracking-widest text-xs text-[#FFCB05] uppercase mb-4">
                             Customer Care
                         </h4>
@@ -77,7 +77,7 @@ export default function Footer() {
                     </div>
 
                     {/* Column 3: Atelier Story */}
-                    <div className="md:col-span-2">
+                    <div className="sm:col-span-1 lg:col-span-2">
                         <h4 className="font-extrabold tracking-widest text-xs text-[#FFCB05] uppercase mb-4">
                             Atelier Story
                         </h4>
@@ -90,7 +90,7 @@ export default function Footer() {
                     </div>
 
                     {/* Column 4: Newsletter Subscription (Right) */}
-                    <div className="md:col-span-3 space-y-4">
+                    <div className="sm:col-span-1 lg:col-span-3 space-y-4">
                         <h4 className="font-extrabold tracking-widest text-xs text-[#FFCB05] uppercase">
                             Join the Atelier
                         </h4>

@@ -182,7 +182,7 @@ export default function HomePage() {
 
             {/* 1. HERO SECTION (Redesigned matching reference mockup exactly) */}
             <section 
-                className="relative w-full min-h-[380px] md:min-h-[440px] lg:min-h-[490px] flex items-center pt-3 pb-8 md:pt-4 md:pb-10 px-6 md:px-12 xl:px-20 overflow-hidden border-b border-[#070F2B]/5 select-none"
+                className="relative w-full min-h-[380px] md:min-h-[440px] lg:min-h-[490px] flex items-center pt-3 pb-8 md:pt-4 md:pb-10 px-4 sm:px-8 md:px-12 xl:px-20 overflow-hidden border-b border-[#070F2B]/5 select-none"
                 style={{ backgroundColor: '#FAF6F0' }}
                 onMouseEnter={() => setIsHoveringHero(true)}
                 onMouseLeave={() => setIsHoveringHero(false)}
@@ -200,8 +200,8 @@ export default function HomePage() {
                     }}
                 />
                 
-                {/* Top-Left gold slash and navy triangle */}
-                <div className="absolute top-0 left-0 w-[150px] sm:w-[200px] md:w-[240px] lg:w-[280px] aspect-square pointer-events-none z-0 select-none">
+                {/* Top-Left gold slash and navy triangle (Scaled down & transparent on mobile to avoid overlapping text) */}
+                <div className="absolute top-0 left-0 w-[90px] sm:w-[200px] md:w-[240px] lg:w-[280px] aspect-square pointer-events-none z-0 select-none opacity-40 sm:opacity-100">
                     <svg className="w-full h-full" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M-10 -10 C 45 20, 70 50, 90 100 C 75 110, 35 75, -10 40 Z" fill="#B5945B" opacity="0.85" />
                         <path d="M-10 20 C 15 40, 45 80, 60 125 C 50 130, 25 95, -10 65 Z" fill="#B5945B" opacity="0.6" />
@@ -210,7 +210,7 @@ export default function HomePage() {
                 </div>
 
                 {/* Bottom-Left gold brush slash */}
-                <div className="absolute bottom-0 left-0 w-[180px] sm:w-[260px] md:w-[320px] aspect-[4/3] pointer-events-none z-0 select-none">
+                <div className="absolute bottom-0 left-0 w-[140px] sm:w-[260px] md:w-[320px] aspect-[4/3] pointer-events-none z-0 select-none opacity-60 sm:opacity-100">
                     <svg className="w-full h-full" viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
                         <path d="M-10 160 C 45 125, 105 105, 165 160 Z" fill="#B5945B" opacity="0.85" />
                         <path d="M-10 105 C 25 75, 85 65, 125 160 Z" fill="#B5945B" opacity="0.55" />
@@ -235,16 +235,16 @@ export default function HomePage() {
                     ))}
                 </div>
 
-                <div className="container mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10 max-w-6xl">
+                <div className="container mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-center relative z-10 max-w-6xl">
                     
                     {/* Left: Campaign typography */}
-                    <div className="lg:col-span-6 relative min-h-[200px] md:min-h-[250px] lg:min-h-[310px] flex items-center z-10 pl-2 sm:pl-8 lg:pl-12">
+                    <div className="lg:col-span-6 relative min-h-[250px] xs:min-h-[270px] md:min-h-[270px] lg:min-h-[310px] flex items-center z-10 pl-1 sm:pl-8 lg:pl-12">
                         {heroSlides.map((slide, index) => {
                             const isActive = activeHeroSlide === index;
                             return (
                                 <div 
                                     key={index}
-                                    className={`absolute inset-x-0 top-1/2 -translate-y-1/2 transition-all duration-1000 ease-in-out space-y-5 md:space-y-6 text-left ${
+                                    className={`absolute inset-x-0 top-1/2 -translate-y-1/2 transition-all duration-1000 ease-in-out space-y-3.5 sm:space-y-5 md:space-y-6 text-left ${
                                         isActive 
                                             ? 'opacity-100 translate-y-[-50%] pointer-events-auto z-10' 
                                             : 'opacity-0 translate-y-[-45%] pointer-events-none z-0'
@@ -252,36 +252,36 @@ export default function HomePage() {
                                 >
                                     {/* Category tag */}
                                     <div className="flex items-center gap-2">
-                                        <span className="w-6 h-[2px] bg-[#B5945B]" />
-                                        <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#B5945B]">
+                                        <span className="w-5 sm:w-6 h-[2px] bg-[#B5945B]" />
+                                        <span className="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-widest text-[#B5945B]">
                                             {slide.tagline}
                                         </span>
                                     </div>
 
                                     {/* Main Heading */}
-                                    <h1 className="text-4xl xs:text-5xl md:text-6xl lg:text-[68px] font-black tracking-tight leading-[1.02] uppercase text-[#070F2B]">
+                                    <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-[68px] font-black tracking-tight leading-[1.04] uppercase text-[#070F2B]">
                                         {slide.titlePart1}<br />
                                         {slide.titlePart2} <span className="text-[#B5945B] relative inline-block">
                                             {slide.titleHighlight}
                                             {/* Accent line under highlighted word */}
-                                            <svg className="absolute -bottom-2 left-0 w-full h-3 text-[#B5945B]" viewBox="0 0 100 10" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                                            <svg className="absolute -bottom-1.5 sm:-bottom-2 left-0 w-full h-2.5 sm:h-3 text-[#B5945B]" viewBox="0 0 100 10" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
                                                 <path d="M0 5 Q 35 2, 70 8 T 100 4" stroke="currentColor" strokeWidth="3" strokeLinecap="round" fill="none" />
                                             </svg>
                                         </span>
                                     </h1>
 
                                     {/* Subtitle */}
-                                    <p className="text-sm md:text-base text-[#070F2B]/75 font-semibold leading-relaxed max-w-sm">
+                                    <p className="text-xs sm:text-sm md:text-base text-[#070F2B]/75 font-semibold leading-relaxed max-w-sm">
                                         {slide.subtitle}
                                     </p>
                                     
-                                    {/* Single CTA button matching mockup (square corners with solid accent shadow) */}
-                                    <div className="pt-2">
+                                    {/* Single CTA button matching mockup */}
+                                    <div className="pt-1 sm:pt-2">
                                         <Link 
                                             href={slide.link} 
                                             onMouseEnter={() => setHoveredButton(index)}
                                             onMouseLeave={() => setHoveredButton(null)}
-                                            className="bg-[#070F2B] text-white py-3.5 px-8 rounded-none font-bold uppercase tracking-wider text-[11px] shadow-[4px_4px_0px_#B5945B] hover:shadow-[0px_0px_0px_#B5945B] hover:bg-[#B5945B] hover:text-[#070F2B] transition-all duration-300 text-center inline-flex items-center gap-3.5 group cursor-pointer border border-[#070F2B] hover:border-[#B5945B] active:scale-[0.98]"
+                                            className="bg-[#070F2B] text-white py-2.5 px-6 sm:py-3.5 sm:px-8 rounded-none font-bold uppercase tracking-wider text-[10px] sm:text-[11px] shadow-[3px_3px_0px_#B5945B] sm:shadow-[4px_4px_0px_#B5945B] hover:shadow-[0px_0px_0px_#B5945B] hover:bg-[#B5945B] hover:text-[#070F2B] transition-all duration-300 text-center inline-flex items-center gap-2.5 sm:gap-3.5 group cursor-pointer border border-[#070F2B] hover:border-[#B5945B] active:scale-[0.98]"
                                         >
                                             {hoveredButton === index ? 'Explore Casuals' : slide.buttonText}
                                             <span className="text-[#B5945B] group-hover:translate-x-1 transition-transform font-bold">&rarr;</span>
@@ -293,7 +293,7 @@ export default function HomePage() {
                     </div>
 
                     {/* Right: Lifestyle campaign visual (Unboxed style, directly overlays background brush strokes) */}
-                    <div className="lg:col-span-6 relative w-full h-[280px] sm:h-[350px] lg:h-[430px] flex items-end justify-center z-10">
+                    <div className="lg:col-span-6 relative w-full h-[260px] sm:h-[350px] lg:h-[430px] flex items-end justify-center z-10">
                         {/* Background Z and grid accents */}
                         <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
                             {/* Real Zeynix Logo Watermark */}
@@ -336,7 +336,7 @@ export default function HomePage() {
                                             : 'opacity-0 translate-x-12 scale-95 pointer-events-none z-0'
                                     }`}
                                 >
-                                    <div className="relative w-full h-[90%] max-h-[320px] lg:max-h-[410px] aspect-[4/5] md:aspect-[3/4] flex items-end justify-center">
+                                    <div className="relative w-full h-[90%] max-h-[300px] lg:max-h-[410px] aspect-[4/5] md:aspect-[3/4] flex items-end justify-center">
                                         <Image 
                                             src={slide.image} 
                                             alt={`${slide.category} Campaign visual`}
@@ -350,78 +350,78 @@ export default function HomePage() {
                             );
                         })}
 
-                        {/* Carousel navigation controls floating bottom right of the image/container */}
-                        <div className="absolute bottom-4 right-4 sm:right-12 flex items-center gap-3.5 z-20">
+                        {/* Carousel navigation controls */}
+                        <div className="absolute bottom-2 right-2 sm:bottom-4 sm:right-12 flex items-center gap-2 sm:gap-3.5 z-20">
                             <button 
                                 onClick={() => setActiveHeroSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length)}
-                                className="w-10 h-10 rounded-full bg-[#070F2B] text-white flex items-center justify-center hover:bg-[#B5945B] hover:scale-105 active:scale-95 transition-all shadow-lg border border-white/10 cursor-pointer"
+                                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#070F2B] text-white flex items-center justify-center hover:bg-[#B5945B] hover:scale-105 active:scale-95 transition-all shadow-lg border border-white/10 cursor-pointer"
                                 aria-label="Previous Slide"
                             >
-                                <ChevronLeft className="w-5 h-5 text-white" />
+                                <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                             </button>
                             <button 
                                 onClick={() => setActiveHeroSlide((prev) => (prev + 1) % heroSlides.length)}
-                                className="w-10 h-10 rounded-full bg-[#070F2B] text-white flex items-center justify-center hover:bg-[#B5945B] hover:scale-105 active:scale-95 transition-all shadow-lg border border-white/10 cursor-pointer"
+                                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#070F2B] text-white flex items-center justify-center hover:bg-[#B5945B] hover:scale-105 active:scale-95 transition-all shadow-lg border border-white/10 cursor-pointer"
                                 aria-label="Next Slide"
                             >
-                                <ChevronRight className="w-5 h-5 text-white" />
+                                <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                             </button>
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* 2. Floating rounded benefits panel overlapping the Hero section */}
-            <div className="relative z-20 -mt-3 lg:-mt-4 max-w-6xl mx-auto px-4">
-                <div className="bg-[#070F2B] text-white rounded-2xl py-7 px-6 md:px-10 shadow-[0_20px_50px_rgba(7,15,43,0.28)] border border-white/10 flex flex-col lg:flex-row items-stretch justify-between gap-6 lg:gap-0 backdrop-blur-md bg-opacity-95">
+            {/* 2. Floating rounded benefits panel overlapping the Hero section (2x2 on mobile, row on desktop) */}
+            <div className="relative z-20 -mt-3 lg:-mt-4 max-w-6xl mx-auto px-3 sm:px-4">
+                <div className="bg-[#070F2B] text-white rounded-2xl py-5 px-4 sm:py-7 sm:px-8 md:px-10 shadow-[0_20px_50px_rgba(7,15,43,0.28)] border border-white/10 grid grid-cols-2 lg:flex lg:flex-row items-stretch justify-between gap-3 sm:gap-4 lg:gap-0 backdrop-blur-md bg-opacity-95">
                     
                     {/* Benefit 1 */}
-                    <div className="flex-1 flex flex-col lg:flex-row items-center lg:items-start text-center lg:text-left gap-4 p-2 transition-transform duration-300 hover:translate-y-[-2px] group">
-                        <div className="w-12 h-12 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center text-[#B5945B] flex-shrink-0 group-hover:border-[#B5945B]/40 group-hover:bg-[#B5945B]/5 transition-all duration-300">
-                            <Award className="w-6 h-6 stroke-[1.5] group-hover:scale-110 transition-transform duration-300" />
+                    <div className="flex-1 flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-2 sm:gap-4 p-1.5 sm:p-2 transition-transform duration-300 hover:translate-y-[-2px] group">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center text-[#B5945B] shrink-0 group-hover:border-[#B5945B]/40 group-hover:bg-[#B5945B]/5 transition-all duration-300">
+                            <Award className="w-5 h-5 sm:w-6 sm:h-6 stroke-[1.5] group-hover:scale-110 transition-transform duration-300" />
                         </div>
                         <div>
-                            <h4 className="text-sm font-extrabold uppercase tracking-wider text-[#FAF6F0] group-hover:text-[#B5945B] transition-colors duration-300">Premium Quality</h4>
-                            <p className="text-xs text-white/60 mt-1 leading-relaxed max-w-[220px]">Finest fabrics for long-lasting comfort.</p>
+                            <h4 className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-[#FAF6F0] group-hover:text-[#B5945B] transition-colors duration-300">Premium Quality</h4>
+                            <p className="text-[10px] sm:text-xs text-white/60 mt-0.5 sm:mt-1 leading-relaxed max-w-[220px]">Finest fabrics for lasting comfort.</p>
                         </div>
                     </div>
 
                     <div className="hidden lg:block w-px bg-white/10 self-stretch my-2 mx-4" />
 
                     {/* Benefit 2 */}
-                    <div className="flex-1 flex flex-col lg:flex-row items-center lg:items-start text-center lg:text-left gap-4 p-2 lg:pl-6 transition-transform duration-300 hover:translate-y-[-2px] group">
-                        <div className="w-12 h-12 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center text-[#B5945B] flex-shrink-0 group-hover:border-[#B5945B]/40 group-hover:bg-[#B5945B]/5 transition-all duration-300">
-                            <Sparkles className="w-6 h-6 stroke-[1.5] group-hover:scale-110 transition-transform duration-300" />
+                    <div className="flex-1 flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-2 sm:gap-4 p-1.5 sm:p-2 lg:pl-6 transition-transform duration-300 hover:translate-y-[-2px] group">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center text-[#B5945B] shrink-0 group-hover:border-[#B5945B]/40 group-hover:bg-[#B5945B]/5 transition-all duration-300">
+                            <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 stroke-[1.5] group-hover:scale-110 transition-transform duration-300" />
                         </div>
                         <div>
-                            <h4 className="text-sm font-extrabold uppercase tracking-wider text-[#FAF6F0] group-hover:text-[#B5945B] transition-colors duration-300">Modern Designs</h4>
-                            <p className="text-xs text-white/60 mt-1 leading-relaxed max-w-[220px]">Clean, minimal & on-trend styles.</p>
+                            <h4 className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-[#FAF6F0] group-hover:text-[#B5945B] transition-colors duration-300">Modern Designs</h4>
+                            <p className="text-[10px] sm:text-xs text-white/60 mt-0.5 sm:mt-1 leading-relaxed max-w-[220px]">Clean, minimal & on-trend styles.</p>
                         </div>
                     </div>
 
                     <div className="hidden lg:block w-px bg-white/10 self-stretch my-2 mx-4" />
 
                     {/* Benefit 3 */}
-                    <div className="flex-1 flex flex-col lg:flex-row items-center lg:items-start text-center lg:text-left gap-4 p-2 lg:pl-6 transition-transform duration-300 hover:translate-y-[-2px] group">
-                        <div className="w-12 h-12 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center text-[#B5945B] flex-shrink-0 group-hover:border-[#B5945B]/40 group-hover:bg-[#B5945B]/5 transition-all duration-300">
-                            <Shield className="w-6 h-6 stroke-[1.5] group-hover:scale-110 transition-transform duration-300" />
+                    <div className="flex-1 flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-2 sm:gap-4 p-1.5 sm:p-2 lg:pl-6 transition-transform duration-300 hover:translate-y-[-2px] group">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center text-[#B5945B] shrink-0 group-hover:border-[#B5945B]/40 group-hover:bg-[#B5945B]/5 transition-all duration-300">
+                            <Shield className="w-5 h-5 sm:w-6 sm:h-6 stroke-[1.5] group-hover:scale-110 transition-transform duration-300" />
                         </div>
                         <div>
-                            <h4 className="text-sm font-extrabold uppercase tracking-wider text-[#FAF6F0] group-hover:text-[#B5945B] transition-colors duration-300">Built to Last</h4>
-                            <p className="text-xs text-white/60 mt-1 leading-relaxed max-w-[220px]">Durable materials that go the distance.</p>
+                            <h4 className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-[#FAF6F0] group-hover:text-[#B5945B] transition-colors duration-300">Built to Last</h4>
+                            <p className="text-[10px] sm:text-xs text-white/60 mt-0.5 sm:mt-1 leading-relaxed max-w-[220px]">Durable materials made to last.</p>
                         </div>
                     </div>
 
                     <div className="hidden lg:block w-px bg-white/10 self-stretch my-2 mx-4" />
 
                     {/* Benefit 4 */}
-                    <div className="flex-1 flex flex-col lg:flex-row items-center lg:items-start text-center lg:text-left gap-4 p-2 lg:pl-6 transition-transform duration-300 hover:translate-y-[-2px] group">
-                        <div className="w-12 h-12 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center text-[#B5945B] flex-shrink-0 group-hover:border-[#B5945B]/40 group-hover:bg-[#B5945B]/5 transition-all duration-300">
-                            <RotateCcw className="w-6 h-6 stroke-[1.5] group-hover:scale-110 transition-transform duration-300" />
+                    <div className="flex-1 flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-2 sm:gap-4 p-1.5 sm:p-2 lg:pl-6 transition-transform duration-300 hover:translate-y-[-2px] group">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center text-[#B5945B] shrink-0 group-hover:border-[#B5945B]/40 group-hover:bg-[#B5945B]/5 transition-all duration-300">
+                            <RotateCcw className="w-5 h-5 sm:w-6 sm:h-6 stroke-[1.5] group-hover:scale-110 transition-transform duration-300" />
                         </div>
                         <div>
-                            <h4 className="text-sm font-extrabold uppercase tracking-wider text-[#FAF6F0] group-hover:text-[#B5945B] transition-colors duration-300">Easy Returns</h4>
-                            <p className="text-xs text-white/60 mt-1 leading-relaxed max-w-[220px]">Hassle-free returns and exchanges.</p>
+                            <h4 className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-[#FAF6F0] group-hover:text-[#B5945B] transition-colors duration-300">Easy Returns</h4>
+                            <p className="text-[10px] sm:text-xs text-white/60 mt-0.5 sm:mt-1 leading-relaxed max-w-[220px]">Hassle-free returns & exchanges.</p>
                         </div>
                     </div>
 
@@ -500,7 +500,7 @@ export default function HomePage() {
 
                     {/* Products Grid */}
                     {isLoading ? (
-                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
                             {[1, 2, 3, 4].map((i) => (
                                 <div key={i} className="aspect-[3/4] bg-gray-50 rounded-xl animate-pulse" />
                             ))}
@@ -510,7 +510,7 @@ export default function HomePage() {
                             No casual products available. Check back soon!
                         </div>
                     ) : (
-                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
                             {casualProducts.map((product) => (
                                 <ProductCard 
                                     key={product.id}
@@ -650,7 +650,7 @@ export default function HomePage() {
                     </div>
 
                     {/* Social Grid */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4 max-w-4xl mx-auto">
                         {[
                             {
                                 image: '/images/lookbook-1.jpg',
