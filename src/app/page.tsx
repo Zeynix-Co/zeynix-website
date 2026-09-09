@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import HeroSection from '@/components/home/HeroSection';
 import Link from 'next/link';
 import Image from 'next/image';
 import { colorClasses, APP_CONFIG } from '@/lib/constants';
@@ -20,56 +21,18 @@ import {
     ArrowRight, 
     Star, 
     ChevronLeft, 
-    ChevronRight,
-    Play,
-    Instagram
+    ChevronRight, 
+    Play, 
+    Instagram 
 } from 'lucide-react';
-
-const heroSlides = [
-    {
-        category: 'Casual',
-        tagline: 'Timeless Casuals',
-        titlePart1: 'Effortless Style.',
-        titlePart2: 'Everyday',
-        titleHighlight: 'You.',
-        subtitle: 'Timeless casuals designed for comfort, made for you.',
-        buttonText: 'Explore Casuals',
-        link: '/products/casual',
-        image: '/images/lookbook-1.jpg'
-    },
-    {
-        category: 'Casual',
-        tagline: 'Premium Layers',
-        titlePart1: 'Modern Utility.',
-        titlePart2: 'Aesthetic',
-        titleHighlight: 'Fits.',
-        subtitle: 'Cozy layers, utility jackets, and tailored bomber fits.',
-        buttonText: 'Shop Utility',
-        link: '/products/casual',
-        image: '/images/lookbook-3.jpg'
-    },
-    {
-        category: 'Casual',
-        tagline: 'Vintage Washes',
-        titlePart1: 'Classic Blue.',
-        titlePart2: 'Lightweight',
-        titleHighlight: 'Denim.',
-        subtitle: 'Premium denim jackets and structured layers for casual luxury.',
-        buttonText: 'Shop Denim',
-        link: '/products/casual',
-        image: '/images/lookbook-4.jpg'
-    }
-];
 
 export default function HomePage() {
     const [casualProducts, setCasualProducts] = useState<any[]>([]);
     const [newArrivals, setNewArrivals] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    // Carousel & Hero Slider State
+    // Carousel State for New Arrivals
     const [carouselIndex, setCarouselIndex] = useState(0);
-    const [activeHeroSlide, setActiveHeroSlide] = useState(0);
-    const [hoveredButton, setHoveredButton] = useState<number | null>(null);
     const carouselRef = useRef<HTMLDivElement>(null);
 
     // Wishlist context
@@ -103,16 +66,6 @@ export default function HomePage() {
         };
         loadHomeData();
     }, []);
-
-    // Hero Slider Auto-Play with pause on hover
-    const [isHoveringHero, setIsHoveringHero] = useState(false);
-    useEffect(() => {
-        if (isHoveringHero) return;
-        const timer = setInterval(() => {
-            setActiveHeroSlide((prev) => (prev + 1) % heroSlides.length);
-        }, 6000);
-        return () => clearInterval(timer);
-    }, [isHoveringHero]);
 
     const handleWishlistToggle = (e: React.MouseEvent, product: any) => {
         e.preventDefault();
@@ -180,196 +133,8 @@ export default function HomePage() {
         <div className="min-h-screen bg-[#FAF6F0] text-[#070F2B] overflow-x-hidden font-sans">
             <Header />
 
-            {/* 1. HERO SECTION (Redesigned matching reference mockup exactly) */}
-            <section 
-                className="relative w-full min-h-[380px] md:min-h-[440px] lg:min-h-[490px] flex items-center pt-3 pb-8 md:pt-4 md:pb-10 px-4 sm:px-8 md:px-12 xl:px-20 overflow-hidden border-b border-[#070F2B]/5 select-none"
-                style={{ backgroundColor: '#FAF6F0' }}
-                onMouseEnter={() => setIsHoveringHero(true)}
-                onMouseLeave={() => setIsHoveringHero(false)}
-            >
-                {/* Background Textures */}
-                <div 
-                    className="absolute inset-0 opacity-40 pointer-events-none z-0"
-                    style={{
-                        backgroundImage: `
-                            radial-gradient(circle at center, transparent 30%, #FAF6F0 100%),
-                            linear-gradient(to right, rgba(181, 148, 91, 0.04) 1px, transparent 1px),
-                            linear-gradient(to bottom, rgba(181, 148, 91, 0.04) 1px, transparent 1px)
-                        `,
-                        backgroundSize: '100% 100%, 32px 32px, 32px 32px'
-                    }}
-                />
-                
-                {/* Top-Left gold slash and navy triangle (Scaled down & transparent on mobile to avoid overlapping text) */}
-                <div className="absolute top-0 left-0 w-[90px] sm:w-[200px] md:w-[240px] lg:w-[280px] aspect-square pointer-events-none z-0 select-none opacity-40 sm:opacity-100">
-                    <svg className="w-full h-full" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M-10 -10 C 45 20, 70 50, 90 100 C 75 110, 35 75, -10 40 Z" fill="#B5945B" opacity="0.85" />
-                        <path d="M-10 20 C 15 40, 45 80, 60 125 C 50 130, 25 95, -10 65 Z" fill="#B5945B" opacity="0.6" />
-                        <path d="M-10 -10 L80 -10 L-10 160 Z" fill="#070F2B" />
-                    </svg>
-                </div>
-
-                {/* Bottom-Left gold brush slash */}
-                <div className="absolute bottom-0 left-0 w-[140px] sm:w-[260px] md:w-[320px] aspect-[4/3] pointer-events-none z-0 select-none opacity-60 sm:opacity-100">
-                    <svg className="w-full h-full" viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-                        <path d="M-10 160 C 45 125, 105 105, 165 160 Z" fill="#B5945B" opacity="0.85" />
-                        <path d="M-10 105 C 25 75, 85 65, 125 160 Z" fill="#B5945B" opacity="0.55" />
-                    </svg>
-                </div>
-
-                {/* Left margin 2x6 dot matrix */}
-                <div className="absolute left-6 top-1/2 -translate-y-1/2 hidden xl:flex flex-col gap-3.5 opacity-25 z-0 select-none">
-                    {[...Array(6)].map((_, r) => (
-                        <div key={r} className="flex gap-3">
-                            {[...Array(2)].map((_, c) => (
-                                <div key={c} className="w-1.5 h-1.5 rounded-full bg-[#070F2B]" />
-                            ))}
-                        </div>
-                    ))}
-                </div>
-
-                {/* Tilted background wireframe grid on the left */}
-                <div className="absolute left-[12%] top-[22%] w-44 h-44 border border-[#B5945B]/15 rotate-[24deg] pointer-events-none z-0 hidden lg:grid grid-cols-4 grid-rows-4 select-none">
-                    {[...Array(16)].map((_, i) => (
-                        <div key={i} className="border border-[#B5945B]/5" />
-                    ))}
-                </div>
-
-                <div className="container mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-center relative z-10 max-w-6xl">
-                    
-                    {/* Left: Campaign typography */}
-                    <div className="lg:col-span-6 relative min-h-[250px] xs:min-h-[270px] md:min-h-[270px] lg:min-h-[310px] flex items-center z-10 pl-1 sm:pl-8 lg:pl-12">
-                        {heroSlides.map((slide, index) => {
-                            const isActive = activeHeroSlide === index;
-                            return (
-                                <div 
-                                    key={index}
-                                    className={`absolute inset-x-0 top-1/2 -translate-y-1/2 transition-all duration-1000 ease-in-out space-y-3.5 sm:space-y-5 md:space-y-6 text-left ${
-                                        isActive 
-                                            ? 'opacity-100 translate-y-[-50%] pointer-events-auto z-10' 
-                                            : 'opacity-0 translate-y-[-45%] pointer-events-none z-0'
-                                    }`}
-                                >
-                                    {/* Category tag */}
-                                    <div className="flex items-center gap-2">
-                                        <span className="w-5 sm:w-6 h-[2px] bg-[#B5945B]" />
-                                        <span className="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-widest text-[#B5945B]">
-                                            {slide.tagline}
-                                        </span>
-                                    </div>
-
-                                    {/* Main Heading */}
-                                    <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-[68px] font-black tracking-tight leading-[1.04] uppercase text-[#070F2B]">
-                                        {slide.titlePart1}<br />
-                                        {slide.titlePart2} <span className="text-[#B5945B] relative inline-block">
-                                            {slide.titleHighlight}
-                                            {/* Accent line under highlighted word */}
-                                            <svg className="absolute -bottom-1.5 sm:-bottom-2 left-0 w-full h-2.5 sm:h-3 text-[#B5945B]" viewBox="0 0 100 10" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-                                                <path d="M0 5 Q 35 2, 70 8 T 100 4" stroke="currentColor" strokeWidth="3" strokeLinecap="round" fill="none" />
-                                            </svg>
-                                        </span>
-                                    </h1>
-
-                                    {/* Subtitle */}
-                                    <p className="text-xs sm:text-sm md:text-base text-[#070F2B]/75 font-semibold leading-relaxed max-w-sm">
-                                        {slide.subtitle}
-                                    </p>
-                                    
-                                    {/* Single CTA button matching mockup */}
-                                    <div className="pt-1 sm:pt-2">
-                                        <Link 
-                                            href={slide.link} 
-                                            onMouseEnter={() => setHoveredButton(index)}
-                                            onMouseLeave={() => setHoveredButton(null)}
-                                            className="bg-[#070F2B] text-white py-2.5 px-6 sm:py-3.5 sm:px-8 rounded-none font-bold uppercase tracking-wider text-[10px] sm:text-[11px] shadow-[3px_3px_0px_#B5945B] sm:shadow-[4px_4px_0px_#B5945B] hover:shadow-[0px_0px_0px_#B5945B] hover:bg-[#B5945B] hover:text-[#070F2B] transition-all duration-300 text-center inline-flex items-center gap-2.5 sm:gap-3.5 group cursor-pointer border border-[#070F2B] hover:border-[#B5945B] active:scale-[0.98]"
-                                        >
-                                            {hoveredButton === index ? 'Explore Casuals' : slide.buttonText}
-                                            <span className="text-[#B5945B] group-hover:translate-x-1 transition-transform font-bold">&rarr;</span>
-                                        </Link>
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </div>
-
-                    {/* Right: Lifestyle campaign visual (Unboxed style, directly overlays background brush strokes) */}
-                    <div className="lg:col-span-6 relative w-full h-[260px] sm:h-[350px] lg:h-[430px] flex items-end justify-center z-10">
-                        {/* Background Z and grid accents */}
-                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
-                            {/* Real Zeynix Logo Watermark */}
-                            <div className="absolute w-[80%] md:w-[90%] h-[80%] flex items-center justify-center opacity-[0.07] pointer-events-none select-none z-0">
-                                <Image
-                                    src="/images/logos/zeynix-logo-rbg.png"
-                                    alt="Zeynix Logo Watermark"
-                                    width={450}
-                                    height={450}
-                                    className="object-contain w-full h-full"
-                                    priority
-                                />
-                            </div>
-                            
-                            {/* Diagonal gold lines on the right */}
-                            <div className="absolute -right-6 top-1/4 w-32 h-[2px] bg-gradient-to-r from-transparent to-[#B5945B]/40 rotate-[-30deg]" />
-                            <div className="absolute -right-12 top-1/3 w-40 h-[2px] bg-gradient-to-r from-transparent to-[#B5945B]/30 rotate-[-30deg]" />
-                            
-                            {/* Accent Dot pattern */}
-                            <div className="absolute right-4 bottom-20 flex gap-2 opacity-35">
-                                {[...Array(3)].map((_, r) => (
-                                    <div key={r} className="flex flex-col gap-2">
-                                        {[...Array(3)].map((_, c) => (
-                                            <div key={c} className="w-1.5 h-1.5 rounded-full bg-[#070F2B]" />
-                                        ))}
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* Sliding Images */}
-                        {heroSlides.map((slide, index) => {
-                            const isActive = activeHeroSlide === index;
-                            return (
-                                <div 
-                                    key={index}
-                                    className={`absolute inset-0 flex items-end justify-center transition-all duration-1000 ease-in-out ${
-                                        isActive 
-                                            ? 'opacity-100 translate-x-0 scale-100 pointer-events-auto z-10' 
-                                            : 'opacity-0 translate-x-12 scale-95 pointer-events-none z-0'
-                                    }`}
-                                >
-                                    <div className="relative w-full h-[90%] max-h-[300px] lg:max-h-[410px] aspect-[4/5] md:aspect-[3/4] flex items-end justify-center">
-                                        <Image 
-                                            src={slide.image} 
-                                            alt={`${slide.category} Campaign visual`}
-                                            fill
-                                            priority={index === 0}
-                                            sizes="(max-width: 1024px) 100vw, 550px"
-                                            className="object-contain object-bottom select-none drop-shadow-[0_20px_40px_rgba(7,15,43,0.18)]"
-                                        />
-                                    </div>
-                                </div>
-                            );
-                        })}
-
-                        {/* Carousel navigation controls */}
-                        <div className="absolute bottom-2 right-2 sm:bottom-4 sm:right-12 flex items-center gap-2 sm:gap-3.5 z-20">
-                            <button 
-                                onClick={() => setActiveHeroSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length)}
-                                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#070F2B] text-white flex items-center justify-center hover:bg-[#B5945B] hover:scale-105 active:scale-95 transition-all shadow-lg border border-white/10 cursor-pointer"
-                                aria-label="Previous Slide"
-                            >
-                                <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                            </button>
-                            <button 
-                                onClick={() => setActiveHeroSlide((prev) => (prev + 1) % heroSlides.length)}
-                                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#070F2B] text-white flex items-center justify-center hover:bg-[#B5945B] hover:scale-105 active:scale-95 transition-all shadow-lg border border-white/10 cursor-pointer"
-                                aria-label="Next Slide"
-                            >
-                                <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            {/* 1. HERO SECTION */}
+            <HeroSection />
 
             {/* 2. Floating rounded benefits panel overlapping the Hero section (2x2 on mobile, row on desktop) */}
             <div className="relative z-20 -mt-3 lg:-mt-4 max-w-6xl mx-auto px-3 sm:px-4">
