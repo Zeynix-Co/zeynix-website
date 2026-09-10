@@ -68,3 +68,35 @@ export async function GET(request: NextRequest) {
         );
     }
 }
+
+// POST /api/products - Create a new product
+export async function POST(request: NextRequest) {
+    try {
+        await connectDB();
+        const body = await request.json();
+
+        if (!body.title && !body.name) {
+            return NextResponse.json(
+                { success: false, message: 'Product title or name is required' },
+                { status: 400 }
+            );
+        }
+
+        const newProduct = await Product.create(body);
+
+        return NextResponse.json(
+            {
+                success: true,
+                message: 'Product created successfully',
+                data: transformProduct(newProduct)
+            },
+            { status: 201 }
+        );
+    } catch (error: any) {
+        console.error('Create product error:', error);
+        return NextResponse.json(
+            { success: false, message: error.message || 'Error creating product' },
+            { status: 500 }
+        );
+    }
+}

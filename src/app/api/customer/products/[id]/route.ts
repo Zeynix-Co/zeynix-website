@@ -28,19 +28,11 @@ export async function GET(
 
         const { id } = await params;
 
-        // Validate ObjectId
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            return NextResponse.json(
-                {
-                    success: false,
-                    message: 'Invalid product ID'
-                },
-                { status: 400 }
-            );
-        }
+        const isObjectId = mongoose.Types.ObjectId.isValid(id);
+        const filter = isObjectId
+            ? { $or: [{ _id: id }, { slug: id }, { productId: id }], ...getBaseProductFilter() }
+            : { $or: [{ slug: id }, { productId: id }], ...getBaseProductFilter() };
 
-        // Get product - only active and published
-        const filter = { _id: id, ...getBaseProductFilter() };
         const product = await Product.findOne(filter);
 
         if (!product) {

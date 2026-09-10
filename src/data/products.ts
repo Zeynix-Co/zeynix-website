@@ -1,17 +1,29 @@
 export interface Product {
     id: string;
     name: string;
+    slug?: string;
+    productId?: string;
     brand: string;
     price: number;
     originalPrice: number;
     rating: number;
+    totalRatings?: number;
     image: string;
+    mainImage?: string;
     images: string[];
     category: string;
+    subcategory?: string;
     size: string[];
+    sizes?: Array<{
+        size: string;
+        stock: number;
+        inStock: boolean;
+    }>;
     label?: string;
+    productFit?: string;
     description?: string;
     inStock?: boolean;
+    availableStock?: number;
     featured?: boolean;
     discount?: number;
 }

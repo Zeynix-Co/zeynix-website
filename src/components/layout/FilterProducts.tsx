@@ -8,6 +8,7 @@ import { calculateDiscount, Product } from '@/data/products';
 import { productAPI } from '@/lib/api';
 import { useWishlistStore } from '@/store';
 import WishlistConfirmationModal from '@/components/wishlist/WishlistConfirmationModal';
+import ProductCard from '@/components/product/ProductCard';
 
 const categories = ["All", "casual", "formal", "ethnic", "sports"];
 const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
@@ -287,83 +288,12 @@ export default function FilterProducts() {
                     </div>
 
                     {/* Products Grid - Mobile optimized */}
-                    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4">
+                    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
                         {filteredProducts.map(product => (
-                            <Link
+                            <ProductCard
                                 key={product.id}
-                                href={`/products/${product.category}/${product.id}`}
-                                className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
-                            >
-                                {/* Product Image - Mobile optimized */}
-                                <div className="relative aspect-square bg-gray-200">
-                                    {product.label && (
-                                        <div className="absolute top-2 left-2 bg-gray-800 text-white text-xs px-2 py-1 rounded">
-                                            {product.label}
-                                        </div>
-                                    )}
-                                    {product.image ? (
-                                        <img
-                                            src={product.image}
-                                            alt={product.name}
-                                            className="w-full h-full object-cover"
-                                            onError={(e) => {
-                                                // Fallback to placeholder if image fails to load
-                                                const target = e.target as HTMLImageElement;
-                                                target.src = '/images/products/placeholder.jpg';
-                                            }}
-                                        />
-                                    ) : (
-                                        <div className="w-full h-full flex items-center justify-center text-gray-500">
-                                            <div className="text-center">
-                                                <div className="w-16 h-16 bg-gray-300 rounded-full mx-auto mb-2"></div>
-                                                <p className="text-sm">No Image</p>
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
-
-                                {/* Product Details - Mobile optimized */}
-                                <div className="p-2">
-                                    {/* Rating - Hidden on mobile to save space */}
-                                    <div className="hidden md:flex items-center mb-1">
-                                        <Star className="w-3 h-3 text-yellow-400 fill-current" />
-                                        <span className="text-xs text-gray-600 ml-1">{product.rating}</span>
-                                    </div>
-
-                                    {/* Brand and Name */}
-                                    <div className="mb-1">
-                                        <p className="font-semibold text-xs text-gray-800 truncate">{product.brand}</p>
-                                        <p className="text-xs text-gray-600 truncate">{product.name}</p>
-                                    </div>
-
-                                    {/* Price and Like - Mobile optimized */}
-                                    <div className="flex items-center justify-between">
-                                        <div className="flex flex-col gap-1">
-                                            <span className="font-bold text-xs text-black">₹{product.price}</span>
-                                            <div className="flex items-center gap-1">
-                                                <span className="text-xs text-gray-500 line-through">₹{product.originalPrice}</span>
-                                                <span className="text-xs text-green-600 font-semibold">
-                                                    {calculateDiscount(product.originalPrice, product.price)}% OFF
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div
-                                            className={`w-4 h-4 md:w-5 md:h-5 cursor-pointer transition-colors ${isInWishlist(product.id, product.size[0] || 'M')
-                                                ? 'text-red-500'
-                                                : 'text-gray-400 hover:text-red-500'
-                                                }`}
-                                            onClick={(e) => handleWishlistToggle(e, product)}
-                                        >
-                                            <Heart
-                                                className={`w-4 h-4 md:w-5 md:h-5 ${isInWishlist(product.id, product.size[0] || 'M')
-                                                    ? 'fill-current'
-                                                    : 'fill-none'
-                                                    }`}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            </Link>
+                                product={product}
+                            />
                         ))}
                     </div>
 

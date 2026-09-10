@@ -1,11 +1,27 @@
 const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        trim: true,
+        maxlength: [100, 'Name cannot exceed 100 characters']
+    },
     title: {
         type: String,
         required: [true, 'Product title is required'],
         trim: true,
         maxlength: [100, 'Title cannot exceed 100 characters']
+    },
+    slug: {
+        type: String,
+        trim: true,
+        lowercase: true,
+        unique: true,
+        sparse: true
+    },
+    productId: {
+        type: String,
+        trim: true
     },
     brand: {
         type: String,
@@ -17,7 +33,10 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: false,
         trim: true,
-        maxlength: [500, 'Description cannot exceed 500 characters']
+        maxlength: [1000, 'Description cannot exceed 1000 characters']
+    },
+    mainImage: {
+        type: String
     },
     images: [{
         type: String,
@@ -26,8 +45,21 @@ const productSchema = new mongoose.Schema({
     category: {
         type: String,
         required: [true, 'Product category is required'],
-        enum: ['casual', 'formal', 'ethnic', 'sports'],
+        enum: ['casual', 'formal', 'ethnic', 'sports', 't-shirts'],
         default: 'casual'
+    },
+    subcategory: {
+        type: String,
+        trim: true,
+        default: 't-shirts'
+    },
+    price: {
+        type: Number,
+        min: [0, 'Price cannot be negative']
+    },
+    originalPrice: {
+        type: Number,
+        min: [0, 'Original price cannot be negative']
     },
     actualPrice: {
         type: Number,
@@ -53,11 +85,16 @@ const productSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    availableStock: {
+        type: Number,
+        default: 100,
+        min: [0, 'Stock cannot be negative']
+    },
     sizes: [{
         size: {
             type: String,
             required: true,
-            enum: ['M', 'L', 'XL', 'XXL', 'XXXL']
+            enum: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL']
         },
         stock: {
             type: Number,
@@ -85,18 +122,51 @@ const productSchema = new mongoose.Schema({
     },
     productFit: {
         type: String,
-        enum: ['OVERSIZED FIT', 'CASUAL FIT', 'FORMAL FIT', 'CLASSIC FIT', 'SLIM FIT'],
+        enum: ['OVERSIZED FIT', 'CASUAL FIT', 'FORMAL FIT', 'CLASSIC FIT', 'SLIM FIT', 'RELAXED FIT'],
         default: 'CASUAL FIT'
     }
 }, {
     timestamps: true
 });
 
-// Calculate discount percentage before saving
+// Synchronize fields and calculate discount percentage before saving
 productSchema.pre('save', function (next) {
-    if (this.actualPrice && this.discountPrice && this.discountPrice < this.actualPrice) {
-        this.discount = Math.round(((this.actualPrice - this.discountPrice) / this.actualPrice) * 100);
+    if (!this.name && this.title) {
+        this.name = this.title;
     }
+    if (!this.title && this.name) {
+        this.title = this.name;
+    }
+    if (!this.originalPrice && this.actualPrice) {
+        this.originalPrice = this.actualPrice;
+    }
+    if (!this.actualPrice && this.originalPrice) {
+        this.actualPrice = this.originalPrice;
+    }
+    if (this.discountPrice !== undefined && this.discountPrice !== null) {
+        this.price = this.discountPrice;
+    } else if (this.price !== undefined && this.price !== null) {
+        this.discountPrice = this.price;
+    } else {
+        this.price = this.actualPrice;
+    }
+
+    if (this.images && this.images.length > 0) {
+        if (!this.mainImage) {
+            this.mainImage = this.images[0];
+        }
+    }
+
+    if (this.sizes && this.sizes.length > 0) {
+        this.availableStock = this.sizes.reduce((total, s) => total + (s.stock || 0), 0);
+    }
+
+    const orig = this.originalPrice || this.actualPrice;
+    const curr = this.price || this.discountPrice;
+    if (orig && curr && curr < orig) {
+        this.discount = Math.round(((orig - curr) / orig) * 100);
+    }
+
     next();
 });
 

@@ -177,7 +177,12 @@ const getProduct = async (req, res) => {
             });
         }
 
-        const product = await Product.findById(id);
+        const mongoose = require('mongoose');
+        const findQuery = mongoose.Types.ObjectId.isValid(id)
+            ? { $or: [{ _id: id }, { slug: id }, { productId: id }] }
+            : { $or: [{ slug: id }, { productId: id }] };
+
+        const product = await Product.findOne(findQuery);
         if (!product) {
             return res.status(404).json({
                 success: false,
@@ -217,7 +222,12 @@ const updateProduct = async (req, res) => {
         }
 
         // Check if product exists
-        const existingProduct = await Product.findById(id);
+        const mongoose = require('mongoose');
+        const findQuery = mongoose.Types.ObjectId.isValid(id)
+            ? { $or: [{ _id: id }, { slug: id }, { productId: id }] }
+            : { $or: [{ slug: id }, { productId: id }] };
+
+        const existingProduct = await Product.findOne(findQuery);
         if (!existingProduct) {
             return res.status(404).json({
                 success: false,
@@ -290,7 +300,12 @@ const deleteProduct = async (req, res) => {
         }
 
         // Check if product exists
-        const product = await Product.findById(id);
+        const mongoose = require('mongoose');
+        const findQuery = mongoose.Types.ObjectId.isValid(id)
+            ? { $or: [{ _id: id }, { slug: id }, { productId: id }] }
+            : { $or: [{ slug: id }, { productId: id }] };
+
+        const product = await Product.findOne(findQuery);
         if (!product) {
             return res.status(404).json({
                 success: false,
@@ -299,7 +314,7 @@ const deleteProduct = async (req, res) => {
         }
 
         // Soft delete - mark as inactive
-        await Product.findByIdAndUpdate(id, {
+        await Product.findOneAndUpdate(findQuery, {
             isActive: false,
             status: 'archived'
         });

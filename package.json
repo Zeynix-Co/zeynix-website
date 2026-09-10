@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "backend": "cd backend && npm run dev",
-    "dev:full": "concurrently \"npm run dev\" \"npm run backend\""
+    "dev:full": "concurrently \"npm run dev\" \"npm run backend\"",
+    "seed:products": "node backend/scripts/seedProducts.js"
   },
   "dependencies": {
     "@react-email/render": "^1.3.1",

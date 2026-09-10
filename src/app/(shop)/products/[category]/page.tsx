@@ -11,13 +11,27 @@ import { Filter, ArrowLeft, X } from 'lucide-react';
 import Link from 'next/link';
 import { productAPI } from '@/lib/api';
 
+import ProductDetailView from '@/components/product/ProductDetailView';
+
+const KNOWN_CATEGORIES = new Set([
+    'casual', 'formal', 'ethnic', 'sports', 't-shirts', 'tshirts',
+    'shirts', 'jeans', 'pants', 'jackets', 'all', 'men', 'women', 'hoodies', 'sweatshirts'
+]);
+
 export default function CategoryProductsPage() {
     const params = useParams();
     const category = params.category as string;
 
+    // If the URL is /products/[slugOrId] and not a category name, render the ProductDetailView
+    const isProductSlugOrId = Boolean(category && !KNOWN_CATEGORIES.has(category.toLowerCase()));
+
     const [products, setProducts] = useState<Product[]>([]);
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
     const [showFilters, setShowFilters] = useState(false);
+
+    if (isProductSlugOrId) {
+        return <ProductDetailView productIdOrSlug={category} />;
+    }
 
     useEffect(() => {
         // Fetch products by category from API

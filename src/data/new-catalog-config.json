@@ -1,0 +1,137 @@
+[
+  {
+    "title": "Pikachu & Starters Stamp Graphic T-Shirt",
+    "brand": "Zeynix",
+    "description": "Heavyweight 240 GSM drop-shoulder streetwear t-shirt featuring the iconic Pikachu and starter Pokémon front graphic, complemented by an authentic vintage Japanese postage stamp back print. Crafted with 100% premium combed cotton for structured drape and all-day comfort.",
+    "images": [
+      "/images/products/new/pokemon-stamp-tee/front.png",
+      "/images/products/new/pokemon-stamp-tee/back.png",
+      "/images/products/new/pokemon-stamp-tee/angle.png",
+      "/images/products/new/pokemon-stamp-tee/detail.png",
+      "/images/products/new/pokemon-stamp-tee/showcase.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1999,
+    "discountPrice": 899,
+    "rating": 4.9,
+    "totalRatings": 128,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      { "size": "XS", "stock": 50, "inStock": true },
+      { "size": "S", "stock": 85, "inStock": true },
+      { "size": "M", "stock": 140, "inStock": true },
+      { "size": "L", "stock": 160, "inStock": true },
+      { "size": "XL", "stock": 110, "inStock": true },
+      { "size": "XXL", "stock": 65, "inStock": true }
+    ]
+  },
+  {
+    "title": "Zeynix & Co. Botanical Sunflower T-Shirt",
+    "brand": "Zeynix",
+    "description": "Warm terracotta luxury streetwear tee showcasing a meticulously detailed woodcut botanical sunflower back artwork and mini signature chest stamp badge. Tailored in an oversized boxy silhouette from pre-shrunk organic combed cotton.",
+    "images": [
+      "/images/products/new/sunflower-collection-tee/front.png",
+      "/images/products/new/sunflower-collection-tee/back.png",
+      "/images/products/new/sunflower-collection-tee/angle.png",
+      "/images/products/new/sunflower-collection-tee/detail.png",
+      "/images/products/new/sunflower-collection-tee/showcase.png"
+    ],
+    "category": "casual",
+    "actualPrice": 2199,
+    "discountPrice": 999,
+    "rating": 4.8,
+    "totalRatings": 94,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      { "size": "XS", "stock": 40, "inStock": true },
+      { "size": "S", "stock": 75, "inStock": true },
+      { "size": "M", "stock": 130, "inStock": true },
+      { "size": "L", "stock": 145, "inStock": true },
+      { "size": "XL", "stock": 90, "inStock": true },
+      { "size": "XXL", "stock": 55, "inStock": true }
+    ]
+  },
+  {
+    "title": "Renaissance 'Balancing Sins & Virtue' Graphic T-Shirt",
+    "brand": "Zeynix",
+    "description": "Classical Renaissance angel oil painting reflecting into crimson underworld flames, framed under gothic arched 'Zeynix' typography. Ultra-durable high-definition screen print on washed charcoal black heavyweight cotton.",
+    "images": [
+      "/images/products/new/sins-and-virtue-tee/front.png",
+      "/images/products/new/sins-and-virtue-tee/back.png",
+      "/images/products/new/sins-and-virtue-tee/angle.png",
+      "/images/products/new/sins-and-virtue-tee/detail.png",
+      "/images/products/new/sins-and-virtue-tee/showcase.png"
+    ],
+    "category": "casual",
+    "actualPrice": 2299,
+    "discountPrice": 1049,
+    "rating": 5.0,
+    "totalRatings": 156,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      { "size": "XS", "stock": 35, "inStock": true },
+      { "size": "S", "stock": 90, "inStock": true },
+      { "size": "M", "stock": 150, "inStock": true },
+      { "size": "L", "stock": 170, "inStock": true },
+      { "size": "XL", "stock": 120, "inStock": true },
+      { "size": "XXL", "stock": 70, "inStock": true }
+    ]
+  },
+  {
+    "title": "Pixel Art 'Not Today, Satan' Minimalist T-Shirt",
+    "brand": "Zeynix",
+    "description": "Crisp chalk-white minimalist streetwear tee featuring a retro 8-bit pixel comic illustration with bold typography. Premium lightweight combed cotton with reinforced ribbed collar for effortless casual styling.",
+    "images": [
+      "/images/products/new/not-today-satan-tee/front.png",
+      "/images/products/new/not-today-satan-tee/back.png",
+      "/images/products/new/not-today-satan-tee/angle.png",
+      "/images/products/new/not-today-satan-tee/detail.png",
+      "/images/products/new/not-today-satan-tee/showcase.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1899,
+    "discountPrice": 799,
+    "rating": 4.7,
+    "totalRatings": 87,
+    "productFit": "RELAXED FIT",
+    "featured": true,
+    "sizes": [
+      { "size": "XS", "stock": 45, "inStock": true },
+      { "size": "S", "stock": 80, "inStock": true },
+      { "size": "M", "stock": 135, "inStock": true },
+      { "size": "L", "stock": 150, "inStock": true },
+      { "size": "XL", "stock": 100, "inStock": true },
+      { "size": "XXL", "stock": 60, "inStock": true }
+    ]
+  },
+  {
+    "title": "The Underdog Foundation Streetwear Performance T-Shirt",
+    "brand": "Zeynix",
+    "description": "Statement urban athletic tee featuring high-contrast 'The Underdog Foundation' pitbull chain back graphic in crimson and black. Front chest typographic print with relaxed drop shoulders in high-gauge breathable cotton.",
+    "images": [
+      "/images/products/new/underdog-foundation-tee/front.png",
+      "/images/products/new/underdog-foundation-tee/back.png",
+      "/images/products/new/underdog-foundation-tee/angle.png",
+      "/images/products/new/underdog-foundation-tee/detail.png",
+      "/images/products/new/underdog-foundation-tee/showcase.png"
+    ],
+    "category": "casual",
+    "actualPrice": 2399,
+    "discountPrice": 1099,
+    "rating": 4.9,
+    "totalRatings": 112,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      { "size": "XS", "stock": 30, "inStock": true },
+      { "size": "S", "stock": 70, "inStock": true },
+      { "size": "M", "stock": 140, "inStock": true },
+      { "size": "L", "stock": 165, "inStock": true },
+      { "size": "XL", "stock": 115, "inStock": true },
+      { "size": "XXL", "stock": 65, "inStock": true }
+    ]
+  }
+]
