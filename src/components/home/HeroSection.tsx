@@ -3,69 +3,81 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ArrowRight, Sparkles } from 'lucide-react';
 
 interface HeroSlide {
     id: string;
     badge: string;
+    fitTag: string;
     titlePart1: string;
-    titlePart2: string;
     titleHighlight: string;
     subtitle: string;
     tagline: string;
     link: string;
     buttonText: string;
     image: string;
-    fitTag: string;
-    fabricTag: string;
-    colorName: string;
+    stat1Label: string;
+    stat1Value: string;
+    stat2Label: string;
+    stat2Value: string;
+    stat3Label: string;
+    stat3Value: string;
 }
 
 const heroSlides: HeroSlide[] = [
     {
         id: 'downers-at-dusk',
-        badge: 'VIRAL STREETWEAR // SS-26',
-        titlePart1: 'YOUR MUSIC.',
-        titlePart2: 'YOUR',
-        titleHighlight: 'VIBE.',
-        subtitle: '"Alag hi hain agar manzilein to kyu na alag hi rakhe hum raastein?" Heavyweight oversized graphic streetwear tee featuring the signature Downers At Dusk soundtrack atelier print.',
-        tagline: 'Downers At Dusk Edition',
-        link: '/products/casual',
-        buttonText: 'SHOP STREETWEAR',
+        badge: 'SIGNATURE COLLECTION',
+        fitTag: 'OVERSIZED FIT',
+        titlePart1: 'WEAR THE',
+        titleHighlight: 'LUXURY.',
+        subtitle: 'Heavyweight 240 GSM organic cotton with an engineered drop-shoulder cut that holds its boxy drape wash after wash.',
+        tagline: '240 GSM Heavyweight Edition',
+        link: '/products',
+        buttonText: 'SHOP THE DROP',
         image: '/images/hero/downers-at-dusk-tee.png',
-        fitTag: 'OVERSIZED DROP-SHOULDER',
-        fabricTag: '240 GSM HEAVYWEIGHT',
-        colorName: 'PITCH BLACK'
+        stat1Label: 'Fabric',
+        stat1Value: '240 GSM',
+        stat2Label: 'Silhouette',
+        stat2Value: 'Drop-Shoulder',
+        stat3Label: 'Quality',
+        stat3Value: 'Pre-Shrunk'
     },
     {
         id: 'snake-graphic',
-        badge: 'EXCLUSIVE DROP',
-        titlePart1: 'SNAKES DON\'T HISS.',
-        titlePart2: 'THEY',
-        titleHighlight: 'KISS.',
-        subtitle: 'Intricate monochromatic serpent tribal graphic screen-printed on premium organic combed cotton. Engineered with dropped shoulders for an effortless, confident street silhouette.',
-        tagline: 'Serpent Graphic Edition',
+        badge: 'ATELIER PRINT SERIES',
+        fitTag: 'CRACK-RESISTANT',
+        titlePart1: 'STREETWEAR',
+        titleHighlight: 'ELEVATED.',
+        subtitle: 'High-density screen prints on breathable combed cotton. Engineered with reinforced ribbed collar and zero-shrink tailoring.',
+        tagline: 'High-Density Graphic Series',
         link: '/products/casual',
         buttonText: 'EXPLORE COLLECTION',
         image: '/images/hero/snake-graphic-tee.png',
-        fitTag: 'RELAXED STREETWEAR',
-        fabricTag: '100% ORGANIC COTTON',
-        colorName: 'MIDNIGHT ONYX'
+        stat1Label: 'Print Craft',
+        stat1Value: 'High-Density',
+        stat2Label: 'Material',
+        stat2Value: '100% Combed',
+        stat3Label: 'Neckline',
+        stat3Value: 'Ribbed Crew'
     },
     {
         id: 'guman-lavender',
-        badge: 'SIGNATURE ATELIER',
-        titlePart1: 'VINTAGE SOUND.',
-        titlePart2: 'MODERN',
-        titleHighlight: 'LUXURY.',
-        subtitle: '"Woh Padhti Thi Kitaabein" Guman Spotify edition. Soft-washed pastel lilac heavyweight cotton with vinyl record soundtrack art on the back.',
-        tagline: 'Guman Pastel Edition',
-        link: '/products/casual',
-        buttonText: 'SHOP PASTEL EDITION',
+        badge: 'EXPRESS DISPATCH',
+        fitTag: '30-MIN DELIVERY',
+        titlePart1: 'PERFECT FIT.',
+        titleHighlight: 'BUILT TO LAST.',
+        subtitle: 'Soft-washed pastel heavyweight fabric with zero sheer. Double-needle stitched hems ensure lasting everyday luxury.',
+        tagline: 'Pastel Streetwear Series',
+        link: '/products',
+        buttonText: 'VIEW PASTEL FITS',
         image: '/images/hero/guman-lavender-tee.png',
-        fitTag: 'STRUCTURED BOX FIT',
-        fabricTag: 'SOFT-WASHED 240 GSM',
-        colorName: 'LAVENDER PASTEL'
+        stat1Label: 'Finish',
+        stat1Value: 'Soft-Washed',
+        stat2Label: 'Feel',
+        stat2Value: 'Zero Sheer',
+        stat3Label: 'Dispatch',
+        stat3Value: '30 Minutes'
     }
 ];
 
@@ -133,7 +145,7 @@ export default function HeroSection() {
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
-            {/* Custom keyframes for smooth progress bar and light shimmer */}
+            {/* Custom keyframes for progress bar and light sweep */}
             <style dangerouslySetInnerHTML={{__html: `
                 @keyframes hero-progress {
                     from { width: 0%; }
@@ -159,136 +171,106 @@ export default function HeroSection() {
                 }}
             />
 
-            {/* Subtle luxury geometric line accents */}
-            <div className="absolute top-0 right-0 w-[300px] h-[300px] pointer-events-none opacity-20 hidden lg:block">
-                <svg className="w-full h-full" viewBox="0 0 300 300" fill="none">
-                    <circle cx="250" cy="50" r="180" stroke="#B5945B" strokeWidth="1" strokeDasharray="4 6" />
-                    <circle cx="250" cy="50" r="220" stroke="#070F2B" strokeWidth="0.5" />
-                </svg>
-            </div>
-
-            {/* Decorative dot matrix - desktop left margin */}
-            <div className="absolute left-6 top-1/2 -translate-y-1/2 hidden xl:flex flex-col gap-3.5 opacity-20 pointer-events-none z-0">
-                {[...Array(6)].map((_, r) => (
-                    <div key={r} className="flex gap-3">
-                        {[...Array(2)].map((_, c) => (
-                            <div key={c} className="w-1.5 h-1.5 rounded-full bg-[#070F2B]" />
-                        ))}
-                    </div>
-                ))}
-            </div>
-
             <div className="container mx-auto max-w-6xl relative z-10">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
                     
-                    {/* LEFT COLUMN: Editorial Typography & CTA (Smooth Fade & Slide-Up) */}
-                    <div className="lg:col-span-5 relative min-h-[310px] xs:min-h-[330px] sm:min-h-[360px] md:min-h-[390px] lg:min-h-[440px] flex items-center text-left order-1">
+                    {/* LEFT COLUMN: Clean, High-Contrast Editorial Typography */}
+                    <div className="lg:col-span-5 relative min-h-[300px] xs:min-h-[320px] sm:min-h-[350px] md:min-h-[380px] lg:min-h-[420px] flex items-center text-left order-1">
                         {heroSlides.map((slide, index) => {
                             const isActive = currentSlide === index;
                             return (
                                 <div
                                     key={slide.id}
-                                    className={`w-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                                    className={`w-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
                                         isActive 
-                                            ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto z-10' 
-                                            : 'opacity-0 translate-y-6 scale-[0.98] pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 z-0'
+                                            ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto z-10 relative' 
+                                            : 'opacity-0 translate-y-4 scale-[0.98] pointer-events-none absolute inset-0 flex flex-col justify-center z-0'
                                     }`}
                                 >
-                                    {/* 1. Collection Label / Micro-Badge */}
-                                    <div className="inline-flex items-center gap-2.5 mb-3 sm:mb-4">
-                                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#B5945B]/10 border border-[#B5945B]/30 text-[#070F2B] text-[10px] sm:text-[11px] font-black uppercase tracking-widest">
-                                            <span className="w-1.5 h-1.5 rounded-full bg-[#B5945B] animate-pulse" />
+                                    {/* 1. Sleek Feature Tag Pill */}
+                                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-[#070F2B]/10 shadow-xs mb-3 sm:mb-4">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-[#B5945B] animate-pulse" />
+                                        <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-[#070F2B]">
                                             {slide.badge}
                                         </span>
-                                        <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-[#B5945B]">
+                                        <span className="text-[#070F2B]/20">•</span>
+                                        <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#B5945B]">
                                             {slide.fitTag}
                                         </span>
                                     </div>
 
-                                    {/* 2. Bold Editorial Headline */}
-                                    <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-[62px] font-black tracking-tight leading-[1.04] uppercase text-[#070F2B]">
-                                        {slide.titlePart1}<br />
-                                        {slide.titlePart2}{' '}
-                                        <span className="text-[#B5945B] relative inline-block">
-                                            {slide.titleHighlight}
-                                            {/* Subtle gold brush underline */}
-                                            <svg 
-                                                className="absolute -bottom-1 sm:-bottom-2 left-0 w-full h-2 sm:h-3 text-[#B5945B]" 
-                                                viewBox="0 0 100 10" 
-                                                fill="none" 
-                                                xmlns="http://www.w3.org/2000/svg" 
-                                                preserveAspectRatio="none"
-                                            >
-                                                <path d="M0 6 Q 30 1, 60 7 T 100 5" stroke="currentColor" strokeWidth="3" strokeLinecap="round" fill="none" />
-                                            </svg>
-                                        </span>
+                                    {/* 2. Clear, Bold Headline */}
+                                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-black tracking-tight leading-[1.08] uppercase text-[#070F2B]">
+                                        {slide.titlePart1} <span className="text-[#B5945B]">{slide.titleHighlight}</span>
                                     </h1>
 
-                                    {/* 3. Short Supporting Fashion Statement */}
-                                    <p className="mt-3 sm:mt-4 text-xs sm:text-sm md:text-base text-[#070F2B]/75 font-medium leading-relaxed max-w-md">
+                                    {/* 3. Short, Crisp, Highly Readable Feature Description */}
+                                    <p className="mt-3 sm:mt-4 text-xs sm:text-sm md:text-[15px] text-[#070F2B]/80 font-medium leading-relaxed max-w-md">
                                         {slide.subtitle}
                                     </p>
 
-                                    {/* 4. Primary CTA & Secondary Quick Indicator */}
-                                    <div className="mt-5 sm:mt-7 flex flex-wrap items-center gap-4">
+                                    {/* 4. Luxury CTA Button */}
+                                    <div className="mt-5 sm:mt-6 flex flex-wrap items-center gap-3 sm:gap-4">
                                         <Link 
                                             href={slide.link}
-                                            className="bg-[#070F2B] text-white py-3 px-6 sm:py-3.5 sm:px-8 rounded-none font-black uppercase tracking-wider text-[11px] sm:text-xs shadow-[4px_4px_0px_#B5945B] hover:shadow-[0px_0px_0px_#B5945B] hover:bg-[#B5945B] hover:text-[#070F2B] transition-all duration-300 text-center inline-flex items-center gap-3 group border border-[#070F2B] hover:border-[#B5945B] active:scale-[0.98]"
+                                            className="bg-[#070F2B] text-white py-3 px-6 sm:py-3.5 sm:px-7 rounded-xl font-black uppercase tracking-wider text-xs shadow-md hover:shadow-xl hover:bg-[#B5945B] hover:text-[#070F2B] transition-all duration-300 text-center inline-flex items-center gap-2.5 group cursor-pointer active:scale-[0.98]"
                                         >
                                             <span>{slide.buttonText}</span>
                                             <ArrowRight className="w-4 h-4 text-[#B5945B] group-hover:text-[#070F2B] group-hover:translate-x-1 transition-transform" />
                                         </Link>
 
-                                        <div className="flex items-center gap-2 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#070F2B]/60 pl-1">
-                                            <span className="w-1.5 h-1.5 rounded-full bg-[#070F2B]/30" />
-                                            <span>{slide.colorName}</span>
+                                        <Link
+                                            href="/products"
+                                            className="text-xs font-bold uppercase tracking-wider text-[#070F2B]/70 hover:text-[#B5945B] transition-colors py-2 px-3 inline-flex items-center gap-1.5"
+                                        >
+                                            <span>View All</span>
+                                            <span>→</span>
+                                        </Link>
+                                    </div>
+
+                                    {/* 5. Clean 3-Card Feature Spec Matrix (Instant Readability) */}
+                                    <div className="mt-6 pt-5 border-t border-[#070F2B]/10 grid grid-cols-3 gap-2.5 sm:gap-3 max-w-md">
+                                        <div className="bg-white/85 backdrop-blur-xs rounded-xl p-2.5 sm:p-3 border border-[#070F2B]/8 shadow-xs">
+                                            <span className="text-[9px] sm:text-[10px] text-[#B5945B] font-extrabold uppercase tracking-wider block">
+                                                {slide.stat1Label}
+                                            </span>
+                                            <span className="text-xs sm:text-sm font-black text-[#070F2B] block mt-0.5">
+                                                {slide.stat1Value}
+                                            </span>
+                                        </div>
+
+                                        <div className="bg-white/85 backdrop-blur-xs rounded-xl p-2.5 sm:p-3 border border-[#070F2B]/8 shadow-xs">
+                                            <span className="text-[9px] sm:text-[10px] text-[#B5945B] font-extrabold uppercase tracking-wider block">
+                                                {slide.stat2Label}
+                                            </span>
+                                            <span className="text-xs sm:text-sm font-black text-[#070F2B] block mt-0.5">
+                                                {slide.stat2Value}
+                                            </span>
+                                        </div>
+
+                                        <div className="bg-white/85 backdrop-blur-xs rounded-xl p-2.5 sm:p-3 border border-[#070F2B]/8 shadow-xs">
+                                            <span className="text-[9px] sm:text-[10px] text-[#B5945B] font-extrabold uppercase tracking-wider block">
+                                                {slide.stat3Label}
+                                            </span>
+                                            <span className="text-xs sm:text-sm font-black text-[#070F2B] block mt-0.5">
+                                                {slide.stat3Value}
+                                            </span>
                                         </div>
                                     </div>
 
-                                    {/* 5. Minimalist Fabric & Craft Spec Tags */}
-                                    <div className="mt-6 sm:mt-8 pt-4 sm:pt-5 border-t border-[#070F2B]/10 flex flex-wrap items-center gap-x-4 gap-y-2 text-[10px] sm:text-[11px] font-bold text-[#070F2B]/65 uppercase tracking-wider">
-                                        <span className="flex items-center gap-1.5">
-                                            <span className="text-[#B5945B]">✓</span> {slide.fabricTag}
-                                        </span>
-                                        <span className="hidden xs:inline text-[#070F2B]/20">•</span>
-                                        <span className="flex items-center gap-1.5">
-                                            <span className="text-[#B5945B]">✓</span> 100% Combed Cotton
-                                        </span>
-                                        <span className="hidden xs:inline text-[#070F2B]/20">•</span>
-                                        <span className="flex items-center gap-1.5">
-                                            <span className="text-[#B5945B]">✓</span> Pre-Shrunk Fit
-                                        </span>
-                                    </div>
                                 </div>
                             );
                         })}
                     </div>
 
-                    {/* RIGHT COLUMN: Large Fashion Model Visual with Cinematic Editorial Motion */}
+                    {/* RIGHT COLUMN: Large Fashion Model Visual Frame */}
                     <div 
                         className="lg:col-span-7 relative w-full flex items-center justify-center order-2"
                         onTouchStart={handleTouchStart}
                         onTouchEnd={handleTouchEnd}
                     >
-                        {/* Background Watermark & Framing */}
-                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
-                            <div className="w-[85%] h-[85%] opacity-[0.04] select-none">
-                                <Image
-                                    src="/images/logos/zeynix-logo-rbg.png"
-                                    alt="Zeynix Watermark"
-                                    width={500}
-                                    height={500}
-                                    className="object-contain w-full h-full"
-                                    priority
-                                />
-                            </div>
-                            {/* Subtle gold framing lines */}
-                            <div className="hidden lg:block absolute -right-3 -top-3 w-28 h-28 border-t-2 border-r-2 border-[#B5945B]/30 rounded-tr-3xl pointer-events-none" />
-                            <div className="hidden lg:block absolute -left-3 -bottom-3 w-28 h-28 border-b-2 border-l-2 border-[#B5945B]/30 rounded-bl-3xl pointer-events-none" />
-                        </div>
-
                         {/* Visual Container with Lookbook Frame */}
-                        <div className="relative w-full max-w-[620px] lg:max-w-none aspect-[16/9] rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_24px_50px_-10px_rgba(7,15,43,0.14)] border border-[#070F2B]/10 bg-white z-10 group">
+                        <div className="relative w-full max-w-[620px] lg:max-w-none aspect-[16/9] rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_20px_45px_rgba(7,15,43,0.12)] border border-[#070F2B]/10 bg-white z-10 group">
                             
                             {/* Shimmer Light Sweep on Slide Change */}
                             <div 
@@ -301,7 +283,6 @@ export default function HeroSection() {
                             {heroSlides.map((slide, index) => {
                                 const isActive = currentSlide === index;
                                 
-                                // Directional translation
                                 let transformStyle = '';
                                 if (isActive) {
                                     transformStyle = 'opacity-100 translate-x-0 scale-100 pointer-events-auto z-10';
@@ -331,29 +312,22 @@ export default function HeroSection() {
 
                             {/* Top Badge Overlay */}
                             <div className="absolute top-3 sm:top-4 left-3 sm:left-4 z-20">
-                                <span className="bg-[#070F2B]/85 backdrop-blur-md text-[#FFCB05] text-[9px] sm:text-[10px] font-black uppercase tracking-wider py-1 px-2.5 sm:px-3 rounded-md border border-white/10 shadow-sm transition-all duration-300">
+                                <span className="bg-[#070F2B]/90 backdrop-blur-md text-[#FFCB05] text-[9px] sm:text-[10px] font-black uppercase tracking-wider py-1 px-2.5 sm:px-3 rounded-md border border-white/10 shadow-sm transition-all duration-300">
                                     {heroSlides[currentSlide].tagline}
                                 </span>
                             </div>
 
-                            {/* Bottom-Left Fabric Badge */}
-                            <div className="absolute bottom-3.5 sm:bottom-4 left-3 sm:left-4 z-20 hidden xs:block">
-                                <div className="bg-[#FAF6F0]/90 backdrop-blur-md text-[#070F2B] text-[9px] sm:text-[10px] font-black uppercase tracking-wider py-1 px-2.5 rounded-md border border-[#070F2B]/10 shadow-sm">
-                                    {heroSlides[currentSlide].fabricTag}
-                                </div>
-                            </div>
-
                             {/* Bottom-Right Controls Pill (Slide Counter & Prev/Next Chevrons) */}
-                            <div className="absolute bottom-3 sm:bottom-4 right-3 sm:right-4 z-20 flex items-center gap-1.5 bg-[#070F2B]/85 backdrop-blur-md text-white py-1 px-2.5 sm:py-1.5 sm:px-3 rounded-full border border-white/15 shadow-lg">
+                            <div className="absolute bottom-3 sm:bottom-4 right-3 sm:right-4 z-20 flex items-center gap-1.5 bg-[#070F2B]/90 backdrop-blur-md text-white py-1 px-2.5 sm:py-1.5 sm:px-3 rounded-full border border-white/15 shadow-lg">
                                 <span className="text-[10px] sm:text-[11px] font-extrabold text-white/90 tracking-widest pl-1">
                                     0{currentSlide + 1} / 0{heroSlides.length}
                                 </span>
                                 <div className="flex items-center gap-0.5 ml-1 border-l border-white/20 pl-1.5">
                                     <button 
                                         onClick={(e) => {
-                                            e.preventDefault();
-                                            e.stopPropagation();
-                                            prevSlide();
+                                             e.preventDefault();
+                                             e.stopPropagation();
+                                             prevSlide();
                                         }}
                                         className="p-1 hover:text-[#FFCB05] text-white/90 transition-colors cursor-pointer active:scale-90"
                                         aria-label="Previous Slide"
@@ -362,9 +336,9 @@ export default function HeroSection() {
                                     </button>
                                     <button 
                                         onClick={(e) => {
-                                            e.preventDefault();
-                                            e.stopPropagation();
-                                            nextSlide();
+                                             e.preventDefault();
+                                             e.stopPropagation();
+                                             nextSlide();
                                         }}
                                         className="p-1 hover:text-[#FFCB05] text-white/90 transition-colors cursor-pointer active:scale-90"
                                         aria-label="Next Slide"
