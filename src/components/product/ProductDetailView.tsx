@@ -294,8 +294,16 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam }: Pr
     };
 
     // Label for thumbnail
-    const getThumbnailLabel = (index: number) => {
-        const labels = ['Front View', 'Back View', 'Angle View', 'Graphic Detail', 'Full Showcase'];
+    const getThumbnailLabel = (index: number, imgUrl?: string) => {
+        if (imgUrl) {
+            const lower = imgUrl.toLowerCase();
+            if (lower.includes('front')) return 'Front View';
+            if (lower.includes('back')) return 'Back View';
+            if (lower.includes('model') || lower.includes('angle')) return 'Model View';
+            if (lower.includes('detail')) return 'Graphic Detail';
+            if (lower.includes('showcase') || lower.includes('full')) return 'Full Showcase';
+        }
+        const labels = ['Front View', 'Back View', 'Graphic Detail', 'Full Showcase'];
         return labels[index] || `View ${index + 1}`;
     };
 
@@ -351,7 +359,7 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam }: Pr
                                                 ? 'border-[#070F2B] shadow-md ring-2 ring-[#070F2B]/10 scale-102'
                                                 : 'border-transparent hover:border-gray-300 opacity-80 hover:opacity-100'
                                         }`}
-                                        title={getThumbnailLabel(idx)}
+                                        title={getThumbnailLabel(idx, img)}
                                     >
                                         <Image
                                             src={img}
@@ -359,10 +367,10 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam }: Pr
                                             fill
                                             sizes="100px"
                                             className="object-contain p-1"
-                                            quality={80}
+                                            unoptimized
                                         />
                                         <span className="absolute bottom-0 inset-x-0 bg-[#070F2B]/85 text-[#FAF8F5] text-[7px] font-black uppercase text-center py-0.5 tracking-tighter opacity-0 group-hover:opacity-100 transition-opacity">
-                                            {getThumbnailLabel(idx)}
+                                            {getThumbnailLabel(idx, img)}
                                         </span>
                                     </button>
                                 ))}
@@ -390,7 +398,7 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam }: Pr
                                         fill
                                         sizes="(max-width: 1024px) 100vw, 60vw"
                                         priority
-                                        quality={95}
+                                        unoptimized
                                         className={`object-contain transition-transform duration-200 ${
                                             isZooming ? 'scale-150' : 'scale-100'
                                         }`}
@@ -451,7 +459,7 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam }: Pr
 
                             {/* View caption */}
                             <div className="mt-2.5 flex items-center justify-between text-[10px] font-extrabold uppercase tracking-widest text-gray-400 px-1">
-                                <span>Showing: {getThumbnailLabel(selectedImageIndex)}</span>
+                                <span>Showing: {getThumbnailLabel(selectedImageIndex, currentImage)}</span>
                                 <span>{selectedImageIndex + 1} of {productImages.length} Views</span>
                             </div>
                         </div>
@@ -813,7 +821,7 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam }: Pr
                             alt={product.name}
                             fill
                             className="object-contain"
-                            quality={100}
+                            unoptimized
                         />
 
                         {/* Arrows in Lightbox */}

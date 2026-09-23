@@ -217,7 +217,7 @@ export default function ProductCarousel() {
                 {circularProducts.map((product, index) => (
                     <Link
                         key={`${product.id || index}-${index}`}
-                        href={`/products/${product.category || 'casual'}/${product.id || 'unknown'}`}
+                        href={`/products/${(product.category || 'casual').toLowerCase()}/${product.slug || product.id || 'unknown'}`}
                         className="flex-shrink-0 w-70 bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
                         style={{ width: `${CARD_WIDTH}px` }}
                     >

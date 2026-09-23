@@ -9,6 +9,10 @@ if (!process.env.MONGODB_URI) {
 const Product = require('../models/Product');
 
 const SLUG_MAP = {
+    "Vans 'The Heritage Mask' Graphic Oversized Red T-Shirt": "vans-heritage-graphic-tee",
+    "Gothic 'Trust No One' Calligraphy Oversized Purple T-Shirt": "trust-no-one-gothic-tee",
+    "Marathi Pop Art 'Ugach KatKat Karu Nakos' Oversized Red T-Shirt": "ugach-katkat-parody-tee",
+    "'Confidence Looks Cute On Me' Cherry Oversized White T-Shirt": "confidence-cherry-graphic-tee",
     "Pikachu & Starters Stamp Graphic T-Shirt": "pokemon-stamp-tee",
     "Zeynix & Co. Botanical Sunflower T-Shirt": "sunflower-collection-tee",
     "Renaissance 'Balancing Sins & Virtue' Graphic T-Shirt": "sins-and-virtue-tee",

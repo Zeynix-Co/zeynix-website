@@ -31,7 +31,7 @@ export default function ProductCard({ product }: ProductCardProps) {
     const [imageLoaded, setImageLoaded] = useState(false);
 
     // Product link destination - prefer category + id or slug
-    const productHref = `/products/${product.category.toLowerCase()}/${product.slug || product.id}`;
+    const productHref = `/products/${(product.category || 'casual').toLowerCase()}/${product.slug || product.id}`;
 
     const originalPrice = product.originalPrice || product.price || 1999;
     const currentPrice = product.price || 999;
@@ -102,7 +102,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                         alt={product.name}
                         fill
                         sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                        quality={90}
+                        unoptimized
                         priority={false}
                         className={`object-contain transition-all duration-500 ease-out group-hover:scale-105 ${
                             imageLoaded ? 'opacity-100' : 'opacity-0'

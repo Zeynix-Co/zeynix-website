@@ -1,6 +1,116 @@
 [
   {
+    "title": "Vans 'The Heritage Mask' Graphic Oversized Red T-Shirt",
+    "slug": "vans-heritage-graphic-tee",
+    "brand": "Zeynix",
+    "description": "Heavyweight 240 GSM drop-shoulder streetwear t-shirt in bold crimson red. Front features the iconic minimalist white VANS chest logo, complemented on the reverse by a multi-layered underground art collage with textured VANS typography, skate shoes, and a seated figure in a traditional Kathakali ceremonial mask on a Chesterfield sofa with '$BILLION' graffiti detailing. Tailored from 100% premium combed cotton for structured drape.",
+    "images": [
+      "/images/products/new/vans-heritage-graphic-tee/front.png",
+      "/images/products/new/vans-heritage-graphic-tee/back.png",
+      "/images/products/new/vans-heritage-graphic-tee/detail.png",
+      "/images/products/new/vans-heritage-graphic-tee/showcase.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1699,
+    "discountPrice": 499,
+    "rating": 4.9,
+    "totalRatings": 118,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      { "size": "XS", "stock": 35, "inStock": true },
+      { "size": "S", "stock": 80, "inStock": true },
+      { "size": "M", "stock": 140, "inStock": true },
+      { "size": "L", "stock": 160, "inStock": true },
+      { "size": "XL", "stock": 110, "inStock": true },
+      { "size": "XXL", "stock": 60, "inStock": true }
+    ]
+  },
+  {
+    "title": "Gothic 'Trust No One' Calligraphy Oversized Purple T-Shirt",
+    "slug": "trust-no-one-gothic-tee",
+    "brand": "Zeynix",
+    "description": "Vibrant royal violet 240 GSM drop-shoulder oversized streetwear t-shirt. Showcases striking blackletter gothic calligraphy reading 'Trust No One.' swept across the right shoulder and chest, accented by a spiraling calligraphic mandala pattern with ink splatters along the lower hem. The reverse features an intricate bio-mechanical gothic eye emblem alongside cascading dark calligraphic script. 100% pre-shrunk combed cotton.",
+    "images": [
+      "/images/products/new/trust-no-one-gothic-tee/front.png",
+      "/images/products/new/trust-no-one-gothic-tee/back.png",
+      "/images/products/new/trust-no-one-gothic-tee/detail.png",
+      "/images/products/new/trust-no-one-gothic-tee/showcase.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1799,
+    "discountPrice": 529,
+    "rating": 4.9,
+    "totalRatings": 104,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      { "size": "XS", "stock": 40, "inStock": true },
+      { "size": "S", "stock": 85, "inStock": true },
+      { "size": "M", "stock": 130, "inStock": true },
+      { "size": "L", "stock": 150, "inStock": true },
+      { "size": "XL", "stock": 95, "inStock": true },
+      { "size": "XXL", "stock": 50, "inStock": true }
+    ]
+  },
+  {
+    "title": "Marathi Pop Art 'Ugach KatKat Karu Nakos' Oversized Red T-Shirt",
+    "slug": "ugach-katkat-parody-tee",
+    "brand": "Zeynix",
+    "description": "Vibrant scarlet red 240 GSM heavyweight oversized streetwear tee fusing iconic confectionery pop art with beloved Marathi street humor. Front displays clean minimalist chest text 'HAVE A BREAK, HAVE A KITKAT..', while the back features the witty Marathi statement graphic 'उगाच KatKat करू नकोस.' in bold high-density screen print. Crafted from 100% breathable organic combed cotton.",
+    "images": [
+      "/images/products/new/ugach-katkat-parody-tee/front.png",
+      "/images/products/new/ugach-katkat-parody-tee/back.png",
+      "/images/products/new/ugach-katkat-parody-tee/detail.png",
+      "/images/products/new/ugach-katkat-parody-tee/showcase.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1499,
+    "discountPrice": 449,
+    "rating": 4.8,
+    "totalRatings": 136,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      { "size": "XS", "stock": 50, "inStock": true },
+      { "size": "S", "stock": 90, "inStock": true },
+      { "size": "M", "stock": 150, "inStock": true },
+      { "size": "L", "stock": 160, "inStock": true },
+      { "size": "XL", "stock": 105, "inStock": true },
+      { "size": "XXL", "stock": 55, "inStock": true }
+    ]
+  },
+  {
+    "title": "'Confidence Looks Cute On Me' Cherry Oversized White T-Shirt",
+    "slug": "confidence-cherry-graphic-tee",
+    "brand": "Zeynix",
+    "description": "Crisp optical white 240 GSM oversized streetwear t-shirt blending playful coquette aesthetics with luxury streetwear cut. Features an embroidered-style '[69] Hg hot girl' chest badge on the front, paired with vibrant watercolor twin cherries tied with a pink ribbon bow reading 'I'M NOT PERFECT, BUT CONFIDENCE LOOKS CUTE ON ME •• EST. 1989 ••' on the reverse. Premium heavyweight combed cotton with reinforced collar.",
+    "images": [
+      "/images/products/new/confidence-cherry-graphic-tee/front.png",
+      "/images/products/new/confidence-cherry-graphic-tee/back.png",
+      "/images/products/new/confidence-cherry-graphic-tee/angle.png",
+      "/images/products/new/confidence-cherry-graphic-tee/detail.png",
+      "/images/products/new/confidence-cherry-graphic-tee/showcase.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1599,
+    "discountPrice": 469,
+    "rating": 5.0,
+    "totalRatings": 178,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      { "size": "XS", "stock": 45, "inStock": true },
+      { "size": "S", "stock": 95, "inStock": true },
+      { "size": "M", "stock": 160, "inStock": true },
+      { "size": "L", "stock": 175, "inStock": true },
+      { "size": "XL", "stock": 110, "inStock": true },
+      { "size": "XXL", "stock": 65, "inStock": true }
+    ]
+  },
+  {
     "title": "Pikachu & Starters Stamp Graphic T-Shirt",
+    "slug": "pokemon-stamp-tee",
     "brand": "Zeynix",
     "description": "Heavyweight 240 GSM drop-shoulder streetwear t-shirt featuring the iconic Pikachu and starter Pokémon front graphic, complemented by an authentic vintage Japanese postage stamp back print. Crafted with 100% premium combed cotton for structured drape and all-day comfort.",
     "images": [
@@ -28,6 +138,7 @@
   },
   {
     "title": "Zeynix & Co. Botanical Sunflower T-Shirt",
+    "slug": "sunflower-collection-tee",
     "brand": "Zeynix",
     "description": "Warm terracotta luxury streetwear tee showcasing a meticulously detailed woodcut botanical sunflower back artwork and mini signature chest stamp badge. Tailored in an oversized boxy silhouette from pre-shrunk organic combed cotton.",
     "images": [
@@ -55,6 +166,7 @@
   },
   {
     "title": "Renaissance 'Balancing Sins & Virtue' Graphic T-Shirt",
+    "slug": "sins-and-virtue-tee",
     "brand": "Zeynix",
     "description": "Classical Renaissance angel oil painting reflecting into crimson underworld flames, framed under gothic arched 'Zeynix' typography. Ultra-durable high-definition screen print on washed charcoal black heavyweight cotton.",
     "images": [
@@ -82,6 +194,7 @@
   },
   {
     "title": "Pixel Art 'Not Today, Satan' Minimalist T-Shirt",
+    "slug": "not-today-satan-tee",
     "brand": "Zeynix",
     "description": "Crisp chalk-white minimalist streetwear tee featuring a retro 8-bit pixel comic illustration with bold typography. Premium lightweight combed cotton with reinforced ribbed collar for effortless casual styling.",
     "images": [
@@ -109,6 +222,7 @@
   },
   {
     "title": "The Underdog Foundation Streetwear Performance T-Shirt",
+    "slug": "underdog-foundation-tee",
     "brand": "Zeynix",
     "description": "Statement urban athletic tee featuring high-contrast 'The Underdog Foundation' pitbull chain back graphic in crimson and black. Front chest typographic print with relaxed drop shoulders in high-gauge breathable cotton.",
     "images": [
