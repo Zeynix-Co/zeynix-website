@@ -17,7 +17,12 @@ const SLUG_MAP = {
     "Zeynix & Co. Botanical Sunflower T-Shirt": "sunflower-collection-tee",
     "Renaissance 'Balancing Sins & Virtue' Graphic T-Shirt": "sins-and-virtue-tee",
     "Pixel Art 'Not Today, Satan' Minimalist T-Shirt": "not-today-satan-tee",
-    "The Underdog Foundation Streetwear Performance T-Shirt": "underdog-foundation-tee"
+    "The Underdog Foundation Streetwear Performance T-Shirt": "underdog-foundation-tee",
+    "Zeynix 'Make Money Not Hoes' Oversized Streetwear T-Shirt": "make-money-not-hoes-tee",
+    "Venomous Viper 'Snakes Don't Hiss' Calligraphy Oversized Black T-Shirt": "snakes-dont-hiss-viper-tee",
+    "'Snakes Don't Hiss' Crimson Kiss & Graffiti Heart Oversized T-Shirt": "snakes-kiss-crimson-heart-tee",
+    "Squirtle & Great Wave of Kanagawa Cyan Oversized T-Shirt": "squirtle-kanto-wave-tee",
+    "Umair 'Come Through' Spotify Tracklist Oversized Black T-Shirt": "umair-come-through-music-tee"
 };
 
 async function seedProducts() {
