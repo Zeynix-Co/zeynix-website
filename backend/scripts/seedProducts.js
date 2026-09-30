@@ -1,3 +1,5 @@
+const dns = require('dns');
+try { dns.setServers(['8.8.8.8', '1.1.1.1']); } catch(e) {}
 const mongoose = require('mongoose');
 const path = require('path');
 const fs = require('fs');
@@ -22,7 +24,12 @@ const SLUG_MAP = {
     "Venomous Viper 'Snakes Don't Hiss' Calligraphy Oversized Black T-Shirt": "snakes-dont-hiss-viper-tee",
     "'Snakes Don't Hiss' Crimson Kiss & Graffiti Heart Oversized T-Shirt": "snakes-kiss-crimson-heart-tee",
     "Squirtle & Great Wave of Kanagawa Cyan Oversized T-Shirt": "squirtle-kanto-wave-tee",
-    "Umair 'Come Through' Spotify Tracklist Oversized Black T-Shirt": "umair-come-through-music-tee"
+    "Umair 'Come Through' Spotify Tracklist Oversized Black T-Shirt": "umair-come-through-music-tee",
+    "Talha Anjum x Umair 'Downers At Dusk' Oversized Black T-Shirt": "downers-at-dusk-talha-anjum-tee",
+    "Young Stunners 'Gumaan' Slate Blue Oversized T-Shirt": "young-stunners-gumaan-tee",
+    "Talha Anjum 'Kaun Talha?' Acid Wash Oversized Streetwear T-Shirt": "kaun-talha-acid-wash-tee",
+    "Jevin Gill x Talha Anjum 'Cigarettes After Regrets' Oversized Black T-Shirt": "cigarettes-after-regrets-tee",
+    "Gothic Dark Monarch 'Veni Vidi Vici' Oversized White T-Shirt": "veni-vidi-vici-gothic-monarch-tee"
 };
 
 async function seedProducts() {
