@@ -37,7 +37,7 @@ export default function CategoryProductsPage() {
         // Fetch products by category from API
         const fetchCategoryProducts = async () => {
             try {
-                const response = await productAPI.getProductsByCategory(category);
+                const response = await productAPI.getProductsByCategory(category, { limit: 100 });
                 if (response.success) {
                     setProducts(response.data.products);
                     setFilteredProducts(response.data.products);
@@ -159,6 +159,7 @@ export default function CategoryProductsPage() {
                     <div className="flex-1">
                         <ProductGrid
                             products={filteredProducts}
+                            productsPerPage={8}
                         />
                     </div>
                 </div>

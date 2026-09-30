@@ -14,6 +14,8 @@ new_products = [
     "images": [
       "/images/products/new/downers-at-dusk-talha-anjum-tee/front.png",
       "/images/products/new/downers-at-dusk-talha-anjum-tee/back.png",
+      "/images/products/new/downers-at-dusk-talha-anjum-tee/detail.png",
+      "/images/products/new/downers-at-dusk-talha-anjum-tee/angle.png",
       "/images/products/new/downers-at-dusk-talha-anjum-tee/showcase.png"
     ],
     "category": "casual",
@@ -40,6 +42,8 @@ new_products = [
     "images": [
       "/images/products/new/young-stunners-gumaan-tee/front.png",
       "/images/products/new/young-stunners-gumaan-tee/back.png",
+      "/images/products/new/young-stunners-gumaan-tee/detail.png",
+      "/images/products/new/young-stunners-gumaan-tee/angle.png",
       "/images/products/new/young-stunners-gumaan-tee/showcase.png"
     ],
     "category": "casual",
@@ -66,6 +70,8 @@ new_products = [
     "images": [
       "/images/products/new/kaun-talha-acid-wash-tee/front.png",
       "/images/products/new/kaun-talha-acid-wash-tee/back.png",
+      "/images/products/new/kaun-talha-acid-wash-tee/detail.png",
+      "/images/products/new/kaun-talha-acid-wash-tee/angle.png",
       "/images/products/new/kaun-talha-acid-wash-tee/showcase.png"
     ],
     "category": "casual",
@@ -92,6 +98,8 @@ new_products = [
     "images": [
       "/images/products/new/cigarettes-after-regrets-tee/front.png",
       "/images/products/new/cigarettes-after-regrets-tee/back.png",
+      "/images/products/new/cigarettes-after-regrets-tee/detail.png",
+      "/images/products/new/cigarettes-after-regrets-tee/angle.png",
       "/images/products/new/cigarettes-after-regrets-tee/showcase.png"
     ],
     "category": "casual",
@@ -118,6 +126,8 @@ new_products = [
     "images": [
       "/images/products/new/veni-vidi-vici-gothic-monarch-tee/front.png",
       "/images/products/new/veni-vidi-vici-gothic-monarch-tee/back.png",
+      "/images/products/new/veni-vidi-vici-gothic-monarch-tee/detail.png",
+      "/images/products/new/veni-vidi-vici-gothic-monarch-tee/angle.png",
       "/images/products/new/veni-vidi-vici-gothic-monarch-tee/showcase.png"
     ],
     "category": "casual",

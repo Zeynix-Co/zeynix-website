@@ -680,8 +680,6 @@
     "images": [
       "/images/products/new/umair-come-through-music-tee/front.png",
       "/images/products/new/umair-come-through-music-tee/back.png",
-      "/images/products/new/umair-come-through-music-tee/detail.png",
-      "/images/products/new/umair-come-through-music-tee/angle.png",
       "/images/products/new/umair-come-through-music-tee/showcase.png"
     ],
     "category": "casual",
@@ -970,6 +968,1056 @@
       {
         "size": "XXL",
         "stock": 70,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "title": "Gothic 'Unholy Rage' Cemetery Grave Oversized Black T-Shirt",
+    "slug": "unholy-rage-cemetery-tee",
+    "brand": "Zeynix",
+    "description": "Raw gothic rebellion meets heavyweight streetwear luxury. Crafted from premium 240 GSM pre-shrunk combed cotton in deep midnight black with an architectural drop-shoulder cut. The front chest features the piercing minimalist statement 'THE UNHOLY AMOUNT OF RAGE I'VE SWALLOWED TO REMAIN KIND COULD'VE BURIED YOU'. The reverse commands attention with a striking worm's-eye perspective looking out from a subterranean grave at towering silhouettes looking down, crowned by a defiant raised middle-finger typography monument reading 'FUCK YOU'. Finished with reinforced ribbed neckline and double-needle hem.",
+    "images": [
+      "/images/products/new/unholy-rage-cemetery-tee/front.png",
+      "/images/products/new/unholy-rage-cemetery-tee/back.png",
+      "/images/products/new/unholy-rage-cemetery-tee/showcase.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1899,
+    "discountPrice": 549,
+    "rating": 5.0,
+    "totalRatings": 188,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 45,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 90,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 160,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 180,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 120,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 65,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "title": "'You're Going To Die Anyway' Doberman Red & White Oversized T-Shirt",
+    "slug": "marlboro-doberman-die-anyway-tee",
+    "brand": "Zeynix",
+    "description": "Avant-garde streetwear bootleg paying homage to classic counterculture aesthetics. Built from heavyweight 240 GSM organic combed cotton with a striking split color-block construction in vibrant scarlet red and optic white. Front showcases iconic blackletter serif lettering, the existential motto 'You're Going To Die Anyway', and Michelangelo's 'Creation of Adam' fingers passing a lit cigarette with delicate smoke swirls. The back features a formidable guardian Doberman with glowing red eyes, heavy chrome link collar, and a protective red talisman tag set against a red chevron silhouette.",
+    "images": [
+      "/images/products/new/marlboro-doberman-die-anyway-tee/front.png",
+      "/images/products/new/marlboro-doberman-die-anyway-tee/back.png",
+      "/images/products/new/marlboro-doberman-die-anyway-tee/showcase.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1799,
+    "discountPrice": 529,
+    "rating": 4.9,
+    "totalRatings": 165,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 40,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 85,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 150,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 170,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 115,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 60,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "title": "'Mera Yaar Khuda Hai' The Art Of Not Explaining Oversized Black T-Shirt",
+    "slug": "mera-yaar-khuda-hai-tee",
+    "brand": "Zeynix",
+    "description": "Poetic devotion meets contemporary dark romanticism. Tailored from premium 240 GSM midnight black jersey cotton with an oversized boxy silhouette. The front showcases atmospheric gothic script 'THE ART OF NOT EXPLAINING' above a dreamy high-contrast monochrome chalk silhouette of two lovers embracing. The back features timeless devotional poetry 'Mai Mandir Kyu jawaan? Mera Yaar Khuda Hai' in sunset saffron and pure white, paired with a classical renaissance-style oil artwork capturing timeless romance and devotion. A profound tribute to transcendent love and art.",
+    "images": [
+      "/images/products/new/mera-yaar-khuda-hai-tee/front.png",
+      "/images/products/new/mera-yaar-khuda-hai-tee/back.png",
+      "/images/products/new/mera-yaar-khuda-hai-tee/showcase.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1899,
+    "discountPrice": 549,
+    "rating": 5.0,
+    "totalRatings": 204,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 50,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 95,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 165,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 185,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 125,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 70,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "title": "Desi Pop 'Cutie Patola' Lotus Buttercream Yellow Oversized T-Shirt",
+    "slug": "cutie-patola-lotus-tee",
+    "brand": "Zeynix",
+    "description": "Vibrant Desi pop culture and summer aesthetics combined. Made from 230 GSM ultra-soft combed cotton in a warm pastel buttercream yellow. Front features energetic dual-tone typography with neon pink bubble lettering 'CUTIE' alongside deep maroon Devanagari Hindi 'पटोला' (Patola), anchored by lush watercolor lotus blossoms blooming along the hem. The reverse features a retro-modern cartoon illustration of an empowered Desi fashion icon framed by an arch of floating red hearts. Light, breathable, and effortlessly stylish.",
+    "images": [
+      "/images/products/new/cutie-patola-lotus-tee/front.png",
+      "/images/products/new/cutie-patola-lotus-tee/back.png",
+      "/images/products/new/cutie-patola-lotus-tee/showcase.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1599,
+    "discountPrice": 479,
+    "rating": 4.8,
+    "totalRatings": 142,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 45,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 80,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 140,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 155,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 100,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 50,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "title": "Liquid Chrome 'Kid Buu' Y2K Metallic Oversized Black T-Shirt",
+    "slug": "liquid-chrome-kid-buu-tee",
+    "brand": "Zeynix",
+    "description": "Futuristic Y2K cyber-anime aesthetics pushed to the highest standard. Crafted from heavyweight 250 GSM deep obsidian combed cotton with an exaggerated drop-shoulder drape. Kept purely minimalist on the front for understated luxury wear. The back erupts with a hyper-detailed 3D liquid chrome sculpture of iconic villain Kid Buu, rendered in reflective molten mercury with high-gloss specularity and sinister glowing crimson eyes. Built to stand out on the street with unmatched visual impact.",
+    "images": [
+      "/images/products/new/liquid-chrome-kid-buu-tee/front.png",
+      "/images/products/new/liquid-chrome-kid-buu-tee/back.png",
+      "/images/products/new/liquid-chrome-kid-buu-tee/showcase.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1999,
+    "discountPrice": 599,
+    "rating": 5.0,
+    "totalRatings": 225,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 50,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 100,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 175,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 190,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 130,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 75,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "title": "Gothic Cathedral 'Chained Wanderer' Oversized Black T-Shirt",
+    "slug": "gothic-cathedral-chained-wanderer-tee",
+    "brand": "Zeynix",
+    "description": "Haunting architectural gothic streetwear woven from 240 GSM pre-shrunk combed cotton in obsidian black. The front depicts an intricate cathedral trefoil stained-glass arch overlooking barren winter canopies, framed by shadowy hooded skull figures and delicate calligraphic cursive script. The back reveals a monumental dark cathedral spire facade enveloped in historical gothic manuscripts, as a hooded wanderer grasps heavy wrought-iron chains extending forward into the viewer's dimension. Relaxed drop-shoulder drape.",
+    "images": [
+      "/images/products/new/gothic-cathedral-chained-wanderer-tee/front.png",
+      "/images/products/new/gothic-cathedral-chained-wanderer-tee/back.png",
+      "/images/products/new/gothic-cathedral-chained-wanderer-tee/showcase.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1899,
+    "discountPrice": 549,
+    "rating": 5.0,
+    "totalRatings": 172,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 45,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 90,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 160,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 180,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 120,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 65,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "title": "Lightning McQueen 'Piston Cup 95' Racer Oversized Black T-Shirt",
+    "slug": "lightning-mcqueen-piston-cup-tee",
+    "brand": "Zeynix",
+    "description": "High-octane motorsport pop culture tee commemorating the legendary #95. Crafted on 240 GSM premium heavy jersey cotton in pure midnight black. The front features a vibrant metallic chrome '95' encased in an electric lightning bolt with bold 'PISTON CUP' typography across the lower hem. The reverse erupts with a high-definition vintage racing poster of Lightning McQueen smiling in vibrant red, detailed CAD blueprints of the race silhouette, and the immortal motto: 'I'm more than fast, more than fast / I'M LIGHTNING!'.",
+    "images": [
+      "/images/products/new/lightning-mcqueen-piston-cup-tee/front.png",
+      "/images/products/new/lightning-mcqueen-piston-cup-tee/back.png",
+      "/images/products/new/lightning-mcqueen-piston-cup-tee/showcase.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1799,
+    "discountPrice": 499,
+    "rating": 4.9,
+    "totalRatings": 230,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 50,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 95,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 170,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 190,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 125,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 70,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "title": "Porsche 911 'Sally Carrera' Cyan Drift Oversized Black T-Shirt",
+    "slug": "porsche-911-sally-carrera-tee",
+    "brand": "Zeynix",
+    "description": "Sleek automotive streetwear celebrating the timeless Radiator Springs icon. Cut from 240 GSM organic combed cotton in midnight black. The front chest is branded with a clean, understated white '911 PORSCHE' logo. The back showcases a bold electric cyan tribute: 'I'm SALLY', a 3D rendered baby-blue Porsche 911 Carrera, technical line-drawn top and profile schematics, and the classic quote: 'Don't you big city runners ever just go for a walk?'.",
+    "images": [
+      "/images/products/new/porsche-911-sally-carrera-tee/front.png",
+      "/images/products/new/porsche-911-sally-carrera-tee/back.png",
+      "/images/products/new/porsche-911-sally-carrera-tee/showcase.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1799,
+    "discountPrice": 529,
+    "rating": 4.9,
+    "totalRatings": 198,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 40,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 85,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 150,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 175,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 110,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 60,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "title": "GTA VI 'Vice City Outlaws' Neon Graphic Oversized Black T-Shirt",
+    "slug": "gta-vi-vice-city-tee",
+    "brand": "Zeynix",
+    "description": "Next-gen neon streetwear honoring the most anticipated gaming cultural phenomenon. Constructed from 250 GSM deep black heavy cotton with a relaxed streetwear silhouette. The front features the iconic Rockstar Games 'R*' logo badge glowing in neon magenta. The reverse is dominated by a panoramic synthwave GTA VI title graphic framing Lucia and Jason in street bandanas beneath Florida palm silhouettes and neon sunset hues, signed off with retro 'ROCKSTAR GAMES presents' script.",
+    "images": [
+      "/images/products/new/gta-vi-vice-city-tee/front.png",
+      "/images/products/new/gta-vi-vice-city-tee/back.png",
+      "/images/products/new/gta-vi-vice-city-tee/showcase.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1899,
+    "discountPrice": 549,
+    "rating": 5.0,
+    "totalRatings": 310,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 55,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 110,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 185,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 200,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 140,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 80,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "title": "Transformers 'Optimus Prime' Cybertron Oversized Black T-Shirt",
+    "slug": "transformers-optimus-prime-tee",
+    "brand": "Zeynix",
+    "description": "Cybernetic luxury streetwear paying homage to the heroic Autobot Commander. Tailored on 240 GSM heavyweight combed cotton in solid black. Front chest showcases the cobalt Autobot shield insignia and bold 'TRANSFORMERS' typography. The reverse commands respect with a monumental architectural vector portrait of Optimus Prime's battle helm in electric cobalt blue and technical steel-grey line hatching, illuminated by piercing cyan optics.",
+    "images": [
+      "/images/products/new/transformers-optimus-prime-tee/front.png",
+      "/images/products/new/transformers-optimus-prime-tee/back.png",
+      "/images/products/new/transformers-optimus-prime-tee/showcase.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1899,
+    "discountPrice": 549,
+    "rating": 5.0,
+    "totalRatings": 215,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 45,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 90,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 155,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 180,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 120,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 65,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "title": "Risk & Wealth 'Money Money' Oversized Black T-Shirt",
+    "slug": "risk-rich-money-typography-tee",
+    "brand": "Zeynix",
+    "description": "A hard-hitting financial streetwear drop constructed on premium 240 GSM dense combed cotton in obsidian black. The front left chest features geometric cube key badges reading 'RISK / RICH'. The back is dominated by a vertical Swiss brutalist typography layout reading 'MONEY / MONEY' bisected by an authentic US $100 dollar bill slice featuring Benjamin Franklin's portrait.",
+    "images": [
+      "/images/products/new/risk-rich-money-typography-tee/front.png",
+      "/images/products/new/risk-rich-money-typography-tee/back.png",
+      "/images/products/new/risk-rich-money-typography-tee/showcase.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1899,
+    "discountPrice": 549,
+    "rating": 4.9,
+    "totalRatings": 178,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 45,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 90,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 155,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 180,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 120,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 65,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "title": "Japanese Dragon & Samurai 'Red Sun Anime' Oversized Black T-Shirt",
+    "slug": "japanese-dragon-samurai-red-sun-tee",
+    "brand": "Zeynix",
+    "description": "An epic fusion of Japanese ukiyo-e mythology and modern manga aesthetic crafted from 240 GSM ultra-heavyweight combed black cotton. The front chest is struck with a cinematic red-eyed anime ninja gaze peering through shadows. The back unfolds a panoramic traditional white Ryu dragon ascending around a blazing crimson Rising Sun above a stoic solitary samurai warrior holding his drawn katana.",
+    "images": [
+      "/images/products/new/japanese-dragon-samurai-red-sun-tee/front.png",
+      "/images/products/new/japanese-dragon-samurai-red-sun-tee/back.png",
+      "/images/products/new/japanese-dragon-samurai-red-sun-tee/showcase.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1899,
+    "discountPrice": 549,
+    "rating": 5.0,
+    "totalRatings": 240,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 45,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 90,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 155,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 180,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 120,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 65,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "title": "Disney Pixar 'Rayo McQueen 95' Retro Racer Oversized White T-Shirt",
+    "slug": "rayo-mcqueen-retro-racer-white-tee",
+    "brand": "Zeynix",
+    "description": "Nostalgic retro racing energy crafted on pure white 240 GSM organic heavyweight cotton. The front chest features the signature #95 lightning bolt emblem. The back showcases vibrant pop-art puffy lettering 'RAYO MCQUEEN' in flame orange with crossing checkered flags, Lightning McQueen's classic grin, Route 66 badge, and the gold Piston Cup trophy.",
+    "images": [
+      "/images/products/new/rayo-mcqueen-retro-racer-white-tee/front.png",
+      "/images/products/new/rayo-mcqueen-retro-racer-white-tee/back.png",
+      "/images/products/new/rayo-mcqueen-retro-racer-white-tee/showcase.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1799,
+    "discountPrice": 499,
+    "rating": 4.9,
+    "totalRatings": 195,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 45,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 90,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 155,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 180,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 120,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 65,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "title": "'Trust No One - It Is Me' Geometric Red Line Oversized Black T-Shirt",
+    "slug": "trust-no-one-it-is-me-tee",
+    "brand": "Zeynix",
+    "description": "A minimalist avant-garde silhouette built on dense 240 GSM heavyweight black cotton. The front torso displays a vertical technical bar in crisp white and crimson accent blocks reading 'IT IS ME'. The reverse reveals an interlocking geometric dagger cross formation spelling 'TRUST NO ONE' with stylized crimson angles and razor-sharp typographic symmetry.",
+    "images": [
+      "/images/products/new/trust-no-one-it-is-me-tee/front.png",
+      "/images/products/new/trust-no-one-it-is-me-tee/back.png",
+      "/images/products/new/trust-no-one-it-is-me-tee/showcase.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1799,
+    "discountPrice": 499,
+    "rating": 4.8,
+    "totalRatings": 162,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 45,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 90,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 155,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 180,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 120,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 65,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "title": "Dragon Ball Super 'Son Goku SSB' Power Quote Oversized Black T-Shirt",
+    "slug": "goku-ssb-power-quote-tee",
+    "brand": "Zeynix",
+    "description": "Unleash godly ki with this Dragon Ball Super collector's piece rendered on 240 GSM heavyweight combed cotton in deep black. The chest pocket zone displays an intricate monochrome sketch of Goku charging Super Saiyan. The back features a split graphic showing the iconic Goku quote 'Power comes in response to a need, not a desire' superimposed against his half-face in Super Saiyan Blue form with cyan azure hair and orange battle gi.",
+    "images": [
+      "/images/products/new/goku-ssb-power-quote-tee/front.png",
+      "/images/products/new/goku-ssb-power-quote-tee/back.png",
+      "/images/products/new/goku-ssb-power-quote-tee/showcase.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1899,
+    "discountPrice": 549,
+    "rating": 5.0,
+    "totalRatings": 265,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 45,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 90,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 155,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 180,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 120,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 65,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "title": "'Faaaahhh! / Confidence' Motion Typo Oversized Cream T-Shirt",
+    "slug": "faaaahhh-confidence-motion-typo-tee",
+    "brand": "Zeynix",
+    "description": "Avant-garde streetwear tailored in a warm off-white cream 240 GSM organic heavy cotton. The front chest features the raw kinetic expression 'FAAAAHHH!' in arched distressed typography. The reverse displays an elongated spine print spelling 'CONFIDENCE' treated with horizontal glitch and motion-blur distortion.",
+    "images": [
+      "/images/products/new/faaaahhh-confidence-motion-typo-tee/front.png",
+      "/images/products/new/faaaahhh-confidence-motion-typo-tee/back.png",
+      "/images/products/new/faaaahhh-confidence-motion-typo-tee/showcase.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1799,
+    "discountPrice": 499,
+    "rating": 4.9,
+    "totalRatings": 182,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 45,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 90,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 155,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 180,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 120,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 65,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "title": "Desi Street Attitude 'Humse Jalte Hain' Oversized Black T-Shirt",
+    "slug": "humse-jalte-hain-attitude-tee",
+    "brand": "Zeynix",
+    "description": "Bold desi street attitude engineered on 240 GSM dense combed obsidian black cotton. The front features iconic Hindi typography reading 'LOG AAG SE NAHI HUMSE JALTE HAIN' in a distressed retro sunset gradient spanning sunset coral, desert cream, and burnt orange. Finished with a clean, unblemished back.",
+    "images": [
+      "/images/products/new/humse-jalte-hain-attitude-tee/front.png",
+      "/images/products/new/humse-jalte-hain-attitude-tee/back.png",
+      "/images/products/new/humse-jalte-hain-attitude-tee/showcase.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1699,
+    "discountPrice": 479,
+    "rating": 5.0,
+    "totalRatings": 230,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 45,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 90,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 155,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 180,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 120,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 65,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "title": "Marvel Spider-Man 'Miles Morales Web-Slinger' Oversized Off-White T-Shirt",
+    "slug": "spiderman-miles-morales-webslinger-tee",
+    "brand": "Zeynix",
+    "description": "Multiverse-inspired Marvel luxury streetwear constructed on 240 GSM heavyweight off-white cotton. The front chest features a dynamic minimalist line-art of Miles Morales slinging across a diagonal web thread. The back erupts with the iconic comic jagged 'SPIDER-MAN' red-shadowed title logo over a massive leaping silhouette of the wall-crawler.",
+    "images": [
+      "/images/products/new/spiderman-miles-morales-webslinger-tee/front.png",
+      "/images/products/new/spiderman-miles-morales-webslinger-tee/back.png",
+      "/images/products/new/spiderman-miles-morales-webslinger-tee/showcase.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1899,
+    "discountPrice": 549,
+    "rating": 5.0,
+    "totalRatings": 280,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 45,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 90,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 155,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 180,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 120,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 65,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "title": "Marvel Spider-Man 'Peter Parker Mask Typography' Oversized Black T-Shirt",
+    "slug": "spiderman-peter-parker-typography-tee",
+    "brand": "Zeynix",
+    "description": "An architectural typographic masterpiece on 240 GSM deep black combed cotton. Front chest carries the razor-sharp crimson spider insignia with micro-engraved mantle motto. The back features a stunning Spider-Man mask silhouette constructed entirely out of negative space typography: 'PETER PARKER / GREAT POWER / SPIDER-MAN'.",
+    "images": [
+      "/images/products/new/spiderman-peter-parker-typography-tee/front.png",
+      "/images/products/new/spiderman-peter-parker-typography-tee/back.png",
+      "/images/products/new/spiderman-peter-parker-typography-tee/showcase.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1899,
+    "discountPrice": 549,
+    "rating": 4.9,
+    "totalRatings": 250,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 45,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 90,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 155,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 180,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 120,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 65,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "title": "Romantic Streetwear 'I Love My Crazy Girlfriend' Oversized White T-Shirt",
+    "slug": "i-love-my-crazy-girlfriend-tee",
+    "brand": "Zeynix",
+    "description": "Contemporary romantic streetwear cut from 240 GSM pristine white combed cotton. The chest features four monochrome analog photobooth film snapshot moments in a neat quad grid. The back makes an unapologetic statement in classic crimson serif lettering: 'I LOVE MY CRAZY GIRLFRIEND'.",
+    "images": [
+      "/images/products/new/i-love-my-crazy-girlfriend-tee/front.png",
+      "/images/products/new/i-love-my-crazy-girlfriend-tee/back.png",
+      "/images/products/new/i-love-my-crazy-girlfriend-tee/showcase.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1799,
+    "discountPrice": 499,
+    "rating": 4.9,
+    "totalRatings": 190,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 45,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 90,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 155,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 180,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 120,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 65,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "title": "Yin-Yang Koi 'Only Dead Fish Go With The Flow' Oversized White T-Shirt",
+    "slug": "yin-yang-koi-dead-fish-tee",
+    "brand": "Zeynix",
+    "description": "A serene yet rebellious philosophical statement crafted on 240 GSM organic white combed cotton. The front chest features the thought-provoking proverb 'Only DEAD fish go with the flow-' in medieval calligraphy with blood-red accent lettering, complemented by an ink-wash black koi swimming upward at the lower hem. The reverse reveals a breathless circular sumi-e artwork of twin black and white Koi fish swirling in perpetual balance as a living Yin-Yang water vortex.",
+    "images": [
+      "/images/products/new/yin-yang-koi-dead-fish-tee/front.png",
+      "/images/products/new/yin-yang-koi-dead-fish-tee/back.png",
+      "/images/products/new/yin-yang-koi-dead-fish-tee/showcase.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1899,
+    "discountPrice": 549,
+    "rating": 5.0,
+    "totalRatings": 275,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 45,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 90,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 155,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 180,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 120,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 65,
         "inStock": true
       }
     ]

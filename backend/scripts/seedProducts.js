@@ -29,7 +29,28 @@ const SLUG_MAP = {
     "Young Stunners 'Gumaan' Slate Blue Oversized T-Shirt": "young-stunners-gumaan-tee",
     "Talha Anjum 'Kaun Talha?' Acid Wash Oversized Streetwear T-Shirt": "kaun-talha-acid-wash-tee",
     "Jevin Gill x Talha Anjum 'Cigarettes After Regrets' Oversized Black T-Shirt": "cigarettes-after-regrets-tee",
-    "Gothic Dark Monarch 'Veni Vidi Vici' Oversized White T-Shirt": "veni-vidi-vici-gothic-monarch-tee"
+    "Gothic Dark Monarch 'Veni Vidi Vici' Oversized White T-Shirt": "veni-vidi-vici-gothic-monarch-tee",
+    "Gothic 'Unholy Rage' Cemetery Grave Oversized Black T-Shirt": "unholy-rage-cemetery-tee",
+    "'You're Going To Die Anyway' Doberman Red & White Oversized T-Shirt": "marlboro-doberman-die-anyway-tee",
+    "'Mera Yaar Khuda Hai' The Art Of Not Explaining Oversized Black T-Shirt": "mera-yaar-khuda-hai-tee",
+    "Desi Pop 'Cutie Patola' Lotus Buttercream Yellow Oversized T-Shirt": "cutie-patola-lotus-tee",
+    "Liquid Chrome 'Kid Buu' Y2K Metallic Oversized Black T-Shirt": "liquid-chrome-kid-buu-tee",
+    "Gothic Cathedral 'Chained Wanderer' Oversized Black T-Shirt": "gothic-cathedral-chained-wanderer-tee",
+    "Lightning McQueen 'Piston Cup 95' Racer Oversized Black T-Shirt": "lightning-mcqueen-piston-cup-tee",
+    "Porsche 911 'Sally Carrera' Cyan Drift Oversized Black T-Shirt": "porsche-911-sally-carrera-tee",
+    "GTA VI 'Vice City Outlaws' Neon Graphic Oversized Black T-Shirt": "gta-vi-vice-city-tee",
+    "Transformers 'Optimus Prime' Cybertron Oversized Black T-Shirt": "transformers-optimus-prime-tee",
+    "Risk & Wealth 'Money Money' Oversized Black T-Shirt": "risk-rich-money-typography-tee",
+    "Japanese Dragon & Samurai 'Red Sun Anime' Oversized Black T-Shirt": "japanese-dragon-samurai-red-sun-tee",
+    "Disney Pixar 'Rayo McQueen 95' Retro Racer Oversized White T-Shirt": "rayo-mcqueen-retro-racer-white-tee",
+    "'Trust No One - It Is Me' Geometric Red Line Oversized Black T-Shirt": "trust-no-one-it-is-me-tee",
+    "Dragon Ball Super 'Son Goku SSB' Power Quote Oversized Black T-Shirt": "goku-ssb-power-quote-tee",
+    "'Faaaahhh! / Confidence' Motion Typo Oversized Cream T-Shirt": "faaaahhh-confidence-motion-typo-tee",
+    "Desi Street Attitude 'Humse Jalte Hain' Oversized Black T-Shirt": "humse-jalte-hain-attitude-tee",
+    "Marvel Spider-Man 'Miles Morales Web-Slinger' Oversized Off-White T-Shirt": "spiderman-miles-morales-webslinger-tee",
+    "Marvel Spider-Man 'Peter Parker Mask Typography' Oversized Black T-Shirt": "spiderman-peter-parker-typography-tee",
+    "Romantic Streetwear 'I Love My Crazy Girlfriend' Oversized White T-Shirt": "i-love-my-crazy-girlfriend-tee",
+    "Yin-Yang Koi 'Only Dead Fish Go With The Flow' Oversized White T-Shirt": "yin-yang-koi-dead-fish-tee"
 };
 
 async function seedProducts() {

@@ -25,7 +25,7 @@ export default memo(function ProductGrid({
     hasMore = false,
     className = '',
     enableInfiniteScroll = false,
-    productsPerPage = 12
+    productsPerPage = 8
 }: ProductGridProps) {
     const [viewMode, setViewMode] = useState<ViewMode>('grid');
     const [currentPage, setCurrentPage] = useState(1);
@@ -185,53 +185,62 @@ export default memo(function ProductGrid({
                 </div>
             )}
 
-            {/* Pagination - Only show if not using infinite scroll */}
+            {/* Luxury Pagination Controls */}
             {!enableInfiniteScroll && totalPages > 1 && (
-                <div className="flex items-center justify-center space-x-2 mt-8">
-                    {/* Previous Page */}
-                    <button
-                        onClick={() => handlePageChange(currentPage - 1)}
-                        disabled={currentPage === 1}
-                        className="p-2 border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                    >
-                        <ChevronLeft className="w-4 h-4" />
-                    </button>
+                <div className="mt-12 pt-8 border-t border-gray-200/80 flex flex-col items-center gap-4">
+                    {/* Status Badge */}
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#070F2B]/5 border border-[#070F2B]/10 text-[11px] font-black uppercase tracking-wider text-[#070F2B]">
+                        <span className="w-2 h-2 rounded-full bg-[#B5945B] animate-pulse" />
+                        <span>Section {currentPage} of {totalPages}</span>
+                        <span className="text-gray-400">•</span>
+                        <span className="text-gray-500">Showing {startIndex + 1}–{Math.min(endIndex, products.length)} of {products.length} Products</span>
+                    </div>
 
-                    {/* Page Numbers */}
-                    {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                        let pageNum;
-                        if (totalPages <= 5) {
-                            pageNum = i + 1;
-                        } else if (currentPage <= 3) {
-                            pageNum = i + 1;
-                        } else if (currentPage >= totalPages - 2) {
-                            pageNum = totalPages - 4 + i;
-                        } else {
-                            pageNum = currentPage - 2 + i;
-                        }
+                    {/* Section Switcher Buttons */}
+                    <div className="flex items-center gap-2 sm:gap-3 select-none">
+                        {/* Previous Section */}
+                        <button
+                            onClick={() => handlePageChange(currentPage - 1)}
+                            disabled={currentPage === 1}
+                            className="flex items-center gap-1 px-3.5 py-2.5 rounded-xl border border-gray-200 bg-white text-[#070F2B] font-bold text-xs uppercase tracking-wider hover:border-[#B5945B] hover:text-[#B5945B] disabled:opacity-40 disabled:pointer-events-none transition-all shadow-xs active:scale-95 cursor-pointer"
+                            aria-label="Previous Section"
+                        >
+                            <ChevronLeft className="w-4 h-4" />
+                            <span className="hidden sm:inline">Prev</span>
+                        </button>
 
-                        return (
-                            <button
-                                key={pageNum}
-                                onClick={() => handlePageChange(pageNum)}
-                                className={`px-3 py-2 border rounded-md transition-colors ${currentPage === pageNum
-                                    ? 'bg-blue-600 text-white border-blue-600'
-                                    : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                        {/* Numbered Section Buttons */}
+                        {Array.from({ length: totalPages }, (_, i) => {
+                            const pageNum = i + 1;
+                            const isActive = currentPage === pageNum;
+                            return (
+                                <button
+                                    key={pageNum}
+                                    onClick={() => handlePageChange(pageNum)}
+                                    className={`relative min-w-[42px] h-[42px] px-3.5 rounded-xl font-black text-xs uppercase tracking-wider transition-all duration-200 cursor-pointer active:scale-95 flex items-center justify-center gap-1.5 ${
+                                        isActive
+                                            ? 'bg-[#070F2B] text-[#E5D7B5] shadow-[0_8px_20px_rgba(7,15,43,0.25)] border border-[#B5945B]/60 scale-105'
+                                            : 'bg-white text-[#070F2B] border border-gray-200 hover:border-[#B5945B]/60 hover:text-[#B5945B] shadow-xs'
                                     }`}
-                            >
-                                {pageNum}
-                            </button>
-                        );
-                    })}
+                                >
+                                    <span className="text-[10px] opacity-60 font-semibold sm:hidden">#</span>
+                                    <span className="hidden sm:inline text-[9px] uppercase font-bold tracking-widest opacity-70">Sec</span>
+                                    <span>{pageNum}</span>
+                                </button>
+                            );
+                        })}
 
-                    {/* Next Page */}
-                    <button
-                        onClick={() => handlePageChange(currentPage + 1)}
-                        disabled={currentPage === totalPages}
-                        className="p-2 border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                    >
-                        <ChevronRight className="w-4 h-4" />
-                    </button>
+                        {/* Next Section */}
+                        <button
+                            onClick={() => handlePageChange(currentPage + 1)}
+                            disabled={currentPage === totalPages}
+                            className="flex items-center gap-1 px-3.5 py-2.5 rounded-xl border border-gray-200 bg-white text-[#070F2B] font-bold text-xs uppercase tracking-wider hover:border-[#B5945B] hover:text-[#B5945B] disabled:opacity-40 disabled:pointer-events-none transition-all shadow-xs active:scale-95 cursor-pointer"
+                            aria-label="Next Section"
+                        >
+                            <span className="hidden sm:inline">Next</span>
+                            <ChevronRight className="w-4 h-4" />
+                        </button>
+                    </div>
                 </div>
             )}
 
