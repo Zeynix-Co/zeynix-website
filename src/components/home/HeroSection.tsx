@@ -47,23 +47,23 @@ export default function HeroSection() {
                         sizes="100vw"
                         className="object-cover object-top"
                     />
-                    {/* Bottom-to-middle midnight navy gradient so headline and button sit on clean canvas */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#070F2B] via-[#070F2B]/95 via-48% to-transparent pointer-events-none" />
+                    {/* Subtle bottom gradient only behind CTA button and headline - model's body remains 100% visible */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#070F2B] via-[#070F2B]/80 via-28% to-transparent pointer-events-none" />
                     {/* Very subtle top scrim for navbar legibility without hiding model's face/hair */}
-                    <div className="absolute top-0 inset-x-0 h-16 bg-gradient-to-b from-[#070F2B]/40 to-transparent pointer-events-none" />
+                    <div className="absolute top-0 inset-x-0 h-14 bg-gradient-to-b from-[#070F2B]/35 to-transparent pointer-events-none" />
                 </div>
 
                 {/* Bottom Edge subtle blend into page */}
-                <div className="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-[#070F2B] to-transparent pointer-events-none" />
+                <div className="absolute bottom-0 inset-x-0 h-14 bg-gradient-to-t from-[#070F2B] to-transparent pointer-events-none" />
             </div>
 
             {/* 2. FOREGROUND EDITORIAL CONTENT */}
             {/* Responsive padding: mobile starts with space for fixed header, desktop has generous breathing room */}
-            <div className="relative z-20 w-full max-w-7xl mx-auto px-5 sm:px-10 lg:px-16 pt-20 sm:pt-24 lg:pt-28 pb-5 sm:pb-8 flex flex-col justify-between h-full">
+            <div className="relative z-20 w-full max-w-7xl mx-auto px-5 sm:px-10 lg:px-16 pt-16 sm:pt-24 lg:pt-28 pb-4 sm:pb-8 flex flex-col justify-between h-full">
                 
                 {/* Top Subtle Status Tag */}
                 <div className="w-full flex items-center justify-between">
-                    <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.25em] text-[#B5945B] font-semibold">
+                    <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.25em] text-[#B5945B] font-semibold drop-shadow-sm">
                         NEW DROP 01 / 2026
                     </span>
                     <span className="hidden sm:inline-block text-[10px] sm:text-xs font-mono uppercase tracking-[0.25em] text-white/40">
@@ -73,15 +73,15 @@ export default function HeroSection() {
 
                 {/* Center / Lower Content Block */}
                 {/* On mobile: placed at bottom above the footer bar. On desktop: vertically centered on left. */}
-                <div className="mt-auto md:my-auto max-w-lg lg:max-w-xl pb-2 sm:pb-4 md:py-6">
+                <div className="mt-auto md:my-auto max-w-lg lg:max-w-xl pb-1 sm:pb-4 md:py-6">
                     {/* Main Headline */}
-                    <h1 className="font-black uppercase text-white tracking-tight leading-[0.96] text-3xl xs:text-4xl sm:text-5xl lg:text-[4rem] xl:text-[4.5rem] text-balance">
+                    <h1 className="font-black uppercase text-white tracking-tight leading-[0.96] text-3xl xs:text-4xl sm:text-5xl lg:text-[4rem] xl:text-[4.5rem] text-balance drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
                         NOT FOR EVERYONE.<br />
                         THAT&apos;S THE POINT.
                     </h1>
 
                     {/* Supporting Line */}
-                    <p className="mt-2.5 sm:mt-3.5 text-xs sm:text-sm md:text-base text-white/70 font-normal leading-relaxed max-w-sm">
+                    <p className="mt-2.5 sm:mt-3.5 text-xs sm:text-sm md:text-base text-white/80 font-normal leading-relaxed max-w-sm drop-shadow-[0_1px_8px_rgba(0,0,0,0.8)]">
                         Independent streetwear. Made for your frequency.
                     </p>
 
