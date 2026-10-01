@@ -136,8 +136,8 @@ export default function HomePage() {
             {/* 1. HERO SECTION */}
             <HeroSection />
 
-            {/* 2. Floating rounded benefits panel overlapping the Hero section (2x2 on mobile, row on desktop) */}
-            <div className="relative z-20 -mt-3 lg:-mt-4 max-w-6xl mx-auto px-3 sm:px-4">
+            {/* 2. Floating rounded benefits panel separated cleanly from the Hero section */}
+            <div className="relative z-20 mt-8 sm:mt-12 lg:mt-14 mb-6 sm:mb-8 max-w-6xl mx-auto px-3 sm:px-4">
                 <div className="bg-[#070F2B] text-white rounded-2xl py-5 px-4 sm:py-7 sm:px-8 md:px-10 shadow-[0_20px_50px_rgba(7,15,43,0.28)] border border-white/10 grid grid-cols-2 lg:flex lg:flex-row items-stretch justify-between gap-3 sm:gap-4 lg:gap-0 backdrop-blur-md bg-opacity-95">
                     
                     {/* Benefit 1 */}

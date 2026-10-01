@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Search, User, Menu, Package, LogOut, UserCheckIcon, X } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { navigation } from '@/lib/constants';
 import MobileNavigation from './Navigation';
 import { useAuthStore } from '@/store';
@@ -12,6 +13,8 @@ import WishlistIcon from '@/components/wishlist/WishlistIcon';
 import SearchBar from './SearchBar';
 
 export default function Header() {
+    const pathname = usePathname();
+    const isHome = pathname === '/';
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -52,10 +55,14 @@ export default function Header() {
     return (
         <>
             <header 
-                className={`sticky top-0 z-40 transition-all duration-300 w-full border-b ${
-                    isScrolled 
-                        ? 'bg-[#070F2B]/95 backdrop-blur-md shadow-2xl py-1 border-white/15' 
-                        : 'bg-[#070F2B] py-2 border-white/5'
+                className={`w-full z-40 transition-all duration-500 border-b ${
+                    isHome 
+                        ? (isScrolled 
+                            ? 'fixed top-0 bg-[#070F2B]/95 backdrop-blur-md shadow-2xl py-1 border-white/10' 
+                            : 'fixed top-0 bg-gradient-to-b from-[#070F2B]/80 via-[#070F2B]/30 to-transparent py-2 sm:py-3 border-transparent')
+                        : (isScrolled 
+                            ? 'sticky top-0 bg-[#070F2B]/95 backdrop-blur-md shadow-2xl py-1 border-white/15' 
+                            : 'sticky top-0 bg-[#070F2B] py-2 border-white/5')
                 }`}
             >
                 <div className="container mx-auto px-3 sm:px-4 md:px-8">
