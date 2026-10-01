@@ -53,7 +53,10 @@ const SLUG_MAP = {
     "Yin-Yang Koi 'Only Dead Fish Go With The Flow' Oversized White T-Shirt": "yin-yang-koi-dead-fish-tee",
     "Gothic Demon 'INSANITY' Crimson Oversized T-Shirt": "insanity-demon-crimson-tee",
     "Acid Wash 'Her New Guy' Coiled Viper Oversized Black T-Shirt": "her-new-guy-viper-acid-wash-tee",
-    "Halloween 'Still Dead - Thanks For Checking' Oversized Black T-Shirt": "halloween-rip-still-dead-tee"
+    "Halloween 'Still Dead - Thanks For Checking' Oversized Black T-Shirt": "halloween-rip-still-dead-tee",
+    "Kawaii Gothic 'Spookie' Peeking Cat & Skeletons Buttercream Oversized T-Shirt": "spookie-peeking-cat-skeletons-tee",
+    "Gothic Anatomy 'Only Live Once' Ribcage & Spine Oversized Black T-Shirt": "only-live-once-skeleton-ribcage-tee",
+    "Cyber Techwear 'Cosmic Horizon Alien' Oversized Black T-Shirt": "cosmic-alien-mountain-cyber-tee"
 };
 
 async function seedProducts() {
