@@ -50,7 +50,10 @@ const SLUG_MAP = {
     "Marvel Spider-Man 'Miles Morales Web-Slinger' Oversized Off-White T-Shirt": "spiderman-miles-morales-webslinger-tee",
     "Marvel Spider-Man 'Peter Parker Mask Typography' Oversized Black T-Shirt": "spiderman-peter-parker-typography-tee",
     "Romantic Streetwear 'I Love My Crazy Girlfriend' Oversized White T-Shirt": "i-love-my-crazy-girlfriend-tee",
-    "Yin-Yang Koi 'Only Dead Fish Go With The Flow' Oversized White T-Shirt": "yin-yang-koi-dead-fish-tee"
+    "Yin-Yang Koi 'Only Dead Fish Go With The Flow' Oversized White T-Shirt": "yin-yang-koi-dead-fish-tee",
+    "Gothic Demon 'INSANITY' Crimson Oversized T-Shirt": "insanity-demon-crimson-tee",
+    "Acid Wash 'Her New Guy' Coiled Viper Oversized Black T-Shirt": "her-new-guy-viper-acid-wash-tee",
+    "Halloween 'Still Dead - Thanks For Checking' Oversized Black T-Shirt": "halloween-rip-still-dead-tee"
 };
 
 async function seedProducts() {

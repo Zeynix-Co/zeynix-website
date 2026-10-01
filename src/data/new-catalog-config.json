@@ -1,5 +1,55 @@
 [
   {
+    "title": "Halloween 'Still Dead - Thanks For Checking' Oversized Black T-Shirt",
+    "slug": "halloween-rip-still-dead-tee",
+    "brand": "Zeynix",
+    "description": "Dark comedy meets spooky streetwear in this Halloween special edition drop crafted on dense 240 GSM organic combed black cotton. The front chest features spooky shoulder spiderwebs, retro purple typography reading 'HAPPY HALLOWEEN', and a playful hanging spider charm. The reverse commands attention with an iconic cracked tombstone declaring 'R.I.P. STILL DEAD THANKS FOR CHECKING' crowned with a kawaii skull and an irreverent skeletal hand rising with an OK gesture.",
+    "images": [
+      "/images/products/new/halloween-rip-still-dead-tee/front.png",
+      "/images/products/new/halloween-rip-still-dead-tee/back.png",
+      "/images/products/new/halloween-rip-still-dead-tee/showcase.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1799,
+    "discountPrice": 499,
+    "rating": 5.0,
+    "totalRatings": 245,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 45,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 90,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 155,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 180,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 120,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 65,
+        "inStock": true
+      }
+    ]
+  },
+  {
     "title": "Vans 'The Heritage Mask' Graphic Oversized Red T-Shirt",
     "slug": "vans-heritage-graphic-tee",
     "brand": "Zeynix",
@@ -1003,6 +1053,106 @@
       {
         "size": "M",
         "stock": 160,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 180,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 120,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 65,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "title": "Gothic Demon 'INSANITY' Crimson Oversized T-Shirt",
+    "slug": "insanity-demon-crimson-tee",
+    "brand": "Zeynix",
+    "description": "An audacious masterpiece of dark luxury streetwear cut from heavyweight 240 GSM organic crimson red combed cotton. The front commands attention with arched distressed 'INSANITY' flame typography above an intricate, hyper-detailed demonic entity bust and baroque tribal filigree flourishes. Features an unembellished, clean plain back for refined minimalist streetwear balance.",
+    "images": [
+      "/images/products/new/insanity-demon-crimson-tee/front.png",
+      "/images/products/new/insanity-demon-crimson-tee/back.png",
+      "/images/products/new/insanity-demon-crimson-tee/showcase.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1899,
+    "discountPrice": 549,
+    "rating": 5.0,
+    "totalRatings": 215,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 45,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 90,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 155,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 180,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 120,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 65,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "title": "Acid Wash 'Her New Guy' Coiled Viper Oversized Black T-Shirt",
+    "slug": "her-new-guy-viper-acid-wash-tee",
+    "brand": "Zeynix",
+    "description": "Heavyweight vintage streetwear cut from 240 GSM dense mineral-washed charcoal black cotton jersey. The front features the unapologetic statement 'Her New Guy WAS Never New, You Just never KNEW...' interwoven with a lifelike albino coiled pit viper with crimson red eyes and the signature Zeynix emblem. Finished with a clean, unblemished plain back and relaxed drop-shoulder silhouette.",
+    "images": [
+      "/images/products/new/her-new-guy-viper-acid-wash-tee/front.png",
+      "/images/products/new/her-new-guy-viper-acid-wash-tee/back.png",
+      "/images/products/new/her-new-guy-viper-acid-wash-tee/showcase.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1899,
+    "discountPrice": 549,
+    "rating": 5.0,
+    "totalRatings": 240,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 45,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 90,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 155,
         "inStock": true
       },
       {
