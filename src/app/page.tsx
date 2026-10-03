@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import HeroSection from '@/components/home/HeroSection';
-import LaunchBannerCard from '@/components/home/LaunchBannerCard';
 import Link from 'next/link';
 import Image from 'next/image';
 import { colorClasses, APP_CONFIG } from '@/lib/constants';
@@ -12,19 +11,19 @@ import { useWishlistStore, useAuthStore } from '@/store';
 import useCartStore from '@/store/cartStore';
 import WishlistConfirmationModal from '@/components/wishlist/WishlistConfirmationModal';
 import ProductCard from '@/components/product/ProductCard';
-import { 
-    Award, 
-    Sparkles, 
-    Shield, 
-    RotateCcw, 
-    Heart, 
-    ShoppingCart, 
-    ArrowRight, 
-    Star, 
-    ChevronLeft, 
-    ChevronRight, 
-    Play, 
-    Instagram 
+import {
+    Award,
+    Sparkles,
+    Shield,
+    RotateCcw,
+    Heart,
+    ShoppingCart,
+    ArrowRight,
+    Star,
+    ChevronLeft,
+    ChevronRight,
+    Play,
+    Instagram
 } from 'lucide-react';
 
 export default function HomePage() {
@@ -107,7 +106,7 @@ export default function HomePage() {
         }
 
         const defaultSize = product.size?.[0] || 'M';
-        
+
         addToCart({
             product: {
                 id: product.id,
@@ -140,13 +139,10 @@ export default function HomePage() {
             {/* 1. HERO SECTION */}
             <HeroSection />
 
-            {/* Launching 13th October Pre-Order Card */}
-            <LaunchBannerCard />
-
             {/* 2. Floating rounded benefits panel separated cleanly from the Hero section */}
             <div className="relative z-20 mt-8 sm:mt-12 lg:mt-14 mb-6 sm:mb-8 max-w-6xl mx-auto px-3 sm:px-4">
                 <div className="bg-[#070F2B] text-white rounded-2xl py-5 px-4 sm:py-7 sm:px-8 md:px-10 shadow-[0_20px_50px_rgba(7,15,43,0.28)] border border-white/10 grid grid-cols-2 lg:flex lg:flex-row items-stretch justify-between gap-3 sm:gap-4 lg:gap-0 backdrop-blur-md bg-opacity-95">
-                    
+
                     {/* Benefit 1 */}
                     <div className="flex-1 flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-2 sm:gap-4 p-1.5 sm:p-2 transition-transform duration-300 hover:translate-y-[-2px] group">
                         <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center text-[#B5945B] shrink-0 group-hover:border-[#B5945B]/40 group-hover:bg-[#B5945B]/5 transition-all duration-300">
@@ -204,17 +200,17 @@ export default function HomePage() {
             <section className="py-10 md:py-14 px-4 md:px-8 bg-[#FCF8DD]">
                 <div className="container mx-auto max-w-6xl">
                     <div className="grid grid-cols-1 lg:grid-cols-12 rounded-2xl overflow-hidden shadow-xl border border-[#070F2B]/10">
-                        
+
                         {/* Left: Visual representation (Print atelier flat lay) */}
                         <div className="lg:col-span-6 relative aspect-[4/3] lg:aspect-auto min-h-[280px] bg-white group overflow-hidden">
                             <div className="absolute inset-0 bg-[#070F2B]/5 group-hover:bg-transparent transition-all duration-300 z-10" />
-                            <Image 
-                                src="/images/custom-print-service.jpg" 
-                                alt="Zeynix Custom Printing Service Flatlay" 
+                            <Image
+                                src="/images/custom-print-service.jpg"
+                                alt="Zeynix Custom Printing Service Flatlay"
                                 fill
                                 className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                             />
-                            
+
                             <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-md rounded-xl p-4 border border-[#070F2B]/10 flex items-center gap-3.5 z-20 shadow-lg">
                                 <div className="w-9 h-9 rounded-full bg-[#070F2B] text-white flex items-center justify-center text-[11px] font-black shadow-md flex-shrink-0">
                                     B2B
@@ -239,8 +235,8 @@ export default function HomePage() {
                                 We bring your creative visions to life. From corporate branding to limited event merchandise, get high-quality custom printing on our premium organic cotton fabrics. Send us your designs, and we will handle the rest.
                             </p>
                             <div className="pt-2">
-                                <Link 
-                                    href="/contact" 
+                                <Link
+                                    href="/contact"
                                     className="inline-flex items-center gap-2 bg-[#FFCB05] text-[#070F2B] py-3.5 px-6 rounded-xl font-bold uppercase tracking-wider text-[10px] shadow-md hover:bg-white hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
                                 >
                                     Inquire Bespoke Order
@@ -256,7 +252,7 @@ export default function HomePage() {
             {/* 4. STREETWEAR ESSENTIALS GRID (1st Section of Products) */}
             <section className="py-10 md:py-14 px-4 bg-white border-t border-b border-[#070F2B]/5 relative z-10">
                 <div className="container mx-auto max-w-6xl">
-                    
+
                     {/* Header */}
                     <div className="flex items-end justify-between mb-8">
                         <div>
@@ -284,7 +280,7 @@ export default function HomePage() {
                     ) : (
                         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
                             {casualProducts.map((product) => (
-                                <ProductCard 
+                                <ProductCard
                                     key={product.id}
                                     product={{
                                         ...product,
@@ -301,7 +297,7 @@ export default function HomePage() {
             {/* 5. SECTION 2 OF PRODUCTS: POP CULTURE & GRAPHIC EDITION */}
             <section className="py-12 md:py-16 px-4 bg-[#FAF6F0] border-b border-[#070F2B]/5 relative z-10">
                 <div className="container mx-auto max-w-7xl">
-                    
+
                     {/* Header */}
                     <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
                         <div>
@@ -320,8 +316,8 @@ export default function HomePage() {
                                 Premium 240 GSM organic cotton heavyweight tees. Hover over any design to reveal its high-definition back graphic.
                             </p>
                         </div>
-                        <Link 
-                            href="/products/casual" 
+                        <Link
+                            href="/products/casual"
                             className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider hover:text-[#B5945B] transition-colors border-b-2 border-[#070F2B] pb-0.5 cursor-pointer shrink-0 self-start sm:self-end"
                         >
                             Explore Drop <ArrowRight className="w-3.5 h-3.5" />
@@ -342,7 +338,7 @@ export default function HomePage() {
                     ) : (
                         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
                             {sec2Products.map((product) => (
-                                <ProductCard 
+                                <ProductCard
                                     key={product.id}
                                     product={{
                                         ...product,
@@ -358,7 +354,8 @@ export default function HomePage() {
 
             {/* 7. 30-MINUTE DELIVERY PROMOTION BANNER */}
             <section className="py-12 md:py-16 bg-[#070F2B] text-white px-4 md:px-8 border-b border-white/5 relative overflow-hidden select-none">
-                <style dangerouslySetInnerHTML={{__html: `
+                <style dangerouslySetInnerHTML={{
+                    __html: `
                     @keyframes road-slide {
                         0% { background-position: 0 0; }
                         100% { background-position: -30px 0; }
@@ -384,7 +381,7 @@ export default function HomePage() {
 
                 <div className="container mx-auto max-w-5xl relative z-10">
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                        
+
                         {/* Left Column: Speeding Delivery Truck Animation */}
                         <div className="lg:col-span-5 flex flex-col items-center justify-center relative min-h-[140px] md:min-h-[160px] overflow-hidden bg-[#070F2B]/40 rounded-2xl p-6 border border-white/5">
                             {/* Speed Lines */}
@@ -400,12 +397,12 @@ export default function HomePage() {
                                     {/* Branding on cargo box */}
                                     <text x="42.5" y="24" fill="#070F2B" fontSize="8" fontWeight="900" textAnchor="middle" letterSpacing="1">ZEYNIX</text>
                                     <text x="42.5" y="34" fill="#B5945B" fontSize="5" fontWeight="900" textAnchor="middle" letterSpacing="0.5">30 MINS EXPRESS</text>
-                                    
+
                                     {/* Cabin */}
                                     <path d="M 80 45 L 80 18 L 98 18 C 103 18, 107 22, 107 27 L 115 27 L 115 45 Z" fill="#070F2B" className="stroke-[#FAF6F0] stroke-[1.5px]" />
                                     {/* Cabin Window */}
                                     <path d="M 85 22 L 96 22 L 99 27 L 85 27 Z" fill="#FAF6F0" />
-                                    
+
                                     {/* Wheels */}
                                     {/* Wheel 1 (Front) */}
                                     <g className="animate-[wheel-spin_0.25s_linear_infinite]" style={{ transformOrigin: '98px 45px' }}>
@@ -450,8 +447,8 @@ export default function HomePage() {
                                 Need a quick style upgrade? Get your favorite streetwear essentials delivered straight to your door in 30 minutes or less. Rapid dispatch, premium packaging, zero delays.
                             </p>
                             <div className="pt-2">
-                                <Link 
-                                    href="/products/casual" 
+                                <Link
+                                    href="/products/casual"
                                     className="inline-flex items-center gap-2 bg-[#FFCB05] text-[#070F2B] py-3.5 px-6 rounded-xl font-bold uppercase tracking-wider text-[10px] shadow-md hover:bg-white hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
                                 >
                                     Order Now
@@ -505,13 +502,13 @@ export default function HomePage() {
                                 category: 'Denim Classic'
                             }
                         ].map((item, idx) => (
-                            <div 
-                                key={idx} 
+                            <div
+                                key={idx}
                                 className="relative aspect-square rounded-2xl overflow-hidden shadow-md border border-[#070F2B]/5 group select-none cursor-pointer"
                             >
-                                <Image 
-                                    src={item.image} 
-                                    alt={`Zeynix Lookbook ${item.category}`} 
+                                <Image
+                                    src={item.image}
+                                    alt={`Zeynix Lookbook ${item.category}`}
                                     fill
                                     className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                                 />
@@ -532,9 +529,9 @@ export default function HomePage() {
                     </div>
 
                     <div className="pt-2">
-                        <a 
-                            target="_blank" 
-                            href="https://www.instagram.com/zeynix.in" 
+                        <a
+                            target="_blank"
+                            href="https://www.instagram.com/zeynix.in"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-2 bg-[#070F2B] text-white py-3.5 px-6 rounded-none font-bold uppercase tracking-wider text-[10px] shadow-[3px_3px_0px_#B5945B] hover:shadow-[0px_0px_0px_#B5945B] hover:bg-[#B5945B] hover:text-[#070F2B] border border-[#070F2B] hover:border-[#B5945B] transition-all duration-300 cursor-pointer"
                         >

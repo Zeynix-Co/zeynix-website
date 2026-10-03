@@ -16,13 +16,18 @@ export async function GET(request: NextRequest) {
         const sortOrder = searchParams.get('sortOrder') || 'desc';
 
         // Build filter - only active and published products
-        const filter: { isActive: boolean; status: string; category?: string } = {
+        const filter: any = {
             isActive: true,
             status: 'published'
         };
 
         if (category && category !== 'all') {
-            filter.category = category.toLowerCase() === 'streetwear' ? 'casual' : category;
+            const cat = category.toLowerCase();
+            if (['casual', 'streetwear', 'unisex', 'unisexual', 't-shirts', 'tshirts'].includes(cat)) {
+                filter.category = { $in: ['unisexual', 'unisex', 'casual', 'streetwear', 't-shirts'] };
+            } else {
+                filter.category = category;
+            }
         }
 
         // Build sort object

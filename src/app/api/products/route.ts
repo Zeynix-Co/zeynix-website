@@ -14,14 +14,18 @@ export async function GET(request: NextRequest) {
         const category = searchParams.get('category');
         const search = searchParams.get('search');
 
-        // Build filter - only active and published products
-        const filter: { isActive: boolean; status: string; category?: string; $or?: Array<{ [key: string]: { $regex: string; $options: string } }> } = {
+        const filter: any = {
             isActive: true,
             status: 'published'
         };
 
         if (category && category !== 'all') {
-            filter.category = category;
+            const cat = category.toLowerCase();
+            if (['casual', 'streetwear', 'unisex', 'unisexual', 't-shirts', 'tshirts'].includes(cat)) {
+                filter.category = { $in: ['unisexual', 'unisex', 'casual', 'streetwear', 't-shirts'] };
+            } else {
+                filter.category = category;
+            }
         }
 
         if (search) {
