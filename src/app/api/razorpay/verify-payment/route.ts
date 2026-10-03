@@ -111,11 +111,21 @@ export async function GET(request: NextRequest) {
 
         await connectDB();
 
-        // Find the order
-        const order = await Order.findOne({
-            orderNumber: orderId,
-            user: authResult.user._id
-        });
+        // Find the order by _id or orderNumber
+        const mongoose = (await import('mongoose')).default;
+        let order = null;
+        if (mongoose.Types.ObjectId.isValid(orderId)) {
+            order = await Order.findOne({
+                _id: orderId,
+                user: authResult.user._id
+            });
+        }
+        if (!order) {
+            order = await Order.findOne({
+                orderNumber: orderId,
+                user: authResult.user._id
+            });
+        }
 
         if (!order) {
             return NextResponse.json(

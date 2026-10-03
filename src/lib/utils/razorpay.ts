@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import mongoose from 'mongoose';
 import { getRazorpayInstance, getRazorpayConfig, CURRENCY, PAYMENT_STATUS } from '@/lib/config/razorpay';
 import connectDB from '@/lib/config/database';
 import { Order } from '@/lib/models/Order';
@@ -120,8 +121,20 @@ export const verifyAndUpdateOrderPayment = async (paymentData: {
         // Connect to database
         await connectDB();
 
-        // Find the order by orderNumber
-        const order = await Order.findOne({ orderNumber: paymentData.orderId });
+        // Find the order by _id, orderNumber, or razorpayOrderId
+        let order = null;
+        if (mongoose.Types.ObjectId.isValid(paymentData.orderId)) {
+            order = await Order.findById(paymentData.orderId);
+        }
+        if (!order) {
+            order = await Order.findOne({
+                $or: [
+                    { orderNumber: paymentData.orderId },
+                    { razorpayOrderId: paymentData.razorpayOrderId }
+                ]
+            });
+        }
+
         if (!order) {
             return {
                 success: false,
@@ -172,10 +185,13 @@ export const verifyAndUpdateOrderPayment = async (paymentData: {
             }
 
             // Verify amount (payment.amount is in paise)
-            const orderAmountInPaise = convertRupeesToPaise(totalAmountFromDiscountPrice);
-            if (payment.amount !== orderAmountInPaise) {
+            const orderAmountInPaise = convertRupeesToPaise(totalAmountFromDiscountPrice || order.totalAmount);
+            const directOrderAmountInPaise = convertRupeesToPaise(order.totalAmount);
+
+            if (payment.amount !== orderAmountInPaise && payment.amount !== directOrderAmountInPaise) {
                 console.error('Amount mismatch:', {
                     expected: orderAmountInPaise,
+                    directOrderExpected: directOrderAmountInPaise,
                     received: payment.amount,
                 });
                 return {
