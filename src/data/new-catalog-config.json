@@ -663,63 +663,6 @@
     "discount": 53
   },
   {
-    "title": "'Confidence Looks Cute On Me' Cherry Oversized White T-Shirt",
-    "slug": "confidence-cherry-graphic-tee",
-    "brand": "Zeynix",
-    "description": "Crisp optical white 240 GSM oversized streetwear t-shirt blending playful coquette aesthetics with luxury streetwear cut. Features an embroidered-style '[69] Hg hot girl' chest badge on the front, paired with vibrant watercolor twin cherries tied with a pink ribbon bow reading 'I'M NOT PERFECT, BUT CONFIDENCE LOOKS CUTE ON ME •• EST. 1989 ••' on the reverse. Premium heavyweight combed cotton with reinforced collar.",
-    "images": [
-      "/images/products/new/confidence-cherry-graphic-tee/back.png",
-      "/images/products/new/confidence-cherry-graphic-tee/front.png",
-      "/images/products/new/confidence-cherry-graphic-tee/angle.png",
-      "/images/products/new/confidence-cherry-graphic-tee/detail.png",
-      "/images/products/new/confidence-cherry-graphic-tee/showcase.png"
-    ],
-    "category": "unisexual",
-    "actualPrice": 1599,
-    "discountPrice": 699,
-    "rating": 5,
-    "totalRatings": 178,
-    "productFit": "OVERSIZED FIT",
-    "featured": true,
-    "sizes": [
-      {
-        "size": "XS",
-        "stock": 45,
-        "inStock": true
-      },
-      {
-        "size": "S",
-        "stock": 95,
-        "inStock": true
-      },
-      {
-        "size": "M",
-        "stock": 160,
-        "inStock": true
-      },
-      {
-        "size": "L",
-        "stock": 175,
-        "inStock": true
-      },
-      {
-        "size": "XL",
-        "stock": 110,
-        "inStock": true
-      },
-      {
-        "size": "XXL",
-        "stock": 65,
-        "inStock": true
-      }
-    ],
-    "mainImage": "/images/products/new/confidence-cherry-graphic-tee/back.png",
-    "subcategory": "t-shirts",
-    "price": 699,
-    "originalPrice": 1599,
-    "discount": 56
-  },
-  {
     "title": "Pikachu & Starters Stamp Graphic T-Shirt",
     "slug": "pokemon-stamp-tee",
     "brand": "Zeynix",
