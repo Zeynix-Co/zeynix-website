@@ -15,7 +15,8 @@ export const env = {
     RESEND_API_KEY: process.env.RESEND_API_KEY,
     // Razorpay Configuration (Live API Only)
     RAZORPAY_KEY_ID_LIVE: process.env.RAZORPAY_KEY_ID_LIVE || process.env.RAZORPAY_KEY_ID,
-    RAZORPAY_KEY_SECRET_LIVE: process.env.RAZORPAY_KEY_SECRET_LIVE || process.env.RAZORPAY_KEY_SECRET
+    RAZORPAY_KEY_SECRET_LIVE: process.env.RAZORPAY_KEY_SECRET_LIVE || process.env.RAZORPAY_KEY_SECRET,
+    RAZORPAY_WEBHOOK_SECRET: process.env.RAZORPAY_WEBHOOK_SECRET || process.env.RAZORPAY_KEY_SECRET_LIVE || process.env.RAZORPAY_KEY_SECRET
 };
 
 // Debug function to check environment variables
