@@ -320,7 +320,7 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam }: Pr
                         <Link href="/products" className="hover:text-[#B5945B] transition-colors">Products</Link>
                         <span>/</span>
                         <Link href={`/products/${product.category.toLowerCase()}`} className="hover:text-[#B5945B] transition-colors">
-                            {product.category.toLowerCase() === 'casual' ? 'Streetwear' : product.category}
+                            {product.category.toLowerCase() === 'unisexual' ? 'Unisexual' : product.category.toLowerCase() === 'casual' ? 'Streetwear' : product.category}
                         </Link>
                         <span>/</span>
                         <span className="text-[#070F2B] font-extrabold truncate max-w-[200px] sm:max-w-md">
@@ -740,6 +740,14 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam }: Pr
                                 <div>
                                     <span className="text-gray-400 font-bold block text-[10px] uppercase">Fabric</span>
                                     <span className="font-extrabold text-[#070F2B]">100% Combed Cotton (240 GSM)</span>
+                                </div>
+                                <div>
+                                    <span className="text-gray-400 font-bold block text-[10px] uppercase">Category</span>
+                                    <span className="font-extrabold text-[#070F2B] capitalize">{product.category || 'Unisexual'}</span>
+                                </div>
+                                <div>
+                                    <span className="text-gray-400 font-bold block text-[10px] uppercase">Gender</span>
+                                    <span className="font-extrabold text-[#070F2B]">Unisex / All Genders</span>
                                 </div>
                                 <div>
                                     <span className="text-gray-400 font-bold block text-[10px] uppercase">Fit Type</span>

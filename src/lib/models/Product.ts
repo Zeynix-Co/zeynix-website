@@ -9,7 +9,7 @@ export interface IProduct extends Document {
     description?: string;
     mainImage?: string;
     images: string[];
-    category: 'casual' | 'formal' | 'ethnic' | 'sports' | 't-shirts';
+    category: 'casual' | 'formal' | 'ethnic' | 'sports' | 't-shirts' | 'unisex' | 'unisexual';
     subcategory?: string;
     price?: number;
     originalPrice?: number;
@@ -77,8 +77,8 @@ const productSchema = new Schema<IProduct>({
     category: {
         type: String,
         required: [true, 'Product category is required'],
-        enum: ['casual', 'formal', 'ethnic', 'sports', 't-shirts'],
-        default: 'casual'
+        enum: ['casual', 'formal', 'ethnic', 'sports', 't-shirts', 'unisex', 'unisexual'],
+        default: 'unisexual'
     },
     subcategory: {
         type: String,

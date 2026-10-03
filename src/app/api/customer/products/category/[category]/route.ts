@@ -34,9 +34,13 @@ export async function GET(
         const sortOrder = searchParams.get('sortOrder') === 'asc' ? 1 : -1;
 
         // Build filter - only active and published products in the specified category
+        const cat = category.toLowerCase();
+        const isBroadTeeCategory = ['casual', 'streetwear', 'unisex', 'unisexual', 't-shirts', 'tshirts'].includes(cat);
         const filter = {
             ...getBaseProductFilter(),
-            category: category.toLowerCase()
+            ...(isBroadTeeCategory
+                ? { category: { $in: ['unisexual', 'unisex', 'casual', 'streetwear', 't-shirts'] } }
+                : { category: cat })
         };
 
         // Build sort object

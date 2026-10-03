@@ -15,7 +15,8 @@ import ProductDetailView from '@/components/product/ProductDetailView';
 
 const KNOWN_CATEGORIES = new Set([
     'casual', 'streetwear', 'formal', 'ethnic', 'sports', 't-shirts', 'tshirts',
-    'shirts', 'jeans', 'pants', 'jackets', 'all', 'men', 'women', 'hoodies', 'sweatshirts'
+    'shirts', 'jeans', 'pants', 'jackets', 'all', 'men', 'women', 'hoodies', 'sweatshirts',
+    'unisex', 'unisexual'
 ]);
 
 export default function CategoryProductsPage() {
@@ -34,7 +35,7 @@ export default function CategoryProductsPage() {
     }
 
     useEffect(() => {
-        // Fetch products by category from API (support both 'streetwear' and 'casual')
+        // Fetch products by category from API (support 'streetwear', 'casual', 'unisexual', etc.)
         const fetchCategoryProducts = async () => {
             try {
                 const apiCat = (category.toLowerCase() === 'streetwear' || category.toLowerCase() === 'casual') ? 'casual' : category;
@@ -61,6 +62,8 @@ export default function CategoryProductsPage() {
 
     const getCategoryTitle = (cat: string) => {
         const titles: { [key: string]: string } = {
+            'unisexual': 'Unisexual Collection',
+            'unisex': 'Unisex Collection',
             'casual': 'Streetwear',
             'streetwear': 'Streetwear',
             'formal': 'Formal Wear',
@@ -77,6 +80,8 @@ export default function CategoryProductsPage() {
 
     const getCategoryDescription = (cat: string) => {
         const descriptions: { [key: string]: string } = {
+            'unisexual': 'Inclusive luxury streetwear tailored for every silhouette, crafted from heavyweight 240 GSM organic combed cotton with distinct artisan graphics.',
+            'unisex': 'Inclusive luxury streetwear tailored for every silhouette, crafted from heavyweight 240 GSM organic combed cotton with distinct artisan graphics.',
             'casual': 'Urban luxury streetwear crafted from heavyweight 240 GSM organic cotton with bold graphic silhouettes',
             'streetwear': 'Urban luxury streetwear crafted from heavyweight 240 GSM organic cotton with bold graphic silhouettes',
             'formal': 'Professional and elegant formal attire for special occasions',

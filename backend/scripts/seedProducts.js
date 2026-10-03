@@ -104,7 +104,7 @@ async function seedProducts() {
                 description: item.description || '',
                 images: item.images || [],
                 mainImage: mainImage,
-                category: item.category || 'casual',
+                category: item.category || 'unisexual',
                 subcategory: 't-shirts',
                 price: price,
                 discountPrice: price,

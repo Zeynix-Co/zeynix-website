@@ -14,7 +14,7 @@ export const transformProduct = (product: IProduct) => ({
     image: product.mainImage || (product.images && product.images.length > 0 ? product.images[0] : '/images/products/placeholder.jpg'),
     mainImage: product.mainImage || (product.images && product.images.length > 0 ? product.images[0] : '/images/products/placeholder.jpg'),
     images: product.images || [],
-    category: product.category || 'casual',
+    category: product.category || 'unisexual',
     subcategory: product.subcategory || 't-shirts',
     size: product.sizes && product.sizes.length > 0 ? product.sizes.map((s) => s.size) : ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
     label: product.productFit || 'CASUAL FIT',
