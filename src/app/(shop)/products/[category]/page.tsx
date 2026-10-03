@@ -14,7 +14,7 @@ import { productAPI } from '@/lib/api';
 import ProductDetailView from '@/components/product/ProductDetailView';
 
 const KNOWN_CATEGORIES = new Set([
-    'casual', 'formal', 'ethnic', 'sports', 't-shirts', 'tshirts',
+    'casual', 'streetwear', 'formal', 'ethnic', 'sports', 't-shirts', 'tshirts',
     'shirts', 'jeans', 'pants', 'jackets', 'all', 'men', 'women', 'hoodies', 'sweatshirts'
 ]);
 
@@ -34,10 +34,11 @@ export default function CategoryProductsPage() {
     }
 
     useEffect(() => {
-        // Fetch products by category from API
+        // Fetch products by category from API (support both 'streetwear' and 'casual')
         const fetchCategoryProducts = async () => {
             try {
-                const response = await productAPI.getProductsByCategory(category, { limit: 100 });
+                const apiCat = (category.toLowerCase() === 'streetwear' || category.toLowerCase() === 'casual') ? 'casual' : category;
+                const response = await productAPI.getProductsByCategory(apiCat, { limit: 100 });
                 if (response.success) {
                     setProducts(response.data.products);
                     setFilteredProducts(response.data.products);
@@ -60,7 +61,8 @@ export default function CategoryProductsPage() {
 
     const getCategoryTitle = (cat: string) => {
         const titles: { [key: string]: string } = {
-            'casual': 'Casual Wear',
+            'casual': 'Streetwear',
+            'streetwear': 'Streetwear',
             'formal': 'Formal Wear',
             'ethnic': 'Ethnic Wear',
             'sports': 'Sports Wear',
@@ -75,12 +77,13 @@ export default function CategoryProductsPage() {
 
     const getCategoryDescription = (cat: string) => {
         const descriptions: { [key: string]: string } = {
-            'casual': 'Comfortable and stylish casual clothing for everyday wear',
+            'casual': 'Urban luxury streetwear crafted from heavyweight 240 GSM organic cotton with bold graphic silhouettes',
+            'streetwear': 'Urban luxury streetwear crafted from heavyweight 240 GSM organic cotton with bold graphic silhouettes',
             'formal': 'Professional and elegant formal attire for special occasions',
             'ethnic': 'Traditional and cultural ethnic wear with modern touches',
             'sports': 'Performance-driven sports and athletic wear',
-            't-shirts': 'Comfortable and trendy t-shirts for casual styling',
-            'shirts': 'Versatile shirts for both casual and formal occasions',
+            't-shirts': 'Comfortable and trendy t-shirts for streetwear styling',
+            'shirts': 'Versatile shirts for both streetwear and formal occasions',
             'jeans': 'Classic and modern denim styles for every occasion',
             'pants': 'Comfortable and stylish pants for various occasions',
             'jackets': 'Trendy jackets to complete your look'
@@ -123,7 +126,7 @@ export default function CategoryProductsPage() {
                                     Home
                                 </Link>
                                 <span className="text-[9px] font-black uppercase tracking-widest text-[#FAF6F0]/60 bg-white/5 py-1 px-3 rounded-full border border-white/10">
-                                    {category}
+                                    {category.toLowerCase() === 'casual' ? 'streetwear' : category}
                                 </span>
                             </div>
                             <h1 className="text-2xl sm:text-3xl md:text-5xl font-black uppercase tracking-tight text-[#FAF6F0]">
@@ -136,7 +139,7 @@ export default function CategoryProductsPage() {
                         
                         {/* stats badge */}
                         <div className="bg-white/5 backdrop-blur-xs border border-white/10 p-4 sm:p-5 rounded-xl shrink-0 text-left md:text-right shadow-xs">
-                            <span className="text-[9px] text-[#B5945B] font-bold uppercase tracking-wider block">Exclusive Zeynix Wear</span>
+                            <span className="text-[9px] text-[#B5945B] font-bold uppercase tracking-wider block">Exclusive Zeynix Streetwear</span>
                             <span className="text-xl sm:text-2xl font-black text-[#FAF6F0] block mt-0.5">{filteredProducts.length} Items</span>
                             <span className="text-[9px] text-white/40 block">Premium Fit & Fabric Quality</span>
                         </div>

@@ -10,7 +10,7 @@ import { useWishlistStore } from '@/store';
 import WishlistConfirmationModal from '@/components/wishlist/WishlistConfirmationModal';
 import ProductCard from '@/components/product/ProductCard';
 
-const categories = ["All", "casual", "formal", "ethnic", "sports"];
+const categories = ["All", "Streetwear", "formal", "ethnic", "sports"];
 const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
 const priceRanges = [
     { label: "Under ₹500", min: 0, max: 500 },
@@ -99,7 +99,10 @@ export default function FilterProducts() {
     };
 
     const filteredProducts = products.filter(product => {
-        const categoryMatch = selectedCategory === "All" || product.category.toLowerCase() === selectedCategory.toLowerCase();
+        const categoryMatch = selectedCategory === "All" ||
+            (selectedCategory.toLowerCase() === 'streetwear'
+                ? (product.category.toLowerCase() === 'casual' || product.category.toLowerCase() === 'streetwear')
+                : product.category.toLowerCase() === selectedCategory.toLowerCase());
         const sizeMatch = selectedSizes.length === 0 || selectedSizes.some(size => product.size.includes(size));
         const priceMatch = !selectedPriceRange || (() => {
             const range = priceRanges.find(r => r.label === selectedPriceRange);

@@ -78,6 +78,7 @@ export default function ProductCard({ product }: ProductCardProps) {
     };
 
     const mainImageUrl = product.mainImage || product.image || (product.images && product.images[0]) || '/images/products/placeholder.jpg';
+    const secondaryImageUrl = product.images && product.images.length > 1 ? product.images[1] : null;
 
     return (
         <div
@@ -95,7 +96,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                     <div className="absolute inset-0 bg-gradient-to-r from-gray-100 via-gray-200/60 to-gray-100 animate-pulse" />
                 )}
 
-                {/* High-Resolution Product Image with object-contain */}
+                {/* High-Resolution Product Image with object-contain & Hover Back-View */}
                 <Link href={productHref} className="relative w-full h-full block">
                     <Image
                         src={mainImageUrl}
@@ -105,10 +106,23 @@ export default function ProductCard({ product }: ProductCardProps) {
                         unoptimized
                         priority={false}
                         className={`object-contain transition-all duration-500 ease-out group-hover:scale-105 ${
-                            imageLoaded ? 'opacity-100' : 'opacity-0'
+                            secondaryImageUrl && isHovered ? 'opacity-0' : (imageLoaded ? 'opacity-100' : 'opacity-0')
                         }`}
                         onLoad={() => setImageLoaded(true)}
                     />
+                    {secondaryImageUrl && (
+                        <Image
+                            src={secondaryImageUrl}
+                            alt={`${product.name} - Back View`}
+                            fill
+                            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                            unoptimized
+                            priority={false}
+                            className={`object-contain transition-all duration-500 ease-out group-hover:scale-105 ${
+                                isHovered ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                            }`}
+                        />
+                    )}
                 </Link>
 
                 {/* Discount Badge */}

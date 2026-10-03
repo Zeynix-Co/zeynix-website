@@ -56,7 +56,12 @@ const SLUG_MAP = {
     "Halloween 'Still Dead - Thanks For Checking' Oversized Black T-Shirt": "halloween-rip-still-dead-tee",
     "Kawaii Gothic 'Spookie' Peeking Cat & Skeletons Buttercream Oversized T-Shirt": "spookie-peeking-cat-skeletons-tee",
     "Gothic Anatomy 'Only Live Once' Ribcage & Spine Oversized Black T-Shirt": "only-live-once-skeleton-ribcage-tee",
-    "Cyber Techwear 'Cosmic Horizon Alien' Oversized Black T-Shirt": "cosmic-alien-mountain-cyber-tee"
+    "Cyber Techwear 'Cosmic Horizon Alien' Oversized Black T-Shirt": "cosmic-alien-mountain-cyber-tee",
+    "Aesthetic Gaze 'Yes Is Clear' Crimson Heart Oversized Black T-Shirt": "aesthetic-gaze-yes-is-clear-heart-tee",
+    "Marvel Avengers 'Tony Stark Arc Reactor Legacy' Oversized Black T-Shirt": "iron-man-tony-stark-legacy-arc-reactor-tee",
+    "Looney Tunes 'Street Trio & Comic Panels' Mustard Yellow Oversized T-Shirt": "looney-tunes-street-trio-comic-panels-yellow-tee",
+    "Disney 'Mickey Mouse Fabric Tear & Inverted Dive' Buttercream Oversized T-Shirt": "disney-mickey-mouse-fabric-tear-buttercream-tee",
+    "Minions 'Banana! & Hanging Chain Pile' Oversized Black T-Shirt": "minions-banana-hanging-chain-pile-black-tee"
 };
 
 async function seedProducts() {

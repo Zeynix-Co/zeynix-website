@@ -81,6 +81,20 @@ export default memo(function ProductGrid({
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
+    // Calculate visible section buttons (Maximum 3 section buttons shown at a time)
+    const getVisiblePages = () => {
+        if (totalPages <= 3) {
+            return Array.from({ length: totalPages }, (_, i) => i + 1);
+        }
+        if (currentPage <= 3) {
+            return [1, 2, 3];
+        }
+        const start = Math.min(currentPage - 1, totalPages - 2);
+        return [start, start + 1, start + 2];
+    };
+
+    const visiblePages = getVisiblePages();
+
     const handleLoadMore = () => {
         if (onLoadMore) {
             onLoadMore();
@@ -209,9 +223,8 @@ export default memo(function ProductGrid({
                             <span className="hidden sm:inline">Prev</span>
                         </button>
 
-                        {/* Numbered Section Buttons */}
-                        {Array.from({ length: totalPages }, (_, i) => {
-                            const pageNum = i + 1;
+                        {/* Numbered Section Buttons (Window of 3 max) */}
+                        {visiblePages.map((pageNum) => {
                             const isActive = currentPage === pageNum;
                             return (
                                 <button

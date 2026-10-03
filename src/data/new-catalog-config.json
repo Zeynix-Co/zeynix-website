@@ -12,7 +12,7 @@
     "category": "casual",
     "actualPrice": 1799,
     "discountPrice": 499,
-    "rating": 5.0,
+    "rating": 5,
     "totalRatings": 245,
     "productFit": "OVERSIZED FIT",
     "featured": true,
@@ -62,7 +62,7 @@
     "category": "casual",
     "actualPrice": 1799,
     "discountPrice": 499,
-    "rating": 5.0,
+    "rating": 5,
     "totalRatings": 230,
     "productFit": "OVERSIZED FIT",
     "featured": true,
@@ -112,7 +112,7 @@
     "category": "casual",
     "actualPrice": 1899,
     "discountPrice": 549,
-    "rating": 5.0,
+    "rating": 5,
     "totalRatings": 255,
     "productFit": "OVERSIZED FIT",
     "featured": true,
@@ -162,8 +162,258 @@
     "category": "casual",
     "actualPrice": 1899,
     "discountPrice": 549,
-    "rating": 5.0,
+    "rating": 5,
     "totalRatings": 210,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 45,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 90,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 155,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 180,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 120,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 65,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "title": "Aesthetic Gaze 'Yes Is Clear' Crimson Heart Oversized Black T-Shirt",
+    "slug": "aesthetic-gaze-yes-is-clear-heart-tee",
+    "brand": "Zeynix",
+    "description": "Subtle emotional depth meets cinematic street aesthetics. Crafted from heavyweight 240 GSM organic combed black cotton jersey with a structured drop-shoulder drape. The front displays a poignant black-and-white cinematic eye gaze portrait framed in a minimalist horizontal letterbox cut. The reverse features an expressive magenta-pink outline heart enclosing intimate portraits and the profound streetwear typography: 'And if you're ever confused between a yes or a no, its always no, because yes is clear.'",
+    "images": [
+      "/images/products/new/aesthetic-gaze-yes-is-clear-heart-tee/front.png",
+      "/images/products/new/aesthetic-gaze-yes-is-clear-heart-tee/back.png",
+      "/images/products/new/aesthetic-gaze-yes-is-clear-heart-tee/whole.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1899,
+    "discountPrice": 549,
+    "rating": 5,
+    "totalRatings": 235,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 45,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 90,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 155,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 180,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 120,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 65,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "title": "Marvel Avengers 'Tony Stark Arc Reactor Legacy' Oversized Black T-Shirt",
+    "slug": "iron-man-tony-stark-legacy-arc-reactor-tee",
+    "brand": "Zeynix",
+    "description": "Honor the ultimate Avenger in this heavyweight 240 GSM drop-shoulder black cotton jersey. The front chest is stamped with the legendary glowing Arc Reactor emblem inscribed with 'Proof That Tony Stark Has A Heart'. The reverse features a high-impact crimson red and monochrome montage of Robert Downey Jr. as Tony Stark, accented with Stark Industries technical HUD blueprints, Mark armor suits, and classic quotes: 'I Am Iron Man. Legacy' and 'Genius. Billionaire. Playboy. Philanthropist.'",
+    "images": [
+      "/images/products/new/iron-man-tony-stark-legacy-arc-reactor-tee/front.png",
+      "/images/products/new/iron-man-tony-stark-legacy-arc-reactor-tee/back.png",
+      "/images/products/new/iron-man-tony-stark-legacy-arc-reactor-tee/whole.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1999,
+    "discountPrice": 599,
+    "rating": 5,
+    "totalRatings": 280,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 45,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 90,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 155,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 180,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 120,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 65,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "title": "Looney Tunes 'Street Trio & Comic Panels' Mustard Yellow Oversized T-Shirt",
+    "slug": "looney-tunes-street-trio-comic-panels-yellow-tee",
+    "brand": "Zeynix",
+    "description": "Nostalgic 90s animation re-imagined for contemporary urban streetwear. Tailored from premium 240 GSM mustard yellow organic cotton with a boxy oversized fit. The front highlights Bugs Bunny rocking dark sunglasses and a red oversized tee accompanied by Marvin the Martian and Daffy Duck in high-top kicks. The back commands the streets with dynamic split comic-action panels featuring Daffy, hooded Bunny, and Taz along with official Looney Tunes typography.",
+    "images": [
+      "/images/products/new/looney-tunes-street-trio-comic-panels-yellow-tee/front.png",
+      "/images/products/new/looney-tunes-street-trio-comic-panels-yellow-tee/back.png",
+      "/images/products/new/looney-tunes-street-trio-comic-panels-yellow-tee/whole.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1899,
+    "discountPrice": 549,
+    "rating": 5,
+    "totalRatings": 225,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 45,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 90,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 155,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 180,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 120,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 65,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "title": "Disney 'Mickey Mouse Fabric Tear & Inverted Dive' Buttercream Oversized T-Shirt",
+    "slug": "disney-mickey-mouse-fabric-tear-buttercream-tee",
+    "brand": "Zeynix",
+    "description": "An ingenious dual-sided illusion celebrating pop culture royalty. Tailored in an oversized drop-shoulder cut from 240 GSM buttercream yellow combed cotton. The front depicts Mickey Mouse literally breaking through the torn fabric of your tee with a cheerful wink and classic Mickey typography. The back reveals the hilarious continuous backside view—Mickey's red shorts, yellow shoes, waving white gloves, and tail as he dives through the garment.",
+    "images": [
+      "/images/products/new/disney-mickey-mouse-fabric-tear-buttercream-tee/front.png",
+      "/images/products/new/disney-mickey-mouse-fabric-tear-buttercream-tee/back.png",
+      "/images/products/new/disney-mickey-mouse-fabric-tear-buttercream-tee/whole.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1899,
+    "discountPrice": 549,
+    "rating": 5,
+    "totalRatings": 260,
+    "productFit": "OVERSIZED FIT",
+    "featured": true,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 45,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 90,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 155,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 180,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 120,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 65,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "title": "Minions 'Banana! & Hanging Chain Pile' Oversized Black T-Shirt",
+    "slug": "minions-banana-hanging-chain-pile-black-tee",
+    "brand": "Zeynix",
+    "description": "Delightful mischief packed into luxury streetwear. Spun from ultra-dense 240 GSM organic black cotton jersey in an oversized boxy silhouette. The front features a Minion savoring his favorite fruit against energetic calligraphic 'BANANA!' text. The reverse commands attention with an inventive right-aligned vertical chain of Minions clinging to each other from the shoulder seam all the way down into a tumbling pile at the waist hem.",
+    "images": [
+      "/images/products/new/minions-banana-hanging-chain-pile-black-tee/front.png",
+      "/images/products/new/minions-banana-hanging-chain-pile-black-tee/back.png",
+      "/images/products/new/minions-banana-hanging-chain-pile-black-tee/whole.png"
+    ],
+    "category": "casual",
+    "actualPrice": 1899,
+    "discountPrice": 549,
+    "rating": 5,
+    "totalRatings": 215,
     "productFit": "OVERSIZED FIT",
     "featured": true,
     "sizes": [
@@ -367,7 +617,7 @@
     "category": "casual",
     "actualPrice": 1599,
     "discountPrice": 469,
-    "rating": 5.0,
+    "rating": 5,
     "totalRatings": 178,
     "productFit": "OVERSIZED FIT",
     "featured": true,
@@ -523,7 +773,7 @@
     "category": "casual",
     "actualPrice": 1699,
     "discountPrice": 499,
-    "rating": 5.0,
+    "rating": 5,
     "totalRatings": 156,
     "productFit": "OVERSIZED FIT",
     "featured": true,
@@ -731,7 +981,7 @@
     "category": "casual",
     "actualPrice": 1799,
     "discountPrice": 549,
-    "rating": 5.0,
+    "rating": 5,
     "totalRatings": 165,
     "productFit": "OVERSIZED FIT",
     "featured": true,
@@ -835,7 +1085,7 @@
     "category": "casual",
     "actualPrice": 1699,
     "discountPrice": 499,
-    "rating": 5.0,
+    "rating": 5,
     "totalRatings": 198,
     "productFit": "OVERSIZED FIT",
     "featured": true,
@@ -935,7 +1185,7 @@
     "category": "casual",
     "actualPrice": 1899,
     "discountPrice": 549,
-    "rating": 5.0,
+    "rating": 5,
     "totalRatings": 214,
     "productFit": "OVERSIZED FIT",
     "featured": true,
@@ -1035,7 +1285,7 @@
     "category": "casual",
     "actualPrice": 1899,
     "discountPrice": 599,
-    "rating": 5.0,
+    "rating": 5,
     "totalRatings": 248,
     "productFit": "OVERSIZED FIT",
     "featured": true,
@@ -1135,7 +1385,7 @@
     "category": "casual",
     "actualPrice": 1899,
     "discountPrice": 549,
-    "rating": 5.0,
+    "rating": 5,
     "totalRatings": 162,
     "productFit": "OVERSIZED FIT",
     "featured": true,
@@ -1185,7 +1435,7 @@
     "category": "casual",
     "actualPrice": 1899,
     "discountPrice": 549,
-    "rating": 5.0,
+    "rating": 5,
     "totalRatings": 188,
     "productFit": "OVERSIZED FIT",
     "featured": true,
@@ -1235,7 +1485,7 @@
     "category": "casual",
     "actualPrice": 1899,
     "discountPrice": 549,
-    "rating": 5.0,
+    "rating": 5,
     "totalRatings": 215,
     "productFit": "OVERSIZED FIT",
     "featured": true,
@@ -1285,7 +1535,7 @@
     "category": "casual",
     "actualPrice": 1899,
     "discountPrice": 549,
-    "rating": 5.0,
+    "rating": 5,
     "totalRatings": 240,
     "productFit": "OVERSIZED FIT",
     "featured": true,
@@ -1385,7 +1635,7 @@
     "category": "casual",
     "actualPrice": 1899,
     "discountPrice": 549,
-    "rating": 5.0,
+    "rating": 5,
     "totalRatings": 204,
     "productFit": "OVERSIZED FIT",
     "featured": true,
@@ -1485,7 +1735,7 @@
     "category": "casual",
     "actualPrice": 1999,
     "discountPrice": 599,
-    "rating": 5.0,
+    "rating": 5,
     "totalRatings": 225,
     "productFit": "OVERSIZED FIT",
     "featured": true,
@@ -1535,7 +1785,7 @@
     "category": "casual",
     "actualPrice": 1899,
     "discountPrice": 549,
-    "rating": 5.0,
+    "rating": 5,
     "totalRatings": 172,
     "productFit": "OVERSIZED FIT",
     "featured": true,
@@ -1685,7 +1935,7 @@
     "category": "casual",
     "actualPrice": 1899,
     "discountPrice": 549,
-    "rating": 5.0,
+    "rating": 5,
     "totalRatings": 310,
     "productFit": "OVERSIZED FIT",
     "featured": true,
@@ -1735,7 +1985,7 @@
     "category": "casual",
     "actualPrice": 1899,
     "discountPrice": 549,
-    "rating": 5.0,
+    "rating": 5,
     "totalRatings": 215,
     "productFit": "OVERSIZED FIT",
     "featured": true,
@@ -1835,7 +2085,7 @@
     "category": "casual",
     "actualPrice": 1899,
     "discountPrice": 549,
-    "rating": 5.0,
+    "rating": 5,
     "totalRatings": 240,
     "productFit": "OVERSIZED FIT",
     "featured": true,
@@ -1985,7 +2235,7 @@
     "category": "casual",
     "actualPrice": 1899,
     "discountPrice": 549,
-    "rating": 5.0,
+    "rating": 5,
     "totalRatings": 265,
     "productFit": "OVERSIZED FIT",
     "featured": true,
@@ -2085,7 +2335,7 @@
     "category": "casual",
     "actualPrice": 1699,
     "discountPrice": 479,
-    "rating": 5.0,
+    "rating": 5,
     "totalRatings": 230,
     "productFit": "OVERSIZED FIT",
     "featured": true,
@@ -2135,7 +2385,7 @@
     "category": "casual",
     "actualPrice": 1899,
     "discountPrice": 549,
-    "rating": 5.0,
+    "rating": 5,
     "totalRatings": 280,
     "productFit": "OVERSIZED FIT",
     "featured": true,
@@ -2285,7 +2535,7 @@
     "category": "casual",
     "actualPrice": 1899,
     "discountPrice": 549,
-    "rating": 5.0,
+    "rating": 5,
     "totalRatings": 275,
     "productFit": "OVERSIZED FIT",
     "featured": true,

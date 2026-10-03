@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
         };
 
         if (category && category !== 'all') {
-            filter.category = category;
+            filter.category = category.toLowerCase() === 'streetwear' ? 'casual' : category;
         }
 
         // Build sort object

@@ -506,7 +506,7 @@ export default function SearchBar() {
                                 Trending
                             </h3>
                             <div className="flex flex-wrap gap-2">
-                                {['casual wear', 'formal shirts', 'ethnic kurtas', 'sports shoes'].map((term) => (
+                                {['streetwear', 'formal shirts', 'ethnic kurtas', 'sports shoes'].map((term) => (
                                     <button
                                         key={term}
                                         onClick={() => handleSearch(term)}

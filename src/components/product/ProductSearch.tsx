@@ -33,7 +33,7 @@ export default memo(function ProductSearch({
     const [suggestions, setSuggestions] = useState<SearchSuggestion[]>([]);
     const [recentSearches, setRecentSearches] = useState<string[]>([]);
     const [trendingSearches] = useState([
-        'Kurta', 'Formal Shirt', 'Casual Wear', 'Ethnic Dress', 'Sports Wear'
+        'Kurta', 'Formal Shirt', 'Streetwear', 'Ethnic Dress', 'Sports Wear'
     ]);
 
     const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);

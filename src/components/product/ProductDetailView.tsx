@@ -301,9 +301,9 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam }: Pr
             if (lower.includes('back')) return 'Back View';
             if (lower.includes('model') || lower.includes('angle')) return 'Model View';
             if (lower.includes('detail')) return 'Graphic Detail';
-            if (lower.includes('showcase') || lower.includes('full')) return 'Full Showcase';
+            if (lower.includes('whole') || lower.includes('showcase') || lower.includes('full')) return 'Front & Back View';
         }
-        const labels = ['Front View', 'Back View', 'Graphic Detail', 'Full Showcase'];
+        const labels = ['Front View', 'Back View', 'Front & Back View', 'Graphic Detail'];
         return labels[index] || `View ${index + 1}`;
     };
 
@@ -320,7 +320,7 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam }: Pr
                         <Link href="/products" className="hover:text-[#B5945B] transition-colors">Products</Link>
                         <span>/</span>
                         <Link href={`/products/${product.category.toLowerCase()}`} className="hover:text-[#B5945B] transition-colors">
-                            {product.category}
+                            {product.category.toLowerCase() === 'casual' ? 'Streetwear' : product.category}
                         </Link>
                         <span>/</span>
                         <span className="text-[#070F2B] font-extrabold truncate max-w-[200px] sm:max-w-md">

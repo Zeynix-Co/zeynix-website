@@ -10,7 +10,7 @@ const categories = [
         href: '/products/formal'
     },
     {
-        name: 'Casual',
+        name: 'Streetwear',
         image: '/images/category-casual.jpg',
         href: '/products/casual'
     },

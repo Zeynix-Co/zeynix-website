@@ -28,6 +28,7 @@ import {
 
 export default function HomePage() {
     const [casualProducts, setCasualProducts] = useState<any[]>([]);
+    const [sec2Products, setSec2Products] = useState<any[]>([]);
     const [newArrivals, setNewArrivals] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -45,11 +46,13 @@ export default function HomePage() {
     useEffect(() => {
         const loadHomeData = async () => {
             try {
-                // Fetch casual products
-                const casualRes = await fetch('/api/customer/products?category=casual&limit=8');
+                // Fetch casual products: Section 1 (first 4) & Section 2 (next 5)
+                const casualRes = await fetch('/api/customer/products?category=casual&limit=14');
                 const casualJson = await casualRes.json();
                 if (casualJson.success && casualJson.data.products?.length > 0) {
-                    setCasualProducts(casualJson.data.products.slice(0, 4));
+                    const allProds = casualJson.data.products;
+                    setCasualProducts(allProds.slice(0, 4)); // 1st Section: First 4 products
+                    setSec2Products(allProds.slice(4, 9));  // Section 2: Next 5 products
                 }
 
                 // Fetch new arrivals
@@ -246,16 +249,16 @@ export default function HomePage() {
                 </div>
             </section>
 
-            {/* 4. CASUAL ESSENTIALS GRID (Reduced margins & smaller cards) */}
+            {/* 4. STREETWEAR ESSENTIALS GRID (1st Section of Products) */}
             <section className="py-10 md:py-14 px-4 bg-white border-t border-b border-[#070F2B]/5 relative z-10">
                 <div className="container mx-auto max-w-6xl">
                     
                     {/* Header */}
                     <div className="flex items-end justify-between mb-8">
                         <div>
-                            <span className="text-[10px] font-black uppercase tracking-widest text-[#FFCB05] block mb-0.5">Ready to Wear</span>
+                            <span className="text-[10px] font-black uppercase tracking-widest text-[#FFCB05] block mb-0.5">Streetwear Atelier</span>
                             <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tight text-[#070F2B]">
-                                Casual Essentials
+                                Streetwear Essentials
                             </h2>
                         </div>
                         <Link href="/products/casual" className="text-[10px] font-extrabold uppercase tracking-wider hover:text-[#FFCB05] transition-colors border-b-2 border-[#070F2B] pb-0.5 flex items-center gap-1 cursor-pointer">
@@ -272,7 +275,7 @@ export default function HomePage() {
                         </div>
                     ) : casualProducts.length === 0 ? (
                         <div className="text-center py-8 text-gray-500 font-semibold text-xs">
-                            No casual products available. Check back soon!
+                            No streetwear products available. Check back soon!
                         </div>
                     ) : (
                         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
@@ -291,7 +294,63 @@ export default function HomePage() {
                 </div>
             </section>
 
+            {/* 5. SECTION 2 OF PRODUCTS: POP CULTURE & GRAPHIC EDITION */}
+            <section className="py-12 md:py-16 px-4 bg-[#FAF6F0] border-b border-[#070F2B]/5 relative z-10">
+                <div className="container mx-auto max-w-7xl">
+                    
+                    {/* Header */}
+                    <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+                        <div>
+                            <div className="flex items-center gap-2 mb-1.5">
+                                <span className="text-[10px] font-black uppercase tracking-widest text-[#FAF6F0] bg-[#070F2B] px-2.5 py-0.5 rounded-full inline-block">
+                                    Section 2 &bull; Limited Drop
+                                </span>
+                                <span className="text-[10px] font-mono uppercase tracking-wider text-[#B5945B] font-bold">
+                                    Front &amp; Back Art
+                                </span>
+                            </div>
+                            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black uppercase tracking-tight text-[#070F2B]">
+                                Pop Culture &amp; Graphic Edition
+                            </h2>
+                            <p className="text-xs text-gray-600 mt-1 max-w-2xl font-medium leading-relaxed">
+                                Premium 240 GSM organic cotton heavyweight tees. Hover over any design to reveal its high-definition back graphic.
+                            </p>
+                        </div>
+                        <Link 
+                            href="/products/casual" 
+                            className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider hover:text-[#B5945B] transition-colors border-b-2 border-[#070F2B] pb-0.5 cursor-pointer shrink-0 self-start sm:self-end"
+                        >
+                            Explore Drop <ArrowRight className="w-3.5 h-3.5" />
+                        </Link>
+                    </div>
 
+                    {/* Products Grid (Section 2 - 5 items) */}
+                    {isLoading ? (
+                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
+                            {[1, 2, 3, 4, 5].map((i) => (
+                                <div key={i} className="aspect-[3/4] bg-gray-200/60 rounded-xl animate-pulse" />
+                            ))}
+                        </div>
+                    ) : sec2Products.length === 0 ? (
+                        <div className="text-center py-8 text-gray-500 font-semibold text-xs">
+                            No products available in Section 2. Check back soon!
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
+                            {sec2Products.map((product) => (
+                                <ProductCard 
+                                    key={product.id}
+                                    product={{
+                                        ...product,
+                                        images: product.images || [product.image]
+                                    }}
+                                />
+                            ))}
+                        </div>
+                    )}
+
+                </div>
+            </section>
 
             {/* 7. 30-MINUTE DELIVERY PROMOTION BANNER */}
             <section className="py-12 md:py-16 bg-[#070F2B] text-white px-4 md:px-8 border-b border-white/5 relative overflow-hidden select-none">
@@ -419,7 +478,7 @@ export default function HomePage() {
                         {[
                             {
                                 image: '/images/lookbook-1.jpg',
-                                handle: '@zeynix.casual',
+                                handle: '@zeynix.streetwear',
                                 likes: '2.5k',
                                 category: 'Oversized Hoodie'
                             },
