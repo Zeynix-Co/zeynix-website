@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Afacad } from "next/font/google";
 import "./globals.css";
+import LaunchAnnouncementModal from "@/components/common/LaunchAnnouncementModal";
 
 const afacad = Afacad({
   subsets: ["latin"],
@@ -52,6 +53,7 @@ export default function RootLayout({
     <html lang="en" className={afacad.variable}>
       <body className={`${afacad.className} antialiased`}>
         {children}
+        <LaunchAnnouncementModal />
       </body>
     </html>
   );
