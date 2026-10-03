@@ -121,7 +121,7 @@ export default function LaunchAnnouncementModal() {
 
                     {/* Pop-up Card Container with Glow & Scale-In Animation */}
                     <div 
-                        className="relative w-full max-w-lg my-auto bg-gradient-to-b from-[#0F172A] via-[#070F2B] to-[#030717] text-white rounded-2xl sm:rounded-3xl shadow-[0_0_60px_rgba(212,175,55,0.25)] border border-[#B5945B]/40 overflow-hidden transform transition-all duration-300 animate-modalScale"
+                        className="relative w-full max-w-lg my-auto bg-gradient-to-b from-[#0F172A] via-[#070F2B] to-[#030717] text-white rounded-none shadow-[0_0_60px_rgba(212,175,55,0.25)] border border-[#B5945B]/40 overflow-hidden transform transition-all duration-300 animate-modalScale"
                     >
                         {/* Ambient Top Golden Radial Aura */}
                         <div className="absolute top-0 inset-x-0 h-48 bg-gradient-to-b from-[#D4AF37]/15 via-[#B5945B]/5 to-transparent pointer-events-none" />
@@ -135,7 +135,7 @@ export default function LaunchAnnouncementModal() {
                         <button
                             onClick={handleClose}
                             aria-label="Close Announcement"
-                            className="absolute top-3.5 right-3.5 sm:top-5 sm:right-5 z-20 w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/15 text-white/70 hover:text-white border border-white/10 hover:border-[#B5945B]/50 transition-all duration-200 cursor-pointer group"
+                            className="absolute top-3.5 right-3.5 sm:top-5 sm:right-5 z-20 w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-none bg-white/5 hover:bg-white/15 text-white/70 hover:text-white border border-white/10 hover:border-[#B5945B]/50 transition-all duration-200 cursor-pointer group"
                         >
                             <X className="w-4 h-4 sm:w-4.5 sm:h-4.5 transition-transform duration-200 group-hover:rotate-90" />
                         </button>
@@ -172,7 +172,7 @@ export default function LaunchAnnouncementModal() {
                             </p>
 
                             {/* Countdown Timer Block */}
-                            <div className="w-full bg-[#070F2B]/90 border border-[#B5945B]/30 rounded-xl p-3 sm:p-4 mb-5 sm:mb-6 shadow-inner backdrop-blur-sm">
+                            <div className="w-full bg-[#070F2B]/90 border border-[#B5945B]/30 rounded-none p-3 sm:p-4 mb-5 sm:mb-6 shadow-inner backdrop-blur-sm">
                                 <div className="text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.2em] text-[#FCF8DD]/60 mb-2 flex items-center justify-center gap-1.5">
                                     <Clock className="w-3.5 h-3.5 text-[#FFCB05]" />
                                     <span>COUNTDOWN TO OFFICIAL LAUNCH</span>
@@ -180,7 +180,7 @@ export default function LaunchAnnouncementModal() {
 
                                 <div className="grid grid-cols-4 gap-2 sm:gap-3">
                                     {/* Days */}
-                                    <div className="flex flex-col items-center justify-center p-2 sm:p-2.5 rounded-lg bg-black/40 border border-white/5 shadow-md">
+                                    <div className="flex flex-col items-center justify-center p-2 sm:p-2.5 rounded-none bg-black/40 border border-white/5 shadow-md">
                                         <span className="font-mono font-bold text-xl sm:text-2xl text-[#FFCB05] tracking-tight">
                                             {String(timeLeft.days).padStart(2, '0')}
                                         </span>
@@ -239,7 +239,7 @@ export default function LaunchAnnouncementModal() {
                                 <Link
                                     href="/products"
                                     onClick={handlePreOrderClick}
-                                    className="group relative w-full inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-[#FFCB05] via-[#FFE279] to-[#FFCB05] text-[#070F2B] font-bold text-xs sm:text-sm uppercase tracking-[0.18em] py-3.5 sm:py-4 px-6 rounded-xl transition-all duration-300 shadow-[0_4px_25px_rgba(255,203,5,0.35)] hover:shadow-[0_6px_35px_rgba(255,203,5,0.5)] active:scale-[0.98] overflow-hidden"
+                                    className="group relative w-full inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-[#FFCB05] via-[#FFE279] to-[#FFCB05] text-[#070F2B] font-bold text-xs sm:text-sm uppercase tracking-[0.18em] py-3.5 sm:py-4 px-6 rounded-none transition-all duration-300 shadow-[0_4px_25px_rgba(255,203,5,0.35)] hover:shadow-[0_6px_35px_rgba(255,203,5,0.5)] active:scale-[0.98] overflow-hidden"
                                 >
                                     {/* Shimmer sweep effect */}
                                     <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none" />
@@ -266,7 +266,7 @@ export default function LaunchAnnouncementModal() {
                 <button
                     onClick={handleOpen}
                     aria-label="View Launch Offer"
-                    className="fixed bottom-5 right-5 z-40 group flex items-center gap-2.5 bg-[#070F2B]/90 hover:bg-[#070F2B] text-white border border-[#B5945B]/60 hover:border-[#FFCB05] px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full shadow-[0_4px_25px_rgba(0,0,0,0.6)] backdrop-blur-md transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
+                    className="fixed bottom-5 right-5 z-40 group flex items-center gap-2.5 bg-[#070F2B]/90 hover:bg-[#070F2B] text-white border border-[#B5945B]/60 hover:border-[#FFCB05] px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-none shadow-[0_4px_25px_rgba(0,0,0,0.6)] backdrop-blur-md transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
                 >
                     <span className="relative flex h-2 w-2">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FFCB05] opacity-75" />

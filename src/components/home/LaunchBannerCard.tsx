@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 interface TimeLeft {
     days: number;
@@ -40,36 +40,36 @@ export default function LaunchBannerCard() {
     }, []);
 
     return (
-        <div className="relative z-20 mt-4 sm:mt-5 mb-5 sm:mb-6 max-w-4xl mx-auto px-3 sm:px-6">
-            {/* Slim, precise luxury launch strip */}
-            <div className="group relative overflow-hidden rounded-xl sm:rounded-full bg-gradient-to-r from-[#070F2B] via-[#0B1536] to-[#070F2B] text-white py-2 sm:py-2.5 px-3.5 sm:px-6 shadow-[0_8px_30px_rgba(7,15,43,0.22)] border border-[#B5945B]/40 hover:border-[#FFCB05]/70 transition-all duration-300">
+        <div className="relative z-20 mt-4 sm:mt-6 mb-5 sm:mb-7 max-w-4xl mx-auto px-3 sm:px-6">
+            {/* Slim, precise luxury launch strip with crisp sharp edges */}
+            <div className="group relative overflow-hidden rounded-none bg-gradient-to-r from-[#070F2B] via-[#0B1536] to-[#070F2B] text-white py-2.5 sm:py-3 px-4 sm:px-6 shadow-[0_8px_30px_rgba(7,15,43,0.25)] border border-[#B5945B]/40 hover:border-[#FFCB05]/80 transition-all duration-300">
                 
                 {/* Subtle top shimmer accent */}
-                <div className="absolute top-0 inset-x-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#FFCB05] to-transparent opacity-75" />
+                <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[#FFCB05] to-transparent opacity-80" />
 
-                <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-2.5 sm:gap-4">
+                <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
                     
-                    {/* Left: Tag + Headline */}
-                    <div className="flex items-center gap-2 sm:gap-2.5 text-center sm:text-left">
+                    {/* Left: Tag + Headline with sharp edges */}
+                    <div className="flex items-center gap-2.5 text-center sm:text-left">
                         {/* Pulsing beacon */}
                         <span className="relative flex h-2 w-2 shrink-0">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FFCB05] opacity-75" />
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FFCB05]" />
+                            <span className="animate-ping absolute inline-flex h-full w-full bg-[#FFCB05] opacity-75" />
+                            <span className="relative inline-flex h-2 w-2 bg-[#FFCB05]" />
                         </span>
 
                         <div className="flex flex-wrap items-center justify-center sm:justify-start gap-1.5 sm:gap-2">
-                            <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.2em] text-[#FFCB05] font-bold">
+                            <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.25em] text-[#FFCB05] font-bold">
                                 LAUNCHING 13TH OCT
                             </span>
-                            <span className="hidden sm:inline text-white/30 text-xs">•</span>
-                            <span className="text-xs sm:text-sm font-extrabold uppercase tracking-wide text-white">
+                            <span className="hidden sm:inline text-white/30 text-xs">//</span>
+                            <span className="text-xs sm:text-sm font-extrabold uppercase tracking-widest text-white">
                                 PRE-ORDER NOW
                             </span>
                         </div>
                     </div>
 
-                    {/* Middle: Compact Countdown */}
-                    <div className="flex items-center gap-1 sm:gap-1.5 bg-black/40 border border-white/10 px-2.5 py-1 rounded-full text-xs font-mono">
+                    {/* Middle: Compact Countdown with sharp geometric boxes */}
+                    <div className="flex items-center gap-1 sm:gap-1.5 bg-black/50 border border-white/10 px-3 py-1 text-xs font-mono rounded-none">
                         <div className="flex items-baseline gap-0.5">
                             <span className="text-[#FFCB05] font-bold text-xs sm:text-sm">{String(timeLeft.days).padStart(2, '0')}</span>
                             <span className="text-[9px] text-white/40 uppercase">d</span>
@@ -91,14 +91,14 @@ export default function LaunchBannerCard() {
                         </div>
                     </div>
 
-                    {/* Right: Precise CTA Button */}
+                    {/* Right: Sharp rectangular luxury CTA Button */}
                     <Link
                         href="/products"
-                        className="group/btn relative inline-flex items-center justify-center gap-1.5 bg-gradient-to-r from-[#FFCB05] via-[#FFE279] to-[#FFCB05] text-[#070F2B] font-bold text-[11px] sm:text-xs uppercase tracking-[0.14em] py-1.5 px-4 sm:px-5 rounded-full transition-all duration-200 shadow-[0_2px_12px_rgba(255,203,5,0.25)] hover:shadow-[0_4px_18px_rgba(255,203,5,0.4)] active:scale-95 shrink-0 overflow-hidden"
+                        className="group/btn relative inline-flex items-center justify-center gap-2 bg-[#FAF6F0] hover:bg-white text-[#070F2B] font-bold text-[11px] sm:text-xs uppercase tracking-[0.18em] py-2 px-5 rounded-none transition-all duration-200 shadow-md active:scale-95 shrink-0 overflow-hidden cursor-pointer"
                     >
-                        <div className="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none" />
+                        <div className="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-[#FFCB05]/30 to-transparent pointer-events-none" />
                         <span>PRE-ORDER</span>
-                        <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover/btn:translate-x-0.5" />
+                        <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover/btn:translate-x-1" />
                     </Link>
 
                 </div>
