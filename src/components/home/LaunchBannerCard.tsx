@@ -13,7 +13,7 @@ interface TimeLeft {
 
 export default function LaunchBannerCard() {
     const calculateTimeLeft = (): TimeLeft => {
-        const launchDate = new Date('2026-10-13T00:00:00+05:30').getTime();
+        const launchDate = new Date('2026-10-20T00:00:00+05:30').getTime();
         const now = new Date().getTime();
         const difference = launchDate - now;
 
@@ -59,7 +59,7 @@ export default function LaunchBannerCard() {
 
                         <div className="flex flex-wrap items-center justify-center sm:justify-start gap-1.5 sm:gap-2">
                             <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.25em] text-[#FFCB05] font-bold">
-                                LAUNCHING 13TH OCT
+                                LAUNCHING 20TH OCT
                             </span>
                             <span className="hidden sm:inline text-white/30 text-xs">//</span>
                             <span className="text-xs sm:text-sm font-extrabold uppercase tracking-widest text-white">

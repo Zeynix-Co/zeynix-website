@@ -140,7 +140,7 @@ export default function HomePage() {
             {/* 1. HERO SECTION */}
             <HeroSection />
 
-            {/* Launching 13th October Pre-Order Card */}
+            {/* Launching 20th October Pre-Order Card */}
             <LaunchBannerCard />
 
             {/* 2. Floating rounded benefits panel separated cleanly from the Hero section */}

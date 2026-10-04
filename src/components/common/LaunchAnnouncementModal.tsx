@@ -15,10 +15,10 @@ export default function LaunchAnnouncementModal() {
     const [isOpen, setIsOpen] = useState(false);
     const [isFloatingVisible, setIsFloatingVisible] = useState(false);
 
-    // Calculate time remaining until October 13th
+    // Calculate time remaining until October 20th
     const calculateTimeLeft = (): TimeLeft => {
-        // Target: October 13, 2026 00:00:00 IST
-        const launchDate = new Date('2026-10-13T00:00:00+05:30').getTime();
+        // Target: October 20, 2026 00:00:00 IST
+        const launchDate = new Date('2026-10-20T00:00:00+05:30').getTime();
         const now = new Date().getTime();
         const difference = launchDate - now;
 
@@ -146,7 +146,7 @@ export default function LaunchAnnouncementModal() {
                             {/* Live Badge */}
                             <div className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-[#FFCB05]/10 border border-[#FFCB05]/30 text-[#FFCB05] text-[10px] sm:text-xs font-mono uppercase tracking-[0.2em] mb-4 shadow-[0_0_15px_rgba(255,203,5,0.15)] animate-pulse">
                                 <span className="w-1.5 h-1.5 rounded-full bg-[#FFCB05] animate-ping" />
-                                <span>OFFICIAL DROP // 13TH OCTOBER</span>
+                                <span>OFFICIAL DROP // 20TH OCTOBER</span>
                             </div>
 
                             {/* Brand Tagline */}
@@ -161,13 +161,13 @@ export default function LaunchAnnouncementModal() {
                             >
                                 LAUNCHING ON <br />
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFCB05] via-[#FCF8DD] to-[#E5C06E] underline decoration-[#FFCB05]/40 decoration-2 underline-offset-4">
-                                    13TH OCTOBER
+                                    20TH OCTOBER
                                 </span>
                             </h2>
 
                             {/* Subtitle */}
                             <p className="text-xs sm:text-sm text-white/80 max-w-sm font-normal leading-relaxed mb-5 sm:mb-6">
-                                The official website goes live on <span className="text-white font-semibold">October 13th</span>. 
+                                The official website goes live on <span className="text-white font-semibold">October 20th</span>. 
                                 Secure your exclusive heavyweight fits early with VIP priority shipping.
                             </p>
 
@@ -273,7 +273,7 @@ export default function LaunchAnnouncementModal() {
                         <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FFCB05]" />
                     </span>
                     <span className="text-[11px] sm:text-xs font-mono uppercase tracking-widest text-[#FCF8DD] font-semibold">
-                        LAUNCHING OCT 13 // PRE-ORDER
+                        LAUNCHING OCT 20 // PRE-ORDER
                     </span>
                     <Calendar className="w-3.5 h-3.5 text-[#FFCB05] transition-transform duration-200 group-hover:rotate-12" />
                 </button>
