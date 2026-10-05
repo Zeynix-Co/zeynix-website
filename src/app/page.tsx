@@ -485,25 +485,25 @@ export default function HomePage() {
                                 image: '/images/lookbook-1.jpg',
                                 handle: '@zeynix.streetwear',
                                 likes: '2.5k',
-                                category: 'Oversized Hoodie'
+                                category: '240 GSM Oversized Tee'
                             },
                             {
                                 image: '/images/lookbook-2.jpg',
                                 handle: '@zeynix.leather',
                                 likes: '1.8k',
-                                category: 'Suede Bomber'
+                                category: '240 GSM Streetwear Tee'
                             },
                             {
                                 image: '/images/lookbook-3.jpg',
                                 handle: '@zeynix.utility',
                                 likes: '3.1k',
-                                category: 'Utility Jacket'
+                                category: '240 GSM Graphic Tee'
                             },
                             {
                                 image: '/images/lookbook-4.jpg',
                                 handle: '@zeynix.denim',
                                 likes: '2.9k',
-                                category: 'Denim Classic'
+                                category: '240 GSM Heavyweight Tee'
                             }
                         ].map((item, idx) => (
                             <div

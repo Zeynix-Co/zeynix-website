@@ -59,7 +59,7 @@ export default function Footer() {
                         <ul className="space-y-2.5 text-white/70 text-xs font-semibold">
                             <li><Link href="/products/casual" className="hover:text-[#FFCB05] transition-colors">Streetwear Drops</Link></li>
                             <li><Link href="/products/casual" className="hover:text-[#FFCB05] transition-colors">Oversized T-Shirts</Link></li>
-                            <li><Link href="/products/casual" className="hover:text-[#FFCB05] transition-colors">Hoodies & Sweaters</Link></li>
+                            <li><Link href="/products/casual" className="hover:text-[#FFCB05] transition-colors">240 GSM Heavyweight</Link></li>
                             <li><Link href="/products/casual" className="hover:text-[#FFCB05] transition-colors">Signature Graphics</Link></li>
                             <li><Link href="/print-studio" className="hover:text-[#FFCB05] transition-colors">Print Studio</Link></li>
                         </ul>
