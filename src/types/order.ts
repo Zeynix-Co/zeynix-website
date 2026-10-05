@@ -35,6 +35,7 @@ export interface Order {
     paymentMethod: string;
     trackingNumber?: string;
     estimatedDelivery?: string;
+    expectedDelivery?: string;
     notes?: string;
     createdAt: string;
     updatedAt: string;

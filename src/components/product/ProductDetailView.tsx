@@ -704,8 +704,8 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam }: Pr
                             <div className="flex items-center gap-3 p-3 bg-white rounded-xl border border-gray-200">
                                 <Truck className="w-5 h-5 text-[#B5945B] shrink-0" />
                                 <div>
-                                    <p className="text-[11px] font-black uppercase tracking-wide text-[#070F2B]">Fast Delivery</p>
-                                    <p className="text-[10px] text-gray-500 font-medium">Ships within 24 Hours</p>
+                                    <p className="text-[11px] font-black uppercase tracking-wide text-[#070F2B]">Flash Delivery</p>
+                                    <p className="text-[10px] text-gray-500 font-medium">Delivered within 3 Days</p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-3 p-3 bg-white rounded-xl border border-gray-200">

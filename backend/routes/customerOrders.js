@@ -152,7 +152,7 @@ router.post('/', async (req, res) => {
             status: 'pending',
             paymentStatus: 'pending',
             paymentMethod: 'razorpay',
-            expectedDelivery: new Date(Date.now() + (45 * 60 * 1000)) // 45 minutes from now
+            expectedDelivery: new Date(Date.now() + (3 * 24 * 60 * 60 * 1000)) // 3 days from now
         });
 
         await order.save();

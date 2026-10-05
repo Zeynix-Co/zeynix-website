@@ -176,7 +176,7 @@ export async function POST(request: NextRequest) {
             status: 'pending',
             paymentStatus: 'pending',
             paymentMethod: 'razorpay',
-            expectedDelivery: new Date(Date.now() + (45 * 60 * 1000)) // 45 minutes from now
+            expectedDelivery: new Date(Date.now() + (3 * 24 * 60 * 60 * 1000)) // 3 days from now
         });
 
         console.log('💾 Saving order to database...');

@@ -149,7 +149,7 @@ export default function OrdersPage() {
                                         </div>
                                         <div>
                                             <p className="text-sm text-gray-500">Expected Delivery</p>
-                                            <p className="font-semibold text-gray-500">{new Date(Date.now() + (45 * 60 * 1000)).toLocaleDateString()}</p>
+                                            <p className="font-semibold text-gray-500">{new Date(order.expectedDelivery || order.estimatedDelivery || (Date.now() + 3 * 24 * 60 * 60 * 1000)).toLocaleDateString()}</p>
                                         </div>
                                     </div>
 

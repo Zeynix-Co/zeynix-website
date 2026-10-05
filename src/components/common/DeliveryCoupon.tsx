@@ -19,7 +19,7 @@ export default function DeliveryCoupon() {
                 {/* Content */}
                 <div className="flex items-center justify-center gap-3 text-black font-semibold">
                     <Truck className="w-8 h-8 animate-bounce" />
-                    <span className="text-2xl font-bold">Delivery in 30 mins</span>
+                    <span className="text-2xl font-bold">Flash Delivery in 3 Days</span>
                 </div>
             </div>
 

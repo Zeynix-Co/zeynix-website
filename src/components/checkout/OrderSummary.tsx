@@ -121,7 +121,7 @@ export default function OrderSummary() {
                     </div>
                     <div className="flex items-center">
                         <Truck className="w-4 h-4 mr-2" />
-                        <span>Delivered within 30-45 mins</span>
+                        <span>Flash delivery within 3 days</span>
                     </div>
                     <div className="flex items-center">
                         <CreditCard className="w-4 h-4 mr-2" />

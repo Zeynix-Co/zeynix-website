@@ -284,11 +284,11 @@ OrderSchema.pre('save', function (next) {
     next();
 });
 
-// Set expected delivery time (30-45 minutes from now)
+// Set expected delivery time (Flash delivery within 3 days from now)
 OrderSchema.pre('save', function (next) {
     if (this.isNew && !this.expectedDelivery) {
         const now = new Date();
-        const deliveryTime = new Date(now.getTime() + (45 * 60 * 1000)); // 45 minutes
+        const deliveryTime = new Date(now.getTime() + (3 * 24 * 60 * 60 * 1000)); // 3 days
         this.expectedDelivery = deliveryTime;
     }
     next();

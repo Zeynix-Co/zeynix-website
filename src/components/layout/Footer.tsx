@@ -70,7 +70,7 @@ export default function Footer() {
                         </h4>
                         <ul className="space-y-2.5 text-white/70 text-xs font-semibold">
                             <li><Link href="/contact" className="hover:text-[#FFCB05] transition-colors">Contact Atelier</Link></li>
-                            <li><Link href="/contact" className="hover:text-[#FFCB05] transition-colors">30-Min Delivery Zone</Link></li>
+                            <li><Link href="/contact" className="hover:text-[#FFCB05] transition-colors">3-Day Flash Delivery</Link></li>
                             <li><Link href="/about" className="hover:text-[#FFCB05] transition-colors">Size Guide & Styling</Link></li>
                             <li><Link href="/return" className="hover:text-[#FFCB05] transition-colors">Returns & Refunds</Link></li>
                         </ul>

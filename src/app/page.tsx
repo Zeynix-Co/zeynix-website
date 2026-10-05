@@ -356,7 +356,7 @@ export default function HomePage() {
                 </div>
             </section>
 
-            {/* 7. 30-MINUTE DELIVERY PROMOTION BANNER */}
+            {/* 7. FLASH DELIVERY WITHIN 3 DAYS PROMOTION BANNER */}
             <section className="py-12 md:py-16 bg-[#070F2B] text-white px-4 md:px-8 border-b border-white/5 relative overflow-hidden select-none">
                 <style dangerouslySetInnerHTML={{
                     __html: `
@@ -400,7 +400,7 @@ export default function HomePage() {
                                     <rect x="5" y="5" width="75" height="40" rx="3" fill="#FAF6F0" className="stroke-[#070F2B] stroke-[2px]" />
                                     {/* Branding on cargo box */}
                                     <text x="42.5" y="24" fill="#070F2B" fontSize="8" fontWeight="900" textAnchor="middle" letterSpacing="1">ZEYNIX</text>
-                                    <text x="42.5" y="34" fill="#B5945B" fontSize="5" fontWeight="900" textAnchor="middle" letterSpacing="0.5">30 MINS EXPRESS</text>
+                                    <text x="42.5" y="34" fill="#B5945B" fontSize="4.5" fontWeight="900" textAnchor="middle" letterSpacing="0.3">3-DAY FLASH EXPRESS</text>
 
                                     {/* Cabin */}
                                     <path d="M 80 45 L 80 18 L 98 18 C 103 18, 107 22, 107 27 L 115 27 L 115 45 Z" fill="#070F2B" className="stroke-[#FAF6F0] stroke-[1.5px]" />
@@ -441,14 +441,14 @@ export default function HomePage() {
                         {/* Right Column: Text Information */}
                         <div className="lg:col-span-7 flex flex-col justify-center space-y-4 text-center lg:text-left">
                             <span className="text-[10px] font-black uppercase tracking-widest text-[#FFCB05]">
-                                Zeynix Instant Delivery
+                                Zeynix Flash Delivery
                             </span>
                             <h2 className="text-2xl md:text-4xl font-black uppercase tracking-tight leading-tight">
                                 Fresh Fits.<br />
-                                Delivered in 30 Mins.
+                                Delivered Within 3 Days.
                             </h2>
                             <p className="text-xs text-white/70 max-w-md mx-auto lg:mx-0 leading-relaxed font-semibold">
-                                Need a quick style upgrade? Get your favorite streetwear essentials delivered straight to your door in 30 minutes or less. Rapid dispatch, premium packaging, zero delays.
+                                Need a fresh style upgrade? Get your favorite streetwear essentials delivered straight to your door with our express flash delivery within 3 days. Rapid dispatch, premium packaging, zero delays.
                             </p>
                             <div className="pt-2">
                                 <Link

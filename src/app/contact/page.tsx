@@ -92,7 +92,7 @@ export default function ContactPage() {
                                     <div>
                                         <h4 className="font-bold text-white uppercase tracking-wider text-[11px]">Operating Hours</h4>
                                         <p className="text-white/60 mt-0.5">Mon – Sat: 10:00 AM – 6:30 PM IST</p>
-                                        <p className="text-[10px] text-white/40">30-min express delivery active during business hours</p>
+                                        <p className="text-[10px] text-white/40">Flash delivery within 3 days active across India</p>
                                     </div>
                                 </div>
                             </div>
@@ -166,7 +166,7 @@ export default function ContactPage() {
                                         >
                                             <option>Order Status & Tracking</option>
                                             <option>Custom Apparel Printing</option>
-                                            <option>30-Min Delivery Query</option>
+                                            <option>Flash Delivery (3 Days) Query</option>
                                             <option>Returns & Exchanges</option>
                                             <option>Other Question</option>
                                         </select>

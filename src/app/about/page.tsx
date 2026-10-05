@@ -58,10 +58,10 @@ export default function AboutPage() {
                                 <Compass className="w-6 h-6" />
                             </div>
                             <h3 className="text-base font-extrabold uppercase tracking-wide text-[#070F2B]">
-                                30-Minute Hyperlocal Drop
+                                3-Day Flash Delivery
                             </h3>
                             <p className="text-xs text-gray-500 font-semibold leading-relaxed">
-                                Experience instant streetwear gratification with express door-to-door fulfillment in active metropolitan hubs.
+                                Experience rapid streetwear gratification with express door-to-door flash delivery within 3 days nationwide.
                             </p>
                         </div>
                     </div>

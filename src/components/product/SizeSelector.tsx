@@ -139,7 +139,7 @@ export default function SizeSelector({
             {/* Stock Information */}
             <div className="text-sm text-gray-600">
                 <p>• Select your size to see availability</p>
-                <p>• Free returns within 30-45 mins</p>
+                <p>• Flash delivery within 3 days</p>
             </div>
         </div>
     );
