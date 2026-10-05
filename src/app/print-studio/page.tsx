@@ -2,15 +2,14 @@
 
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import { Mail, MapPin, Clock, Send, MessageSquare, Printer, Sparkles } from 'lucide-react';
+import { Mail, MapPin, Clock, Send, MessageSquare, Printer } from 'lucide-react';
 import { useState } from 'react';
 
 export default function PrintStudioPage() {
     const [submitted, setSubmitted] = useState(false);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [projectType, setProjectType] = useState('Custom Oversized Streetwear T-Shirts');
-    const [quantity, setQuantity] = useState('50 – 200 pieces');
+    const [inquiryType, setInquiryType] = useState('Custom T-Shirt Printing');
     const [message, setMessage] = useState('');
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -18,11 +17,10 @@ export default function PrintStudioPage() {
 
         const formattedMessage =
             `*New Print Studio Inquiry - Zeynix*\n\n` +
-            `*Name / Org:* ${name.trim()}\n` +
+            `*Name:* ${name.trim()}\n` +
             `*Email:* ${email.trim()}\n` +
-            `*Project Type:* ${projectType}\n` +
-            `*Estimated Quantity:* ${quantity}\n\n` +
-            `*Project Details:*\n${message.trim()}`;
+            `*Inquiry:* ${inquiryType}\n\n` +
+            `*Message:*\n${message.trim()}`;
 
         const whatsappUrl = `https://wa.me/917420930845?text=${encodeURIComponent(formattedMessage)}`;
         window.open(whatsappUrl, '_blank');
@@ -32,8 +30,7 @@ export default function PrintStudioPage() {
     const handleReset = () => {
         setName('');
         setEmail('');
-        setProjectType('Custom Oversized Streetwear T-Shirts');
-        setQuantity('50 – 200 pieces');
+        setInquiryType('Custom T-Shirt Printing');
         setMessage('');
         setSubmitted(false);
     };
@@ -52,7 +49,7 @@ export default function PrintStudioPage() {
                         Bring Your Designs To Life
                     </h1>
                     <p className="text-xs sm:text-sm text-gray-500 font-semibold mt-2 leading-relaxed">
-                        Looking for custom screen printing, oversized bulk merchandise, or bespoke brand production? Share your project details with our print studio team.
+                        Looking for custom apparel printing or bespoke streetwear? Share your idea with our print studio team.
                     </p>
                 </div>
 
@@ -83,9 +80,9 @@ export default function PrintStudioPage() {
                                         <Mail className="w-4 h-4" />
                                     </div>
                                     <div>
-                                        <h4 className="font-bold text-white uppercase tracking-wider text-[11px]">Bespoke Orders Email</h4>
+                                        <h4 className="font-bold text-white uppercase tracking-wider text-[11px]">Email Support</h4>
                                         <p className="text-white/60 mt-0.5">zeynix.co@gmail.com</p>
-                                        <p className="text-[10px] text-white/40">Subject: Bespoke Print Request</p>
+                                        <p className="text-[10px] text-white/40">Print Studio: zeynix.co@gmail.com</p>
                                     </div>
                                 </div>
 
@@ -109,7 +106,7 @@ export default function PrintStudioPage() {
                         </div>
                     </div>
 
-                    {/* Bespoke Inquiry Form */}
+                    {/* Inquiry Form */}
                     <div className="lg:col-span-7">
                         <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-gray-100">
                             {submitted ? (
@@ -119,7 +116,7 @@ export default function PrintStudioPage() {
                                     </div>
                                     <h3 className="text-2xl font-black text-[#070F2B] uppercase">Inquiry Received</h3>
                                     <p className="text-xs sm:text-sm text-gray-500 max-w-md mx-auto">
-                                        Thank you for reaching out to Zeynix Print Studio. Our bespoke production team will review your specifications and get in touch with you shortly.
+                                        Thank you for reaching out to Zeynix Print Studio. Our team will get back to you shortly.
                                     </p>
                                     <button
                                         onClick={handleReset}
@@ -133,7 +130,7 @@ export default function PrintStudioPage() {
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <div>
                                             <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-700 mb-1.5">
-                                                Your Name / Organization
+                                                Your Name
                                             </label>
                                             <input
                                                 type="text"
@@ -159,50 +156,32 @@ export default function PrintStudioPage() {
                                         </div>
                                     </div>
 
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                        <div>
-                                            <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-700 mb-1.5">
-                                                Project Type
-                                            </label>
-                                            <select
-                                                value={projectType}
-                                                onChange={(e) => setProjectType(e.target.value)}
-                                                className="w-full text-xs px-3.5 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-[#070F2B] bg-gray-50 focus:bg-white transition-colors cursor-pointer"
-                                            >
-                                                <option>Custom Oversized Streetwear T-Shirts</option>
-                                                <option>Screen Printing & Merch (B2B)</option>
-                                                <option>Corporate & Team Merchandise</option>
-                                                <option>Limited Edition Artist Drop</option>
-                                                <option>Puff & High-Density Printing</option>
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-700 mb-1.5">
-                                                Estimated Quantity
-                                            </label>
-                                            <select
-                                                value={quantity}
-                                                onChange={(e) => setQuantity(e.target.value)}
-                                                className="w-full text-xs px-3.5 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-[#070F2B] bg-gray-50 focus:bg-white transition-colors cursor-pointer"
-                                            >
-                                                <option>20 – 50 pieces</option>
-                                                <option>50 – 200 pieces</option>
-                                                <option>200 – 500 pieces</option>
-                                                <option>500+ pieces (Bulk)</option>
-                                            </select>
-                                        </div>
+                                    <div>
+                                        <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-700 mb-1.5">
+                                            Inquiry Type
+                                        </label>
+                                        <select
+                                            value={inquiryType}
+                                            onChange={(e) => setInquiryType(e.target.value)}
+                                            className="w-full text-xs px-3.5 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-[#070F2B] bg-gray-50 focus:bg-white transition-colors cursor-pointer"
+                                        >
+                                            <option>Custom T-Shirt Printing</option>
+                                            <option>Bespoke Streetwear Graphics</option>
+                                            <option>Screen Printing & Embroidery</option>
+                                            <option>General Studio Inquiry</option>
+                                        </select>
                                     </div>
 
                                     <div>
                                         <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-700 mb-1.5">
-                                            Project Specifications & Message
+                                            Message
                                         </label>
                                         <textarea
                                             required
                                             rows={4}
                                             value={message}
                                             onChange={(e) => setMessage(e.target.value)}
-                                            placeholder="Tell us about your designs, preferred fabric GSM, print placement, and expected delivery date..."
+                                            placeholder="Tell us what you would like to print or design..."
                                             className="w-full text-xs px-3.5 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-[#070F2B] bg-gray-50 focus:bg-white transition-colors"
                                         />
                                     </div>

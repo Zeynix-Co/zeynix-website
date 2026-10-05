@@ -165,7 +165,7 @@ export default function ContactPage() {
                                             className="w-full text-xs px-3.5 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-[#070F2B] bg-gray-50 focus:bg-white transition-colors cursor-pointer"
                                         >
                                             <option>Order Status & Tracking</option>
-                                            <option>Bespoke Custom Printing (B2B)</option>
+                                            <option>Custom Apparel Printing</option>
                                             <option>30-Min Delivery Query</option>
                                             <option>Returns & Exchanges</option>
                                             <option>Other Question</option>

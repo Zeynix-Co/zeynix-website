@@ -216,12 +216,12 @@ export default function HomePage() {
                             />
 
                             <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-md rounded-xl p-4 border border-[#070F2B]/10 flex items-center gap-3.5 z-20 shadow-lg">
-                                <div className="w-9 h-9 rounded-full bg-[#070F2B] text-white flex items-center justify-center text-[11px] font-black shadow-md flex-shrink-0">
-                                    B2B
+                                <div className="w-9 h-9 rounded-full bg-[#070F2B] text-[#FFCB05] flex items-center justify-center text-[12px] font-black shadow-md flex-shrink-0">
+                                    ★
                                 </div>
                                 <div>
                                     <span className="text-[10px] font-black uppercase block tracking-wider text-[#070F2B]">Bespoke Print Studio</span>
-                                    <span className="text-[9px] text-gray-500 block leading-tight">High-end screen printing for teams & event merch</span>
+                                    <span className="text-[9px] text-gray-500 block leading-tight">High-end custom screen printing on luxury cotton</span>
                                 </div>
                             </div>
                         </div>
