@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { Instagram, Mail, Phone, MapPin, Clock, MessageSquare } from 'lucide-react';
 import Link from 'next/link';
 
@@ -111,27 +112,20 @@ export default function Footer() {
                         </div>
                     </div>
 
-                    {/* Column 4: Newsletter Subscription (Right) */}
-                    <div className="sm:col-span-1 lg:col-span-2 space-y-4">
-                        <h4 className="font-extrabold tracking-widest text-xs text-[#FFCB05] uppercase">
-                            Join the Atelier
-                        </h4>
-                        <p className="text-xs text-white/50 leading-relaxed font-semibold">
-                            Subscribe for early lookbooks and drop alerts.
-                        </p>
-                        <form className="space-y-2" onSubmit={(e) => e.preventDefault()}>
-                            <input 
-                                type="email" 
-                                placeholder="Your email address" 
-                                className="w-full bg-white/5 text-white placeholder-white/30 text-xs px-3.5 py-2.5 rounded-none border border-white/10 focus:outline-none focus:border-[#FFCB05]"
+                    {/* Column 4: Zeynix Logo (Right) */}
+                    <div className="sm:col-span-1 lg:col-span-2 flex flex-col items-center justify-center space-y-2 text-center">
+                        <Link href="/" className="inline-block group">
+                            <Image 
+                                src="/images/logos/zeynix-logo-rbg.png" 
+                                alt="Zeynix Logo" 
+                                width={180} 
+                                height={180} 
+                                className="w-24 sm:w-28 md:w-32 h-auto object-contain group-hover:scale-105 transition-transform duration-300 drop-shadow-[0_4px_16px_rgba(255,203,5,0.15)]"
                             />
-                            <button 
-                                type="submit" 
-                                className="w-full bg-[#FFCB05] text-[#070F2B] font-black uppercase text-[10px] tracking-wider py-2.5 hover:bg-white hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer shadow-[2px_2px_0px_#B5945B] hover:shadow-[0px_0px_0px_#B5945B]"
-                            >
-                                Subscribe
-                            </button>
-                        </form>
+                        </Link>
+                        <span className="text-[9px] font-black uppercase tracking-widest text-[#B5945B]">
+                            Wear The Luxury
+                        </span>
                     </div>
 
                 </div>
