@@ -220,7 +220,7 @@ export default function HomePage() {
                                     B2B
                                 </div>
                                 <div>
-                                    <span className="text-[10px] font-black uppercase block tracking-wider text-[#070F2B]">Bespoke Printing Atelier</span>
+                                    <span className="text-[10px] font-black uppercase block tracking-wider text-[#070F2B]">Bespoke Print Studio</span>
                                     <span className="text-[9px] text-gray-500 block leading-tight">High-end screen printing for teams & event merch</span>
                                 </div>
                             </div>
@@ -229,7 +229,7 @@ export default function HomePage() {
                         {/* Right: Premium Dark Navy Panel */}
                         <div className="lg:col-span-6 bg-[#070F2B] text-white p-6 md:p-12 flex flex-col justify-center space-y-4 border-l border-white/5">
                             <span className="text-[10px] font-black uppercase tracking-widest text-[#FFCB05]">
-                                Signature Print Atelier
+                                Signature Print Studio
                             </span>
                             <h2 className="text-2xl md:text-4xl font-black tracking-tight leading-tight uppercase">
                                 Custom Printing.<br />
@@ -240,7 +240,7 @@ export default function HomePage() {
                             </p>
                             <div className="pt-2">
                                 <Link
-                                    href="/contact"
+                                    href="/print-studio"
                                     className="inline-flex items-center gap-2 bg-[#FFCB05] text-[#070F2B] py-3.5 px-6 rounded-xl font-bold uppercase tracking-wider text-[10px] shadow-md hover:bg-white hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
                                 >
                                     Inquire Bespoke Order

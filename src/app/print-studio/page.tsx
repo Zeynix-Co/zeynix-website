@@ -2,25 +2,27 @@
 
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import { Mail, Phone, MapPin, Clock, Send, MessageSquare } from 'lucide-react';
+import { Mail, MapPin, Clock, Send, MessageSquare, Printer, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 
-export default function ContactPage() {
+export default function PrintStudioPage() {
     const [submitted, setSubmitted] = useState(false);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [subject, setSubject] = useState('Order Status & Tracking');
+    const [projectType, setProjectType] = useState('Custom Oversized Streetwear T-Shirts');
+    const [quantity, setQuantity] = useState('50 – 200 pieces');
     const [message, setMessage] = useState('');
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
         const formattedMessage =
-            `*New Contact Inquiry - Zeynix*\n\n` +
-            `*Name:* ${name.trim()}\n` +
+            `*New Print Studio Inquiry - Zeynix*\n\n` +
+            `*Name / Org:* ${name.trim()}\n` +
             `*Email:* ${email.trim()}\n` +
-            `*Subject:* ${subject}\n\n` +
-            `*Message:*\n${message.trim()}`;
+            `*Project Type:* ${projectType}\n` +
+            `*Estimated Quantity:* ${quantity}\n\n` +
+            `*Project Details:*\n${message.trim()}`;
 
         const whatsappUrl = `https://wa.me/917420930845?text=${encodeURIComponent(formattedMessage)}`;
         window.open(whatsappUrl, '_blank');
@@ -30,8 +32,9 @@ export default function ContactPage() {
     const handleReset = () => {
         setName('');
         setEmail('');
+        setProjectType('Custom Oversized Streetwear T-Shirts');
+        setQuantity('50 – 200 pieces');
         setMessage('');
-        setSubject('Order Status & Tracking');
         setSubmitted(false);
     };
 
@@ -43,22 +46,23 @@ export default function ContactPage() {
                 {/* Page Header */}
                 <div className="text-center max-w-2xl mx-auto mb-10">
                     <span className="text-[10px] font-black uppercase tracking-widest text-[#B5945B] block mb-1">
-                        Get In Touch
+                        Signature Print Studio
                     </span>
                     <h1 className="text-3xl sm:text-4xl font-black text-[#070F2B] uppercase tracking-tight">
-                        Connect With Us
+                        Bring Your Designs To Life
                     </h1>
                     <p className="text-xs sm:text-sm text-gray-500 font-semibold mt-2 leading-relaxed">
-                        Have a question about our collections, custom printing, sizing, or orders? Reach out to our team.
+                        Looking for custom screen printing, oversized bulk merchandise, or bespoke brand production? Share your project details with our print studio team.
                     </p>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                    {/* Contact Information Cards */}
+                    {/* Print Studio Information Card */}
                     <div className="lg:col-span-5 space-y-4">
                         <div className="bg-[#070F2B] text-white rounded-2xl p-6 sm:p-8 space-y-6 shadow-xl border border-white/5">
-                            <h3 className="text-lg font-extrabold uppercase tracking-wide text-white">
-                                Studio & Store Headquarters
+                            <h3 className="text-lg font-extrabold uppercase tracking-wide text-white flex items-center gap-2">
+                                <Printer className="w-5 h-5 text-[#FFCB05]" />
+                                Print Studio Headquarters
                             </h3>
 
                             <div className="space-y-4 text-xs">
@@ -79,9 +83,9 @@ export default function ContactPage() {
                                         <Mail className="w-4 h-4" />
                                     </div>
                                     <div>
-                                        <h4 className="font-bold text-white uppercase tracking-wider text-[11px]">Email Support</h4>
+                                        <h4 className="font-bold text-white uppercase tracking-wider text-[11px]">Bespoke Orders Email</h4>
                                         <p className="text-white/60 mt-0.5">zeynix.co@gmail.com</p>
-                                        <p className="text-[10px] text-white/40">Print Studio: zeynix.co@gmail.com</p>
+                                        <p className="text-[10px] text-white/40">Subject: Bespoke Print Request</p>
                                     </div>
                                 </div>
 
@@ -92,7 +96,7 @@ export default function ContactPage() {
                                     <div>
                                         <h4 className="font-bold text-white uppercase tracking-wider text-[11px]">Operating Hours</h4>
                                         <p className="text-white/60 mt-0.5">Mon – Sat: 10:00 AM – 6:30 PM IST</p>
-                                        <p className="text-[10px] text-white/40">30-min express delivery active during business hours</p>
+                                        <p className="text-[10px] text-white/40">Studio visits & consultations available by appointment</p>
                                     </div>
                                 </div>
                             </div>
@@ -105,7 +109,7 @@ export default function ContactPage() {
                         </div>
                     </div>
 
-                    {/* Contact Form */}
+                    {/* Bespoke Inquiry Form */}
                     <div className="lg:col-span-7">
                         <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-gray-100">
                             {submitted ? (
@@ -113,15 +117,15 @@ export default function ContactPage() {
                                     <div className="w-16 h-16 rounded-full bg-green-50 text-green-600 flex items-center justify-center mx-auto shadow-sm">
                                         <MessageSquare className="w-8 h-8" />
                                     </div>
-                                    <h3 className="text-2xl font-black text-[#070F2B] uppercase">Message Received</h3>
+                                    <h3 className="text-2xl font-black text-[#070F2B] uppercase">Inquiry Received</h3>
                                     <p className="text-xs sm:text-sm text-gray-500 max-w-md mx-auto">
-                                        Thank you for contacting Zeynix. Our team will get back to you shortly.
+                                        Thank you for reaching out to Zeynix Print Studio. Our bespoke production team will review your specifications and get in touch with you shortly.
                                     </p>
                                     <button
                                         onClick={handleReset}
                                         className="bg-[#070F2B] text-white py-2.5 px-6 font-bold uppercase tracking-wider text-xs shadow-xs hover:bg-[#B5945B] hover:text-[#070F2B] transition-colors"
                                     >
-                                        Send Another Message
+                                        Submit Another Inquiry
                                     </button>
                                 </div>
                             ) : (
@@ -129,7 +133,7 @@ export default function ContactPage() {
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <div>
                                             <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-700 mb-1.5">
-                                                Your Name
+                                                Your Name / Organization
                                             </label>
                                             <input
                                                 type="text"
@@ -155,33 +159,50 @@ export default function ContactPage() {
                                         </div>
                                     </div>
 
-                                    <div>
-                                        <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-700 mb-1.5">
-                                            Subject / Inquiry Type
-                                        </label>
-                                        <select
-                                            value={subject}
-                                            onChange={(e) => setSubject(e.target.value)}
-                                            className="w-full text-xs px-3.5 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-[#070F2B] bg-gray-50 focus:bg-white transition-colors cursor-pointer"
-                                        >
-                                            <option>Order Status & Tracking</option>
-                                            <option>Bespoke Custom Printing (B2B)</option>
-                                            <option>30-Min Delivery Query</option>
-                                            <option>Returns & Exchanges</option>
-                                            <option>Other Question</option>
-                                        </select>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-700 mb-1.5">
+                                                Project Type
+                                            </label>
+                                            <select
+                                                value={projectType}
+                                                onChange={(e) => setProjectType(e.target.value)}
+                                                className="w-full text-xs px-3.5 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-[#070F2B] bg-gray-50 focus:bg-white transition-colors cursor-pointer"
+                                            >
+                                                <option>Custom Oversized Streetwear T-Shirts</option>
+                                                <option>Screen Printing & Merch (B2B)</option>
+                                                <option>Corporate & Team Merchandise</option>
+                                                <option>Limited Edition Artist Drop</option>
+                                                <option>Puff & High-Density Printing</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-700 mb-1.5">
+                                                Estimated Quantity
+                                            </label>
+                                            <select
+                                                value={quantity}
+                                                onChange={(e) => setQuantity(e.target.value)}
+                                                className="w-full text-xs px-3.5 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-[#070F2B] bg-gray-50 focus:bg-white transition-colors cursor-pointer"
+                                            >
+                                                <option>20 – 50 pieces</option>
+                                                <option>50 – 200 pieces</option>
+                                                <option>200 – 500 pieces</option>
+                                                <option>500+ pieces (Bulk)</option>
+                                            </select>
+                                        </div>
                                     </div>
 
                                     <div>
                                         <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-700 mb-1.5">
-                                            Message
+                                            Project Specifications & Message
                                         </label>
                                         <textarea
                                             required
                                             rows={4}
                                             value={message}
                                             onChange={(e) => setMessage(e.target.value)}
-                                            placeholder="Tell us how we can help you..."
+                                            placeholder="Tell us about your designs, preferred fabric GSM, print placement, and expected delivery date..."
                                             className="w-full text-xs px-3.5 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-[#070F2B] bg-gray-50 focus:bg-white transition-colors"
                                         />
                                     </div>

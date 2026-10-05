@@ -79,7 +79,7 @@ export const brand = {
 export const navigation = {
     categories: [
         { name: 'Shop Fits', href: '/products/casual' },
-        { name: 'Print Atelier', href: '/contact' },
+        { name: 'Print Studio', href: '/print-studio' },
         { name: 'Our Story', href: '/about' },
         { name: 'Contact Us', href: '/contact' },
     ],
