@@ -9,7 +9,6 @@ export default function PrintStudioPage() {
     const [submitted, setSubmitted] = useState(false);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [inquiryType, setInquiryType] = useState('Custom T-Shirt Printing');
     const [message, setMessage] = useState('');
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -18,8 +17,7 @@ export default function PrintStudioPage() {
         const formattedMessage =
             `*New Print Studio Inquiry - Zeynix*\n\n` +
             `*Name:* ${name.trim()}\n` +
-            `*Email:* ${email.trim()}\n` +
-            `*Inquiry:* ${inquiryType}\n\n` +
+            `*Email:* ${email.trim()}\n\n` +
             `*Message:*\n${message.trim()}`;
 
         const whatsappUrl = `https://wa.me/917420930845?text=${encodeURIComponent(formattedMessage)}`;
@@ -30,7 +28,6 @@ export default function PrintStudioPage() {
     const handleReset = () => {
         setName('');
         setEmail('');
-        setInquiryType('Custom T-Shirt Printing');
         setMessage('');
         setSubmitted(false);
     };
@@ -156,21 +153,6 @@ export default function PrintStudioPage() {
                                         </div>
                                     </div>
 
-                                    <div>
-                                        <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-700 mb-1.5">
-                                            Inquiry Type
-                                        </label>
-                                        <select
-                                            value={inquiryType}
-                                            onChange={(e) => setInquiryType(e.target.value)}
-                                            className="w-full text-xs px-3.5 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-[#070F2B] bg-gray-50 focus:bg-white transition-colors cursor-pointer"
-                                        >
-                                            <option>Custom T-Shirt Printing</option>
-                                            <option>Bespoke Streetwear Graphics</option>
-                                            <option>Screen Printing & Embroidery</option>
-                                            <option>General Studio Inquiry</option>
-                                        </select>
-                                    </div>
 
                                     <div>
                                         <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-700 mb-1.5">
