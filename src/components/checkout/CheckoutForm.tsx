@@ -247,7 +247,7 @@ Please confirm availability and provide delivery timeline.
 Thank you!`;
 
                     const encodedMessage = encodeURIComponent(whatsappMessage);
-                    const whatsappUrl = `https://wa.me/7420930845?text=${encodedMessage}`;
+                    const whatsappUrl = `https://wa.me/917420004429?text=${encodedMessage}`;
 
                     // Redirect to WhatsApp
                     window.open(whatsappUrl, '_blank');

@@ -34,7 +34,7 @@ export default function Footer() {
                             </a>
                             <a 
                                 target="_blank" 
-                                href="https://wa.me/917420930845" 
+                                href="https://wa.me/917420004429" 
                                 rel="noopener noreferrer" 
                                 aria-label="WhatsApp"
                                 className="p-2 bg-white/5 hover:bg-[#FFCB05] hover:text-[#070F2B] rounded-lg text-white transition-all shadow-sm"
@@ -99,8 +99,8 @@ export default function Footer() {
                             </div>
                             <div className="flex items-center gap-2.5 text-white/70">
                                 <Phone className="w-4 h-4 text-[#FFCB05] shrink-0" />
-                                <a href="https://wa.me/917420930845" target="_blank" rel="noopener noreferrer" className="hover:text-[#FFCB05] transition-colors font-semibold text-[11px]">
-                                    +91 7420930845
+                                <a href="https://wa.me/917420004429" target="_blank" rel="noopener noreferrer" className="hover:text-[#FFCB05] transition-colors font-semibold text-[11px]">
+                                    +91 7420004429
                                 </a>
                             </div>
                             <div className="flex items-center gap-2.5 text-white/70">

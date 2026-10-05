@@ -22,7 +22,7 @@ export default function ContactPage() {
             `*Subject:* ${subject}\n\n` +
             `*Message:*\n${message.trim()}`;
 
-        const whatsappUrl = `https://wa.me/917420930845?text=${encodeURIComponent(formattedMessage)}`;
+        const whatsappUrl = `https://wa.me/917420004429?text=${encodeURIComponent(formattedMessage)}`;
         window.open(whatsappUrl, '_blank');
         setSubmitted(true);
     };
@@ -82,6 +82,24 @@ export default function ContactPage() {
                                         <h4 className="font-bold text-white uppercase tracking-wider text-[11px]">Email Support</h4>
                                         <p className="text-white/60 mt-0.5">zeynix.co@gmail.com</p>
                                         <p className="text-[10px] text-white/40">Print Studio: zeynix.co@gmail.com</p>
+                                    </div>
+                                </div>
+
+                                <div className="flex items-start gap-3.5">
+                                    <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-[#FFCB05] shrink-0">
+                                        <Phone className="w-4 h-4" />
+                                    </div>
+                                    <div>
+                                        <h4 className="font-bold text-white uppercase tracking-wider text-[11px]">Phone / WhatsApp</h4>
+                                        <a 
+                                            href="https://wa.me/917420004429" 
+                                            target="_blank" 
+                                            rel="noopener noreferrer" 
+                                            className="text-white/60 hover:text-[#FFCB05] transition-colors mt-0.5 block font-semibold"
+                                        >
+                                            +91 7420004429
+                                        </a>
+                                        <p className="text-[10px] text-white/40">Direct WhatsApp support available</p>
                                     </div>
                                 </div>
 
