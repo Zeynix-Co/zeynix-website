@@ -1,8 +1,7 @@
 'use client';
 
-import { Facebook, Instagram, Twitter, Mail, Truck, CreditCard, MapPin } from 'lucide-react';
+import { Instagram, Mail, Phone, MapPin, Clock, MessageSquare } from 'lucide-react';
 import Link from 'next/link';
-import { colors, colorClasses, brand } from '@/lib/constants';
 
 export default function Footer() {
     const currentYear = new Date().getFullYear();
@@ -27,25 +26,26 @@ export default function Footer() {
                                 target="_blank" 
                                 href="https://www.instagram.com/zeynix.in" 
                                 rel="noopener noreferrer" 
+                                aria-label="Instagram"
                                 className="p-2 bg-white/5 hover:bg-[#FFCB05] hover:text-[#070F2B] rounded-lg text-white transition-all shadow-sm"
                             >
                                 <Instagram className="w-4 h-4" />
                             </a>
                             <a 
                                 target="_blank" 
-                                href="https://facebook.com" 
+                                href="https://wa.me/917420930845" 
                                 rel="noopener noreferrer" 
+                                aria-label="WhatsApp"
                                 className="p-2 bg-white/5 hover:bg-[#FFCB05] hover:text-[#070F2B] rounded-lg text-white transition-all shadow-sm"
                             >
-                                <Facebook className="w-4 h-4" />
+                                <MessageSquare className="w-4 h-4" />
                             </a>
                             <a 
-                                target="_blank" 
-                                href="https://twitter.com" 
-                                rel="noopener noreferrer" 
+                                href="mailto:zeynix.co@gmail.com" 
+                                aria-label="Email"
                                 className="p-2 bg-white/5 hover:bg-[#FFCB05] hover:text-[#070F2B] rounded-lg text-white transition-all shadow-sm"
                             >
-                                <Twitter className="w-4 h-4" />
+                                <Mail className="w-4 h-4" />
                             </a>
                         </div>
                     </div>
@@ -60,6 +60,7 @@ export default function Footer() {
                             <li><Link href="/products/casual" className="hover:text-[#FFCB05] transition-colors">Oversized T-Shirts</Link></li>
                             <li><Link href="/products/casual" className="hover:text-[#FFCB05] transition-colors">Hoodies & Sweaters</Link></li>
                             <li><Link href="/products/casual" className="hover:text-[#FFCB05] transition-colors">Signature Graphics</Link></li>
+                            <li><Link href="/print-studio" className="hover:text-[#FFCB05] transition-colors">Print Studio</Link></li>
                         </ul>
                     </div>
 
@@ -72,42 +73,63 @@ export default function Footer() {
                             <li><Link href="/contact" className="hover:text-[#FFCB05] transition-colors">Contact Atelier</Link></li>
                             <li><Link href="/contact" className="hover:text-[#FFCB05] transition-colors">3-Day Flash Delivery</Link></li>
                             <li><Link href="/about" className="hover:text-[#FFCB05] transition-colors">Size Guide & Styling</Link></li>
-                            <li><Link href="/return" className="hover:text-[#FFCB05] transition-colors">Returns & Refunds</Link></li>
+                            <li><Link href="/about" className="hover:text-[#FFCB05] transition-colors">Our Story</Link></li>
+                            <li><Link href="/orders" className="hover:text-[#FFCB05] transition-colors">Track Order</Link></li>
                         </ul>
                     </div>
 
-                    {/* Column 3: Atelier Story */}
-                    <div className="sm:col-span-1 lg:col-span-2">
+                    {/* Column 3: Store & Studio (Genuine Store Details) */}
+                    <div className="sm:col-span-1 lg:col-span-3 space-y-3">
                         <h4 className="font-extrabold tracking-widest text-xs text-[#FFCB05] uppercase mb-4">
-                            Atelier Story
+                            Store & Studio
                         </h4>
-                        <ul className="space-y-2.5 text-white/70 text-xs font-semibold">
-                            <li><Link href="/about" className="hover:text-[#FFCB05] transition-colors">Our Heritage</Link></li>
-                            <li><Link href="/about" className="hover:text-[#FFCB05] transition-colors">Fabric Selection</Link></li>
-                            <li><Link href="/privacy" className="hover:text-[#FFCB05] transition-colors">Privacy Charter</Link></li>
-                            <li><Link href="/terms" className="hover:text-[#FFCB05] transition-colors">Terms of Service</Link></li>
-                        </ul>
+                        <div className="space-y-3 text-xs">
+                            <div className="flex items-start gap-2.5 text-white/70">
+                                <MapPin className="w-4 h-4 text-[#FFCB05] shrink-0 mt-0.5" />
+                                <span className="leading-relaxed font-semibold text-[11px]">
+                                    1st Floor, M Dange Caters, in front of Neelam Mess, LIT Road, Ram Nagar, Nagpur, Maharashtra - 440010
+                                </span>
+                            </div>
+                            <div className="flex items-center gap-2.5 text-white/70">
+                                <Mail className="w-4 h-4 text-[#FFCB05] shrink-0" />
+                                <a href="mailto:zeynix.co@gmail.com" className="hover:text-[#FFCB05] transition-colors font-semibold text-[11px]">
+                                    zeynix.co@gmail.com
+                                </a>
+                            </div>
+                            <div className="flex items-center gap-2.5 text-white/70">
+                                <Phone className="w-4 h-4 text-[#FFCB05] shrink-0" />
+                                <a href="https://wa.me/917420930845" target="_blank" rel="noopener noreferrer" className="hover:text-[#FFCB05] transition-colors font-semibold text-[11px]">
+                                    +91 7420930845
+                                </a>
+                            </div>
+                            <div className="flex items-center gap-2.5 text-white/70">
+                                <Clock className="w-4 h-4 text-[#FFCB05] shrink-0" />
+                                <span className="font-semibold text-[11px]">
+                                    Mon – Sat: 10:00 AM – 6:30 PM IST
+                                </span>
+                            </div>
+                        </div>
                     </div>
 
                     {/* Column 4: Newsletter Subscription (Right) */}
-                    <div className="sm:col-span-1 lg:col-span-3 space-y-4">
+                    <div className="sm:col-span-1 lg:col-span-2 space-y-4">
                         <h4 className="font-extrabold tracking-widest text-xs text-[#FFCB05] uppercase">
                             Join the Atelier
                         </h4>
                         <p className="text-xs text-white/50 leading-relaxed font-semibold">
-                            Subscribe to receive early lookbooks, streetwear drop notifications, and private sales.
+                            Subscribe for early lookbooks and drop alerts.
                         </p>
-                        <form className="flex items-stretch gap-2" onSubmit={(e) => e.preventDefault()}>
+                        <form className="space-y-2" onSubmit={(e) => e.preventDefault()}>
                             <input 
                                 type="email" 
-                                placeholder="Email address" 
-                                className="bg-white/5 text-white placeholder-white/30 text-xs px-4 py-2.5 rounded-none border border-white/10 focus:outline-none focus:border-[#FFCB05] flex-1"
+                                placeholder="Your email address" 
+                                className="w-full bg-white/5 text-white placeholder-white/30 text-xs px-3.5 py-2.5 rounded-none border border-white/10 focus:outline-none focus:border-[#FFCB05]"
                             />
                             <button 
-                                type="submit"
-                                className="bg-[#FFCB05] text-[#070F2B] font-black uppercase text-[10px] tracking-wider px-4 py-2.5 hover:bg-white hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-[2px_2px_0px_#B5945B] hover:shadow-[0px_0px_0px_#B5945B]"
+                                type="submit" 
+                                className="w-full bg-[#FFCB05] text-[#070F2B] font-black uppercase text-[10px] tracking-wider py-2.5 hover:bg-white hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer shadow-[2px_2px_0px_#B5945B] hover:shadow-[0px_0px_0px_#B5945B]"
                             >
-                                Join
+                                Subscribe
                             </button>
                         </form>
                     </div>
@@ -118,9 +140,9 @@ export default function Footer() {
                 <div className="border-t border-white/10 pt-8 mt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/40 font-bold uppercase tracking-wider">
                     <p>© {currentYear} Zeynix.in. All rights reserved.</p>
                     <div className="flex items-center gap-6">
-                        <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
-                        <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
-                        <Link href="/about" className="hover:text-white transition-colors">Atelier Shipping</Link>
+                        <Link href="/about" className="hover:text-white transition-colors">Our Story</Link>
+                        <Link href="/print-studio" className="hover:text-white transition-colors">Print Studio</Link>
+                        <Link href="/contact" className="hover:text-white transition-colors">Contact Atelier</Link>
                     </div>
                 </div>
             </div>
