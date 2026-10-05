@@ -41,6 +41,14 @@ export default function ProductCard({ product }: ProductCardProps) {
 
     const isAlreadyInCart = isInCart(product.id, selectedSize);
 
+    const handleCardClick = (e: React.MouseEvent) => {
+        const target = e.target as HTMLElement;
+        if (target.closest('button') || target.closest('input') || target.closest('select') || target.closest('[data-stop-propagation="true"]')) {
+            return;
+        }
+        router.push(productHref);
+    };
+
     const handleAddToCart = async (e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
@@ -82,7 +90,8 @@ export default function ProductCard({ product }: ProductCardProps) {
 
     return (
         <div
-            className="group relative bg-white rounded-2xl border border-gray-150/80 hover:border-[#B5945B]/50 hover:shadow-[0_20px_45px_rgba(7,15,43,0.08)] transition-all duration-300 flex flex-col justify-between h-full overflow-hidden"
+            onClick={handleCardClick}
+            className="cursor-pointer group relative bg-white rounded-2xl border border-gray-150/80 hover:border-[#B5945B]/50 hover:shadow-[0_20px_45px_rgba(7,15,43,0.08)] transition-all duration-300 flex flex-col justify-between h-full overflow-hidden"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
@@ -145,13 +154,14 @@ export default function ProductCard({ product }: ProductCardProps) {
                 >
                     <Link
                         href={productHref}
+                        onClick={(e) => e.stopPropagation()}
                         className="flex-1 min-h-[36px] bg-[#070F2B] hover:bg-[#B5945B] text-white hover:text-[#070F2B] text-[10px] font-extrabold uppercase tracking-wider rounded-xl shadow-lg transition-all duration-200 flex items-center justify-center gap-1.5 px-3"
                     >
                         <Eye className="w-3.5 h-3.5" />
                         <span>View Product</span>
                     </Link>
 
-                    <div className="shrink-0">
+                    <div className="shrink-0" onClick={(e) => e.stopPropagation()} data-stop-propagation="true">
                         <WishlistHeart
                             product={{
                                 id: product.id,
@@ -179,7 +189,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                             {product.brand || 'ZEYNIX'}
                         </span>
                         <span className="text-[8.5px] sm:text-[9px] font-bold text-gray-500 uppercase tracking-wider bg-gray-100 px-2 py-0.5 rounded-md shrink-0">
-                            {product.category}
+                            {product.category?.toLowerCase() === 'unisexual' || product.category?.toLowerCase() === 'unisex' ? 'UNISEX' : product.category}
                         </span>
                     </div>
 

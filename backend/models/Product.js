@@ -45,8 +45,8 @@ const productSchema = new mongoose.Schema({
     category: {
         type: String,
         required: [true, 'Product category is required'],
-        enum: ['casual', 'formal', 'ethnic', 'sports', 't-shirts'],
-        default: 'casual'
+        enum: ['casual', 'formal', 'ethnic', 'sports', 't-shirts', 'unisex', 'unisexual'],
+        default: 'unisex'
     },
     subcategory: {
         type: String,

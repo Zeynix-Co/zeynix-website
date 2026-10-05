@@ -49,7 +49,12 @@ const getPublicProducts = async (req, res) => {
         };
 
         if (category && category !== 'all') {
-            filter.category = category;
+            const cat = category.toLowerCase();
+            if (['casual', 'streetwear', 'unisex', 'unisexual', 't-shirts', 'tshirts'].includes(cat)) {
+                filter.category = { $in: ['unisexual', 'unisex', 'casual', 'streetwear', 't-shirts'] };
+            } else {
+                filter.category = category;
+            }
         }
 
         // Build sort object

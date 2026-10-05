@@ -9,8 +9,8 @@
       "/images/products/new/her-new-guy-viper-acid-wash-tee/back.png",
       "/images/products/new/her-new-guy-viper-acid-wash-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1899,
+    "category": "unisex",
+    "actualPrice": 1049,
     "discountPrice": 549,
     "rating": 5,
     "totalRatings": 240,
@@ -51,8 +51,8 @@
     "mainImage": "/images/products/new/her-new-guy-viper-acid-wash-tee/front.png",
     "subcategory": "t-shirts",
     "price": 549,
-    "originalPrice": 1899,
-    "discount": 71
+    "originalPrice": 1049,
+    "discount": 48
   },
   {
     "title": "Zeynix & Co. Botanical Sunflower T-Shirt",
@@ -64,8 +64,8 @@
       "/images/products/new/sunflower-collection-tee/front.png",
       "/images/products/new/sunflower-collection-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1599,
+    "category": "unisex",
+    "actualPrice": 1299,
     "discountPrice": 699,
     "rating": 4.8,
     "totalRatings": 94,
@@ -106,8 +106,8 @@
     "mainImage": "/images/products/new/sunflower-collection-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1599,
-    "discount": 56
+    "originalPrice": 1299,
+    "discount": 46
   },
   {
     "title": "Venomous Viper 'Snakes Don't Hiss' Calligraphy Oversized Black T-Shirt",
@@ -121,8 +121,8 @@
       "/images/products/new/snakes-dont-hiss-viper-tee/angle.png",
       "/images/products/new/snakes-dont-hiss-viper-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1799,
+    "category": "unisex",
+    "actualPrice": 1349,
     "discountPrice": 699,
     "rating": 5,
     "totalRatings": 165,
@@ -163,8 +163,8 @@
     "mainImage": "/images/products/new/snakes-dont-hiss-viper-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1799,
-    "discount": 61
+    "originalPrice": 1349,
+    "discount": 48
   },
   {
     "title": "Vans 'The Heritage Mask' Graphic Oversized Red T-Shirt",
@@ -177,8 +177,8 @@
       "/images/products/new/vans-heritage-graphic-tee/detail.png",
       "/images/products/new/vans-heritage-graphic-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1699,
+    "category": "unisex",
+    "actualPrice": 1299,
     "discountPrice": 699,
     "rating": 4.9,
     "totalRatings": 118,
@@ -219,8 +219,8 @@
     "mainImage": "/images/products/new/vans-heritage-graphic-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1699,
-    "discount": 59
+    "originalPrice": 1299,
+    "discount": 46
   },
   {
     "title": "Gothic Demon 'INSANITY' Crimson Oversized T-Shirt",
@@ -232,8 +232,8 @@
       "/images/products/new/insanity-demon-crimson-tee/back.png",
       "/images/products/new/insanity-demon-crimson-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1899,
+    "category": "unisex",
+    "actualPrice": 1049,
     "discountPrice": 549,
     "rating": 5,
     "totalRatings": 215,
@@ -274,8 +274,8 @@
     "mainImage": "/images/products/new/insanity-demon-crimson-tee/front.png",
     "subcategory": "t-shirts",
     "price": 549,
-    "originalPrice": 1899,
-    "discount": 71
+    "originalPrice": 1049,
+    "discount": 48
   },
   {
     "title": "'You're Going To Die Anyway' Doberman Red & White Oversized T-Shirt",
@@ -287,8 +287,8 @@
       "/images/products/new/marlboro-doberman-die-anyway-tee/front.png",
       "/images/products/new/marlboro-doberman-die-anyway-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1799,
+    "category": "unisex",
+    "actualPrice": 1349,
     "discountPrice": 699,
     "rating": 4.9,
     "totalRatings": 165,
@@ -329,8 +329,8 @@
     "mainImage": "/images/products/new/marlboro-doberman-die-anyway-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1799,
-    "discount": 61
+    "originalPrice": 1349,
+    "discount": 48
   },
   {
     "title": "Gothic Cathedral 'Chained Wanderer' Oversized Black T-Shirt",
@@ -342,8 +342,8 @@
       "/images/products/new/gothic-cathedral-chained-wanderer-tee/front.png",
       "/images/products/new/gothic-cathedral-chained-wanderer-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1899,
+    "category": "unisex",
+    "actualPrice": 1399,
     "discountPrice": 699,
     "rating": 5,
     "totalRatings": 172,
@@ -384,8 +384,8 @@
     "mainImage": "/images/products/new/gothic-cathedral-chained-wanderer-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1899,
-    "discount": 63
+    "originalPrice": 1399,
+    "discount": 50
   },
   {
     "title": "Yin-Yang Koi 'Only Dead Fish Go With The Flow' Oversized White T-Shirt",
@@ -397,8 +397,8 @@
       "/images/products/new/yin-yang-koi-dead-fish-tee/front.png",
       "/images/products/new/yin-yang-koi-dead-fish-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1899,
+    "category": "unisex",
+    "actualPrice": 1399,
     "discountPrice": 699,
     "rating": 5,
     "totalRatings": 275,
@@ -439,8 +439,8 @@
     "mainImage": "/images/products/new/yin-yang-koi-dead-fish-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1899,
-    "discount": 63
+    "originalPrice": 1399,
+    "discount": 50
   },
   {
     "title": "Gothic Dark Monarch 'Veni Vidi Vici' Oversized White T-Shirt",
@@ -452,8 +452,8 @@
       "/images/products/new/veni-vidi-vici-gothic-monarch-tee/front.png",
       "/images/products/new/veni-vidi-vici-gothic-monarch-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1899,
+    "category": "unisex",
+    "actualPrice": 1399,
     "discountPrice": 699,
     "rating": 5,
     "totalRatings": 162,
@@ -494,8 +494,8 @@
     "mainImage": "/images/products/new/veni-vidi-vici-gothic-monarch-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1899,
-    "discount": 63
+    "originalPrice": 1399,
+    "discount": 50
   },
   {
     "title": "Gothic 'Unholy Rage' Cemetery Grave Oversized Black T-Shirt",
@@ -507,8 +507,8 @@
       "/images/products/new/unholy-rage-cemetery-tee/front.png",
       "/images/products/new/unholy-rage-cemetery-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1899,
+    "category": "unisex",
+    "actualPrice": 1399,
     "discountPrice": 699,
     "rating": 5,
     "totalRatings": 188,
@@ -549,8 +549,8 @@
     "mainImage": "/images/products/new/unholy-rage-cemetery-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1899,
-    "discount": 63
+    "originalPrice": 1399,
+    "discount": 50
   },
   {
     "title": "Marvel Spider-Man 'Miles Morales Web-Slinger' Oversized Off-White T-Shirt",
@@ -563,13 +563,13 @@
       "/images/products/new/spiderman-miles-morales-webslinger-tee/showcase.png"
     ],
     "mainImage": "/images/products/new/spiderman-miles-morales-webslinger-tee/back.png",
-    "category": "unisexual",
+    "category": "unisex",
     "subcategory": "t-shirts",
-    "actualPrice": 1899,
+    "actualPrice": 1399,
     "discountPrice": 699,
     "price": 699,
-    "originalPrice": 1899,
-    "discount": 63,
+    "originalPrice": 1399,
+    "discount": 50,
     "rating": 5,
     "totalRatings": 280,
     "productFit": "OVERSIZED FIT",
@@ -618,8 +618,8 @@
       "/images/products/new/ugach-katkat-parody-tee/detail.png",
       "/images/products/new/ugach-katkat-parody-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1499,
+    "category": "unisex",
+    "actualPrice": 1299,
     "discountPrice": 699,
     "rating": 4.8,
     "totalRatings": 136,
@@ -660,8 +660,8 @@
     "mainImage": "/images/products/new/ugach-katkat-parody-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1499,
-    "discount": 53
+    "originalPrice": 1299,
+    "discount": 46
   },
   {
     "title": "Zeynix 'Make Money Not Hoes' Oversized Streetwear T-Shirt",
@@ -675,8 +675,8 @@
       "/images/products/new/make-money-not-hoes-tee/angle.png",
       "/images/products/new/make-money-not-hoes-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1699,
+    "category": "unisex",
+    "actualPrice": 1299,
     "discountPrice": 699,
     "rating": 4.9,
     "totalRatings": 142,
@@ -717,8 +717,8 @@
     "mainImage": "/images/products/new/make-money-not-hoes-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1699,
-    "discount": 59
+    "originalPrice": 1299,
+    "discount": 46
   },
   {
     "title": "Pink Cherries & Bow 'Confidence Looks Cute On Me' Oversized White T-Shirt",
@@ -731,13 +731,13 @@
       "/images/products/new/confidence-looks-cute-cherries-white-tee/showcase.png"
     ],
     "mainImage": "/images/products/new/confidence-looks-cute-cherries-white-tee/back.png",
-    "category": "unisexual",
+    "category": "unisex",
     "subcategory": "t-shirts",
-    "actualPrice": 1799,
+    "actualPrice": 1349,
     "discountPrice": 699,
     "price": 699,
-    "originalPrice": 1799,
-    "discount": 61,
+    "originalPrice": 1349,
+    "discount": 48,
     "rating": 5,
     "totalRatings": 195,
     "productFit": "OVERSIZED FIT",
@@ -785,8 +785,8 @@
       "/images/products/new/cutie-patola-lotus-tee/front.png",
       "/images/products/new/cutie-patola-lotus-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1599,
+    "category": "unisex",
+    "actualPrice": 1299,
     "discountPrice": 699,
     "rating": 4.8,
     "totalRatings": 142,
@@ -827,8 +827,8 @@
     "mainImage": "/images/products/new/cutie-patola-lotus-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1599,
-    "discount": 56
+    "originalPrice": 1299,
+    "discount": 46
   },
   {
     "title": "Navy Blue 'Think Outside The Box' Tic-Tac-Toe Oversized T-Shirt",
@@ -841,13 +841,13 @@
       "/images/products/new/think-outside-the-box-tictactoe-navy-tee/showcase.png"
     ],
     "mainImage": "/images/products/new/think-outside-the-box-tictactoe-navy-tee/back.png",
-    "category": "unisexual",
+    "category": "unisex",
     "subcategory": "t-shirts",
-    "actualPrice": 1799,
+    "actualPrice": 1349,
     "discountPrice": 699,
     "price": 699,
-    "originalPrice": 1799,
-    "discount": 61,
+    "originalPrice": 1349,
+    "discount": 48,
     "rating": 5,
     "totalRatings": 210,
     "productFit": "OVERSIZED FIT",
@@ -895,8 +895,8 @@
       "/images/products/new/lightning-mcqueen-piston-cup-tee/front.png",
       "/images/products/new/lightning-mcqueen-piston-cup-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1799,
+    "category": "unisex",
+    "actualPrice": 1349,
     "discountPrice": 699,
     "rating": 4.9,
     "totalRatings": 230,
@@ -937,8 +937,8 @@
     "mainImage": "/images/products/new/lightning-mcqueen-piston-cup-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1799,
-    "discount": 61
+    "originalPrice": 1349,
+    "discount": 48
   },
   {
     "title": "'Mera Yaar Khuda Hai' The Art Of Not Explaining Oversized Black T-Shirt",
@@ -950,8 +950,8 @@
       "/images/products/new/mera-yaar-khuda-hai-tee/front.png",
       "/images/products/new/mera-yaar-khuda-hai-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1899,
+    "category": "unisex",
+    "actualPrice": 1399,
     "discountPrice": 699,
     "rating": 5,
     "totalRatings": 204,
@@ -992,8 +992,8 @@
     "mainImage": "/images/products/new/mera-yaar-khuda-hai-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1899,
-    "discount": 63
+    "originalPrice": 1399,
+    "discount": 50
   },
   {
     "title": "Looney Tunes 'Street Trio & Comic Panels' Mustard Yellow Oversized T-Shirt",
@@ -1005,8 +1005,8 @@
       "/images/products/new/looney-tunes-street-trio-comic-panels-yellow-tee/front.png",
       "/images/products/new/looney-tunes-street-trio-comic-panels-yellow-tee/whole.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1899,
+    "category": "unisex",
+    "actualPrice": 1399,
     "discountPrice": 699,
     "rating": 5,
     "totalRatings": 225,
@@ -1047,8 +1047,8 @@
     "mainImage": "/images/products/new/looney-tunes-street-trio-comic-panels-yellow-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1899,
-    "discount": 63
+    "originalPrice": 1399,
+    "discount": 50
   },
   {
     "title": "Gothic Anatomy 'Only Live Once' Ribcage & Spine Oversized Black T-Shirt",
@@ -1060,8 +1060,8 @@
       "/images/products/new/only-live-once-skeleton-ribcage-tee/front.png",
       "/images/products/new/only-live-once-skeleton-ribcage-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1899,
+    "category": "unisex",
+    "actualPrice": 1399,
     "discountPrice": 699,
     "rating": 5,
     "totalRatings": 255,
@@ -1102,8 +1102,8 @@
     "mainImage": "/images/products/new/only-live-once-skeleton-ribcage-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1899,
-    "discount": 63
+    "originalPrice": 1399,
+    "discount": 50
   },
   {
     "title": "Cyber Techwear 'Cosmic Horizon Alien' Oversized Black T-Shirt",
@@ -1115,8 +1115,8 @@
       "/images/products/new/cosmic-alien-mountain-cyber-tee/back.png",
       "/images/products/new/cosmic-alien-mountain-cyber-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1899,
+    "category": "unisex",
+    "actualPrice": 1049,
     "discountPrice": 549,
     "rating": 5,
     "totalRatings": 210,
@@ -1157,8 +1157,8 @@
     "mainImage": "/images/products/new/cosmic-alien-mountain-cyber-tee/front.png",
     "subcategory": "t-shirts",
     "price": 549,
-    "originalPrice": 1899,
-    "discount": 71
+    "originalPrice": 1049,
+    "discount": 48
   },
   {
     "title": "Marvel Avengers 'Tony Stark Arc Reactor Legacy' Oversized Black T-Shirt",
@@ -1170,8 +1170,8 @@
       "/images/products/new/iron-man-tony-stark-legacy-arc-reactor-tee/front.png",
       "/images/products/new/iron-man-tony-stark-legacy-arc-reactor-tee/whole.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1999,
+    "category": "unisex",
+    "actualPrice": 1399,
     "discountPrice": 699,
     "rating": 5,
     "totalRatings": 280,
@@ -1212,8 +1212,8 @@
     "mainImage": "/images/products/new/iron-man-tony-stark-legacy-arc-reactor-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1999,
-    "discount": 65
+    "originalPrice": 1399,
+    "discount": 50
   },
   {
     "title": "Kawaii Gothic 'Spookie' Peeking Cat & Skeletons Buttercream Oversized T-Shirt",
@@ -1225,8 +1225,8 @@
       "/images/products/new/spookie-peeking-cat-skeletons-tee/front.png",
       "/images/products/new/spookie-peeking-cat-skeletons-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1799,
+    "category": "unisex",
+    "actualPrice": 1349,
     "discountPrice": 699,
     "rating": 5,
     "totalRatings": 230,
@@ -1267,8 +1267,8 @@
     "mainImage": "/images/products/new/spookie-peeking-cat-skeletons-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1799,
-    "discount": 61
+    "originalPrice": 1349,
+    "discount": 48
   },
   {
     "title": "Dark Grunge 'Welcome To My Mind' Psychological Sketch Oversized Black T-Shirt",
@@ -1281,13 +1281,13 @@
       "/images/products/new/welcome-to-my-mind-dark-sketch-black-tee/showcase.png"
     ],
     "mainImage": "/images/products/new/welcome-to-my-mind-dark-sketch-black-tee/back.png",
-    "category": "unisexual",
+    "category": "unisex",
     "subcategory": "t-shirts",
-    "actualPrice": 1799,
+    "actualPrice": 1349,
     "discountPrice": 699,
     "price": 699,
-    "originalPrice": 1799,
-    "discount": 61,
+    "originalPrice": 1349,
+    "discount": 48,
     "rating": 5,
     "totalRatings": 260,
     "productFit": "OVERSIZED FIT",
@@ -1335,8 +1335,8 @@
       "/images/products/new/i-love-my-crazy-girlfriend-tee/front.png",
       "/images/products/new/i-love-my-crazy-girlfriend-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1799,
+    "category": "unisex",
+    "actualPrice": 1349,
     "discountPrice": 699,
     "rating": 4.9,
     "totalRatings": 190,
@@ -1377,8 +1377,8 @@
     "mainImage": "/images/products/new/i-love-my-crazy-girlfriend-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1799,
-    "discount": 61
+    "originalPrice": 1349,
+    "discount": 48
   },
   {
     "title": "Japanese Dragon & Samurai 'Red Sun Anime' Oversized Black T-Shirt",
@@ -1390,8 +1390,8 @@
       "/images/products/new/japanese-dragon-samurai-red-sun-tee/front.png",
       "/images/products/new/japanese-dragon-samurai-red-sun-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1899,
+    "category": "unisex",
+    "actualPrice": 1399,
     "discountPrice": 699,
     "rating": 5,
     "totalRatings": 240,
@@ -1432,8 +1432,8 @@
     "mainImage": "/images/products/new/japanese-dragon-samurai-red-sun-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1899,
-    "discount": 63
+    "originalPrice": 1399,
+    "discount": 50
   },
   {
     "title": "'Faaaahhh! / Confidence' Motion Typo Oversized Cream T-Shirt",
@@ -1445,8 +1445,8 @@
       "/images/products/new/faaaahhh-confidence-motion-typo-tee/front.png",
       "/images/products/new/faaaahhh-confidence-motion-typo-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1799,
+    "category": "unisex",
+    "actualPrice": 1349,
     "discountPrice": 699,
     "rating": 4.9,
     "totalRatings": 182,
@@ -1487,8 +1487,8 @@
     "mainImage": "/images/products/new/faaaahhh-confidence-motion-typo-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1799,
-    "discount": 61
+    "originalPrice": 1349,
+    "discount": 48
   },
   {
     "title": "Talha Anjum 'Kaun Talha?' Acid Wash Oversized Streetwear T-Shirt",
@@ -1500,8 +1500,8 @@
       "/images/products/new/kaun-talha-acid-wash-tee/front.png",
       "/images/products/new/kaun-talha-acid-wash-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1899,
+    "category": "unisex",
+    "actualPrice": 1399,
     "discountPrice": 699,
     "rating": 5,
     "totalRatings": 248,
@@ -1542,8 +1542,8 @@
     "mainImage": "/images/products/new/kaun-talha-acid-wash-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1899,
-    "discount": 63
+    "originalPrice": 1399,
+    "discount": 50
   },
   {
     "title": "Pikachu & Starters Stamp Graphic T-Shirt",
@@ -1557,8 +1557,8 @@
       "/images/products/new/pokemon-stamp-tee/detail.png",
       "/images/products/new/pokemon-stamp-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1499,
+    "category": "unisex",
+    "actualPrice": 1299,
     "discountPrice": 699,
     "rating": 4.9,
     "totalRatings": 128,
@@ -1599,8 +1599,8 @@
     "mainImage": "/images/products/new/pokemon-stamp-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1499,
-    "discount": 53
+    "originalPrice": 1299,
+    "discount": 46
   },
   {
     "title": "'Trust No One - It Is Me' Geometric Red Line Oversized Black T-Shirt",
@@ -1612,8 +1612,8 @@
       "/images/products/new/trust-no-one-it-is-me-tee/front.png",
       "/images/products/new/trust-no-one-it-is-me-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1799,
+    "category": "unisex",
+    "actualPrice": 1349,
     "discountPrice": 699,
     "rating": 4.8,
     "totalRatings": 162,
@@ -1654,8 +1654,8 @@
     "mainImage": "/images/products/new/trust-no-one-it-is-me-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1799,
-    "discount": 61
+    "originalPrice": 1349,
+    "discount": 48
   },
   {
     "title": "Disney Pixar 'Rayo McQueen 95' Retro Racer Oversized White T-Shirt",
@@ -1667,8 +1667,8 @@
       "/images/products/new/rayo-mcqueen-retro-racer-white-tee/front.png",
       "/images/products/new/rayo-mcqueen-retro-racer-white-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1799,
+    "category": "unisex",
+    "actualPrice": 1349,
     "discountPrice": 699,
     "rating": 4.9,
     "totalRatings": 195,
@@ -1709,8 +1709,8 @@
     "mainImage": "/images/products/new/rayo-mcqueen-retro-racer-white-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1799,
-    "discount": 61
+    "originalPrice": 1349,
+    "discount": 48
   },
   {
     "title": "Young Stunners 'Gumaan' Slate Blue Oversized T-Shirt",
@@ -1722,8 +1722,8 @@
       "/images/products/new/young-stunners-gumaan-tee/front.png",
       "/images/products/new/young-stunners-gumaan-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1799,
+    "category": "unisex",
+    "actualPrice": 1349,
     "discountPrice": 699,
     "rating": 4.9,
     "totalRatings": 192,
@@ -1764,8 +1764,8 @@
     "mainImage": "/images/products/new/young-stunners-gumaan-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1799,
-    "discount": 61
+    "originalPrice": 1349,
+    "discount": 48
   },
   {
     "title": "Disney 'Mickey Mouse Fabric Tear & Inverted Dive' Buttercream Oversized T-Shirt",
@@ -1777,8 +1777,8 @@
       "/images/products/new/disney-mickey-mouse-fabric-tear-buttercream-tee/front.png",
       "/images/products/new/disney-mickey-mouse-fabric-tear-buttercream-tee/whole.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1899,
+    "category": "unisex",
+    "actualPrice": 1399,
     "discountPrice": 699,
     "rating": 5,
     "totalRatings": 260,
@@ -1819,8 +1819,8 @@
     "mainImage": "/images/products/new/disney-mickey-mouse-fabric-tear-buttercream-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1899,
-    "discount": 63
+    "originalPrice": 1399,
+    "discount": 50
   },
   {
     "title": "Halloween 'Still Dead - Thanks For Checking' Oversized Black T-Shirt",
@@ -1832,8 +1832,8 @@
       "/images/products/new/halloween-rip-still-dead-tee/front.png",
       "/images/products/new/halloween-rip-still-dead-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1799,
+    "category": "unisex",
+    "actualPrice": 1349,
     "discountPrice": 699,
     "rating": 5,
     "totalRatings": 245,
@@ -1874,8 +1874,8 @@
     "mainImage": "/images/products/new/halloween-rip-still-dead-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1799,
-    "discount": 61
+    "originalPrice": 1349,
+    "discount": 48
   },
   {
     "title": "Transformers 'Optimus Prime' Cybertron Oversized Black T-Shirt",
@@ -1887,8 +1887,8 @@
       "/images/products/new/transformers-optimus-prime-tee/front.png",
       "/images/products/new/transformers-optimus-prime-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1899,
+    "category": "unisex",
+    "actualPrice": 1399,
     "discountPrice": 699,
     "rating": 5,
     "totalRatings": 215,
@@ -1929,8 +1929,8 @@
     "mainImage": "/images/products/new/transformers-optimus-prime-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1899,
-    "discount": 63
+    "originalPrice": 1399,
+    "discount": 50
   },
   {
     "title": "'Snakes Don't Hiss' Crimson Kiss & Graffiti Heart Oversized T-Shirt",
@@ -1944,8 +1944,8 @@
       "/images/products/new/snakes-kiss-crimson-heart-tee/angle.png",
       "/images/products/new/snakes-kiss-crimson-heart-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1499,
+    "category": "unisex",
+    "actualPrice": 999,
     "discountPrice": 549,
     "rating": 4.8,
     "totalRatings": 119,
@@ -1986,8 +1986,8 @@
     "mainImage": "/images/products/new/snakes-kiss-crimson-heart-tee/front.png",
     "subcategory": "t-shirts",
     "price": 549,
-    "originalPrice": 1499,
-    "discount": 63
+    "originalPrice": 999,
+    "discount": 45
   },
   {
     "title": "GTA VI 'Vice City Outlaws' Neon Graphic Oversized Black T-Shirt",
@@ -1999,8 +1999,8 @@
       "/images/products/new/gta-vi-vice-city-tee/front.png",
       "/images/products/new/gta-vi-vice-city-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1899,
+    "category": "unisex",
+    "actualPrice": 1399,
     "discountPrice": 699,
     "rating": 5,
     "totalRatings": 310,
@@ -2041,8 +2041,8 @@
     "mainImage": "/images/products/new/gta-vi-vice-city-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1899,
-    "discount": 63
+    "originalPrice": 1399,
+    "discount": 50
   },
   {
     "title": "Porsche 911 'Sally Carrera' Cyan Drift Oversized Black T-Shirt",
@@ -2054,8 +2054,8 @@
       "/images/products/new/porsche-911-sally-carrera-tee/front.png",
       "/images/products/new/porsche-911-sally-carrera-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1799,
+    "category": "unisex",
+    "actualPrice": 1349,
     "discountPrice": 699,
     "rating": 4.9,
     "totalRatings": 198,
@@ -2096,8 +2096,8 @@
     "mainImage": "/images/products/new/porsche-911-sally-carrera-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1799,
-    "discount": 61
+    "originalPrice": 1349,
+    "discount": 48
   },
   {
     "title": "Liquid Chrome 'Kid Buu' Y2K Metallic Oversized Black T-Shirt",
@@ -2109,8 +2109,8 @@
       "/images/products/new/liquid-chrome-kid-buu-tee/front.png",
       "/images/products/new/liquid-chrome-kid-buu-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1999,
+    "category": "unisex",
+    "actualPrice": 1099,
     "discountPrice": 549,
     "rating": 5,
     "totalRatings": 225,
@@ -2151,8 +2151,8 @@
     "mainImage": "/images/products/new/liquid-chrome-kid-buu-tee/back.png",
     "subcategory": "t-shirts",
     "price": 549,
-    "originalPrice": 1999,
-    "discount": 73
+    "originalPrice": 1099,
+    "discount": 50
   },
   {
     "title": "Dragon Ball Super 'Son Goku SSB' Power Quote Oversized Black T-Shirt",
@@ -2164,8 +2164,8 @@
       "/images/products/new/goku-ssb-power-quote-tee/front.png",
       "/images/products/new/goku-ssb-power-quote-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1899,
+    "category": "unisex",
+    "actualPrice": 1399,
     "discountPrice": 699,
     "rating": 5,
     "totalRatings": 265,
@@ -2206,8 +2206,8 @@
     "mainImage": "/images/products/new/goku-ssb-power-quote-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1899,
-    "discount": 63
+    "originalPrice": 1399,
+    "discount": 50
   },
   {
     "title": "Umair 'Come Through' Spotify Tracklist Oversized Black T-Shirt",
@@ -2219,8 +2219,8 @@
       "/images/products/new/umair-come-through-music-tee/front.png",
       "/images/products/new/umair-come-through-music-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1799,
+    "category": "unisex",
+    "actualPrice": 1349,
     "discountPrice": 699,
     "rating": 4.9,
     "totalRatings": 184,
@@ -2261,8 +2261,8 @@
     "mainImage": "/images/products/new/umair-come-through-music-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1799,
-    "discount": 61
+    "originalPrice": 1349,
+    "discount": 48
   },
   {
     "title": "Squirtle & Great Wave of Kanagawa Cyan Oversized T-Shirt",
@@ -2276,8 +2276,8 @@
       "/images/products/new/squirtle-kanto-wave-tee/angle.png",
       "/images/products/new/squirtle-kanto-wave-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1699,
+    "category": "unisex",
+    "actualPrice": 1299,
     "discountPrice": 699,
     "rating": 5,
     "totalRatings": 198,
@@ -2318,8 +2318,8 @@
     "mainImage": "/images/products/new/squirtle-kanto-wave-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1699,
-    "discount": 59
+    "originalPrice": 1299,
+    "discount": 46
   },
   {
     "title": "Talha Anjum x Umair 'Downers At Dusk' Oversized Black T-Shirt",
@@ -2331,8 +2331,8 @@
       "/images/products/new/downers-at-dusk-talha-anjum-tee/front.png",
       "/images/products/new/downers-at-dusk-talha-anjum-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1899,
+    "category": "unisex",
+    "actualPrice": 1399,
     "discountPrice": 699,
     "rating": 5,
     "totalRatings": 214,
@@ -2373,8 +2373,8 @@
     "mainImage": "/images/products/new/downers-at-dusk-talha-anjum-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1899,
-    "discount": 63
+    "originalPrice": 1399,
+    "discount": 50
   },
   {
     "title": "Minions 'Banana! & Hanging Chain Pile' Oversized Black T-Shirt",
@@ -2386,8 +2386,8 @@
       "/images/products/new/minions-banana-hanging-chain-pile-black-tee/front.png",
       "/images/products/new/minions-banana-hanging-chain-pile-black-tee/whole.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1899,
+    "category": "unisex",
+    "actualPrice": 1399,
     "discountPrice": 699,
     "rating": 5,
     "totalRatings": 215,
@@ -2428,8 +2428,8 @@
     "mainImage": "/images/products/new/minions-banana-hanging-chain-pile-black-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1899,
-    "discount": 63
+    "originalPrice": 1399,
+    "discount": 50
   },
   {
     "title": "Gothic 'Trust No One' Calligraphy Oversized Purple T-Shirt",
@@ -2442,8 +2442,8 @@
       "/images/products/new/trust-no-one-gothic-tee/detail.png",
       "/images/products/new/trust-no-one-gothic-tee/showcase.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1799,
+    "category": "unisex",
+    "actualPrice": 1349,
     "discountPrice": 699,
     "rating": 4.9,
     "totalRatings": 104,
@@ -2484,8 +2484,8 @@
     "mainImage": "/images/products/new/trust-no-one-gothic-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1799,
-    "discount": 61
+    "originalPrice": 1349,
+    "discount": 48
   },
   {
     "title": "Aesthetic Gaze 'Yes Is Clear' Crimson Heart Oversized Black T-Shirt",
@@ -2497,8 +2497,8 @@
       "/images/products/new/aesthetic-gaze-yes-is-clear-heart-tee/front.png",
       "/images/products/new/aesthetic-gaze-yes-is-clear-heart-tee/whole.png"
     ],
-    "category": "unisexual",
-    "actualPrice": 1899,
+    "category": "unisex",
+    "actualPrice": 1399,
     "discountPrice": 699,
     "rating": 5,
     "totalRatings": 235,
@@ -2539,8 +2539,8 @@
     "mainImage": "/images/products/new/aesthetic-gaze-yes-is-clear-heart-tee/back.png",
     "subcategory": "t-shirts",
     "price": 699,
-    "originalPrice": 1899,
-    "discount": 63
+    "originalPrice": 1399,
+    "discount": 50
   },
   {
     "title": "Tom and Jerry x Cartoon Network Ice Blue Oversized T-Shirt",
@@ -2553,13 +2553,13 @@
       "/images/products/new/tom-and-jerry-cartoon-network-cyan-tee/showcase.png"
     ],
     "mainImage": "/images/products/new/tom-and-jerry-cartoon-network-cyan-tee/back.png",
-    "category": "unisexual",
+    "category": "unisex",
     "subcategory": "t-shirts",
-    "actualPrice": 1799,
+    "actualPrice": 1349,
     "discountPrice": 699,
     "price": 699,
-    "originalPrice": 1799,
-    "discount": 61,
+    "originalPrice": 1349,
+    "discount": 48,
     "rating": 5,
     "totalRatings": 275,
     "productFit": "OVERSIZED FIT",
@@ -2608,13 +2608,13 @@
       "/images/products/new/srk-om-shanti-om-dialogue-black-tee/showcase.png"
     ],
     "mainImage": "/images/products/new/srk-om-shanti-om-dialogue-black-tee/back.png",
-    "category": "unisexual",
+    "category": "unisex",
     "subcategory": "t-shirts",
-    "actualPrice": 1799,
+    "actualPrice": 1349,
     "discountPrice": 699,
     "price": 699,
-    "originalPrice": 1799,
-    "discount": 61,
+    "originalPrice": 1349,
+    "discount": 48,
     "rating": 5,
     "totalRatings": 340,
     "productFit": "OVERSIZED FIT",

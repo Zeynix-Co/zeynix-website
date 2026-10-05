@@ -10,7 +10,7 @@ import { useWishlistStore } from '@/store';
 import WishlistConfirmationModal from '@/components/wishlist/WishlistConfirmationModal';
 import ProductCard from '@/components/product/ProductCard';
 
-const categories = ["All", "Unisexual", "Streetwear", "formal", "ethnic", "sports"];
+const categories = ["All", "Unisex", "Streetwear", "formal", "ethnic", "sports"];
 const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
 const priceRanges = [
     { label: "Under ₹500", min: 0, max: 500 },
