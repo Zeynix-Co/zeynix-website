@@ -23,8 +23,10 @@ export default function Header() {
     const { user, isAuthenticated, logout } = useAuthStore();
     const profileRef = useRef<HTMLDivElement>(null);
 
-    const handleLogout = () => {
-        logout();
+    const handleLogout = async () => {
+        setIsProfileOpen(false);
+        setIsMobileMenuOpen(false);
+        await logout();
         window.location.href = '/';
     };
 

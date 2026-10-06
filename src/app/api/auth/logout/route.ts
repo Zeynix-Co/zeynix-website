@@ -1,20 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 // POST /api/auth/logout - User logout
-export async function POST() {
+export async function POST(request: NextRequest) {
     try {
-        // Create response
         const response = NextResponse.json({
             success: true,
             message: 'Logout successful'
         });
 
-        // Clear JWT token cookie
+        // 1. Clear via Next.js cookies API
+        response.cookies.delete('token');
+
+        // 2. Clear with explicit past expiration and path
+        const isHttps = request.nextUrl.protocol === 'https:' || request.headers.get('x-forwarded-proto') === 'https';
         response.cookies.set('token', '', {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
+            secure: isHttps,
             sameSite: 'lax',
-            maxAge: 0, // Expire immediately
+            maxAge: 0,
+            expires: new Date(0),
             path: '/'
         });
 

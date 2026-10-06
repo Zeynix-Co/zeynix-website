@@ -22,7 +22,7 @@ interface AuthActions {
     login: (email: string, password: string, rememberMe?: boolean) => Promise<void>;
     register: (userData: RegisterData) => Promise<void>;
     googleLogin: (credentialOrPayload: { credential?: string; profile?: any }) => Promise<void>;
-    logout: () => void;
+    logout: () => Promise<void>;
     checkAuth: () => Promise<void>;
     clearError: () => void;
     setLoading: (loading: boolean) => void;
@@ -201,13 +201,30 @@ const useAuthStore = create<AuthState & AuthActions>()(
 
             logout: async () => {
                 try {
-                    // Call logout API to clear cookie
+                    // Call logout API to clear HTTP-only server cookie
                     await fetch('/api/auth/logout', {
                         method: 'POST',
                         credentials: 'include',
                     });
                 } catch (error) {
                     console.error('Logout API error:', error);
+                }
+
+                // Explicitly purge client cookie
+                if (typeof document !== 'undefined') {
+                    document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; max-age=0; SameSite=Lax';
+                    if (typeof window !== 'undefined' && window.location.hostname) {
+                        document.cookie = `token=; path=/; domain=${window.location.hostname}; expires=Thu, 01 Jan 1970 00:00:00 GMT; max-age=0; SameSite=Lax`;
+                    }
+                }
+
+                // Explicitly wipe auth-storage from localStorage
+                if (typeof window !== 'undefined') {
+                    try {
+                        localStorage.removeItem('auth-storage');
+                    } catch (e) {
+                        console.error('Error removing auth-storage from localStorage:', e);
+                    }
                 }
 
                 // Clear local state
@@ -222,14 +239,12 @@ const useAuthStore = create<AuthState & AuthActions>()(
             checkAuth: async () => {
                 try {
                     // Get token from cookies first
-                    const token = document.cookie
-                        .split('; ')
-                        .find(row => row.startsWith('token='))
-                        ?.split('=')[1];
-
-                    console.log('🔍 CheckAuth Debug:');
-                    console.log('Cookie token:', token);
-                    console.log('All cookies:', document.cookie);
+                    const token = typeof document !== 'undefined'
+                        ? document.cookie
+                            .split('; ')
+                            .find(row => row.startsWith('token='))
+                            ?.split('=')[1]
+                        : null;
 
                     const response = await fetch('/api/auth/me', {
                         credentials: 'include',
@@ -237,32 +252,30 @@ const useAuthStore = create<AuthState & AuthActions>()(
 
                     if (response.ok) {
                         const data = await response.json();
-                        if (data.success) {
+                        if (data.success && data.data?.user) {
                             set({
                                 user: data.data.user,
-                                token: token || null,
+                                token: token || data.data.token || null,
                                 isAuthenticated: true,
                                 error: null,
                             });
-                            console.log('✅ Auth check successful, token:', token);
-                        } else {
-                            set({
-                                user: null,
-                                token: null,
-                                isAuthenticated: false,
-                                error: null,
-                            });
-                            console.log('❌ Auth check failed - no success');
+                            return;
                         }
-                    } else {
-                        set({
-                            user: null,
-                            token: null,
-                            isAuthenticated: false,
-                            error: null,
-                        });
-                        console.log('❌ Auth check failed - response not ok:', response.status);
                     }
+
+                    // If response is not ok or user is not logged in, ensure state & storage are cleared
+                    if (typeof window !== 'undefined') {
+                        try {
+                            localStorage.removeItem('auth-storage');
+                        } catch (e) {}
+                    }
+
+                    set({
+                        user: null,
+                        token: null,
+                        isAuthenticated: false,
+                        error: null,
+                    });
                 } catch (error) {
                     console.error('❌ Auth check error:', error);
                     set({

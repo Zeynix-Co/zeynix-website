@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store';
-import { Sparkles, AlertCircle } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
 
 interface GoogleSignInButtonProps {
     mode?: 'login' | 'register';
@@ -28,14 +28,14 @@ export default function GoogleSignInButton({ mode = 'login', redirectTo = '/' }:
     const router = useRouter();
     const { googleLogin, isLoading } = useAuthStore();
     const [isGoogleLoading, setIsGoogleLoading] = useState(false);
-    const [configNotice, setConfigNotice] = useState<string | null>(null);
+    const [customerNotice, setCustomerNotice] = useState<string | null>(null);
 
     const googleClientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '';
 
     useEffect(() => {
         if (!googleClientId) return;
 
-        // Load Google Identity Services script if not already loaded
+        // Load official Google Identity Services script
         if (!document.getElementById('google-gsi-script')) {
             const script = document.createElement('script');
             script.id = 'google-gsi-script';
@@ -70,24 +70,28 @@ export default function GoogleSignInButton({ mode = 'login', redirectTo = '/' }:
         if (!response.credential) return;
 
         setIsGoogleLoading(true);
-        setConfigNotice(null);
+        setCustomerNotice(null);
 
         try {
             await googleLogin({ credential: response.credential });
             router.push(redirectTo);
         } catch (err: any) {
             console.error('Google login failed:', err);
-            setConfigNotice(err.message || 'Google authentication failed');
+            setCustomerNotice(err.message || 'Unable to sign in with Google. Please try again.');
         } finally {
             setIsGoogleLoading(false);
         }
     };
 
     const handleClick = () => {
+        // If the website owner hasn't linked the Google Client ID yet
         if (!googleClientId) {
-            setConfigNotice(
-                'Google Client ID is not configured yet. Add NEXT_PUBLIC_GOOGLE_CLIENT_ID to your .env.local from Google Cloud Console.'
+            setCustomerNotice(
+                'Google Sign-In is temporarily undergoing maintenance. Please sign in with your email and password below.'
             );
+            setTimeout(() => {
+                setCustomerNotice(null);
+            }, 6000);
             return;
         }
 
@@ -108,11 +112,12 @@ export default function GoogleSignInButton({ mode = 'login', redirectTo = '/' }:
 
     return (
         <div className="w-full">
+            {/* Luxury Google Button */}
             <button
                 type="button"
                 onClick={handleClick}
                 disabled={isLoading || isGoogleLoading}
-                className="w-full h-11 px-4 rounded-xl font-bold text-xs uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-3 bg-white hover:bg-gray-50 text-[#070F2B] border border-gray-200 hover:border-[#B5945B]/60 shadow-[0_2px_10px_rgba(0,0,0,0.06)] hover:shadow-[0_4px_16px_rgba(181,148,91,0.15)] active:scale-[0.99] cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed group relative overflow-hidden"
+                className="w-full h-11 px-4 rounded-xl font-bold text-xs uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-3 bg-white hover:bg-gray-50 text-[#070F2B] border border-gray-200 hover:border-[#B5945B]/60 shadow-[0_2px_10px_rgba(0,0,0,0.06)] hover:shadow-[0_4px_16px_rgba(181,148,91,0.18)] active:scale-[0.99] cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed group relative overflow-hidden"
             >
                 {/* Ambient button shine effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out pointer-events-none" />
@@ -124,7 +129,7 @@ export default function GoogleSignInButton({ mode = 'login', redirectTo = '/' }:
                     </>
                 ) : (
                     <>
-                        {/* Official Google 4-Color 'G' SVG Icon */}
+                        {/* Official Google 4-Color 'G' Icon */}
                         <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
                             <path
                                 fill="#4285F4"
@@ -150,11 +155,11 @@ export default function GoogleSignInButton({ mode = 'login', redirectTo = '/' }:
                 )}
             </button>
 
-            {/* Informative Config / Error Notice */}
-            {configNotice && (
-                <div className="mt-2.5 p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-200 text-[11px] leading-relaxed flex items-start gap-2 animate-fadeIn">
-                    <AlertCircle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-                    <p className="flex-1">{configNotice}</p>
+            {/* Clean Customer Notice (No technical jargon) */}
+            {customerNotice && (
+                <div className="mt-3 p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-200 text-xs leading-relaxed flex items-center gap-2.5 animate-fadeIn">
+                    <AlertCircle className="w-4 h-4 text-amber-400 shrink-0" />
+                    <p className="flex-1 font-medium">{customerNotice}</p>
                 </div>
             )}
         </div>

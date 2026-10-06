@@ -83,9 +83,15 @@ export async function POST(request: NextRequest) {
         });
 
         // Set JWT token as HTTP-only cookie
-        const cookieString = setTokenCookie(token, rememberMe);
-        console.log('Cookie string:', cookieString);
-        nextResponse.headers.set('Set-Cookie', cookieString);
+        const isHttps = request.nextUrl.protocol === 'https:' || request.headers.get('x-forwarded-proto') === 'https';
+        const maxAge = rememberMe ? 30 * 24 * 60 * 60 : 24 * 60 * 60;
+        nextResponse.cookies.set('token', token, {
+            httpOnly: true,
+            secure: isHttps,
+            sameSite: 'lax',
+            maxAge: maxAge,
+            path: '/'
+        });
 
         return nextResponse;
 

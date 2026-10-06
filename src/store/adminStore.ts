@@ -102,7 +102,7 @@ interface AdminActions {
     // Authentication Actions
 
     login: (email: string, password: string, rememberMe?: boolean) => Promise<void>;
-    logout: () => void;
+    logout: () => Promise<void>;
     setupFirstAdmin: (userData: SetupAdminData) => Promise<void>;
 
     // Dashboard Actions
@@ -237,7 +237,29 @@ const useAdminStore = create<AdminState & AdminActions>()(
                 }
             },
 
-            logout: () => {
+            logout: async () => {
+                try {
+                    await fetch('/api/auth/logout', {
+                        method: 'POST',
+                        credentials: 'include',
+                    });
+                } catch (error) {
+                    console.error('Admin logout API error:', error);
+                }
+
+                if (typeof document !== 'undefined') {
+                    document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; max-age=0; SameSite=Lax';
+                    if (typeof window !== 'undefined' && window.location.hostname) {
+                        document.cookie = `token=; path=/; domain=${window.location.hostname}; expires=Thu, 01 Jan 1970 00:00:00 GMT; max-age=0; SameSite=Lax`;
+                    }
+                }
+
+                if (typeof window !== 'undefined') {
+                    try {
+                        localStorage.removeItem('admin-storage');
+                    } catch (e) {}
+                }
+
                 // Clear local state
                 set({
                     user: null,

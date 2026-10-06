@@ -96,8 +96,8 @@ export async function POST(request: NextRequest) {
             user = await User.create({
                 name,
                 email,
-                googleId,
-                avatar: picture,
+                googleId: googleId || undefined,
+                avatar: picture || undefined,
                 password: randomPassword,
                 role: 'user',
                 isActive: true
@@ -123,9 +123,15 @@ export async function POST(request: NextRequest) {
             }
         });
 
-        // Set token cookie
-        const cookieString = setTokenCookie(token, true);
-        nextResponse.headers.set('Set-Cookie', cookieString);
+        // Set token cookie via Next.js cookies API
+        const isHttps = request.nextUrl.protocol === 'https:' || request.headers.get('x-forwarded-proto') === 'https';
+        nextResponse.cookies.set('token', token, {
+            httpOnly: true,
+            secure: isHttps,
+            sameSite: 'lax',
+            maxAge: 30 * 24 * 60 * 60, // 30 days
+            path: '/'
+        });
 
         return nextResponse;
 

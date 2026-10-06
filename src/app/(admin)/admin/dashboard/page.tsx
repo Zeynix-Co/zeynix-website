@@ -65,9 +65,9 @@ export default function AdminDashboardPage() {
         fetchData();
     }, []);
 
-    const handleLogout = () => {
-        logout();
-        router.push('/admin/login');
+    const handleLogout = async () => {
+        await logout();
+        window.location.href = '/admin/login';
     };
 
     const navigateTo = (path: string) => {

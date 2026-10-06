@@ -144,10 +144,8 @@ export const generateToken = (id: string, rememberMe: boolean = false): string =
 };
 
 // Utility function to set token cookie
-export const setTokenCookie = (token: string, rememberMe: boolean = false) => {
-    const maxAge = rememberMe ? 30 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000; // 30 days or 1 day
-    const isProduction = process.env.NODE_ENV === 'production';
-    const secureFlag = isProduction ? 'Secure' : '';
-    const sameSite = 'SameSite=Lax'; // Use Lax for both production and development
-    return `token=${token}; HttpOnly; ${secureFlag}; ${sameSite}; Path=/; Max-Age=${maxAge}`;
+export const setTokenCookie = (token: string, rememberMe: boolean = false, isSecure: boolean = false) => {
+    const maxAge = rememberMe ? 30 * 24 * 60 * 60 : 24 * 60 * 60; // 30 days or 1 day (in seconds per RFC 6265)
+    const secureFlag = isSecure ? 'Secure;' : '';
+    return `token=${token}; HttpOnly; ${secureFlag} SameSite=Lax; Path=/; Max-Age=${maxAge}`;
 };

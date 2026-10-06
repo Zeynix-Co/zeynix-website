@@ -98,9 +98,9 @@ export default function UserDashboardPage() {
         }
     };
 
-    const handleLogout = () => {
-        logout();
-        router.push('/');
+    const handleLogout = async () => {
+        await logout();
+        window.location.href = '/login';
     };
 
     const getStatusColor = (status: string) => {
