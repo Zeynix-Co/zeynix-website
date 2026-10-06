@@ -5,8 +5,10 @@ import crypto from 'crypto';
 export interface IUser extends Document {
     name: string;
     email: string;
-    phone: string;
-    password: string;
+    phone?: string;
+    password?: string;
+    googleId?: string;
+    avatar?: string;
     rememberToken?: string;
     resetPasswordToken?: string;
     resetPasswordExpires?: Date;
@@ -36,10 +38,16 @@ const userSchema = new Schema<IUser>({
     },
     phone: {
         type: String,
-        required: [true, 'Phone number is required'],
-        unique: true,
-        trim: true,
-        match: [/^[0-9]{10}$/, 'Please enter a valid 10-digit phone number']
+        required: false,
+        sparse: true,
+        trim: true
+    },
+    googleId: {
+        type: String,
+        sparse: true
+    },
+    avatar: {
+        type: String
     },
     password: {
         type: String,
@@ -74,11 +82,12 @@ const userSchema = new Schema<IUser>({
 
 // Hash password before saving
 userSchema.pre('save', async function (next) {
-    if (!this.isModified('password')) return next();
+    if (!this.isModified('password') || !this.password) return next();
 
     try {
         const salt = await bcrypt.genSalt(12);
-        this.password = await bcrypt.hash(this.password, salt);
+        const hashedPassword = await bcrypt.hash(this.password as string, salt);
+        this.password = hashedPassword;
         next();
     } catch (error) {
         next(error as Error);
@@ -87,6 +96,7 @@ userSchema.pre('save', async function (next) {
 
 // Method to compare password
 userSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean> {
+    if (!this.password) return false;
     return await bcrypt.compare(candidatePassword, this.password);
 };
 

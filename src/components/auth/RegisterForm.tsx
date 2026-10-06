@@ -2,10 +2,11 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import Link from 'next/link';
 import { useAuthStore } from '@/store';
-import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
-import { colorClasses } from '@/lib/constants';
+import GoogleSignInButton from './GoogleSignInButton';
+import { Eye, EyeOff, XCircle, ArrowRight, Lock, Mail, User, Phone, Sparkles } from 'lucide-react';
 
 export default function RegisterForm() {
     const router = useRouter();
@@ -19,6 +20,9 @@ export default function RegisterForm() {
         password: '',
         confirmPassword: '',
     });
+
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const [formErrors, setFormErrors] = useState<{
         name?: string;
@@ -36,12 +40,10 @@ export default function RegisterForm() {
             [name]: value
         }));
 
-        // Clear error when user starts typing
         if (formErrors[name as keyof typeof formErrors]) {
             setFormErrors(prev => ({ ...prev, [name]: undefined }));
         }
 
-        // Clear global error
         if (error) clearError();
     };
 
@@ -50,20 +52,20 @@ export default function RegisterForm() {
         const errors: typeof formErrors = {};
 
         if (!formData.name.trim()) {
-            errors.name = 'Name is required';
+            errors.name = 'Full name is required';
         } else if (formData.name.trim().length < 2) {
             errors.name = 'Name must be at least 2 characters';
         }
 
         if (!formData.email.trim()) {
-            errors.email = 'Email is required';
+            errors.email = 'Email address is required';
         } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-            errors.email = 'Please enter a valid email';
+            errors.email = 'Please enter a valid email address';
         }
 
         if (!formData.phone.trim()) {
             errors.phone = 'Phone number is required';
-        } else if (!/^[0-9]{10}$/.test(formData.phone)) {
+        } else if (!/^[0-9]{10}$/.test(formData.phone.replace(/[^0-9]/g, ''))) {
             errors.phone = 'Please enter a valid 10-digit phone number';
         }
 
@@ -90,152 +92,265 @@ export default function RegisterForm() {
         if (!validateForm()) return;
 
         try {
-            await register(formData);
-            router.push('/'); // Redirect to home page after successful registration
-        } catch (error) {
-            // Error is handled by the store
-            console.error('Registration failed:', error);
+            await register({
+                name: formData.name.trim(),
+                email: formData.email.trim().toLowerCase(),
+                phone: formData.phone.trim(),
+                password: formData.password,
+                confirmPassword: formData.confirmPassword,
+            });
+            router.push('/');
+        } catch (err) {
+            console.error('Registration failed:', err);
         }
     };
 
     return (
-        <div className="w-full max-w-md px-4 sm:px-0 mx-auto">
-            <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 border border-gray-100">
-                <h2 className={`text-2xl font-bold text-center mb-6 ${colorClasses.primary.text}`}>
-                    Create Account
-                </h2>
+        <div className="w-full max-w-md mx-auto relative z-10">
+            {/* Atelier Luxury Card Container */}
+            <div className="bg-[#070F2B]/90 backdrop-blur-2xl rounded-3xl p-6 sm:p-9 border border-[#B5945B]/30 shadow-[0_25px_70px_rgba(0,0,0,0.65)] relative overflow-hidden">
+                {/* Ambient Top Glow Line */}
+                <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-[#B5945B] to-transparent opacity-80" />
+
+                {/* Brand Header */}
+                <div className="text-center mb-6">
+                    <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-b from-[#B5945B]/20 to-transparent border border-[#B5945B]/40 shadow-inner mb-3 relative">
+                        <Image
+                            src="/images/logos/zeynix-logo-rbg.png"
+                            alt="Zeynix Logo"
+                            width={38}
+                            height={38}
+                            className="object-contain drop-shadow"
+                            priority
+                        />
+                    </div>
+                    <h2 className="text-2xl sm:text-[26px] font-black tracking-tight text-white font-serif uppercase">
+                        Create Account
+                    </h2>
+                    <p className="text-[11px] font-bold uppercase tracking-widest text-[#B5945B] mt-1 flex items-center justify-center gap-1.5">
+                        <Sparkles className="w-3 h-3 text-[#B5945B]" />
+                        Join The Zeynix Atelier
+                        <Sparkles className="w-3 h-3 text-[#B5945B]" />
+                    </p>
+                </div>
 
                 {/* Global Error Display */}
                 {error && (
-                    <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
-                        {error}
+                    <div className="mb-5 p-3.5 bg-red-500/10 border border-red-500/40 rounded-xl flex items-start gap-2.5 text-red-200 text-xs animate-shake">
+                        <XCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+                        <span className="leading-snug">{error}</span>
                     </div>
                 )}
 
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    {/* Name Field */}
+                {/* Google Sign-In Button */}
+                <div className="mb-5">
+                    <GoogleSignInButton mode="register" />
+                </div>
+
+                {/* Elegant Divider */}
+                <div className="relative my-5">
+                    <div className="absolute inset-0 flex items-center">
+                        <div className="w-full border-t border-white/10" />
+                    </div>
+                    <div className="relative flex justify-center text-[10px] font-black uppercase tracking-widest">
+                        <span className="bg-[#070F2B] px-3 text-gray-400">or register with email</span>
+                    </div>
+                </div>
+
+                {/* Main Registration Form */}
+                <form onSubmit={handleSubmit} className="space-y-3.5">
+                    {/* Full Name */}
                     <div>
-                        <label htmlFor="name" className={`block text-sm font-medium mb-1 ${colorClasses.primary.text}`}>
+                        <label htmlFor="name" className="block text-[11px] font-bold text-gray-300 uppercase tracking-wider mb-1">
                             Full Name
                         </label>
-                        <Input
-                            id="name"
-                            name="name"
-                            type="text"
-                            value={formData.name}
-                            onChange={handleInputChange}
-                            placeholder="Enter your full name"
-                            className={formErrors.name ? 'border-red-500' : `w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white ${colorClasses.light.bg} ${colorClasses.dark.text}`}
-                            disabled={isLoading}
-                        />
+                        <div className="relative">
+                            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                                <User className="w-4 h-4" />
+                            </div>
+                            <input
+                                id="name"
+                                name="name"
+                                type="text"
+                                value={formData.name}
+                                onChange={handleInputChange}
+                                placeholder="e.g. Alexander Vance"
+                                disabled={isLoading}
+                                className={`w-full pl-10 pr-4 py-2.5 bg-white/5 border rounded-xl text-white text-xs placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-[#B5945B] transition-all duration-200 ${
+                                    formErrors.name ? 'border-red-500' : 'border-white/15 hover:border-white/30 focus:border-[#B5945B]'
+                                }`}
+                            />
+                        </div>
                         {formErrors.name && (
-                            <p className="mt-1 text-sm text-red-600">{formErrors.name}</p>
+                            <p className="mt-1 text-[11px] text-red-400 font-medium">{formErrors.name}</p>
                         )}
                     </div>
 
                     {/* Email Field */}
                     <div>
-                        <label htmlFor="email" className={`block text-sm font-medium mb-1 ${colorClasses.primary.text}`}>
+                        <label htmlFor="email" className="block text-[11px] font-bold text-gray-300 uppercase tracking-wider mb-1">
                             Email Address
                         </label>
-                        <Input
-                            id="email"
-                            name="email"
-                            type="email"
-                            value={formData.email}
-                            onChange={handleInputChange}
-                            placeholder="Enter your email id"
-                            className={formErrors.email ? 'border-red-500' : `w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white ${colorClasses.light.bg} ${colorClasses.dark.text}`}
-                            disabled={isLoading}
-                        />
+                        <div className="relative">
+                            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                                <Mail className="w-4 h-4" />
+                            </div>
+                            <input
+                                id="email"
+                                name="email"
+                                type="email"
+                                value={formData.email}
+                                onChange={handleInputChange}
+                                placeholder="name@example.com"
+                                disabled={isLoading}
+                                className={`w-full pl-10 pr-4 py-2.5 bg-white/5 border rounded-xl text-white text-xs placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-[#B5945B] transition-all duration-200 ${
+                                    formErrors.email ? 'border-red-500' : 'border-white/15 hover:border-white/30 focus:border-[#B5945B]'
+                                }`}
+                            />
+                        </div>
                         {formErrors.email && (
-                            <p className="mt-1 text-sm text-red-600">{formErrors.email}</p>
+                            <p className="mt-1 text-[11px] text-red-400 font-medium">{formErrors.email}</p>
                         )}
                     </div>
 
                     {/* Phone Field */}
                     <div>
-                        <label htmlFor="phone" className={`block text-sm font-medium mb-1 ${colorClasses.primary.text}`}>
+                        <label htmlFor="phone" className="block text-[11px] font-bold text-gray-300 uppercase tracking-wider mb-1">
                             Phone Number
                         </label>
-                        <Input
-                            id="phone"
-                            name="phone"
-                            type="tel"
-                            value={formData.phone}
-                            onChange={handleInputChange}
-                            placeholder="Enter your phone number"
-                            className={formErrors.phone ? 'border-red-500' : `w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white ${colorClasses.light.bg} ${colorClasses.dark.text}`}
-                            disabled={isLoading}
-                        />
+                        <div className="relative">
+                            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                                <Phone className="w-4 h-4" />
+                            </div>
+                            <input
+                                id="phone"
+                                name="phone"
+                                type="tel"
+                                value={formData.phone}
+                                onChange={handleInputChange}
+                                placeholder="10-digit mobile number"
+                                disabled={isLoading}
+                                className={`w-full pl-10 pr-4 py-2.5 bg-white/5 border rounded-xl text-white text-xs placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-[#B5945B] transition-all duration-200 ${
+                                    formErrors.phone ? 'border-red-500' : 'border-white/15 hover:border-white/30 focus:border-[#B5945B]'
+                                }`}
+                            />
+                        </div>
                         {formErrors.phone && (
-                            <p className="mt-1 text-sm text-red-600">{formErrors.phone}</p>
+                            <p className="mt-1 text-[11px] text-red-400 font-medium">{formErrors.phone}</p>
                         )}
                     </div>
 
                     {/* Password Field */}
                     <div>
-                        <label htmlFor="password" className={`block text-sm font-medium mb-1 ${colorClasses.primary.text}`}>
+                        <label htmlFor="password" className="block text-[11px] font-bold text-gray-300 uppercase tracking-wider mb-1">
                             Password
                         </label>
-                        <Input
-                            id="password"
-                            name="password"
-                            type="password"
-                            value={formData.password}
-                            onChange={handleInputChange}
-                            placeholder="Create a password"
-                            className={formErrors.password ? 'border-red-500' : `w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white ${colorClasses.light.bg} ${colorClasses.dark.text}`}
-                            disabled={isLoading}
-                        />
+                        <div className="relative">
+                            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                                <Lock className="w-4 h-4" />
+                            </div>
+                            <input
+                                id="password"
+                                name="password"
+                                type={showPassword ? 'text' : 'password'}
+                                value={formData.password}
+                                onChange={handleInputChange}
+                                placeholder="At least 6 characters"
+                                disabled={isLoading}
+                                className={`w-full pl-10 pr-10 py-2.5 bg-white/5 border rounded-xl text-white text-xs placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-[#B5945B] transition-all duration-200 ${
+                                    formErrors.password ? 'border-red-500' : 'border-white/15 hover:border-white/30 focus:border-[#B5945B]'
+                                }`}
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-gray-400 hover:text-white transition-colors cursor-pointer"
+                                tabIndex={-1}
+                            >
+                                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                            </button>
+                        </div>
                         {formErrors.password && (
-                            <p className="mt-1 text-sm text-red-600">{formErrors.password}</p>
+                            <p className="mt-1 text-[11px] text-red-400 font-medium">{formErrors.password}</p>
                         )}
                     </div>
 
                     {/* Confirm Password Field */}
                     <div>
-                        <label htmlFor="confirmPassword" className={`block text-sm font-medium mb-1 ${colorClasses.primary.text}`}>
+                        <label htmlFor="confirmPassword" className="block text-[11px] font-bold text-gray-300 uppercase tracking-wider mb-1">
                             Confirm Password
                         </label>
-                        <Input
-                            id="confirmPassword"
-                            name="confirmPassword"
-                            type="password"
-                            value={formData.confirmPassword}
-                            onChange={handleInputChange}
-                            placeholder="Confirm your password"
-                            className={formErrors.confirmPassword ? 'border-red-500' : `w-full px-2 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white ${colorClasses.light.bg} ${colorClasses.dark.text}`}
-                            disabled={isLoading}
-                        />
+                        <div className="relative">
+                            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                                <Lock className="w-4 h-4" />
+                            </div>
+                            <input
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                type={showConfirmPassword ? 'text' : 'password'}
+                                value={formData.confirmPassword}
+                                onChange={handleInputChange}
+                                placeholder="Re-enter your password"
+                                disabled={isLoading}
+                                className={`w-full pl-10 pr-10 py-2.5 bg-white/5 border rounded-xl text-white text-xs placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-[#B5945B] transition-all duration-200 ${
+                                    formErrors.confirmPassword ? 'border-red-500' : 'border-white/15 hover:border-white/30 focus:border-[#B5945B]'
+                                }`}
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-gray-400 hover:text-white transition-colors cursor-pointer"
+                                tabIndex={-1}
+                            >
+                                {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                            </button>
+                        </div>
                         {formErrors.confirmPassword && (
-                            <p className="mt-1 text-sm text-red-600">{formErrors.confirmPassword}</p>
+                            <p className="mt-1 text-[11px] text-red-400 font-medium">{formErrors.confirmPassword}</p>
                         )}
                     </div>
 
+                    {/* Atelier Benefits Note */}
+                    <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-2">
+                        <Sparkles className="w-3.5 h-3.5 text-[#B5945B] shrink-0" />
+                        <p className="text-[10px] text-gray-300">
+                            Member privilege: Early drop access, VIP offers &amp; tracking.
+                        </p>
+                    </div>
+
                     {/* Submit Button */}
-                    <Button
+                    <button
                         type="submit"
-                        className="w-full cursor-pointer"
                         disabled={isLoading}
+                        className="w-full h-11 mt-1 rounded-xl font-extrabold text-xs uppercase tracking-widest text-[#070F2B] bg-gradient-to-r from-[#B5945B] via-[#E5D7B5] to-[#B5945B] hover:from-[#A3834E] hover:to-[#B5945B] shadow-[0_4px_20px_rgba(181,148,91,0.25)] hover:shadow-[0_6px_25px_rgba(181,148,91,0.35)] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed group"
                     >
-                        {isLoading ? 'Creating Account...' : 'Create Account'}
-                    </Button>
+                        {isLoading ? (
+                            <>
+                                <div className="w-4 h-4 border-2 border-[#070F2B] border-t-transparent rounded-full animate-spin" />
+                                <span>Creating Account...</span>
+                            </>
+                        ) : (
+                            <>
+                                <span>Create Atelier Account</span>
+                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                            </>
+                        )}
+                    </button>
                 </form>
 
-                {/* Additional Links */}
-                <div className="mt-6 text-center">
-                    <p className="text-sm text-gray-600">
+                {/* Switch to Login */}
+                <div className="mt-5 pt-4 border-t border-white/10 text-center">
+                    <p className="text-xs text-gray-400">
                         Already have an account?{' '}
-                        <button
-                            onClick={() => router.push('/login')}
-                            className="font-medium text-blue-600 hover:text-blue-500 cursor-pointer"
+                        <Link
+                            href="/login"
+                            className="font-bold text-[#B5945B] hover:text-[#D4AF37] transition-colors inline-flex items-center gap-1"
                         >
-                            Sign in
-                        </button>
+                            Sign in to Atelier
+                        </Link>
                     </p>
                 </div>
             </div>
         </div>
     );
-} 
+}

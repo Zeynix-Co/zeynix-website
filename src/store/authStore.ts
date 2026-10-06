@@ -21,6 +21,7 @@ interface AuthActions {
     // Actions
     login: (email: string, password: string, rememberMe?: boolean) => Promise<void>;
     register: (userData: RegisterData) => Promise<void>;
+    googleLogin: (credentialOrPayload: { credential?: string; profile?: any }) => Promise<void>;
     logout: () => void;
     checkAuth: () => Promise<void>;
     clearError: () => void;
@@ -100,6 +101,54 @@ const useAuthStore = create<AuthState & AuthActions>()(
                 } catch (error) {
                     set({
                         error: error instanceof Error ? error.message : 'Login failed',
+                        isLoading: false,
+                    });
+                    throw error;
+                }
+            },
+
+            googleLogin: async (payload: { credential?: string; profile?: any }) => {
+                try {
+                    set({ isLoading: true, error: null });
+
+                    const response = await fetch('/api/auth/google', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        credentials: 'include',
+                        body: JSON.stringify(payload),
+                    });
+
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(data.message || 'Google sign-in failed');
+                    }
+
+                    if (data.success) {
+                        const token = document.cookie
+                            .split('; ')
+                            .find(row => row.startsWith('token='))
+                            ?.split('=')[1];
+
+                        set({
+                            user: data.data.user,
+                            token: token || data.data.token,
+                            isAuthenticated: true,
+                            isLoading: false,
+                            error: null,
+                        });
+
+                        setTimeout(() => {
+                            get().checkAuth();
+                        }, 100);
+                    } else {
+                        throw new Error(data.message || 'Google sign-in failed');
+                    }
+                } catch (error) {
+                    set({
+                        error: error instanceof Error ? error.message : 'Google sign-in failed',
                         isLoading: false,
                     });
                     throw error;

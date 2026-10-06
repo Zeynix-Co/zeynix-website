@@ -18,10 +18,16 @@ const userSchema = new mongoose.Schema({
     },
     phone: {
         type: String,
-        required: [true, 'Phone number is required'],
-        unique: true,
-        trim: true,
-        match: [/^[0-9]{10}$/, 'Please enter a valid 10-digit phone number']
+        required: false,
+        sparse: true,
+        trim: true
+    },
+    googleId: {
+        type: String,
+        sparse: true
+    },
+    avatar: {
+        type: String
     },
     password: {
         type: String,

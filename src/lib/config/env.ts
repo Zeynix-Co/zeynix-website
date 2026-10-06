@@ -11,8 +11,9 @@ export const env = {
     CLOUDINARY_UPLOAD_PRESET: process.env.CLOUDINARY_UPLOAD_PRESET,
     EMAIL_USER: process.env.EMAIL_USER,
     EMAIL_PASSWORD: process.env.EMAIL_PASSWORD,
-    CLIENT_URL: process.env.CLIENT_URL || 'http://localhost:3001',
+    CLIENT_URL: process.env.FRONT_URL || process.env.CLIENT_URL || process.env.NEXTAUTH_URL || 'http://localhost:3000',
     RESEND_API_KEY: process.env.RESEND_API_KEY,
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID || process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
     // Razorpay Configuration (Live API Only)
     RAZORPAY_KEY_ID_LIVE: process.env.RAZORPAY_KEY_ID_LIVE || process.env.RAZORPAY_KEY_ID,
     RAZORPAY_KEY_SECRET_LIVE: process.env.RAZORPAY_KEY_SECRET_LIVE || process.env.RAZORPAY_KEY_SECRET,
