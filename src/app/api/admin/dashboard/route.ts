@@ -84,7 +84,7 @@ export async function GET(request: NextRequest) {
     try {
         await connectDB();
 
-        let userId = request.nextUrl.searchParams.get('userId');
+        let userId: string | null | undefined = request.nextUrl.searchParams.get('userId');
 
         if (!userId) {
             // Check auth header or cookie

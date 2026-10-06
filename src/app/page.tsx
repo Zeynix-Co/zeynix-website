@@ -47,13 +47,33 @@ export default function HomePage() {
     useEffect(() => {
         const loadHomeData = async () => {
             try {
-                // Fetch casual products: Section 1 (first 4) & Section 2 (next 5)
-                const casualRes = await fetch('/api/customer/products?category=casual&limit=14');
-                const casualJson = await casualRes.json();
-                if (casualJson.success && casualJson.data.products?.length > 0) {
-                    const allProds = casualJson.data.products;
-                    setCasualProducts(allProds.slice(0, 4)); // 1st Section: First 4 products
-                    setSec2Products(allProds.slice(4, 9));  // Section 2: Next 5 products
+                // Fetch products for Section 1 and Section 2 (Halloween Special Edition)
+                const HALLOWEEN_SLUGS = [
+                    'spooky-boo-graveyard-ghost-cream-tee',
+                    'slashers-dream-play-scream-repeat-black-tee',
+                    'kawaii-pink-bow-ghost-halloween-white-tee',
+                    'mystic-haunted-mansion-harvest-moon-purple-tee',
+                    'halloween-rip-still-dead-tee',
+                    'spookie-peeking-cat-skeletons-tee'
+                ];
+
+                const prodRes = await fetch('/api/customer/products?limit=60');
+                const prodJson = await prodRes.json();
+                if (prodJson.success && prodJson.data.products?.length > 0) {
+                    const allProds = prodJson.data.products;
+
+                    // Section 2: Exact 6 Halloween products in curated sequence
+                    const halloweenProds = HALLOWEEN_SLUGS.map((slug) =>
+                        allProds.find((p: any) => p.slug === slug)
+                    ).filter(Boolean);
+
+                    setSec2Products(halloweenProds);
+
+                    // Section 1: Top 4 casual streetwear products
+                    const nonHalloween = allProds.filter(
+                        (p: any) => !HALLOWEEN_SLUGS.includes(p.slug)
+                    );
+                    setCasualProducts(nonHalloween.slice(0, 4));
                 }
 
                 // Fetch new arrivals
@@ -298,52 +318,66 @@ export default function HomePage() {
                 </div>
             </section>
 
-            {/* 5. SECTION 2 OF PRODUCTS: POP CULTURE & GRAPHIC EDITION */}
-            <section className="py-12 md:py-16 px-4 bg-[#FAF6F0] border-b border-[#070F2B]/5 relative z-10">
-                <div className="container mx-auto max-w-7xl">
+            {/* 5. SECTION 2 OF PRODUCTS: HALLOWEEN SPECIAL EDITION */}
+            <section className="py-14 md:py-20 px-4 bg-[#080414] text-white border-y border-purple-500/20 relative z-10 overflow-hidden select-none">
+                {/* Spooky Atmospheric Ambient Glowing Orbs & Micro-Dot Grid */}
+                <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+                    <div className="absolute -top-32 -right-32 w-[550px] h-[550px] rounded-full bg-gradient-to-br from-[#FF7518]/15 via-[#FFA500]/10 to-transparent blur-[140px]" />
+                    <div className="absolute -bottom-36 -left-36 w-[650px] h-[650px] rounded-full bg-gradient-to-tr from-[#8B5CF6]/20 via-[#4C1D95]/30 to-transparent blur-[150px]" />
+                    <div
+                        className="absolute inset-0 opacity-[0.08]"
+                        style={{
+                            backgroundImage: `radial-gradient(circle, rgba(255, 117, 24, 0.35) 1px, transparent 1px)`,
+                            backgroundSize: '36px 36px',
+                        }}
+                    />
+                </div>
+
+                <div className="container mx-auto max-w-7xl relative z-10">
 
                     {/* Header */}
-                    <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+                    <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 md:mb-10 gap-4">
                         <div>
-                            <div className="flex items-center gap-2 mb-1.5">
-                                <span className="text-[10px] font-black uppercase tracking-widest text-[#FAF6F0] bg-[#070F2B] px-2.5 py-0.5 rounded-full inline-block">
-                                    Section 2 &bull; Limited Drop
+                            <div className="flex flex-wrap items-center gap-2 mb-2">
+                                <span className="text-[10px] font-black uppercase tracking-widest text-black bg-gradient-to-r from-[#FF7518] to-[#FFA500] px-3 py-1 rounded-full inline-flex items-center gap-1.5 shadow-[0_0_15px_rgba(255,117,24,0.35)]">
+                                    🎃 Halloween Special Edition &bull; Limited Drop
                                 </span>
-                                <span className="text-[10px] font-mono uppercase tracking-wider text-[#B5945B] font-bold">
-                                    Front &amp; Back Art
+                                <span className="text-[10px] font-mono uppercase tracking-wider text-[#FFA500] font-bold px-2.5 py-0.5 rounded-full bg-[#181133] border border-purple-500/30">
+                                    Front, Back &amp; Whole Format
                                 </span>
                             </div>
-                            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black uppercase tracking-tight text-[#070F2B]">
-                                Pop Culture &amp; Graphic Edition
+                            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black uppercase tracking-tight text-white flex items-center gap-2">
+                                <span>Spooky Season &bull; Halloween Edition</span>
                             </h2>
-                            <p className="text-xs text-gray-600 mt-1 max-w-2xl font-medium leading-relaxed">
-                                Premium 240 GSM organic cotton heavyweight tees. Hover over any design to reveal its high-definition back graphic.
+                            <p className="text-xs text-purple-200/70 mt-1.5 max-w-2xl font-medium leading-relaxed">
+                                Curated horror &amp; phantom streetwear tailored from 240 GSM organic heavyweight cotton. Hover over any piece to reveal its high-definition back graphic.
                             </p>
                         </div>
                         <Link
-                            href="/products/casual"
-                            className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider hover:text-[#B5945B] transition-colors border-b-2 border-[#070F2B] pb-0.5 cursor-pointer shrink-0 self-start sm:self-end"
+                            href="/products/unisex"
+                            className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-[#FFA500] hover:text-[#FF7518] transition-colors border-b-2 border-[#FF7518] pb-0.5 cursor-pointer shrink-0 self-start sm:self-end"
                         >
-                            Explore Drop <ArrowRight className="w-3.5 h-3.5" />
+                            Explore Halloween Drop <ArrowRight className="w-3.5 h-3.5" />
                         </Link>
                     </div>
 
-                    {/* Products Grid (Section 2 - 5 items) */}
+                    {/* Products Grid (Section 2 - 6 Halloween items) */}
                     {isLoading ? (
-                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
-                            {[1, 2, 3, 4, 5].map((i) => (
-                                <div key={i} className="aspect-[3/4] bg-gray-200/60 rounded-xl animate-pulse" />
+                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+                            {[1, 2, 3, 4, 5, 6].map((i) => (
+                                <div key={i} className="aspect-[3/4] bg-[#160F2E]/80 rounded-2xl animate-pulse border border-purple-500/20" />
                             ))}
                         </div>
                     ) : sec2Products.length === 0 ? (
-                        <div className="text-center py-8 text-gray-500 font-semibold text-xs">
-                            No products available in Section 2. Check back soon!
+                        <div className="text-center py-12 text-purple-300/60 font-semibold text-xs bg-[#160F2E]/40 rounded-2xl border border-purple-500/20">
+                            Halloween pieces are loading... Check back soon!
                         </div>
                     ) : (
-                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
                             {sec2Products.map((product) => (
                                 <ProductCard
-                                    key={product.id}
+                                    key={product.id || product._id || product.slug}
+                                    theme="halloween"
                                     product={{
                                         ...product,
                                         images: product.images || [product.image]

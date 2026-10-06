@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ShoppingCart, Star, Eye, ArrowRight } from 'lucide-react';
+import { ShoppingCart, Star, Eye } from 'lucide-react';
 import { Product } from '@/data/products';
 import { APP_CONFIG } from '@/lib/constants';
 import useCartStore from '@/store/cartStore';
@@ -14,12 +14,14 @@ import WishlistHeart from '@/components/wishlist/WishlistHeart';
 interface ProductCardProps {
     product: Product;
     onAddToCart?: (product: Product, size: string) => void;
+    theme?: 'default' | 'halloween';
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({ product, theme = 'default' }: ProductCardProps) {
     const router = useRouter();
     const { addToCart, isInCart } = useCartStore();
     const { isAuthenticated } = useAuthStore();
+    const isHalloween = theme === 'halloween';
 
     const availableSizes = product.size && product.size.length > 0
         ? product.size
@@ -91,18 +93,32 @@ export default function ProductCard({ product }: ProductCardProps) {
     return (
         <div
             onClick={handleCardClick}
-            className="cursor-pointer group relative bg-white rounded-2xl border border-gray-150/80 hover:border-[#B5945B]/50 hover:shadow-[0_20px_45px_rgba(7,15,43,0.08)] transition-all duration-300 flex flex-col justify-between h-full overflow-hidden"
+            className={`cursor-pointer group relative rounded-2xl transition-all duration-300 flex flex-col justify-between h-full overflow-hidden ${
+                isHalloween
+                    ? 'bg-[#0E0A1E]/95 border border-purple-500/25 hover:border-[#FF7518] hover:shadow-[0_20px_45px_rgba(255,117,24,0.22)] shadow-[0_10px_30px_rgba(0,0,0,0.6)] backdrop-blur-md'
+                    : 'bg-white border border-gray-150/80 hover:border-[#B5945B]/50 hover:shadow-[0_20px_45px_rgba(7,15,43,0.08)]'
+            }`}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
             {/* Top Image Studio Frame */}
-            <div className="relative aspect-[4/5] w-full bg-[#F6F4EE]/60 overflow-hidden flex items-center justify-center p-3 sm:p-4">
+            <div className={`relative aspect-[4/5] w-full overflow-hidden flex items-center justify-center p-3 sm:p-4 ${
+                isHalloween ? 'bg-[#181133]/70' : 'bg-[#F6F4EE]/60'
+            }`}>
                 {/* Background ambient lighting */}
-                <div className="absolute inset-0 bg-radial from-white/40 via-transparent to-black/[0.02] pointer-events-none" />
+                <div className={`absolute inset-0 pointer-events-none ${
+                    isHalloween
+                        ? 'bg-radial from-purple-500/10 via-transparent to-black/40'
+                        : 'bg-radial from-white/40 via-transparent to-black/[0.02]'
+                }`} />
 
                 {/* Loading skeleton placeholder */}
                 {!imageLoaded && (
-                    <div className="absolute inset-0 bg-gradient-to-r from-gray-100 via-gray-200/60 to-gray-100 animate-pulse" />
+                    <div className={`absolute inset-0 animate-pulse ${
+                        isHalloween
+                            ? 'bg-gradient-to-r from-purple-950/40 via-purple-900/30 to-purple-950/40'
+                            : 'bg-gradient-to-r from-gray-100 via-gray-200/60 to-gray-100'
+                    }`} />
                 )}
 
                 {/* High-Resolution Product Image with object-contain & Hover Back-View */}
@@ -136,13 +152,21 @@ export default function ProductCard({ product }: ProductCardProps) {
 
                 {/* Discount Badge */}
                 {discountPercent > 0 && (
-                    <div className="absolute top-2.5 left-2.5 bg-[#DC2626] text-white text-[9px] sm:text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full shadow-sm z-20">
+                    <div className={`absolute top-2.5 left-2.5 text-[9px] sm:text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full z-20 ${
+                        isHalloween
+                            ? 'bg-gradient-to-r from-[#FF7518] to-[#E05300] text-black shadow-md'
+                            : 'bg-[#DC2626] text-white shadow-sm'
+                    }`}>
                         -{discountPercent}%
                     </div>
                 )}
 
                 {/* Fit Badge */}
-                <div className="absolute top-2.5 right-2.5 bg-[#070F2B]/85 backdrop-blur-xs text-[#E5D7B5] text-[7.5px] sm:text-[8.5px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full z-20 border border-white/10">
+                <div className={`absolute top-2.5 right-2.5 backdrop-blur-xs text-[7.5px] sm:text-[8.5px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full z-20 ${
+                    isHalloween
+                        ? 'bg-[#0B0718]/90 text-[#FFA500] border border-[#FF7518]/40'
+                        : 'bg-[#070F2B]/85 text-[#E5D7B5] border border-white/10'
+                }`}>
                     {product.label || product.productFit || 'OVERSIZED'}
                 </div>
 
@@ -155,7 +179,11 @@ export default function ProductCard({ product }: ProductCardProps) {
                     <Link
                         href={productHref}
                         onClick={(e) => e.stopPropagation()}
-                        className="flex-1 min-h-[36px] bg-[#070F2B] hover:bg-[#B5945B] text-white hover:text-[#070F2B] text-[10px] font-extrabold uppercase tracking-wider rounded-xl shadow-lg transition-all duration-200 flex items-center justify-center gap-1.5 px-3"
+                        className={`flex-1 min-h-[36px] text-[10px] font-extrabold uppercase tracking-wider rounded-xl shadow-lg transition-all duration-200 flex items-center justify-center gap-1.5 px-3 ${
+                            isHalloween
+                                ? 'bg-[#FF7518] hover:bg-[#FFA500] text-black font-black'
+                                : 'bg-[#070F2B] hover:bg-[#B5945B] text-white hover:text-[#070F2B]'
+                        }`}
                     >
                         <Eye className="w-3.5 h-3.5" />
                         <span>View Product</span>
@@ -174,7 +202,11 @@ export default function ProductCard({ product }: ProductCardProps) {
                                 brand: product.brand || 'Zeynix'
                             }}
                             size={selectedSize}
-                            className="w-9 h-9 p-2 rounded-xl bg-white/95 text-[#070F2B] hover:bg-white shadow-lg border border-gray-200"
+                            className={`w-9 h-9 p-2 rounded-xl shadow-lg transition-colors ${
+                                isHalloween
+                                    ? 'bg-[#181133] text-white hover:text-[#FF7518] border border-purple-500/30'
+                                    : 'bg-white/95 text-[#070F2B] hover:bg-white border border-gray-200'
+                            }`}
                         />
                     </div>
                 </div>
@@ -185,17 +217,25 @@ export default function ProductCard({ product }: ProductCardProps) {
                 <div>
                     {/* Brand & Category */}
                     <div className="flex items-center justify-between gap-1 mb-1.5">
-                        <span className="text-[9.5px] sm:text-[10px] font-black text-[#B5945B] uppercase tracking-widest truncate">
+                        <span className={`text-[9.5px] sm:text-[10px] font-black uppercase tracking-widest truncate ${
+                            isHalloween ? 'text-[#FFA500]' : 'text-[#B5945B]'
+                        }`}>
                             {product.brand || 'ZEYNIX'}
                         </span>
-                        <span className="text-[8.5px] sm:text-[9px] font-bold text-gray-500 uppercase tracking-wider bg-gray-100 px-2 py-0.5 rounded-md shrink-0">
+                        <span className={`text-[8.5px] sm:text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md shrink-0 ${
+                            isHalloween
+                                ? 'bg-[#1D143D] text-purple-200 border border-purple-500/20'
+                                : 'bg-gray-100 text-gray-500'
+                        }`}>
                             {product.category?.toLowerCase() === 'unisexual' || product.category?.toLowerCase() === 'unisex' ? 'UNISEX' : product.category}
                         </span>
                     </div>
 
                     {/* Product Title */}
-                    <Link href={productHref} className="block group-hover:text-[#B5945B] transition-colors">
-                        <h3 className="font-extrabold uppercase tracking-tight text-xs sm:text-[13px] text-[#070F2B] line-clamp-1 mb-1.5 leading-snug">
+                    <Link href={productHref} className="block transition-colors">
+                        <h3 className={`font-extrabold uppercase tracking-tight text-xs sm:text-[13px] line-clamp-1 mb-1.5 leading-snug ${
+                            isHalloween ? 'text-white group-hover:text-[#FFA500]' : 'text-[#070F2B] group-hover:text-[#B5945B]'
+                        }`}>
                             {product.name}
                         </h3>
                     </Link>
@@ -208,24 +248,30 @@ export default function ProductCard({ product }: ProductCardProps) {
                                     key={i}
                                     className={`w-3 h-3 ${
                                         i < Math.floor(product.rating || 5)
-                                            ? 'text-[#F59E0B] fill-[#F59E0B]'
-                                            : 'text-gray-200'
+                                            ? (isHalloween ? 'text-[#FF7518] fill-[#FF7518]' : 'text-[#F59E0B] fill-[#F59E0B]')
+                                            : (isHalloween ? 'text-purple-900/60' : 'text-gray-200')
                                     }`}
                                 />
                             ))}
                         </div>
-                        <span className="text-[9.5px] font-bold text-gray-400 ml-0.5">
+                        <span className={`text-[9.5px] font-bold ml-0.5 ${
+                            isHalloween ? 'text-purple-300/70' : 'text-gray-400'
+                        }`}>
                             ({product.rating || 4.9})
                         </span>
                     </div>
 
                     {/* Price Block */}
                     <div className="flex items-baseline gap-2 mb-3">
-                        <span className="text-sm sm:text-base font-black text-[#070F2B]">
+                        <span className={`text-sm sm:text-base font-black ${
+                            isHalloween ? 'text-white' : 'text-[#070F2B]'
+                        }`}>
                             {APP_CONFIG.currency}{currentPrice.toLocaleString('en-IN')}
                         </span>
                         {discountPercent > 0 && (
-                            <span className="text-xs text-gray-400 line-through font-semibold">
+                            <span className={`text-xs line-through font-semibold ${
+                                isHalloween ? 'text-purple-300/60' : 'text-gray-400'
+                            }`}>
                                 {APP_CONFIG.currency}{originalPrice.toLocaleString('en-IN')}
                             </span>
                         )}
@@ -233,9 +279,11 @@ export default function ProductCard({ product }: ProductCardProps) {
 
                     {/* Size Selector Strip */}
                     <div className="mb-3.5">
-                        <div className="flex items-center justify-between text-[9px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">
+                        <div className={`flex items-center justify-between text-[9px] font-bold uppercase tracking-wider mb-1.5 ${
+                            isHalloween ? 'text-purple-300/60' : 'text-gray-400'
+                        }`}>
                             <span>Select Size</span>
-                            <span className="text-[#070F2B]/70 font-black">{selectedSize}</span>
+                            <span className={`font-black ${isHalloween ? 'text-[#FFA500]' : 'text-[#070F2B]/70'}`}>{selectedSize}</span>
                         </div>
                         <div className="flex flex-wrap gap-1">
                             {availableSizes.slice(0, 5).map((size) => (
@@ -249,15 +297,21 @@ export default function ProductCard({ product }: ProductCardProps) {
                                     }}
                                     className={`text-[9.5px] font-black min-w-[26px] sm:min-w-[28px] h-7 px-1.5 rounded-md border transition-all duration-200 cursor-pointer flex items-center justify-center ${
                                         selectedSize === size
-                                            ? 'bg-[#070F2B] text-white border-[#070F2B] shadow-xs scale-105'
-                                            : 'bg-white text-gray-700 border-gray-200 hover:border-[#070F2B]/50'
+                                            ? (isHalloween
+                                                ? 'bg-[#FF7518] text-black border-[#FF7518] shadow-[0_0_12px_rgba(255,117,24,0.4)] scale-105'
+                                                : 'bg-[#070F2B] text-white border-[#070F2B] shadow-xs scale-105')
+                                            : (isHalloween
+                                                ? 'bg-[#181133] text-purple-200 border-purple-500/30 hover:border-[#FF7518]/60'
+                                                : 'bg-white text-gray-700 border-gray-200 hover:border-[#070F2B]/50')
                                     }`}
                                 >
                                     {size}
                                 </button>
                             ))}
                             {availableSizes.length > 5 && (
-                                <span className="text-[8.5px] font-bold text-gray-400 px-1 py-1 flex items-center">
+                                <span className={`text-[8.5px] font-bold px-1 py-1 flex items-center ${
+                                    isHalloween ? 'text-purple-300/70' : 'text-gray-400'
+                                }`}>
                                     +{availableSizes.length - 5}
                                 </span>
                             )}
@@ -273,8 +327,10 @@ export default function ProductCard({ product }: ProductCardProps) {
                         isAlreadyInCart
                             ? 'bg-emerald-700 text-white cursor-not-allowed'
                             : isAddingToCart
-                                ? 'bg-[#070F2B] text-white opacity-80 cursor-wait'
-                                : 'bg-[#070F2B] hover:bg-[#B5945B] text-white hover:text-[#070F2B] border border-[#070F2B] hover:border-[#B5945B]'
+                                ? (isHalloween ? 'bg-[#FF7518] text-black opacity-80 cursor-wait' : 'bg-[#070F2B] text-white opacity-80 cursor-wait')
+                                : (isHalloween
+                                    ? 'bg-gradient-to-r from-[#FF7518] to-[#E05300] hover:from-[#FFA500] hover:to-[#FF7518] text-black font-black border border-[#FF7518] shadow-[0_4px_15px_rgba(255,117,24,0.3)] hover:shadow-[0_4px_22px_rgba(255,117,24,0.5)]'
+                                    : 'bg-[#070F2B] hover:bg-[#B5945B] text-white hover:text-[#070F2B] border border-[#070F2B] hover:border-[#B5945B]')
                     }`}
                 >
                     {isAlreadyInCart ? (
