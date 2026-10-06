@@ -13,7 +13,7 @@ export const env = {
     EMAIL_PASSWORD: process.env.EMAIL_PASSWORD,
     CLIENT_URL: process.env.FRONT_URL || process.env.CLIENT_URL || process.env.NEXTAUTH_URL || 'http://localhost:3000',
     RESEND_API_KEY: process.env.RESEND_API_KEY,
-    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID || process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID || process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '998969752301-29l4ihp494tfcql40ulinrde74hpronf.apps.googleusercontent.com',
     // Razorpay Configuration (Live API Only)
     RAZORPAY_KEY_ID_LIVE: process.env.RAZORPAY_KEY_ID_LIVE || process.env.RAZORPAY_KEY_ID,
     RAZORPAY_KEY_SECRET_LIVE: process.env.RAZORPAY_KEY_SECRET_LIVE || process.env.RAZORPAY_KEY_SECRET,

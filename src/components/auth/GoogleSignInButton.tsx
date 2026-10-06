@@ -32,7 +32,9 @@ export default function GoogleSignInButton({ mode = 'login', redirectTo = '/' }:
     const [googleReady, setGoogleReady] = useState(false);
     const googleBtnRef = useRef<HTMLDivElement>(null);
 
-    const googleClientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '';
+    const googleClientId =
+        process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ||
+        '998969752301-29l4ihp494tfcql40ulinrde74hpronf.apps.googleusercontent.com';
 
     useEffect(() => {
         if (!googleClientId) return;
