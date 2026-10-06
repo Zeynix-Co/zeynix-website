@@ -319,7 +319,41 @@ export default function HomePage() {
             </section>
 
             {/* 5. SECTION 2 OF PRODUCTS: HALLOWEEN SPECIAL EDITION */}
-            <section className="py-14 md:py-20 px-4 bg-[#080414] text-white border-y border-purple-500/20 relative z-10 overflow-hidden select-none">
+            <section className="pt-14 pb-16 md:pt-20 md:pb-24 px-4 bg-[#080414] text-white border-y border-purple-500/20 relative z-10 overflow-hidden select-none">
+                {/* Spooky CSS Keyframe Animations */}
+                <style dangerouslySetInnerHTML={{
+                    __html: `
+                    @keyframes spider-swing {
+                        0% { transform: rotate(0deg); }
+                        25% { transform: rotate(7deg); }
+                        75% { transform: rotate(-7deg); }
+                        100% { transform: rotate(0deg); }
+                    }
+                    @keyframes pumpkin-flicker {
+                        0%, 100% { filter: drop-shadow(0 0 10px rgba(255, 117, 24, 0.7)) drop-shadow(0 0 22px rgba(255, 165, 0, 0.4)); opacity: 0.95; }
+                        50% { filter: drop-shadow(0 0 18px rgba(255, 117, 24, 0.95)) drop-shadow(0 0 35px rgba(255, 165, 0, 0.7)); opacity: 1; }
+                        75% { filter: drop-shadow(0 0 8px rgba(255, 117, 24, 0.6)); opacity: 0.9; }
+                    }
+                    @keyframes bat-wing {
+                        0%, 100% { transform: scaleY(1); }
+                        50% { transform: scaleY(0.5); }
+                    }
+                    @keyframes bat-glide-1 {
+                        0% { transform: translate(0px, 0px); }
+                        50% { transform: translate(50px, -18px); }
+                        100% { transform: translate(0px, 0px); }
+                    }
+                    @keyframes bat-glide-2 {
+                        0% { transform: translate(0px, 0px); }
+                        50% { transform: translate(-45px, 14px); }
+                        100% { transform: translate(0px, 0px); }
+                    }
+                    @keyframes ghost-float {
+                        0%, 100% { transform: translateY(0px) rotate(0deg); }
+                        50% { transform: translateY(-10px) rotate(3deg); }
+                    }
+                `}} />
+
                 {/* Spooky Atmospheric Ambient Glowing Orbs & Micro-Dot Grid */}
                 <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
                     <div className="absolute -top-32 -right-32 w-[550px] h-[550px] rounded-full bg-gradient-to-br from-[#FF7518]/15 via-[#FFA500]/10 to-transparent blur-[140px]" />
@@ -331,24 +365,136 @@ export default function HomePage() {
                             backgroundSize: '36px 36px',
                         }}
                     />
+
+                    {/* Top-Left Corner Intricate Spider Web */}
+                    <svg className="w-48 h-48 sm:w-64 sm:h-64 text-[#A855F7]/30 absolute -top-1 -left-1 pointer-events-none" viewBox="0 0 200 200" fill="none">
+                        <line x1="0" y1="0" x2="200" y2="0" stroke="rgba(255,117,24,0.3)" strokeWidth="1.2" />
+                        <line x1="0" y1="0" x2="190" y2="60" stroke="rgba(168,85,247,0.35)" strokeWidth="1" />
+                        <line x1="0" y1="0" x2="160" y2="120" stroke="rgba(168,85,247,0.35)" strokeWidth="1" />
+                        <line x1="0" y1="0" x2="120" y2="160" stroke="rgba(168,85,247,0.35)" strokeWidth="1" />
+                        <line x1="0" y1="0" x2="60" y2="190" stroke="rgba(168,85,247,0.35)" strokeWidth="1" />
+                        <line x1="0" y1="0" x2="0" y2="200" stroke="rgba(255,117,24,0.3)" strokeWidth="1.2" />
+                        {/* Concentric Web Arcs */}
+                        <path d="M 0,35 Q 18,33 33,18 Q 35,0 35,0" stroke="rgba(255,165,0,0.35)" strokeWidth="0.8" />
+                        <path d="M 0,70 Q 36,65 65,36 Q 70,0 70,0" stroke="rgba(255,165,0,0.35)" strokeWidth="0.8" />
+                        <path d="M 0,110 Q 55,100 100,55 Q 110,0 110,0" stroke="rgba(168,85,247,0.4)" strokeWidth="0.8" />
+                        <path d="M 0,150 Q 75,140 140,75 Q 150,0 150,0" stroke="rgba(168,85,247,0.35)" strokeWidth="0.8" />
+                        <path d="M 0,190 Q 95,180 180,95 Q 190,0 190,0" stroke="rgba(255,117,24,0.25)" strokeWidth="0.8" />
+                    </svg>
+
+                    {/* Top-Right Corner Intricate Spider Web */}
+                    <svg className="w-48 h-48 sm:w-64 sm:h-64 text-[#A855F7]/30 absolute -top-1 -right-1 pointer-events-none scale-x-[-1]" viewBox="0 0 200 200" fill="none">
+                        <line x1="0" y1="0" x2="200" y2="0" stroke="rgba(255,117,24,0.3)" strokeWidth="1.2" />
+                        <line x1="0" y1="0" x2="190" y2="60" stroke="rgba(168,85,247,0.35)" strokeWidth="1" />
+                        <line x1="0" y1="0" x2="160" y2="120" stroke="rgba(168,85,247,0.35)" strokeWidth="1" />
+                        <line x1="0" y1="0" x2="120" y2="160" stroke="rgba(168,85,247,0.35)" strokeWidth="1" />
+                        <line x1="0" y1="0" x2="60" y2="190" stroke="rgba(168,85,247,0.35)" strokeWidth="1" />
+                        <line x1="0" y1="0" x2="0" y2="200" stroke="rgba(255,117,24,0.3)" strokeWidth="1.2" />
+                        <path d="M 0,35 Q 18,33 33,18 Q 35,0 35,0" stroke="rgba(255,165,0,0.35)" strokeWidth="0.8" />
+                        <path d="M 0,70 Q 36,65 65,36 Q 70,0 70,0" stroke="rgba(255,165,0,0.35)" strokeWidth="0.8" />
+                        <path d="M 0,110 Q 55,100 100,55 Q 110,0 110,0" stroke="rgba(168,85,247,0.4)" strokeWidth="0.8" />
+                        <path d="M 0,150 Q 75,140 140,75 Q 150,0 150,0" stroke="rgba(168,85,247,0.35)" strokeWidth="0.8" />
+                    </svg>
+
+                    {/* Dangling Animated Spider Swinging from Silk Thread (Left) */}
+                    <div className="absolute top-0 left-10 sm:left-24 origin-top animate-[spider-swing_3.8s_ease-in-out_infinite] pointer-events-none z-10">
+                        <div className="w-[1.5px] h-20 sm:h-28 bg-gradient-to-b from-purple-400/50 via-orange-400/60 to-orange-400" />
+                        <div className="relative -left-[9px] -top-[1px] w-5 h-5">
+                            <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5 text-[#FF7518] drop-shadow-[0_0_8px_rgba(255,117,24,0.9)]">
+                                <ellipse cx="12" cy="14" rx="4.5" ry="5.5" fill="#140B28" stroke="#FF7518" strokeWidth="1.2" />
+                                <circle cx="12" cy="8" r="3" fill="#140B28" stroke="#FF7518" strokeWidth="1.2" />
+                                <circle cx="11" cy="7.5" r="0.75" fill="#FFA500" />
+                                <circle cx="13" cy="7.5" r="0.75" fill="#FFA500" />
+                                <path d="M 9 9 Q 4 6 2 11" stroke="#FF7518" strokeWidth="1" strokeLinecap="round" />
+                                <path d="M 9 12 Q 3 12 1 17" stroke="#FF7518" strokeWidth="1" strokeLinecap="round" />
+                                <path d="M 9 15 Q 4 18 3 23" stroke="#FF7518" strokeWidth="1" strokeLinecap="round" />
+                                <path d="M 15 9 Q 20 6 22 11" stroke="#FF7518" strokeWidth="1" strokeLinecap="round" />
+                                <path d="M 15 12 Q 21 12 23 17" stroke="#FF7518" strokeWidth="1" strokeLinecap="round" />
+                                <path d="M 15 15 Q 20 18 21 23" stroke="#FF7518" strokeWidth="1" strokeLinecap="round" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    {/* Flying Bat 1 (Glide Across Center-Left) */}
+                    <div className="absolute top-10 left-[28%] pointer-events-none animate-[bat-glide-1_7s_ease-in-out_infinite]">
+                        <div className="animate-[bat-wing_0.35s_ease-in-out_infinite_alternate]">
+                            <svg viewBox="0 0 40 20" className="w-8 h-4 text-[#A855F7]/40 drop-shadow-[0_0_8px_rgba(168,85,247,0.6)]" fill="currentColor">
+                                <path d="M 20 12 C 16 4 9 0 0 6 C 5 12 11 14 15 12 C 17 14 23 14 25 12 C 29 14 35 12 40 6 C 31 0 24 4 20 12 Z" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    {/* Flying Bat 2 (Glide Across Center-Right) */}
+                    <div className="absolute top-16 right-[24%] pointer-events-none animate-[bat-glide-2_5.5s_ease-in-out_infinite]">
+                        <div className="animate-[bat-wing_0.3s_ease-in-out_infinite_alternate]">
+                            <svg viewBox="0 0 40 20" className="w-6 h-3 text-[#FF7518]/45 drop-shadow-[0_0_8px_rgba(255,117,24,0.6)]" fill="currentColor">
+                                <path d="M 20 12 C 16 4 9 0 0 6 C 5 12 11 14 15 12 C 17 14 23 14 25 12 C 29 14 35 12 40 6 C 31 0 24 4 20 12 Z" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    {/* Flying Bat 3 (Small Distant Bat) */}
+                    <div className="hidden md:block absolute top-6 right-[42%] pointer-events-none animate-[bat-glide-1_8.5s_ease-in-out_infinite]">
+                        <div className="animate-[bat-wing_0.28s_ease-in-out_infinite_alternate]">
+                            <svg viewBox="0 0 40 20" className="w-5 h-2.5 text-purple-300/30" fill="currentColor">
+                                <path d="M 20 12 C 16 4 9 0 0 6 C 5 12 11 14 15 12 C 17 14 23 14 25 12 C 29 14 35 12 40 6 C 31 0 24 4 20 12 Z" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    {/* Glowing Jack-O'-Lantern in Background Bottom Right */}
+                    <div className="hidden lg:block absolute bottom-6 right-8 pointer-events-none opacity-40 animate-[pumpkin-flicker_3.2s_ease-in-out_infinite_alternate]">
+                        <svg viewBox="0 0 100 85" className="w-20 h-16">
+                            <ellipse cx="50" cy="52" rx="36" ry="28" fill="#E85D04" stroke="#9D0208" strokeWidth="1.5" />
+                            <ellipse cx="50" cy="52" rx="26" ry="28" fill="#F48C06" />
+                            <ellipse cx="50" cy="52" rx="14" ry="28" fill="#FAA307" />
+                            <path d="M 48 24 Q 52 14 60 12 Q 58 18 53 25 Z" fill="#2D6A4F" stroke="#1B4332" strokeWidth="1" />
+                            <polygon points="36,44 44,48 38,53" fill="#FFEE55" />
+                            <polygon points="64,44 56,48 62,53" fill="#FFEE55" />
+                            <polygon points="50,52 46,59 54,59" fill="#FFEE55" />
+                            <path d="M 32 63 Q 50 75 68 63 Q 64 70 59 66 Q 55 72 50 67 Q 45 72 41 66 Q 36 70 32 63 Z" fill="#FFEE55" />
+                        </svg>
+                    </div>
                 </div>
 
                 <div className="container mx-auto max-w-7xl relative z-10">
 
-                    {/* Header */}
+                    {/* Header with Glowing Jack-O'-Lanterns & Ghost Accents */}
                     <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 md:mb-10 gap-4">
                         <div>
-                            <div className="flex flex-wrap items-center gap-2 mb-2">
-                                <span className="text-[10px] font-black uppercase tracking-widest text-black bg-gradient-to-r from-[#FF7518] to-[#FFA500] px-3 py-1 rounded-full inline-flex items-center gap-1.5 shadow-[0_0_15px_rgba(255,117,24,0.35)]">
-                                    🎃 Halloween Special Edition &bull; Limited Drop
+                            <div className="flex flex-wrap items-center gap-2 mb-2.5">
+                                <span className="text-[10px] font-black uppercase tracking-widest text-black bg-gradient-to-r from-[#FF7518] to-[#FFA500] px-3.5 py-1 rounded-full inline-flex items-center gap-2 shadow-[0_0_20px_rgba(255,117,24,0.45)]">
+                                    <span className="animate-[ghost-float_3s_ease-in-out_infinite] inline-block text-xs">👻</span>
+                                    <span>Halloween Special Edition &bull; Limited Drop</span>
                                 </span>
                                 <span className="text-[10px] font-mono uppercase tracking-wider text-[#FFA500] font-bold px-2.5 py-0.5 rounded-full bg-[#181133] border border-purple-500/30">
                                     Front, Back &amp; Whole Format
                                 </span>
                             </div>
-                            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black uppercase tracking-tight text-white flex items-center gap-2">
-                                <span>Spooky Season &bull; Halloween Edition</span>
-                            </h2>
+
+                            <div className="flex items-center gap-3">
+                                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black uppercase tracking-tight text-white flex items-center gap-2.5">
+                                    <span>Spooky Season &bull; Halloween Edition</span>
+                                </h2>
+
+                                {/* Animated Carved Jack-O'-Lantern in Header */}
+                                <div className="inline-block animate-[pumpkin-flicker_3s_ease-in-out_infinite_alternate] shrink-0">
+                                    <svg viewBox="0 0 100 85" className="w-9 h-8 sm:w-11 sm:h-9 drop-shadow-[0_0_15px_rgba(255,117,24,0.85)]">
+                                        {/* Pumpkin Shell */}
+                                        <ellipse cx="50" cy="52" rx="36" ry="28" fill="#E85D04" stroke="#9D0208" strokeWidth="1.2" />
+                                        <ellipse cx="50" cy="52" rx="26" ry="28" fill="#F48C06" />
+                                        <ellipse cx="50" cy="52" rx="14" ry="28" fill="#FAA307" />
+                                        {/* Stem */}
+                                        <path d="M 48 24 Q 52 14 60 12 Q 58 18 53 25 Z" fill="#2D6A4F" stroke="#1B4332" strokeWidth="1" />
+                                        {/* Carved Glowing Face */}
+                                        <polygon points="36,44 44,48 38,53" fill="#FFEE55" stroke="#FFA200" strokeWidth="0.8" />
+                                        <polygon points="64,44 56,48 62,53" fill="#FFEE55" stroke="#FFA200" strokeWidth="0.8" />
+                                        <polygon points="50,52 46,59 54,59" fill="#FFEE55" stroke="#FFA200" strokeWidth="0.8" />
+                                        <path d="M 32 63 Q 50 75 68 63 Q 64 70 59 66 Q 55 72 50 67 Q 45 72 41 66 Q 36 70 32 63 Z" fill="#FFEE55" stroke="#FFA200" strokeWidth="0.8" />
+                                    </svg>
+                                </div>
+                            </div>
+
                             <p className="text-xs text-purple-200/70 mt-1.5 max-w-2xl font-medium leading-relaxed">
                                 Curated horror &amp; phantom streetwear tailored from 240 GSM organic heavyweight cotton. Hover over any piece to reveal its high-definition back graphic.
                             </p>
@@ -391,7 +537,7 @@ export default function HomePage() {
             </section>
 
             {/* 7. FLASH DELIVERY WITHIN 3 DAYS PROMOTION BANNER */}
-            <section className="py-12 md:py-16 bg-[#070F2B] text-white px-4 md:px-8 border-b border-white/5 relative overflow-hidden select-none">
+            <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-[#FAF6F0] relative z-10 select-none">
                 <style dangerouslySetInnerHTML={{
                     __html: `
                     @keyframes road-slide {
@@ -413,85 +559,91 @@ export default function HomePage() {
                     }
                 `}} />
 
-                {/* Decorative circles in background */}
-                <div className="absolute top-1/2 left-10 -translate-y-1/2 w-48 h-48 border border-white/5 rounded-full pointer-events-none" />
-                <div className="absolute top-1/2 right-10 -translate-y-1/2 w-72 h-72 border border-white/5 rounded-full pointer-events-none" />
+                <div className="container mx-auto max-w-6xl">
+                    <div className="bg-[#070F2B] text-white rounded-3xl p-6 sm:p-10 md:p-12 shadow-[0_25px_60px_rgba(7,15,43,0.22)] border border-white/10 relative overflow-hidden">
 
-                <div className="container mx-auto max-w-5xl relative z-10">
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        {/* Decorative circles in background */}
+                        <div className="absolute top-1/2 left-10 -translate-y-1/2 w-48 h-48 border border-white/5 rounded-full pointer-events-none" />
+                        <div className="absolute top-1/2 right-10 -translate-y-1/2 w-72 h-72 border border-white/5 rounded-full pointer-events-none" />
 
-                        {/* Left Column: Speeding Delivery Truck Animation */}
-                        <div className="lg:col-span-5 flex flex-col items-center justify-center relative min-h-[140px] md:min-h-[160px] overflow-hidden bg-[#070F2B]/40 rounded-2xl p-6 border border-white/5">
-                            {/* Speed Lines */}
-                            <div className="absolute left-[20%] top-[25%] w-24 h-[1.5px] bg-gradient-to-r from-transparent via-[#FFCB05] to-transparent animate-[speed-line_0.7s_linear_infinite]" />
-                            <div className="absolute left-[10%] top-[45%] w-16 h-[1px] bg-gradient-to-r from-transparent via-white to-transparent animate-[speed-line_0.5s_linear_infinite] [animation-delay:150ms]" />
-                            <div className="absolute left-[15%] top-[65%] w-28 h-[2px] bg-gradient-to-r from-transparent via-[#B5945B] to-transparent animate-[speed-line_0.9s_linear_infinite] [animation-delay:300ms]" />
+                        <div className="relative z-10">
+                            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
 
-                            {/* Truck */}
-                            <div className="relative animate-[bounce-truck_0.35s_infinite_alternate] z-20 flex flex-col items-center">
-                                <svg className="w-36 h-20 text-[#FFCB05]" viewBox="0 0 120 60" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    {/* Cargo Box */}
-                                    <rect x="5" y="5" width="75" height="40" rx="3" fill="#FAF6F0" className="stroke-[#070F2B] stroke-[2px]" />
-                                    {/* Branding on cargo box */}
-                                    <text x="42.5" y="24" fill="#070F2B" fontSize="8" fontWeight="900" textAnchor="middle" letterSpacing="1">ZEYNIX</text>
-                                    <text x="42.5" y="34" fill="#B5945B" fontSize="4.5" fontWeight="900" textAnchor="middle" letterSpacing="0.3">3-DAY FLASH EXPRESS</text>
+                                {/* Left Column: Speeding Delivery Truck Animation */}
+                                <div className="lg:col-span-5 flex flex-col items-center justify-center relative min-h-[140px] md:min-h-[160px] overflow-hidden bg-[#070F2B]/40 rounded-2xl p-6 border border-white/5">
+                                    {/* Speed Lines */}
+                                    <div className="absolute left-[20%] top-[25%] w-24 h-[1.5px] bg-gradient-to-r from-transparent via-[#FFCB05] to-transparent animate-[speed-line_0.7s_linear_infinite]" />
+                                    <div className="absolute left-[10%] top-[45%] w-16 h-[1px] bg-gradient-to-r from-transparent via-white to-transparent animate-[speed-line_0.5s_linear_infinite] [animation-delay:150ms]" />
+                                    <div className="absolute left-[15%] top-[65%] w-28 h-[2px] bg-gradient-to-r from-transparent via-[#B5945B] to-transparent animate-[speed-line_0.9s_linear_infinite] [animation-delay:300ms]" />
 
-                                    {/* Cabin */}
-                                    <path d="M 80 45 L 80 18 L 98 18 C 103 18, 107 22, 107 27 L 115 27 L 115 45 Z" fill="#070F2B" className="stroke-[#FAF6F0] stroke-[1.5px]" />
-                                    {/* Cabin Window */}
-                                    <path d="M 85 22 L 96 22 L 99 27 L 85 27 Z" fill="#FAF6F0" />
+                                    {/* Truck */}
+                                    <div className="relative animate-[bounce-truck_0.35s_infinite_alternate] z-20 flex flex-col items-center">
+                                        <svg className="w-36 h-20 text-[#FFCB05]" viewBox="0 0 120 60" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            {/* Cargo Box */}
+                                            <rect x="5" y="5" width="75" height="40" rx="3" fill="#FAF6F0" className="stroke-[#070F2B] stroke-[2px]" />
+                                            {/* Branding on cargo box */}
+                                            <text x="42.5" y="24" fill="#070F2B" fontSize="8" fontWeight="900" textAnchor="middle" letterSpacing="1">ZEYNIX</text>
+                                            <text x="42.5" y="34" fill="#B5945B" fontSize="4.5" fontWeight="900" textAnchor="middle" letterSpacing="0.3">3-DAY FLASH EXPRESS</text>
 
-                                    {/* Wheels */}
-                                    {/* Wheel 1 (Front) */}
-                                    <g className="animate-[wheel-spin_0.25s_linear_infinite]" style={{ transformOrigin: '98px 45px' }}>
-                                        <circle cx="98" cy="45" r="9" fill="#070F2B" stroke="#B5945B" strokeWidth="2" />
-                                        <circle cx="98" cy="45" r="3" fill="#FAF6F0" />
-                                        <line x1="98" y1="36" x2="98" y2="54" stroke="#FAF6F0" strokeWidth="1" />
-                                        <line x1="89" y1="45" x2="107" y2="45" stroke="#FAF6F0" strokeWidth="1" />
-                                    </g>
-                                    {/* Wheel 2 (Rear) */}
-                                    <g className="animate-[wheel-spin_0.25s_linear_infinite]" style={{ transformOrigin: '25px 45px' }}>
-                                        <circle cx="25" cy="45" r="9" fill="#070F2B" stroke="#B5945B" strokeWidth="2" />
-                                        <circle cx="25" cy="45" r="3" fill="#FAF6F0" />
-                                        <line x1="25" y1="36" x2="25" y2="54" stroke="#FAF6F0" strokeWidth="1" />
-                                        <line x1="16" y1="45" x2="34" y2="45" stroke="#FAF6F0" strokeWidth="1" />
-                                    </g>
-                                    {/* Wheel 3 (Mid-Rear) */}
-                                    <g className="animate-[wheel-spin_0.25s_linear_infinite]" style={{ transformOrigin: '48px 45px' }}>
-                                        <circle cx="48" cy="45" r="9" fill="#070F2B" stroke="#B5945B" strokeWidth="2" />
-                                        <circle cx="48" cy="45" r="3" fill="#FAF6F0" />
-                                        <line x1="48" y1="36" x2="48" y2="54" stroke="#FAF6F0" strokeWidth="1" />
-                                        <line x1="39" y1="45" x2="57" y2="45" stroke="#FAF6F0" strokeWidth="1" />
-                                    </g>
-                                </svg>
-                            </div>
+                                            {/* Cabin */}
+                                            <path d="M 80 45 L 80 18 L 98 18 C 103 18, 107 22, 107 27 L 115 27 L 115 45 Z" fill="#070F2B" className="stroke-[#FAF6F0] stroke-[1.5px]" />
+                                            {/* Cabin Window */}
+                                            <path d="M 85 22 L 96 22 L 99 27 L 85 27 Z" fill="#FAF6F0" />
 
-                            {/* Speeding Road Line */}
-                            <div className="w-48 h-[2px] bg-white/20 mt-2 relative overflow-hidden">
-                                <div className="absolute inset-0 bg-repeat-x bg-[linear-gradient(to_right,white_50%,transparent_50%)] bg-[length:12px_100%] animate-[road-slide_0.4s_linear_infinite]" />
-                            </div>
-                        </div>
+                                            {/* Wheels */}
+                                            {/* Wheel 1 (Front) */}
+                                            <g className="animate-[wheel-spin_0.25s_linear_infinite]" style={{ transformOrigin: '98px 45px' }}>
+                                                <circle cx="98" cy="45" r="9" fill="#070F2B" stroke="#B5945B" strokeWidth="2" />
+                                                <circle cx="98" cy="45" r="3" fill="#FAF6F0" />
+                                                <line x1="98" y1="36" x2="98" y2="54" stroke="#FAF6F0" strokeWidth="1" />
+                                                <line x1="89" y1="45" x2="107" y2="45" stroke="#FAF6F0" strokeWidth="1" />
+                                            </g>
+                                            {/* Wheel 2 (Rear) */}
+                                            <g className="animate-[wheel-spin_0.25s_linear_infinite]" style={{ transformOrigin: '25px 45px' }}>
+                                                <circle cx="25" cy="45" r="9" fill="#070F2B" stroke="#B5945B" strokeWidth="2" />
+                                                <circle cx="25" cy="45" r="3" fill="#FAF6F0" />
+                                                <line x1="25" y1="36" x2="25" y2="54" stroke="#FAF6F0" strokeWidth="1" />
+                                                <line x1="16" y1="45" x2="34" y2="45" stroke="#FAF6F0" strokeWidth="1" />
+                                            </g>
+                                            {/* Wheel 3 (Mid-Rear) */}
+                                            <g className="animate-[wheel-spin_0.25s_linear_infinite]" style={{ transformOrigin: '48px 45px' }}>
+                                                <circle cx="48" cy="45" r="9" fill="#070F2B" stroke="#B5945B" strokeWidth="2" />
+                                                <circle cx="48" cy="45" r="3" fill="#FAF6F0" />
+                                                <line x1="48" y1="36" x2="48" y2="54" stroke="#FAF6F0" strokeWidth="1" />
+                                                <line x1="39" y1="45" x2="57" y2="45" stroke="#FAF6F0" strokeWidth="1" />
+                                            </g>
+                                        </svg>
+                                    </div>
 
-                        {/* Right Column: Text Information */}
-                        <div className="lg:col-span-7 flex flex-col justify-center space-y-4 text-center lg:text-left">
-                            <span className="text-[10px] font-black uppercase tracking-widest text-[#FFCB05]">
-                                Zeynix Flash Delivery
-                            </span>
-                            <h2 className="text-2xl md:text-4xl font-black uppercase tracking-tight leading-tight">
-                                Fresh Fits.<br />
-                                Delivered Within 3 Days.
-                            </h2>
-                            <p className="text-xs text-white/70 max-w-md mx-auto lg:mx-0 leading-relaxed font-semibold">
-                                Need a fresh style upgrade? Get your favorite streetwear essentials delivered straight to your door with our express flash delivery within 3 days. Rapid dispatch, premium packaging, zero delays.
-                            </p>
-                            <div className="pt-2">
-                                <Link
-                                    href="/products/casual"
-                                    className="inline-flex items-center gap-2 bg-[#FFCB05] text-[#070F2B] py-3.5 px-6 rounded-xl font-bold uppercase tracking-wider text-[10px] shadow-md hover:bg-white hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
-                                >
-                                    Order Now
-                                    <ArrowRight className="w-3.5 h-3.5" />
-                                </Link>
+                                    {/* Speeding Road Line */}
+                                    <div className="w-48 h-[2px] bg-white/20 mt-2 relative overflow-hidden">
+                                        <div className="absolute inset-0 bg-repeat-x bg-[linear-gradient(to_right,white_50%,transparent_50%)] bg-[length:12px_100%] animate-[road-slide_0.4s_linear_infinite]" />
+                                    </div>
+                                </div>
+
+                                {/* Right Column: Text Information */}
+                                <div className="lg:col-span-7 flex flex-col justify-center space-y-4 text-center lg:text-left">
+                                    <span className="text-[10px] font-black uppercase tracking-widest text-[#FFCB05]">
+                                        Zeynix Flash Delivery
+                                    </span>
+                                    <h2 className="text-2xl md:text-4xl font-black uppercase tracking-tight leading-tight">
+                                        Fresh Fits.<br />
+                                        Delivered Within 3 Days.
+                                    </h2>
+                                    <p className="text-xs text-white/70 max-w-md mx-auto lg:mx-0 leading-relaxed font-semibold">
+                                        Need a fresh style upgrade? Get your favorite streetwear essentials delivered straight to your door with our express flash delivery within 3 days. Rapid dispatch, premium packaging, zero delays.
+                                    </p>
+                                    <div className="pt-2">
+                                        <Link
+                                            href="/products/casual"
+                                            className="inline-flex items-center gap-2 bg-[#FFCB05] text-[#070F2B] py-3.5 px-6 rounded-xl font-bold uppercase tracking-wider text-[10px] shadow-md hover:bg-white hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
+                                        >
+                                            Order Now
+                                            <ArrowRight className="w-3.5 h-3.5" />
+                                        </Link>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
 
