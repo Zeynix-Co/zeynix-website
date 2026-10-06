@@ -1,22 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import mongoose from 'mongoose';
+import connectDB from '@/lib/config/database';
 import { Product } from '@/lib/models/Product';
 import { transformProduct, getBaseProductFilter } from '@/lib/utils/productTransformer';
-
-// Connect to MongoDB
-const connectDB = async () => {
-    try {
-        if (mongoose.connection.readyState === 1) {
-            return; // Already connected
-        }
-
-        await mongoose.connect(process.env.MONGODB_URI!);
-        console.log('✅ MongoDB Connected');
-    } catch (error) {
-        console.error('❌ MongoDB connection failed:', error);
-        throw error;
-    }
-};
 
 // GET /api/customer/products/featured - Get featured products (public)
 export async function GET(request: NextRequest) {
@@ -30,15 +15,23 @@ export async function GET(request: NextRequest) {
         const filter = { ...getBaseProductFilter(), featured: true };
         const products = await Product.find(filter)
             .sort({ rating: -1, createdAt: -1 })
-            .limit(limit);
+            .limit(limit)
+            .lean();
 
         // Transform products for frontend
-        const transformedProducts = products.map(transformProduct);
+        const transformedProducts = products.map((p) => transformProduct(p as any));
 
-        return NextResponse.json({
-            success: true,
-            data: transformedProducts
-        });
+        return NextResponse.json(
+            {
+                success: true,
+                data: transformedProducts
+            },
+            {
+                headers: {
+                    'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300'
+                }
+            }
+        );
 
     } catch (error) {
         console.error('Get featured products error:', error);

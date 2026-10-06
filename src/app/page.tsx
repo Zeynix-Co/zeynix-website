@@ -74,13 +74,9 @@ export default function HomePage() {
                         (p: any) => !HALLOWEEN_SLUGS.includes(p.slug)
                     );
                     setCasualProducts(nonHalloween.slice(0, 4));
-                }
 
-                // Fetch new arrivals
-                const newRes = await fetch('/api/customer/products?limit=8');
-                const newJson = await newRes.json();
-                if (newJson.success && newJson.data.products?.length > 0) {
-                    setNewArrivals(newJson.data.products);
+                    // New arrivals: Use top products directly from allProds (eliminates redundant second network request)
+                    setNewArrivals(allProds.slice(0, 8));
                 }
             } catch (err) {
                 console.error('Failed to load homepage products:', err);
@@ -232,6 +228,7 @@ export default function HomePage() {
                                 src="/images/custom-print-service.jpg"
                                 alt="Zeynix Custom Printing Service Flatlay"
                                 fill
+                                sizes="(max-width: 1024px) 100vw, 50vw"
                                 className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                             />
 
@@ -712,8 +709,8 @@ export default function HomePage() {
                                     src={item.image}
                                     alt={`Zeynix Instagram Post - ${item.title}`}
                                     fill
-                                    unoptimized
-                                    priority
+                                    sizes="(max-width: 640px) 50vw, 25vw"
+                                    loading="lazy"
                                     className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                                 />
                                 {/* Instagram Overlay */}

@@ -28,7 +28,6 @@ export default function HeroSection() {
                         alt="Zeynix Streetwear Model - Quiet Minds Move Strong Oversized Tee"
                         fill
                         priority
-                        unoptimized
                         sizes="100vw"
                         className="object-cover object-[right_top] lg:object-[85%_top] xl:object-[88%_top]"
                     />
@@ -43,7 +42,6 @@ export default function HeroSection() {
                         alt="Zeynix Streetwear Model - Quiet Minds Move Strong Oversized Tee"
                         fill
                         priority
-                        unoptimized
                         sizes="100vw"
                         className="object-cover object-top"
                     />

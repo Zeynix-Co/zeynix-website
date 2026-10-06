@@ -34,30 +34,38 @@ export async function GET(request: NextRequest) {
         const sort: { [key: string]: 1 | -1 } = {};
         sort[sortBy] = sortOrder === 'desc' ? -1 : 1;
 
-        // Execute query
-        const products = await Product.find(filter)
-            .sort(sort)
-            .skip((page - 1) * limit)
-            .limit(limit);
-
-        // Get total count
-        const total = await Product.countDocuments(filter);
+        // Execute queries in parallel using lean() for zero-overhead JSON serialization
+        const [products, total] = await Promise.all([
+            Product.find(filter)
+                .sort(sort)
+                .skip((page - 1) * limit)
+                .limit(limit)
+                .lean(),
+            Product.countDocuments(filter)
+        ]);
 
         // Transform products for frontend
-        const transformedProducts = products.map(transformProduct);
+        const transformedProducts = products.map((p) => transformProduct(p as any));
 
-        return NextResponse.json({
-            success: true,
-            data: {
-                products: transformedProducts,
-                pagination: {
-                    page,
-                    limit,
-                    total,
-                    pages: Math.ceil(total / limit)
+        return NextResponse.json(
+            {
+                success: true,
+                data: {
+                    products: transformedProducts,
+                    pagination: {
+                        page,
+                        limit,
+                        total,
+                        pages: Math.ceil(total / limit)
+                    }
+                }
+            },
+            {
+                headers: {
+                    'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300'
                 }
             }
-        });
+        );
 
     } catch (error) {
         console.error('Get public products error:', error);

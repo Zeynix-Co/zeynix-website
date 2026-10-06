@@ -367,7 +367,6 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam }: Pr
                                             fill
                                             sizes="100px"
                                             className="object-contain p-1"
-                                            unoptimized
                                         />
                                         <span className="absolute bottom-0 inset-x-0 bg-[#070F2B]/85 text-[#FAF8F5] text-[7px] font-black uppercase text-center py-0.5 tracking-tighter opacity-0 group-hover:opacity-100 transition-opacity">
                                             {getThumbnailLabel(idx, img)}
@@ -398,7 +397,6 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam }: Pr
                                         fill
                                         sizes="(max-width: 1024px) 100vw, 60vw"
                                         priority
-                                        unoptimized
                                         className={`object-contain transition-transform duration-200 ${
                                             isZooming ? 'scale-150' : 'scale-100'
                                         }`}
@@ -828,8 +826,8 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam }: Pr
                             src={currentImage}
                             alt={product.name}
                             fill
+                            sizes="(max-width: 1200px) 100vw, 1200px"
                             className="object-contain"
-                            unoptimized
                         />
 
                         {/* Arrows in Lightbox */}

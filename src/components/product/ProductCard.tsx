@@ -128,7 +128,6 @@ export default function ProductCard({ product, theme = 'default' }: ProductCardP
                         alt={product.name}
                         fill
                         sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                        unoptimized
                         priority={false}
                         className={`object-contain transition-all duration-500 ease-out group-hover:scale-105 ${
                             secondaryImageUrl && isHovered ? 'opacity-0' : (imageLoaded ? 'opacity-100' : 'opacity-0')
@@ -141,7 +140,7 @@ export default function ProductCard({ product, theme = 'default' }: ProductCardP
                             alt={`${product.name} - Back View`}
                             fill
                             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                            unoptimized
+                            loading="lazy"
                             priority={false}
                             className={`object-contain transition-all duration-500 ease-out group-hover:scale-105 ${
                                 isHovered ? 'opacity-100' : 'opacity-0 pointer-events-none'

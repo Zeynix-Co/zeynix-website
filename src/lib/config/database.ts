@@ -1,44 +1,52 @@
 import mongoose from 'mongoose';
 
-const connectDB = async (): Promise<void> => {
-    try {
-        if (mongoose.connection.readyState === 1) {
-            console.log('✅ MongoDB Already Connected');
-            return;
-        }
+interface MongooseCache {
+    conn: typeof mongoose | null;
+    promise: Promise<typeof mongoose> | null;
+}
 
-        const conn = await mongoose.connect(process.env.MONGODB_URI!, {
+declare global {
+    // eslint-disable-next-line no-var
+    var mongooseCache: MongooseCache | undefined;
+}
+
+let cached: MongooseCache = global.mongooseCache || { conn: null, promise: null };
+
+if (!global.mongooseCache) {
+    global.mongooseCache = cached;
+}
+
+const connectDB = async (): Promise<void> => {
+    if (cached.conn && mongoose.connection.readyState === 1) {
+        return;
+    }
+
+    if (!process.env.MONGODB_URI) {
+        throw new Error('Please define the MONGODB_URI environment variable');
+    }
+
+    if (!cached.promise) {
+        const opts = {
             maxPoolSize: 10,
             serverSelectionTimeoutMS: 5000,
-            socketTimeoutMS: 45000
+            socketTimeoutMS: 45000,
+            bufferCommands: false
+        };
+
+        cached.promise = mongoose.connect(process.env.MONGODB_URI, opts).then((m) => {
+            console.log('✅ MongoDB Connected');
+            return m;
         });
+    }
 
-        console.log('✅ MongoDB Connected:', conn.connection.host);
-
-        // Handle connection events
-        mongoose.connection.on('error', (err) => {
-            console.error('❌ MongoDB connection error:', err);
-        });
-
-        mongoose.connection.on('disconnected', () => {
-            console.log('⚠️  MongoDB disconnected');
-        });
-
-        mongoose.connection.on('reconnected', () => {
-            console.log('🔄 MongoDB reconnected');
-        });
-
-        // Graceful shutdown
-        process.on('SIGINT', async () => {
-            await mongoose.connection.close();
-            console.log('🛑 MongoDB connection closed through app termination');
-            process.exit(0);
-        });
-
+    try {
+        cached.conn = await cached.promise;
     } catch (error) {
+        cached.promise = null;
         console.error('❌ MongoDB connection failed:', error);
-        process.exit(1);
+        throw error;
     }
 };
 
 export default connectDB;
+

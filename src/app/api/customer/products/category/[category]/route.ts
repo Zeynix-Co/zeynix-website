@@ -1,22 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import mongoose from 'mongoose';
+import connectDB from '@/lib/config/database';
 import { Product } from '@/lib/models/Product';
 import { transformProduct, getBaseProductFilter } from '@/lib/utils/productTransformer';
-
-// Connect to MongoDB
-const connectDB = async () => {
-    try {
-        if (mongoose.connection.readyState === 1) {
-            return; // Already connected
-        }
-
-        await mongoose.connect(process.env.MONGODB_URI!);
-        console.log('✅ MongoDB Connected');
-    } catch (error) {
-        console.error('❌ MongoDB connection failed:', error);
-        throw error;
-    }
-};
 
 // GET /api/customer/products/category/[category] - Get products by category
 export async function GET(
@@ -62,30 +47,38 @@ export async function GET(
                 sort = { createdAt: -1 };
         }
 
-        // Execute query
-        const products = await Product.find(filter)
-            .sort(sort)
-            .skip((page - 1) * limit)
-            .limit(limit);
-
-        // Get total count
-        const total = await Product.countDocuments(filter);
+        // Execute queries in parallel using lean()
+        const [products, total] = await Promise.all([
+            Product.find(filter)
+                .sort(sort)
+                .skip((page - 1) * limit)
+                .limit(limit)
+                .lean(),
+            Product.countDocuments(filter)
+        ]);
 
         // Transform products for frontend
-        const transformedProducts = products.map(transformProduct);
+        const transformedProducts = products.map((p) => transformProduct(p as any));
 
-        return NextResponse.json({
-            success: true,
-            data: {
-                products: transformedProducts,
-                pagination: {
-                    page,
-                    limit,
-                    total,
-                    pages: Math.ceil(total / limit)
+        return NextResponse.json(
+            {
+                success: true,
+                data: {
+                    products: transformedProducts,
+                    pagination: {
+                        page,
+                        limit,
+                        total,
+                        pages: Math.ceil(total / limit)
+                    }
+                }
+            },
+            {
+                headers: {
+                    'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300'
                 }
             }
-        });
+        );
 
     } catch (error) {
         console.error('Get products by category error:', error);
