@@ -668,53 +668,73 @@ export default function HomePage() {
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4 max-w-4xl mx-auto">
                         {[
                             {
-                                image: '/images/lookbook-1.jpg',
-                                handle: '@zeynix.streetwear',
-                                likes: '2.5k',
-                                category: '240 GSM Oversized Tee'
-                            },
-                            {
-                                image: '/images/lookbook-2.jpg',
-                                handle: '@zeynix.leather',
-                                likes: '1.8k',
-                                category: '240 GSM Streetwear Tee'
-                            },
-                            {
-                                image: '/images/lookbook-3.jpg',
-                                handle: '@zeynix.utility',
-                                likes: '3.1k',
+                                image: '/images/instagram/marlboro.jpg',
+                                postUrl: 'https://www.instagram.com/p/DeCwkuSiGjQ/',
+                                title: "Marlboro • Die Anyway",
+                                handle: '@zeynix.in',
+                                likes: '3.4k',
                                 category: '240 GSM Graphic Tee'
                             },
                             {
-                                image: '/images/lookbook-4.jpg',
-                                handle: '@zeynix.denim',
-                                likes: '2.9k',
-                                category: '240 GSM Heavyweight Tee'
+                                image: '/images/instagram/snakes-kiss.jpg',
+                                postUrl: 'https://www.instagram.com/p/DeCv8FPiDVn/',
+                                title: "Snakes Don't Hiss... Kiss",
+                                handle: '@zeynix.in',
+                                likes: '2.8k',
+                                category: '240 GSM Oversized Fit'
+                            },
+                            {
+                                image: '/images/instagram/kaun-talha.jpg',
+                                postUrl: 'https://www.instagram.com/p/DeCvXlJE49M/',
+                                title: 'Kaun Talha? Vintage Acid',
+                                handle: '@zeynix.in',
+                                likes: '4.1k',
+                                category: '240 GSM Mineral Wash'
+                            },
+                            {
+                                image: '/images/instagram/dead-fish.jpg',
+                                postUrl: 'https://www.instagram.com/p/DeB8vIqGjpR/',
+                                title: 'Only DEAD Fish Go With Flow',
+                                handle: '@zeynix.in',
+                                likes: '3.9k',
+                                category: '240 GSM Japanese Koi'
                             }
                         ].map((item, idx) => (
-                            <div
+                            <a
                                 key={idx}
-                                className="relative aspect-square rounded-2xl overflow-hidden shadow-md border border-[#070F2B]/5 group select-none cursor-pointer"
+                                href={item.postUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={`View ${item.title} post on Instagram`}
+                                className="relative aspect-square rounded-2xl overflow-hidden shadow-md border border-[#070F2B]/5 group select-none cursor-pointer block"
                             >
                                 <Image
                                     src={item.image}
-                                    alt={`Zeynix Lookbook ${item.category}`}
+                                    alt={`Zeynix Instagram Post - ${item.title}`}
                                     fill
+                                    unoptimized
+                                    priority
                                     className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                                 />
                                 {/* Instagram Overlay */}
-                                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-t from-[#070F2B]/90 via-[#070F2B]/40 to-transparent transition-all duration-300 backdrop-blur-xs flex flex-col justify-end p-4 text-left z-20">
+                                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-t from-[#070F2B]/95 via-[#070F2B]/50 to-transparent transition-all duration-300 backdrop-blur-xs flex flex-col justify-end p-3.5 sm:p-4 text-left z-20">
                                     <span className="text-[10px] font-black tracking-widest text-[#FAF6F0] block uppercase">{item.handle}</span>
-                                    <span className="text-[8px] font-black text-[#B5945B] block mt-0.5 uppercase tracking-wide">{item.category}</span>
-                                    <div className="flex items-center gap-1 text-[9px] font-bold text-white/80 mt-2.5">
-                                        <Heart className="w-3 h-3 text-red-500 fill-current" />
-                                        <span>{item.likes}</span>
+                                    <span className="text-[9px] font-black text-[#FFCB05] block mt-0.5 uppercase tracking-wide leading-tight">{item.title}</span>
+                                    <span className="text-[8px] font-semibold text-white/70 block mt-0.5">{item.category}</span>
+                                    <div className="flex items-center justify-between mt-2.5">
+                                        <div className="flex items-center gap-1 text-[9px] font-bold text-white/90">
+                                            <Heart className="w-3 h-3 text-red-500 fill-current" />
+                                            <span>{item.likes}</span>
+                                        </div>
+                                        <span className="text-[8px] font-bold uppercase tracking-wider text-[#FFCB05] flex items-center gap-0.5">
+                                            View Post ↗
+                                        </span>
                                     </div>
-                                    <div className="absolute top-4 right-4 w-7 h-7 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20">
-                                        <Instagram className="w-3.5 h-3.5 text-[#FFCB05]" />
+                                    <div className="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 w-7 h-7 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 group-hover:bg-[#FFCB05] group-hover:text-[#070F2B] text-[#FFCB05] transition-colors">
+                                        <Instagram className="w-3.5 h-3.5" />
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         ))}
                     </div>
 
