@@ -169,6 +169,7 @@ const useAdminStore = create<AdminState & AdminActions>()(
                         headers: {
                             'Content-Type': 'application/json',
                         },
+                        credentials: 'include',
                         body: JSON.stringify({ email, password, rememberMe }),
                     });
 
@@ -251,7 +252,7 @@ const useAdminStore = create<AdminState & AdminActions>()(
 
             getDashboardData: async () => {
                 try {
-                    const { user } = get();
+                    const { user, token } = get();
 
                     if (!user) {
                         throw new Error('No user authenticated');
@@ -261,7 +262,9 @@ const useAdminStore = create<AdminState & AdminActions>()(
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
+                            ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
                         },
+                        credentials: 'include',
                         body: JSON.stringify({ userId: user.id }),
                     });
 
@@ -287,7 +290,7 @@ const useAdminStore = create<AdminState & AdminActions>()(
             // Order Management Actions
             getAllOrders: async (params: OrderFilters = {}) => {
                 try {
-                    const { user } = get();
+                    const { user, token } = get();
 
                     if (!user) {
                         throw new Error('No user authenticated');
@@ -312,6 +315,7 @@ const useAdminStore = create<AdminState & AdminActions>()(
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',
+                            ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
                         },
                         credentials: 'include',
                     });
@@ -338,7 +342,7 @@ const useAdminStore = create<AdminState & AdminActions>()(
 
             getOrderById: async (orderId: string) => {
                 try {
-                    const { user } = get();
+                    const { user, token } = get();
 
                     if (!user) {
                         throw new Error('No user authenticated');
@@ -350,7 +354,9 @@ const useAdminStore = create<AdminState & AdminActions>()(
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',
+                            ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
                         },
+                        credentials: 'include',
                     });
 
                     const data = await response.json();
@@ -375,7 +381,7 @@ const useAdminStore = create<AdminState & AdminActions>()(
 
             updateOrderStatus: async (orderId: string, status: string) => {
                 try {
-                    const { user } = get();
+                    const { user, token } = get();
 
                     if (!user) {
                         throw new Error('No user authenticated');
@@ -387,7 +393,9 @@ const useAdminStore = create<AdminState & AdminActions>()(
                         method: 'PATCH',
                         headers: {
                             'Content-Type': 'application/json',
+                            ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
                         },
+                        credentials: 'include',
                         body: JSON.stringify({ userId: user.id, status }),
                     });
 
@@ -428,7 +436,7 @@ const useAdminStore = create<AdminState & AdminActions>()(
 
             updateOrder: async (orderId: string, updateData: Partial<Order>) => {
                 try {
-                    const { user } = get();
+                    const { user, token } = get();
 
                     if (!user) {
                         throw new Error('No user authenticated');
@@ -440,6 +448,7 @@ const useAdminStore = create<AdminState & AdminActions>()(
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
+                            ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
                         },
                         credentials: 'include', // Include cookies for authentication
                         body: JSON.stringify({ userId: user.id, updateData }),
@@ -485,7 +494,7 @@ const useAdminStore = create<AdminState & AdminActions>()(
 
             deleteOrder: async (orderId: string) => {
                 try {
-                    const { user } = get();
+                    const { user, token } = get();
 
                     if (!user) {
                         throw new Error('No user authenticated');
@@ -497,6 +506,7 @@ const useAdminStore = create<AdminState & AdminActions>()(
                         method: 'DELETE',
                         headers: {
                             'Content-Type': 'application/json',
+                            ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
                         },
                         credentials: 'include', // Include cookies for authentication
                         body: JSON.stringify({ userId: user.id }),
