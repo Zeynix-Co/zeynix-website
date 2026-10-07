@@ -24,7 +24,8 @@ export const transformProduct = (product: IProduct) => ({
     availableStock: product.availableStock || (product.sizes && product.sizes.length > 0 ? product.sizes.reduce((tot, s) => tot + (s.stock || 0), 0) : 100),
     featured: product.featured || false,
     discount: product.discount || 0,
-    sizes: product.sizes || []
+    sizes: product.sizes || [],
+    colors: product.colors || []
 });
 
 // Base filter for active and published products

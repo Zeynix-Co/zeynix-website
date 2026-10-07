@@ -2660,6 +2660,58 @@
       "/images/products/new/spooky-boo-graveyard-ghost-cream-tee/back.png",
       "/images/products/new/spooky-boo-graveyard-ghost-cream-tee/whole.png"
     ],
+    "colors": [
+      {
+        "name": "Vintage Buttercream",
+        "colorCode": "#F0EEE7",
+        "images": [
+          "/images/products/new/spooky-boo-graveyard-ghost-cream-tee/colors/cream/front.png",
+          "/images/products/new/spooky-boo-graveyard-ghost-cream-tee/colors/cream/back.png",
+          "/images/products/new/spooky-boo-graveyard-ghost-cream-tee/colors/cream/whole.png"
+        ],
+        "mainImage": "/images/products/new/spooky-boo-graveyard-ghost-cream-tee/colors/cream/front.png"
+      },
+      {
+        "name": "Pumpkin Orange",
+        "colorCode": "#FF751F",
+        "images": [
+          "/images/products/new/spooky-boo-graveyard-ghost-cream-tee/colors/orange/front.png",
+          "/images/products/new/spooky-boo-graveyard-ghost-cream-tee/colors/orange/back.png",
+          "/images/products/new/spooky-boo-graveyard-ghost-cream-tee/colors/orange/whole.png"
+        ],
+        "mainImage": "/images/products/new/spooky-boo-graveyard-ghost-cream-tee/colors/orange/front.png"
+      },
+      {
+        "name": "Gothic Purple",
+        "colorCode": "#723D8D",
+        "images": [
+          "/images/products/new/spooky-boo-graveyard-ghost-cream-tee/colors/purple/front.png",
+          "/images/products/new/spooky-boo-graveyard-ghost-cream-tee/colors/purple/back.png",
+          "/images/products/new/spooky-boo-graveyard-ghost-cream-tee/colors/purple/whole.png"
+        ],
+        "mainImage": "/images/products/new/spooky-boo-graveyard-ghost-cream-tee/colors/purple/front.png"
+      },
+      {
+        "name": "Crimson Red",
+        "colorCode": "#B70000",
+        "images": [
+          "/images/products/new/spooky-boo-graveyard-ghost-cream-tee/colors/red/front.png",
+          "/images/products/new/spooky-boo-graveyard-ghost-cream-tee/colors/red/back.png",
+          "/images/products/new/spooky-boo-graveyard-ghost-cream-tee/colors/red/whole.png"
+        ],
+        "mainImage": "/images/products/new/spooky-boo-graveyard-ghost-cream-tee/colors/red/front.png"
+      },
+      {
+        "name": "Candy Pink",
+        "colorCode": "#FFA7E4",
+        "images": [
+          "/images/products/new/spooky-boo-graveyard-ghost-cream-tee/colors/pink/front.png",
+          "/images/products/new/spooky-boo-graveyard-ghost-cream-tee/colors/pink/back.png",
+          "/images/products/new/spooky-boo-graveyard-ghost-cream-tee/colors/pink/whole.png"
+        ],
+        "mainImage": "/images/products/new/spooky-boo-graveyard-ghost-cream-tee/colors/pink/front.png"
+      }
+    ],
     "mainImage": "/images/products/new/spooky-boo-graveyard-ghost-cream-tee/front.png",
     "category": "unisex",
     "subcategory": "t-shirts",

@@ -261,7 +261,7 @@ export default function ProductCard({ product, theme = 'default' }: ProductCardP
                     </div>
 
                     {/* Price Block */}
-                    <div className="flex items-baseline gap-2 mb-3">
+                    <div className="flex items-baseline gap-2 mb-2">
                         <span className={`text-sm sm:text-base font-black ${
                             isHalloween ? 'text-white' : 'text-[#070F2B]'
                         }`}>
@@ -275,6 +275,27 @@ export default function ProductCard({ product, theme = 'default' }: ProductCardP
                             </span>
                         )}
                     </div>
+
+                    {/* Color Swatches Indicator */}
+                    {product.colors && product.colors.length > 0 && (
+                        <div className="flex items-center gap-1.5 mb-2.5">
+                            <div className="flex items-center -space-x-1">
+                                {product.colors.map((c: any, idx: number) => (
+                                    <span
+                                        key={idx}
+                                        title={c.name}
+                                        className="w-3.5 h-3.5 rounded-full border border-white shadow-xs inline-block"
+                                        style={{ backgroundColor: c.colorCode }}
+                                    />
+                                ))}
+                            </div>
+                            <span className={`text-[8.5px] font-bold tracking-tight ${
+                                isHalloween ? 'text-[#FFA500]' : 'text-gray-500'
+                            }`}>
+                                {product.colors.length} Shades
+                            </span>
+                        </div>
+                    )}
 
                     {/* Size Selector Strip */}
                     <div className="mb-3.5">

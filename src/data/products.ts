@@ -26,6 +26,12 @@ export interface Product {
     availableStock?: number;
     featured?: boolean;
     discount?: number;
+    colors?: Array<{
+        name: string;
+        colorCode: string;
+        images: string[];
+        mainImage?: string;
+    }>;
 }
 
 // Remove mock products - we'll fetch from API

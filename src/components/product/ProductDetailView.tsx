@@ -32,6 +32,7 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam }: Pr
     const [product, setProduct] = useState<Product | null>(null);
     const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
     const [selectedSize, setSelectedSize] = useState<string>('');
+    const [selectedColorIndex, setSelectedColorIndex] = useState<number>(0);
     const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
     const [quantity, setQuantity] = useState<number>(1);
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -155,10 +156,15 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam }: Pr
         );
     }
 
-    // Prepare images array
-    const productImages: string[] = (product.images && product.images.length > 0)
-        ? product.images
-        : [product.mainImage || product.image || '/images/products/placeholder.jpg'];
+    const hasColors = Boolean(product?.colors && product.colors.length > 0);
+    const activeColor = hasColors && product?.colors ? product.colors[selectedColorIndex] : null;
+
+    // Prepare images array (switches dynamically based on selected color variant)
+    const productImages: string[] = (activeColor && activeColor.images && activeColor.images.length > 0)
+        ? activeColor.images
+        : ((product.images && product.images.length > 0)
+            ? product.images
+            : [product.mainImage || product.image || '/images/products/placeholder.jpg']);
 
     const currentImage = productImages[selectedImageIndex] || productImages[0];
 
@@ -216,6 +222,7 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam }: Pr
                     discountPrice: currentPrice
                 },
                 size: selectedSize as any,
+                color: activeColor ? activeColor.name : undefined,
                 quantity: quantity,
                 totalPrice: currentPrice * quantity
             });
@@ -249,6 +256,7 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam }: Pr
                     discountPrice: currentPrice
                 },
                 size: selectedSize as any,
+                color: activeColor ? activeColor.name : undefined,
                 quantity: quantity,
                 totalPrice: currentPrice * quantity
             });
@@ -536,6 +544,50 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam }: Pr
                         {product.description && (
                             <div className="text-xs sm:text-sm text-gray-600 leading-relaxed font-medium">
                                 <p>{product.description}</p>
+                            </div>
+                        )}
+
+                        {/* Color Variant Selection */}
+                        {hasColors && product.colors && product.colors.length > 0 && (
+                            <div className="space-y-3 pt-2">
+                                <div className="flex items-center justify-between">
+                                    <span className="text-xs font-black uppercase tracking-wider text-[#070F2B] flex items-center gap-1.5">
+                                        Color Shade:
+                                        <span className="text-[#B5945B] font-black">{activeColor?.name}</span>
+                                    </span>
+                                    <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest bg-gray-100 px-2 py-0.5 rounded-full">
+                                        {product.colors.length} Shades
+                                    </span>
+                                </div>
+
+                                <div className="flex items-center gap-2 flex-wrap">
+                                    {product.colors.map((c, idx) => {
+                                        const isSelected = selectedColorIndex === idx;
+                                        return (
+                                            <button
+                                                key={idx}
+                                                type="button"
+                                                onClick={() => {
+                                                    setSelectedColorIndex(idx);
+                                                    setSelectedImageIndex(0);
+                                                }}
+                                                className={`group relative flex items-center gap-2 px-3 py-2 rounded-xl border-2 transition-all duration-200 cursor-pointer ${
+                                                    isSelected
+                                                        ? 'border-[#070F2B] bg-[#070F2B] text-white shadow-md scale-102 ring-2 ring-[#070F2B]/10'
+                                                        : 'border-gray-200 bg-white hover:border-[#070F2B]/50 hover:bg-gray-50 text-gray-800'
+                                                }`}
+                                            >
+                                                <span
+                                                    className="w-4 h-4 rounded-full border border-black/20 shadow-xs shrink-0 transition-transform group-hover:scale-110"
+                                                    style={{ backgroundColor: c.colorCode }}
+                                                />
+                                                <span className="text-xs font-black tracking-tight whitespace-nowrap">
+                                                    {c.name}
+                                                </span>
+                                            </button>
+                                        );
+                                    })}
+                                </div>
                             </div>
                         )}
 

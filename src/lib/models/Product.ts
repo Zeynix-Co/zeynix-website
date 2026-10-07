@@ -28,6 +28,12 @@ export interface IProduct extends Document {
     featured: boolean;
     status: 'draft' | 'published' | 'archived';
     productFit: 'OVERSIZED FIT' | 'CASUAL FIT' | 'FORMAL FIT' | 'CLASSIC FIT' | 'SLIM FIT' | 'RELAXED FIT';
+    colors?: Array<{
+        name: string;
+        colorCode: string;
+        images: string[];
+        mainImage?: string;
+    }>;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -156,7 +162,13 @@ const productSchema = new Schema<IProduct>({
         type: String,
         enum: ['OVERSIZED FIT', 'CASUAL FIT', 'FORMAL FIT', 'CLASSIC FIT', 'SLIM FIT', 'RELAXED FIT'],
         default: 'CASUAL FIT'
-    }
+    },
+    colors: [{
+        name: { type: String, required: true },
+        colorCode: { type: String, required: true },
+        images: [{ type: String }],
+        mainImage: { type: String }
+    }]
 }, {
     timestamps: true
 });

@@ -11,6 +11,7 @@ interface CartItem {
         discountPrice?: number;
     };
     size: 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL';
+    color?: string;
     quantity: number;
     totalPrice: number;
     customization?: {
@@ -37,6 +38,7 @@ interface SavedItem {
         discountPrice?: number;
     };
     size: 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL';
+    color?: string;
     quantity: number;
     totalPrice: number;
     customization?: {
@@ -96,6 +98,7 @@ const useCartStore = create<CartState & CartActions>()(
                 const existingItem = items.find(
                     (i) => i.product.id === item.product.id && 
                            i.size === item.size && 
+                           i.color === item.color &&
                            JSON.stringify(i.customization) === JSON.stringify(item.customization)
                 );
 
@@ -108,6 +111,7 @@ const useCartStore = create<CartState & CartActions>()(
                     const updatedItems = items.map((i) =>
                         i.product.id === item.product.id && 
                         i.size === item.size && 
+                        i.color === item.color &&
                         JSON.stringify(i.customization) === JSON.stringify(item.customization)
                             ? {
                                 ...i,
