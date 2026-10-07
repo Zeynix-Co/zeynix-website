@@ -66,7 +66,7 @@ function ProductsPageContent() {
                 </div>
 
                 {/* Main Content - Use FilterProducts component */}
-                <FilterProducts />
+                <FilterProducts searchQuery={searchQuery} />
             </main>
 
             <Footer />
