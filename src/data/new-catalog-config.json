@@ -2929,5 +2929,280 @@
         "inStock": true
       }
     ]
+  },
+  {
+    "title": "Bollywood Cult 'Majnu Bhai - Ghodo Ki Race' Oversized White T-Shirt",
+    "slug": "welcome-ghodo-ki-race-majnu-bhai-tee",
+    "brand": "Zeynix",
+    "description": "Legendary Bollywood pop-culture meets high-fashion streetwear. Crafted in 240 GSM pre-shrunk heavyweight white combed cotton. Features a sleek minimalist cursive 'WELCOME' print on the front left chest, while the back showcases the iconic cult masterpiece painting of the donkey riding atop the galloping stallion with bold Hindi comic typography: 'AB GHODO KI RACE MEIN GADHE BHI DAUDENGE..'.",
+    "images": [
+      "/images/products/new/welcome-ghodo-ki-race-majnu-bhai-tee/back.png",
+      "/images/products/new/welcome-ghodo-ki-race-majnu-bhai-tee/front.png",
+      "/images/products/new/welcome-ghodo-ki-race-majnu-bhai-tee/whole.png"
+    ],
+    "mainImage": "/images/products/new/welcome-ghodo-ki-race-majnu-bhai-tee/back.png",
+    "category": "unisex",
+    "actualPrice": 1349,
+    "discountPrice": 699,
+    "rating": 5,
+    "totalRatings": 182,
+    "productFit": "OVERSIZED FIT",
+    "featured": false,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 45,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 90,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 155,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 180,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 120,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 65,
+        "inStock": true
+      }
+    ],
+    "subcategory": "t-shirts",
+    "price": 699,
+    "originalPrice": 1349,
+    "discount": 48
+  },
+  {
+    "title": "Japanese Heritage 'Zen Samurai & Mount Fuji' Oversized Beige T-Shirt",
+    "slug": "zen-samurai-mount-fuji-pagoda-tee",
+    "brand": "Zeynix",
+    "description": "Ancient Japanese discipline translated into modern luxury streetwear. Tailored from premium 240 GSM heavyweight combed cotton in vintage oatmeal beige. The front displays a meditating Ronin samurai in a traditional straw Kasa hat against a striking crimson Rising Sun, while the back unveils the majestic snow-capped Mount Fuji behind a multi-tiered red pagoda temple beneath the crimson dawn.",
+    "images": [
+      "/images/products/new/zen-samurai-mount-fuji-pagoda-tee/back.png",
+      "/images/products/new/zen-samurai-mount-fuji-pagoda-tee/front.png",
+      "/images/products/new/zen-samurai-mount-fuji-pagoda-tee/whole.png"
+    ],
+    "mainImage": "/images/products/new/zen-samurai-mount-fuji-pagoda-tee/back.png",
+    "category": "unisex",
+    "actualPrice": 1349,
+    "discountPrice": 699,
+    "rating": 5,
+    "totalRatings": 214,
+    "productFit": "OVERSIZED FIT",
+    "featured": false,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 45,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 90,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 155,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 180,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 120,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 65,
+        "inStock": true
+      }
+    ],
+    "subcategory": "t-shirts",
+    "price": 699,
+    "originalPrice": 1349,
+    "discount": 48
+  },
+  {
+    "title": "Japanese Aesthetic 'Sakura Heiwa Bonsai' Oversized Pink T-Shirt",
+    "slug": "sakura-heiwa-bonsai-cherry-blossom-pink-tee",
+    "brand": "Zeynix",
+    "description": "Ethereal Tokyo street elegance infused with tranquil botanical art. Cut in an oversized boxy fit from 240 GSM organic combed cotton in delicate pastel sakura pink. Front features blooming cherry blossom branches framing a neon synthwave sun, while the reverse reveals a breathtaking windswept Sakura Bonsai tree flourishing atop a cliff with Japanese kanji '平和' (Heiwa - Inner Peace).",
+    "images": [
+      "/images/products/new/sakura-heiwa-bonsai-cherry-blossom-pink-tee/back.png",
+      "/images/products/new/sakura-heiwa-bonsai-cherry-blossom-pink-tee/front.png",
+      "/images/products/new/sakura-heiwa-bonsai-cherry-blossom-pink-tee/whole.png"
+    ],
+    "mainImage": "/images/products/new/sakura-heiwa-bonsai-cherry-blossom-pink-tee/back.png",
+    "category": "unisex",
+    "actualPrice": 1349,
+    "discountPrice": 699,
+    "rating": 5,
+    "totalRatings": 196,
+    "productFit": "OVERSIZED FIT",
+    "featured": false,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 45,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 90,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 155,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 180,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 120,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 65,
+        "inStock": true
+      }
+    ],
+    "subcategory": "t-shirts",
+    "price": 699,
+    "originalPrice": 1349,
+    "discount": 48
+  },
+  {
+    "title": "Vintage Noir 'Seduction Skull Cocktail' Oversized Black T-Shirt",
+    "slug": "seduction-noir-skull-cocktail-black-tee",
+    "brand": "Zeynix",
+    "description": "Dark allure and retro graphic novel intrigue. Crafted from 240 GSM deep black pre-shrunk organic combed cotton with structured drop shoulders. Features a sleek minimal clean chest on the front, complemented by an explosive retro comic noir poster on the back with bold crimson 'Seduction' lettering, a gleaming ice-blue skull submerged in a cocktail glass, a cigarette silhouette, and the cursive motto: 'A Quiet Pull, A Dangerous Charm'.",
+    "images": [
+      "/images/products/new/seduction-noir-skull-cocktail-black-tee/back.png",
+      "/images/products/new/seduction-noir-skull-cocktail-black-tee/front.png",
+      "/images/products/new/seduction-noir-skull-cocktail-black-tee/whole.png"
+    ],
+    "mainImage": "/images/products/new/seduction-noir-skull-cocktail-black-tee/back.png",
+    "category": "unisex",
+    "actualPrice": 1349,
+    "discountPrice": 699,
+    "rating": 5,
+    "totalRatings": 240,
+    "productFit": "OVERSIZED FIT",
+    "featured": false,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 45,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 90,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 155,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 180,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 120,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 65,
+        "inStock": true
+      }
+    ],
+    "subcategory": "t-shirts",
+    "price": 699,
+    "originalPrice": 1349,
+    "discount": 48
+  },
+  {
+    "title": "Urban Grunge 'Hustle Never Settle - Stay Grinding' Oversized Black T-Shirt",
+    "slug": "hustle-never-settle-stay-grinding-black-tee",
+    "brand": "Zeynix",
+    "description": "Unstoppable drive embodied in raw underground Tokyo-meets-Berlin street graphics. Engineered from heavyweight 240 GSM dense combed cotton in midnight black. Features a clean front silhouette and a gritty mixed-media back artwork boasting aggressive crimson brush typography 'Hustle - Never Settle', cybernetic street anime eyes with crimson lips, and chalk typography 'Stay Grinding - No Excuses'.",
+    "images": [
+      "/images/products/new/hustle-never-settle-stay-grinding-black-tee/back.png",
+      "/images/products/new/hustle-never-settle-stay-grinding-black-tee/front.png",
+      "/images/products/new/hustle-never-settle-stay-grinding-black-tee/whole.png"
+    ],
+    "mainImage": "/images/products/new/hustle-never-settle-stay-grinding-black-tee/back.png",
+    "category": "unisex",
+    "actualPrice": 1349,
+    "discountPrice": 699,
+    "rating": 5,
+    "totalRatings": 228,
+    "productFit": "OVERSIZED FIT",
+    "featured": false,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 45,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 90,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 155,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 180,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 120,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 65,
+        "inStock": true
+      }
+    ],
+    "subcategory": "t-shirts",
+    "price": 699,
+    "originalPrice": 1349,
+    "discount": 48
   }
 ]
