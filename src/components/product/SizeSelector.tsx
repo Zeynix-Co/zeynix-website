@@ -104,31 +104,33 @@ export default function SizeSelector({
 
             {/* Size Guide Modal */}
             {showSizeGuide && (
-                <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+                <div className="mt-4 p-4 bg-gray-50 rounded-xl border border-gray-200">
                     <div className="flex items-start space-x-3">
                         <AlertCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-                        <div className="text-sm text-gray-700">
-                            <h4 className="font-medium mb-2">Size Guide</h4>
+                        <div className="text-sm text-gray-700 w-full">
+                            <h4 className="font-bold text-[#070F2B] mb-2 uppercase text-xs tracking-wider">
+                                Drop Shoulder Oversized Fit (Inches)
+                            </h4>
                             <div className="space-y-2">
-                                <div className="grid grid-cols-3 gap-4 text-xs">
-                                    <div>
-                                        <span className="font-medium">M:</span> Chest 38-40&quot;, Waist 32-34&quot;
+                                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs">
+                                    <div className="p-2 bg-white rounded-lg border border-gray-100">
+                                        <span className="font-black text-[#070F2B]">S:</span> Length 28&quot;, Chest 40&quot;, Shoulder 23&quot;
                                     </div>
-                                    <div>
-                                        <span className="font-medium">L:</span> Chest 40-42&quot;, Waist 34-36&quot;
+                                    <div className="p-2 bg-white rounded-lg border border-gray-100">
+                                        <span className="font-black text-[#070F2B]">M:</span> Length 29&quot;, Chest 42&quot;, Shoulder 24&quot;
                                     </div>
-                                    <div>
-                                        <span className="font-medium">XL:</span> Chest 42-44&quot;, Waist 36-38&quot;
+                                    <div className="p-2 bg-white rounded-lg border border-gray-100">
+                                        <span className="font-black text-[#070F2B]">L:</span> Length 30&quot;, Chest 44&quot;, Shoulder 25&quot;
                                     </div>
-                                    <div>
-                                        <span className="font-medium">XXL:</span> Chest 44-46&quot;, Waist 38-40&quot;
+                                    <div className="p-2 bg-white rounded-lg border border-gray-100">
+                                        <span className="font-black text-[#070F2B]">XL:</span> Length 31&quot;, Chest 46&quot;, Shoulder 26&quot;
                                     </div>
-                                    <div>
-                                        <span className="font-medium">XXXL:</span> Chest 46-48&quot;, Waist 40-42&quot;
+                                    <div className="p-2 bg-white rounded-lg border border-gray-100">
+                                        <span className="font-black text-[#070F2B]">XXL:</span> Length 32&quot;, Chest 48&quot;, Shoulder 27&quot;
                                     </div>
                                 </div>
-                                <p className="text-gray-600 mt-2">
-                                    Measurements are approximate. For best fit, measure your chest and waist.
+                                <p className="text-gray-500 text-[11px] mt-2 font-medium">
+                                    For the perfect fit, measure a t-shirt you already own from shoulder seam to hem and underarm to underarm.
                                 </p>
                             </div>
                         </div>

@@ -43,6 +43,7 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam }: Pr
     const [zoomPosition, setZoomPosition] = useState<{ x: number; y: number }>({ x: 50, y: 50 });
     const [isLightboxOpen, setIsLightboxOpen] = useState<boolean>(false);
     const [isSizeGuideOpen, setIsSizeGuideOpen] = useState<boolean>(false);
+    const [sizeGuideTab, setSizeGuideTab] = useState<'table' | 'diagram'>('table');
     const [copiedLink, setCopiedLink] = useState<boolean>(false);
 
     // Cart action states
@@ -906,49 +907,177 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam }: Pr
             {/* ================= SIZE GUIDE MODAL ================= */}
             {isSizeGuideOpen && (
                 <div
-                    className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-xs"
+                    className="fixed inset-0 bg-black/75 z-50 flex items-center justify-center p-3 sm:p-6 backdrop-blur-xs overflow-y-auto"
                     onClick={() => setIsSizeGuideOpen(false)}
                 >
                     <div
-                        className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl relative"
+                        className="bg-white rounded-3xl max-w-2xl w-full p-5 sm:p-7 shadow-2xl relative border border-gray-100 overflow-hidden my-auto max-h-[92vh] flex flex-col"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <div className="flex items-center justify-between pb-4 border-b border-gray-100">
+                        {/* Header */}
+                        <div className="flex items-start justify-between pb-4 border-b border-gray-100 shrink-0">
                             <div>
-                                <h3 className="text-lg font-black uppercase text-[#070F2B]">Oversized Fit Size Chart</h3>
-                                <p className="text-xs text-gray-500 font-medium">All measurements are in inches</p>
+                                <span className="inline-block text-[10px] font-black uppercase tracking-widest text-[#B5945B] bg-[#FCF8DD] px-2.5 py-1 rounded-full mb-1.5">
+                                    Official Sizing Guide
+                                </span>
+                                <h3 className="text-xl sm:text-2xl font-black uppercase text-[#070F2B] tracking-tight">
+                                    Drop Shoulder Oversized T-Shirt
+                                </h3>
+                                <p className="text-xs text-gray-500 font-semibold mt-0.5">
+                                    All measurements are in inches (in)
+                                </p>
                             </div>
                             <button
                                 onClick={() => setIsSizeGuideOpen(false)}
-                                className="p-2 rounded-full hover:bg-gray-100 cursor-pointer"
+                                className="p-2 rounded-full hover:bg-gray-100 cursor-pointer text-gray-400 hover:text-gray-700 transition-colors"
+                                aria-label="Close size guide"
                             >
-                                <X className="w-5 h-5 text-gray-500" />
+                                <X className="w-5 h-5" />
                             </button>
                         </div>
 
-                        <div className="mt-4 overflow-x-auto">
-                            <table className="w-full text-left text-xs">
-                                <thead>
-                                    <tr className="bg-[#070F2B] text-white">
-                                        <th className="p-2.5 font-black uppercase">Size</th>
-                                        <th className="p-2.5 font-black uppercase">Chest</th>
-                                        <th className="p-2.5 font-black uppercase">Length</th>
-                                        <th className="p-2.5 font-black uppercase">Shoulder</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-gray-100 font-medium text-gray-700">
-                                    <tr><td className="p-2.5 font-black text-[#070F2B]">XS</td><td className="p-2.5">40"</td><td className="p-2.5">27.5"</td><td className="p-2.5">20.5"</td></tr>
-                                    <tr className="bg-gray-50/50"><td className="p-2.5 font-black text-[#070F2B]">S</td><td className="p-2.5">42"</td><td className="p-2.5">28.5"</td><td className="p-2.5">21.5"</td></tr>
-                                    <tr><td className="p-2.5 font-black text-[#070F2B]">M</td><td className="p-2.5">44"</td><td className="p-2.5">29.5"</td><td className="p-2.5">22.5"</td></tr>
-                                    <tr className="bg-gray-50/50"><td className="p-2.5 font-black text-[#070F2B]">L</td><td className="p-2.5">46"</td><td className="p-2.5">30.5"</td><td className="p-2.5">23.5"</td></tr>
-                                    <tr><td className="p-2.5 font-black text-[#070F2B]">XL</td><td className="p-2.5">48"</td><td className="p-2.5">31.5"</td><td className="p-2.5">24.5"</td></tr>
-                                    <tr className="bg-gray-50/50"><td className="p-2.5 font-black text-[#070F2B]">XXL</td><td className="p-2.5">50"</td><td className="p-2.5">32.5"</td><td className="p-2.5">25.5"</td></tr>
-                                </tbody>
-                            </table>
+                        {/* View Switcher Tabs */}
+                        <div className="flex items-center gap-2 mt-4 bg-gray-100 p-1 rounded-xl shrink-0">
+                            <button
+                                type="button"
+                                onClick={() => setSizeGuideTab('table')}
+                                className={`flex-1 py-2 px-3 rounded-lg text-xs font-black uppercase tracking-wider transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 ${
+                                    sizeGuideTab === 'table'
+                                        ? 'bg-[#070F2B] text-white shadow-xs'
+                                        : 'text-gray-600 hover:text-[#070F2B]'
+                                }`}
+                            >
+                                <Ruler className="w-3.5 h-3.5" />
+                                Measurement Table
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => setSizeGuideTab('diagram')}
+                                className={`flex-1 py-2 px-3 rounded-lg text-xs font-black uppercase tracking-wider transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 ${
+                                    sizeGuideTab === 'diagram'
+                                        ? 'bg-[#070F2B] text-white shadow-xs'
+                                        : 'text-gray-600 hover:text-[#070F2B]'
+                                }`}
+                            >
+                                <Sparkles className="w-3.5 h-3.5 text-[#FFCB05]" />
+                                Visual Chart
+                            </button>
                         </div>
 
-                        <div className="mt-4 p-3 bg-amber-50 rounded-xl border border-amber-200/60 text-[11px] text-amber-900 font-medium">
-                            <span className="font-bold">Fit Tip:</span> Our t-shirts are tailored with an oversized drop-shoulder fit. If you prefer a standard fitted silhouette, we recommend choosing one size down.
+                        {/* Content based on tab */}
+                        <div className="overflow-y-auto mt-4 pr-1">
+                            {sizeGuideTab === 'table' ? (
+                                <div className="space-y-4">
+                                    <div className="overflow-x-auto rounded-xl border border-gray-200 shadow-xs">
+                                        <table className="w-full text-center text-xs">
+                                            <thead>
+                                                <tr className="bg-[#070F2B] text-white">
+                                                    <th className="py-3 px-3 font-black uppercase tracking-wider text-left pl-4">Size</th>
+                                                    <th className="py-3 px-3 font-black uppercase tracking-wider">Length <span className="text-gray-400 font-normal">(inches)</span></th>
+                                                    <th className="py-3 px-3 font-black uppercase tracking-wider">Full Chest Circumference <span className="text-gray-400 font-normal">(inches)</span></th>
+                                                    <th className="py-3 px-3 font-black uppercase tracking-wider text-right pr-4">Shoulder <span className="text-gray-400 font-normal">(inches)</span></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody className="divide-y divide-gray-100 font-semibold text-gray-700">
+                                                {[
+                                                    { size: 'XS', length: '27"', chest: '38"', shoulder: '22"' },
+                                                    { size: 'S', length: '28"', chest: '40"', shoulder: '23"' },
+                                                    { size: 'M', length: '29"', chest: '42"', shoulder: '24"' },
+                                                    { size: 'L', length: '30"', chest: '44"', shoulder: '25"' },
+                                                    { size: 'XL', length: '31"', chest: '46"', shoulder: '26"' },
+                                                    { size: 'XXL', length: '32"', chest: '48"', shoulder: '27"' },
+                                                ].map((row, idx) => {
+                                                    const isCurrent = selectedSize === row.size;
+                                                    return (
+                                                        <tr
+                                                            key={row.size}
+                                                            className={`transition-colors ${
+                                                                isCurrent
+                                                                    ? 'bg-[#FFCB05]/20 font-black text-[#070F2B]'
+                                                                    : idx % 2 === 1
+                                                                        ? 'bg-gray-50/70 hover:bg-gray-100/50'
+                                                                        : 'bg-white hover:bg-gray-50'
+                                                            }`}
+                                                        >
+                                                            <td className="py-2.5 px-3 text-left pl-4 font-black text-[#070F2B]">
+                                                                <div className="flex items-center gap-1.5">
+                                                                    <span>{row.size}</span>
+                                                                    {isCurrent && (
+                                                                        <span className="text-[9px] bg-[#070F2B] text-white px-1.5 py-0.5 rounded-full font-bold">
+                                                                            Selected
+                                                                        </span>
+                                                                    )}
+                                                                </div>
+                                                            </td>
+                                                            <td className="py-2.5 px-3 font-bold">{row.length}</td>
+                                                            <td className="py-2.5 px-3 font-bold">{row.chest}</td>
+                                                            <td className="py-2.5 px-3 text-right pr-4 font-bold">{row.shoulder}</td>
+                                                        </tr>
+                                                    );
+                                                })}
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    {/* How to Measure Guide Cards */}
+                                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
+                                        <div className="p-3 bg-gray-50 rounded-xl border border-gray-200/80">
+                                            <div className="text-[10px] font-black uppercase tracking-wider text-[#070F2B] flex items-center gap-1 mb-1">
+                                                <span className="w-1.5 h-1.5 rounded-full bg-[#FFCB05]"></span>
+                                                Length
+                                            </div>
+                                            <p className="text-[11px] text-gray-600 leading-snug">
+                                                Measured from highest point of shoulder to bottom hem.
+                                            </p>
+                                        </div>
+                                        <div className="p-3 bg-gray-50 rounded-xl border border-gray-200/80">
+                                            <div className="text-[10px] font-black uppercase tracking-wider text-[#070F2B] flex items-center gap-1 mb-1">
+                                                <span className="w-1.5 h-1.5 rounded-full bg-[#FFCB05]"></span>
+                                                Full Chest
+                                            </div>
+                                            <p className="text-[11px] text-gray-600 leading-snug">
+                                                Measured around the chest (underarm to underarm).
+                                            </p>
+                                        </div>
+                                        <div className="p-3 bg-gray-50 rounded-xl border border-gray-200/80">
+                                            <div className="text-[10px] font-black uppercase tracking-wider text-[#070F2B] flex items-center gap-1 mb-1">
+                                                <span className="w-1.5 h-1.5 rounded-full bg-[#FFCB05]"></span>
+                                                Shoulder
+                                            </div>
+                                            <p className="text-[11px] text-gray-600 leading-snug">
+                                                Measured from one shoulder seam to the other.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    {/* Perfect Fit Note */}
+                                    <div className="p-3.5 bg-amber-50/80 rounded-xl border border-amber-200/70 text-[11px] text-amber-950 font-medium flex items-center gap-2.5">
+                                        <span className="text-base">📐</span>
+                                        <div>
+                                            <strong className="font-black uppercase tracking-wide text-[#070F2B] block text-[10px]">
+                                                For The Perfect Fit • Measure A T-Shirt You Already Own
+                                            </strong>
+                                            <span>Our t-shirts are tailored with an authentic drop-shoulder oversized silhouette. If you prefer a regular fitted silhouette, we recommend choosing one size down.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="space-y-3">
+                                    <div className="relative rounded-2xl overflow-hidden border border-gray-200 bg-black shadow-inner flex items-center justify-center p-2">
+                                        <Image
+                                            src="/images/size-chart.png"
+                                            alt="Drop Shoulder Oversized T-Shirt Size Chart"
+                                            width={1000}
+                                            height={650}
+                                            className="w-full h-auto object-contain rounded-xl max-h-[440px]"
+                                            priority
+                                        />
+                                    </div>
+                                    <div className="text-center text-[11px] text-gray-500 font-semibold">
+                                        Official Zeynix Drop Shoulder Oversized T-Shirt Measurement Chart
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
