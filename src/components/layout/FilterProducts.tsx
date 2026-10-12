@@ -42,10 +42,31 @@ export const FILTER_PRICE_RANGES = [
 
 export type SortOption = 'featured' | 'price-asc' | 'price-desc' | 'rating-desc' | 'name-asc';
 
+const HALLOWEEN_SLUGS = new Set([
+    'spooky-boo-graveyard-ghost-cream-tee',
+    'slashers-dream-play-scream-repeat-black-tee',
+    'kawaii-pink-bow-ghost-halloween-white-tee',
+    'mystic-haunted-mansion-harvest-moon-purple-tee',
+    'halloween-rip-still-dead-tee',
+    'spookie-peeking-cat-skeletons-tee',
+    'halloween-i-scream-spooky-season-black-tee'
+]);
+
+const EXCLUDED_FROM_HALLOWEEN = new Set([
+    'marlboro-doberman-die-anyway-tee',
+    'yin-yang-koi-dead-fish-tee',
+    'i-love-my-crazy-girlfriend-tee',
+    'kawaii-baoo-bear-ghost-pink-tee',
+    'f1-racing-lights-out-legacy-vinyl-tee',
+    'marvel-spider-gwen-multiverse-white-tee'
+]);
+
 function matchesCategory(product: Product, categoryId: string): boolean {
     if (categoryId === 'All') return true;
     if (categoryId === 'Streetwear') return true;
 
+    const slug = (product.slug || '').toLowerCase();
+    const title = (product.name || product.title || '').toLowerCase();
     const text = `${product.name} ${product.title || ''} ${product.description || ''} ${product.category || ''} ${product.subcategory || ''}`.toLowerCase();
 
     switch (categoryId) {
@@ -57,10 +78,23 @@ function matchesCategory(product: Product, categoryId: string): boolean {
             return /gothic|insanity|viper|demon|doberman|chained|rage|cemetery|veni vidi|skull|noir|dark/.test(text);
         case 'Japanese':
             return /samurai|zen|fuji|sakura|bonsai|koi|japanese|kanagawa/.test(text);
-        case 'Halloween':
-            return /halloween|boo|ghost|phantom|haunted|horror|dead|spookie/.test(text);
+        case 'Halloween': {
+            if (
+                EXCLUDED_FROM_HALLOWEEN.has(slug) ||
+                title.includes('doberman') ||
+                title.includes('dead fish') ||
+                title.includes('crazy girlfriend') ||
+                title.includes('baoo! bear') ||
+                title.includes('lights out and away') ||
+                title.includes('spider-gwen')
+            ) {
+                return false;
+            }
+            if (HALLOWEEN_SLUGS.has(slug)) return true;
+            return /\bhalloween\b|\bspooky season\b/i.test(title);
+        }
         case 'PopCulture':
-            return /mcqueen|porsche|vice city|gta|mickey|tom and jerry|cartoon|minions|spider-man|marvel|tony stark|looney/.test(text);
+            return /mcqueen|porsche|vice city|gta|mickey|tom and jerry|cartoon|minions|spider-man|spidergwen|gwen|marvel|tony stark|looney|f1|racing|motorsport|formula/.test(text);
         default:
             return text.includes(categoryId.toLowerCase());
     }
@@ -255,7 +289,7 @@ export default function FilterProducts({ searchQuery: propSearchQuery }: FilterP
                     <div className="absolute inset-0 rounded-full border-3 border-[#B5945B] border-t-transparent animate-spin"></div>
                 </div>
                 <p className="text-xs font-black uppercase tracking-widest text-[#070F2B]/80">Loading Zeynix Catalog...</p>
-                <p className="text-[11px] text-gray-400 mt-1">Preparing 57 exclusive streetwear fits</p>
+                <p className="text-[11px] text-gray-400 mt-1">Preparing 62 exclusive streetwear fits</p>
             </div>
         );
     }
@@ -627,7 +661,7 @@ export default function FilterProducts({ searchQuery: propSearchQuery }: FilterP
                                 No Matching Streetwear Fits
                             </h3>
                             <p className="text-xs text-gray-500 max-w-md mx-auto mb-6">
-                                We couldn&apos;t find any pieces matching your current filters. Try relaxing your size or category selection to browse our 57 luxury drops.
+                                We couldn&apos;t find any pieces matching your current filters. Try relaxing your size or category selection to browse our full catalog of luxury drops.
                             </p>
                             <button
                                 onClick={clearAllFilters}

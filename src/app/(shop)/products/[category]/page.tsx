@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { Product } from '@/data/products';
 import ProductGrid from '@/components/product/ProductGrid';
 // import ProductFilter from '@/components/product/ProductFilter';
@@ -16,11 +16,12 @@ import ProductDetailView from '@/components/product/ProductDetailView';
 const KNOWN_CATEGORIES = new Set([
     'casual', 'streetwear', 'formal', 'ethnic', 'sports', 't-shirts', 'tshirts',
     'shirts', 'jeans', 'pants', 'jackets', 'all', 'men', 'women', 'hoodies', 'sweatshirts',
-    'unisex', 'unisexual'
+    'unisex', 'unisexual', 'halloween'
 ]);
 
 export default function CategoryProductsPage() {
     const params = useParams();
+    const router = useRouter();
     const category = params.category as string;
 
     // If the URL is /products/[slugOrId] and not a category name, render the ProductDetailView
@@ -38,6 +39,10 @@ export default function CategoryProductsPage() {
         // Fetch products by category from API (support 'streetwear', 'casual', 'unisexual', etc.)
         const fetchCategoryProducts = async () => {
             try {
+                if (category.toLowerCase() === 'halloween') {
+                    router.replace('/products?category=Halloween');
+                    return;
+                }
                 const apiCat = (category.toLowerCase() === 'streetwear' || category.toLowerCase() === 'casual') ? 'casual' : category;
                 const response = await productAPI.getProductsByCategory(apiCat, { limit: 100 });
                 if (response.success) {

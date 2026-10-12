@@ -512,7 +512,7 @@ export default function HomePage() {
                             </p>
                         </div>
                         <Link
-                            href="/products/unisex"
+                            href="/products?category=Halloween"
                             className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-[#FFA500] hover:text-[#FF7518] transition-colors border-b-2 border-[#FF7518] pb-0.5 cursor-pointer shrink-0 self-start sm:self-end"
                         >
                             Explore Halloween Drop <ArrowRight className="w-3.5 h-3.5" />
