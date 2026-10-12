@@ -7,7 +7,7 @@ import ProductGrid from '@/components/product/ProductGrid';
 // import ProductFilter from '@/components/product/ProductFilter';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import { Filter, ArrowLeft, X } from 'lucide-react';
+import { Filter, ArrowLeft, X, Home, ShoppingBag, ChevronRight, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import { productAPI } from '@/lib/api';
 
@@ -106,13 +106,34 @@ export default function CategoryProductsPage() {
             <Header />
 
             <main className="max-w-6xl mx-auto px-3 sm:px-4 py-6 md:py-12">
-                {/* Breadcrumb */}
-                <nav className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-[#070F2B]/60 mb-5">
-                    <Link href="/" className="hover:text-[#B5945B] transition-colors">Home</Link>
-                    <span>/</span>
-                    <Link href="/products" className="hover:text-[#B5945B] transition-colors">Products</Link>
-                    <span>/</span>
-                    <span className="text-[#070F2B]">{getCategoryTitle(category)}</span>
+                {/* Breadcrumb / Top Category Buttons */}
+                <nav aria-label="Breadcrumb navigation" className="flex flex-wrap items-center gap-2 sm:gap-2.5 mb-6">
+                    <Link
+                        href="/"
+                        className="inline-flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 bg-white hover:bg-[#FFCB05] text-[#070F2B] border border-[#070F2B]/15 hover:border-[#FFCB05] rounded-xl text-xs sm:text-sm font-extrabold uppercase tracking-wider shadow-2xs hover:shadow-xs transition-all duration-200 active:scale-95 group cursor-pointer"
+                    >
+                        <Home className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#B5945B] group-hover:text-[#070F2B] transition-colors shrink-0" />
+                        <span>Home</span>
+                    </Link>
+
+                    <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#070F2B]/35 shrink-0" />
+
+                    <Link
+                        href="/products"
+                        className="inline-flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 bg-white hover:bg-[#FFCB05] text-[#070F2B] border border-[#070F2B]/15 hover:border-[#FFCB05] rounded-xl text-xs sm:text-sm font-extrabold uppercase tracking-wider shadow-2xs hover:shadow-xs transition-all duration-200 active:scale-95 group cursor-pointer"
+                    >
+                        <ShoppingBag className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#B5945B] group-hover:text-[#070F2B] transition-colors shrink-0" />
+                        <span>Products</span>
+                    </Link>
+
+                    <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#070F2B]/35 shrink-0" />
+
+                    <div
+                        className="inline-flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 bg-[#070F2B] text-white border border-[#070F2B] rounded-xl text-xs sm:text-sm font-black uppercase tracking-wider shadow-xs"
+                    >
+                        <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#FFCB05] shrink-0" />
+                        <span className="text-[#FFCB05]">{getCategoryTitle(category)}</span>
+                    </div>
                 </nav>
 
                 {/* Category Hero Banner */}
@@ -126,17 +147,25 @@ export default function CategoryProductsPage() {
                     </div>
                     
                     <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5 sm:gap-6">
-                        <div className="space-y-3">
-                            <div className="flex items-center gap-2.5">
+                        <div className="space-y-3.5">
+                            <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
                                 <Link
                                     href="/"
-                                    className="flex items-center gap-1.5 px-3 py-1 bg-[#FFCB05] text-[#070F2B] hover:bg-white hover:scale-105 border border-[#FFCB05] rounded-full transition-all duration-300 font-black uppercase tracking-wider text-[8.5px] shadow-xs cursor-pointer"
+                                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 sm:px-4 sm:py-2 bg-[#FFCB05] text-[#070F2B] hover:bg-white hover:scale-105 border border-[#FFCB05] rounded-full transition-all duration-300 font-black uppercase tracking-wider text-[11px] sm:text-xs shadow-md cursor-pointer active:scale-95"
                                 >
-                                    <ArrowLeft className="w-3 h-3 text-[#070F2B]" />
+                                    <ArrowLeft className="w-3.5 h-3.5 text-[#070F2B] shrink-0" />
                                     Home
                                 </Link>
-                                <span className="text-[9px] font-black uppercase tracking-widest text-[#FAF6F0]/60 bg-white/5 py-1 px-3 rounded-full border border-white/10">
-                                    {category.toLowerCase() === 'casual' ? 'streetwear' : category}
+                                <Link
+                                    href="/products"
+                                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 sm:px-4 sm:py-2 bg-white/10 hover:bg-white hover:text-[#070F2B] text-[#FAF6F0] hover:scale-105 border border-white/20 rounded-full transition-all duration-300 font-extrabold uppercase tracking-wider text-[11px] sm:text-xs shadow-xs cursor-pointer active:scale-95 group"
+                                >
+                                    <ShoppingBag className="w-3.5 h-3.5 shrink-0 text-[#B5945B] group-hover:text-[#070F2B]" />
+                                    Products
+                                </Link>
+                                <span className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-black uppercase tracking-wider text-[#FFCB05] bg-[#181133] py-1.5 px-3.5 sm:px-4 rounded-full border border-[#FFCB05]/30 shadow-xs">
+                                    <Sparkles className="w-3 h-3 text-[#FFCB05] shrink-0" />
+                                    {category.toLowerCase() === 'casual' ? 'Streetwear' : category}
                                 </span>
                             </div>
                             <h1 className="text-2xl sm:text-3xl md:text-5xl font-black uppercase tracking-tight text-[#FAF6F0]">
