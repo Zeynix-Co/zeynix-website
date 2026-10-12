@@ -144,7 +144,7 @@ export default function PrintStudioPage() {
                                 <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <div>
-                                            <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-700 mb-1.5">
+                                            <label className="block text-xs font-bold uppercase tracking-wider text-[#070F2B] mb-1.5">
                                                 Your Name
                                             </label>
                                             <input
@@ -153,11 +153,11 @@ export default function PrintStudioPage() {
                                                 value={name}
                                                 onChange={(e) => setName(e.target.value)}
                                                 placeholder="e.g. Alex Morgan"
-                                                className="w-full text-xs px-3.5 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-[#070F2B] bg-gray-50 focus:bg-white transition-colors"
+                                                className="w-full text-sm text-[#070F2B] placeholder:text-gray-400 placeholder:opacity-100 font-medium px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-[#070F2B] focus:ring-2 focus:ring-[#070F2B]/10 bg-white transition-all"
                                             />
                                         </div>
                                         <div>
-                                            <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-700 mb-1.5">
+                                            <label className="block text-xs font-bold uppercase tracking-wider text-[#070F2B] mb-1.5">
                                                 Email Address
                                             </label>
                                             <input
@@ -166,14 +166,13 @@ export default function PrintStudioPage() {
                                                 value={email}
                                                 onChange={(e) => setEmail(e.target.value)}
                                                 placeholder="alex@example.com"
-                                                className="w-full text-xs px-3.5 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-[#070F2B] bg-gray-50 focus:bg-white transition-colors"
+                                                className="w-full text-sm text-[#070F2B] placeholder:text-gray-400 placeholder:opacity-100 font-medium px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-[#070F2B] focus:ring-2 focus:ring-[#070F2B]/10 bg-white transition-all"
                                             />
                                         </div>
                                     </div>
 
-
                                     <div>
-                                        <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-700 mb-1.5">
+                                        <label className="block text-xs font-bold uppercase tracking-wider text-[#070F2B] mb-1.5">
                                             Message
                                         </label>
                                         <textarea
@@ -182,7 +181,7 @@ export default function PrintStudioPage() {
                                             value={message}
                                             onChange={(e) => setMessage(e.target.value)}
                                             placeholder="Tell us what you would like to print or design..."
-                                            className="w-full text-xs px-3.5 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-[#070F2B] bg-gray-50 focus:bg-white transition-colors"
+                                            className="w-full text-sm text-[#070F2B] placeholder:text-gray-400 placeholder:opacity-100 font-medium px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-[#070F2B] focus:ring-2 focus:ring-[#070F2B]/10 bg-white transition-all resize-y"
                                         />
                                     </div>
 

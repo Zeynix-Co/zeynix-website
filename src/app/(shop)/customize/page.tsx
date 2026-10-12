@@ -459,7 +459,7 @@ export default function CustomizePage() {
                                                 value={customText}
                                                 onChange={(e) => setCustomText(e.target.value)}
                                                 maxLength={30}
-                                                className="w-full p-3.5 border-2 border-gray-200 focus:border-[#070F2B] rounded-xl text-sm font-medium focus:outline-none mb-3"
+                                                className="w-full p-3.5 border-2 border-gray-200 focus:border-[#070F2B] rounded-xl text-sm font-medium text-[#070F2B] bg-white placeholder:text-gray-400 placeholder:opacity-100 focus:outline-none mb-3"
                                                 placeholder="Type your custom text here..."
                                             />
 

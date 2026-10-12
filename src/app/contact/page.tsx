@@ -146,7 +146,7 @@ export default function ContactPage() {
                                 <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <div>
-                                            <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-700 mb-1.5">
+                                            <label className="block text-xs font-bold uppercase tracking-wider text-[#070F2B] mb-1.5">
                                                 Your Name
                                             </label>
                                             <input
@@ -155,11 +155,11 @@ export default function ContactPage() {
                                                 value={name}
                                                 onChange={(e) => setName(e.target.value)}
                                                 placeholder="e.g. Alex Morgan"
-                                                className="w-full text-xs px-3.5 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-[#070F2B] bg-gray-50 focus:bg-white transition-colors"
+                                                className="w-full text-sm text-[#070F2B] placeholder:text-gray-400 placeholder:opacity-100 font-medium px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-[#070F2B] focus:ring-2 focus:ring-[#070F2B]/10 bg-white transition-all"
                                             />
                                         </div>
                                         <div>
-                                            <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-700 mb-1.5">
+                                            <label className="block text-xs font-bold uppercase tracking-wider text-[#070F2B] mb-1.5">
                                                 Email Address
                                             </label>
                                             <input
@@ -168,30 +168,30 @@ export default function ContactPage() {
                                                 value={email}
                                                 onChange={(e) => setEmail(e.target.value)}
                                                 placeholder="alex@example.com"
-                                                className="w-full text-xs px-3.5 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-[#070F2B] bg-gray-50 focus:bg-white transition-colors"
+                                                className="w-full text-sm text-[#070F2B] placeholder:text-gray-400 placeholder:opacity-100 font-medium px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-[#070F2B] focus:ring-2 focus:ring-[#070F2B]/10 bg-white transition-all"
                                             />
                                         </div>
                                     </div>
 
                                     <div>
-                                        <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-700 mb-1.5">
+                                        <label className="block text-xs font-bold uppercase tracking-wider text-[#070F2B] mb-1.5">
                                             Subject / Inquiry Type
                                         </label>
                                         <select
                                             value={subject}
                                             onChange={(e) => setSubject(e.target.value)}
-                                            className="w-full text-xs px-3.5 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-[#070F2B] bg-gray-50 focus:bg-white transition-colors cursor-pointer"
+                                            className="w-full text-sm text-[#070F2B] font-medium px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-[#070F2B] focus:ring-2 focus:ring-[#070F2B]/10 bg-white transition-all cursor-pointer"
                                         >
-                                            <option>Order Status & Tracking</option>
-                                            <option>Custom Apparel Printing</option>
-                                            <option>Flash Delivery (3 Days) Query</option>
-                                            <option>Returns & Exchanges</option>
-                                            <option>Other Question</option>
+                                            <option value="Order Status & Tracking">Order Status & Tracking</option>
+                                            <option value="Custom Apparel Printing">Custom Apparel Printing</option>
+                                            <option value="Flash Delivery (3 Days) Query">Flash Delivery (3 Days) Query</option>
+                                            <option value="Returns & Exchanges">Returns & Exchanges</option>
+                                            <option value="Other Question">Other Question</option>
                                         </select>
                                     </div>
 
                                     <div>
-                                        <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-700 mb-1.5">
+                                        <label className="block text-xs font-bold uppercase tracking-wider text-[#070F2B] mb-1.5">
                                             Message
                                         </label>
                                         <textarea
@@ -200,7 +200,7 @@ export default function ContactPage() {
                                             value={message}
                                             onChange={(e) => setMessage(e.target.value)}
                                             placeholder="Tell us how we can help you..."
-                                            className="w-full text-xs px-3.5 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-[#070F2B] bg-gray-50 focus:bg-white transition-colors"
+                                            className="w-full text-sm text-[#070F2B] placeholder:text-gray-400 placeholder:opacity-100 font-medium px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-[#070F2B] focus:ring-2 focus:ring-[#070F2B]/10 bg-white transition-all resize-y"
                                         />
                                     </div>
 

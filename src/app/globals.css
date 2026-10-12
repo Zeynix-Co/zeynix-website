@@ -29,6 +29,15 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Ensure inputs and placeholders are always crisp and visible regardless of system dark mode */
+input, textarea, select {
+  color: #070F2B;
+}
+input::placeholder, textarea::placeholder {
+  color: #9CA3AF;
+  opacity: 1;
+}
+
 /* Luxury Modal Animations */
 @keyframes fadeIn {
   from {
