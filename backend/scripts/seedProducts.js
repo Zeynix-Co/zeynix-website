@@ -60,8 +60,12 @@ const SLUG_MAP = {
     "Aesthetic Gaze 'Yes Is Clear' Crimson Heart Oversized Black T-Shirt": "aesthetic-gaze-yes-is-clear-heart-tee",
     "Marvel Avengers 'Tony Stark Arc Reactor Legacy' Oversized Black T-Shirt": "iron-man-tony-stark-legacy-arc-reactor-tee",
     "Looney Tunes 'Street Trio & Comic Panels' Mustard Yellow Oversized T-Shirt": "looney-tunes-street-trio-comic-panels-yellow-tee",
-    "Disney 'Mickey Mouse Fabric Tear & Inverted Dive' Buttercream Oversized T-Shirt": "disney-mickey-mouse-fabric-tear-buttercream-tee",
-    "Minions 'Banana! & Hanging Chain Pile' Oversized Black T-Shirt": "minions-banana-hanging-chain-pile-black-tee"
+    "Minions 'Banana! & Hanging Chain Pile' Oversized Black T-Shirt": "minions-banana-hanging-chain-pile-black-tee",
+    "Bitcoin 'It\\'s Time For Plan ₿ - Currency Tic-Tac-Toe' Oversized Black T-Shirt": "bitcoin-time-for-plan-b-tictactoe-tee",
+    "Crypto Chemistry 'Cr Y Pt O Periodic Table & Rolled Cash' Oversized Black T-Shirt": "crypto-periodic-table-money-stack-tee",
+    "Botanical Aesthetic 'Flower Typo & Watercolor Petal' Oversized Buttercream T-Shirt": "botanical-flower-typo-watercolor-petal-tee",
+    "Marvel Spider-Man 'Peter Parker Great Power Typography Mask' Oversized Black T-Shirt": "marvel-spiderman-peter-parker-typography-mask-tee",
+    "Cinematic Grunge 'Eyes Never Lie & Hazel Gaze' Oversized Black T-Shirt": "cinematic-grunge-eyes-never-lie-black-tee"
 };
 
 async function seedProducts() {

@@ -58,7 +58,12 @@ const EXCLUDED_FROM_HALLOWEEN = new Set([
     'i-love-my-crazy-girlfriend-tee',
     'kawaii-baoo-bear-ghost-pink-tee',
     'f1-racing-lights-out-legacy-vinyl-tee',
-    'marvel-spider-gwen-multiverse-white-tee'
+    'marvel-spider-gwen-multiverse-white-tee',
+    'bitcoin-time-for-plan-b-tictactoe-tee',
+    'crypto-periodic-table-money-stack-tee',
+    'botanical-flower-typo-watercolor-petal-tee',
+    'marvel-spiderman-peter-parker-typography-mask-tee',
+    'cinematic-grunge-eyes-never-lie-black-tee'
 ]);
 
 function matchesCategory(product: Product, categoryId: string): boolean {
@@ -75,9 +80,9 @@ function matchesCategory(product: Product, categoryId: string): boolean {
         case 'Bollywood':
             return /majnu|race|om shanti|srk|talha|gumaan|stunners|katkat|patola|mera yaar|desi|bollywood/.test(text);
         case 'Gothic':
-            return /gothic|insanity|viper|demon|doberman|chained|rage|cemetery|veni vidi|skull|noir|dark/.test(text);
+            return /gothic|insanity|viper|demon|doberman|chained|rage|cemetery|veni vidi|skull|noir|dark|eyes never lie|grunge/.test(text);
         case 'Japanese':
-            return /samurai|zen|fuji|sakura|bonsai|koi|japanese|kanagawa/.test(text);
+            return /samurai|zen|fuji|sakura|bonsai|koi|japanese|kanagawa|botanical/.test(text);
         case 'Halloween': {
             if (
                 EXCLUDED_FROM_HALLOWEEN.has(slug) ||
@@ -86,7 +91,10 @@ function matchesCategory(product: Product, categoryId: string): boolean {
                 title.includes('crazy girlfriend') ||
                 title.includes('baoo! bear') ||
                 title.includes('lights out and away') ||
-                title.includes('spider-gwen')
+                title.includes('spider-gwen') ||
+                title.includes('bitcoin') ||
+                title.includes('crypto') ||
+                title.includes('eyes never lie')
             ) {
                 return false;
             }
@@ -94,7 +102,7 @@ function matchesCategory(product: Product, categoryId: string): boolean {
             return /\bhalloween\b|\bspooky season\b/i.test(title);
         }
         case 'PopCulture':
-            return /mcqueen|porsche|vice city|gta|mickey|tom and jerry|cartoon|minions|spider-man|spidergwen|gwen|marvel|tony stark|looney|f1|racing|motorsport|formula/.test(text);
+            return /mcqueen|porsche|vice city|gta|mickey|tom and jerry|cartoon|minions|spider-man|spiderman|spidergwen|gwen|marvel|tony stark|looney|f1|racing|motorsport|formula|bitcoin|crypto|currency/.test(text);
         default:
             return text.includes(categoryId.toLowerCase());
     }
@@ -289,7 +297,7 @@ export default function FilterProducts({ searchQuery: propSearchQuery }: FilterP
                     <div className="absolute inset-0 rounded-full border-3 border-[#B5945B] border-t-transparent animate-spin"></div>
                 </div>
                 <p className="text-xs font-black uppercase tracking-widest text-[#070F2B]/80">Loading Zeynix Catalog...</p>
-                <p className="text-[11px] text-gray-400 mt-1">Preparing 62 exclusive streetwear fits</p>
+                <p className="text-[11px] text-gray-400 mt-1">Preparing 67 exclusive streetwear fits</p>
             </div>
         );
     }
