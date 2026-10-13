@@ -117,6 +117,14 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam }: Pr
         fetchRelated();
     }, [productIdOrSlug]);
 
+    // Reset mobile carousel scroll when changing color or product
+    useEffect(() => {
+        setSelectedImageIndex(0);
+        if (mobileGalleryRef.current) {
+            mobileGalleryRef.current.scrollTo({ left: 0, behavior: 'instant' });
+        }
+    }, [selectedColorIndex, productIdOrSlug]);
+
     if (isLoading) {
         return (
             <div className="min-h-screen bg-[#FBF9F5] flex flex-col justify-between">
@@ -225,14 +233,6 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam }: Pr
         const prevIdx = selectedImageIndex === 0 ? productImages.length - 1 : selectedImageIndex - 1;
         scrollToImage(prevIdx);
     };
-
-    // Reset mobile carousel scroll when changing color or product
-    useEffect(() => {
-        setSelectedImageIndex(0);
-        if (mobileGalleryRef.current) {
-            mobileGalleryRef.current.scrollTo({ left: 0, behavior: 'instant' });
-        }
-    }, [selectedColorIndex, productIdOrSlug]);
 
     const handleAddToCart = async () => {
         if (!isAuthenticated) {
