@@ -3754,5 +3754,280 @@
         "inStock": true
       }
     ]
+  },
+  {
+    "title": "Botanical Floral 'In A World Full Of Roses Be A Sunflower' Oversized Peach T-Shirt",
+    "slug": "world-full-of-roses-be-a-sunflower-peach-tee",
+    "brand": "Zeynix",
+    "description": "Sun-drenched botanical positivity meets modern expressive streetwear. Cut in an oversized silhouette from 240 GSM dense combed cotton in a warm peach tone. The front features an artistic split sunflower illustration paired with inspiring cursive typography 'IN a WORLD full of ROSES be a SUNFLOWER'. The reverse commands attention with a vivid botanical sunflower set against golden abstract brushstrokes and dynamic watercolor paint splatter.",
+    "images": [
+      "/images/products/new/world-full-of-roses-be-a-sunflower-peach-tee/front.png",
+      "/images/products/new/world-full-of-roses-be-a-sunflower-peach-tee/back.png",
+      "/images/products/new/world-full-of-roses-be-a-sunflower-peach-tee/whole.png"
+    ],
+    "mainImage": "/images/products/new/world-full-of-roses-be-a-sunflower-peach-tee/front.png",
+    "category": "unisex",
+    "subcategory": "t-shirts",
+    "actualPrice": 1349,
+    "originalPrice": 1349,
+    "discountPrice": 699,
+    "price": 699,
+    "discount": 48,
+    "rating": 5,
+    "totalRatings": 310,
+    "productFit": "OVERSIZED FIT",
+    "featured": false,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 45,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 90,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 155,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 180,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 120,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 65,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "title": "Aesthetic Landscape 'Spring Mood Window View & Wildflowers' Oversized Royal Blue T-Shirt",
+    "slug": "spring-mood-window-wildflowers-royal-blue-tee",
+    "brand": "Zeynix",
+    "description": "Vibrant springtime wanderlust meets premium drop-shoulder streetwear. Crafted from 240 GSM heavy combed cotton in rich royal blue. The chest features dual-tone typography blending electric green cursive 'Spring' with retro bubble pink 'MOOD'. The back opens a picturesque window pane into idyllic mountain peaks, drifting seagulls, azure skies, and blooming potted daisies.",
+    "images": [
+      "/images/products/new/spring-mood-window-wildflowers-royal-blue-tee/front.png",
+      "/images/products/new/spring-mood-window-wildflowers-royal-blue-tee/back.png",
+      "/images/products/new/spring-mood-window-wildflowers-royal-blue-tee/whole.png"
+    ],
+    "mainImage": "/images/products/new/spring-mood-window-wildflowers-royal-blue-tee/front.png",
+    "category": "unisex",
+    "subcategory": "t-shirts",
+    "actualPrice": 1349,
+    "originalPrice": 1349,
+    "discountPrice": 699,
+    "price": 699,
+    "discount": 48,
+    "rating": 5,
+    "totalRatings": 275,
+    "productFit": "OVERSIZED FIT",
+    "featured": false,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 45,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 90,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 155,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 180,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 120,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 65,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "title": "Studio Ghibli 'Spirited Away Chihiro & No-Face Silhouette' Oversized Teal T-Shirt",
+    "slug": "spirited-away-chihiro-no-face-teal-tee",
+    "brand": "Zeynix",
+    "description": "Cinematic anime nostalgia meets moody aesthetic streetwear. Tailored from 240 GSM heavyweight combed cotton in deep teal blue. The front displays the iconic poignant quote: “Once you’ve met someone, you nver really forget them.” -Spirited Away(2001). The reverse is dominated by Chihiro gazing skyward as the mysterious shadow spirit No-Face towers gently behind her, accented by distressed vintage typography.",
+    "images": [
+      "/images/products/new/spirited-away-chihiro-no-face-teal-tee/front.png",
+      "/images/products/new/spirited-away-chihiro-no-face-teal-tee/back.png",
+      "/images/products/new/spirited-away-chihiro-no-face-teal-tee/whole.png"
+    ],
+    "mainImage": "/images/products/new/spirited-away-chihiro-no-face-teal-tee/front.png",
+    "category": "unisex",
+    "subcategory": "t-shirts",
+    "actualPrice": 1349,
+    "originalPrice": 1349,
+    "discountPrice": 699,
+    "price": 699,
+    "discount": 48,
+    "rating": 5,
+    "totalRatings": 345,
+    "productFit": "OVERSIZED FIT",
+    "featured": false,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 45,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 90,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 155,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 180,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 120,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 65,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "title": "Studio Ghibli 'Kiki's Delivery Service Broom Flight & Meow' Oversized Black T-Shirt",
+    "slug": "kikis-delivery-service-broom-flight-black-tee",
+    "brand": "Zeynix",
+    "description": "Whimsical witchy anime nostalgia meets midnight streetwear. Engineered on 240 GSM organic heavy combed cotton in onyx black. The front pops with playful honey-yellow bubble letters spelling 'MEOW' with inquisitive cat eyes. The back features Kiki soaring across a glowing full moon on her broom with loyal feline companion Jiji perched behind her.",
+    "images": [
+      "/images/products/new/kikis-delivery-service-broom-flight-black-tee/front.png",
+      "/images/products/new/kikis-delivery-service-broom-flight-black-tee/back.png",
+      "/images/products/new/kikis-delivery-service-broom-flight-black-tee/whole.png"
+    ],
+    "mainImage": "/images/products/new/kikis-delivery-service-broom-flight-black-tee/front.png",
+    "category": "unisex",
+    "subcategory": "t-shirts",
+    "actualPrice": 1349,
+    "originalPrice": 1349,
+    "discountPrice": 699,
+    "price": 699,
+    "discount": 48,
+    "rating": 5,
+    "totalRatings": 320,
+    "productFit": "OVERSIZED FIT",
+    "featured": false,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 45,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 90,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 155,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 180,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 120,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 65,
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "title": "Studio Ghibli 'Spirited Away Paper Birds & Courage Quote' Oversized Buttercream T-Shirt",
+    "slug": "spirited-away-paper-birds-courage-quote-cream-tee",
+    "brand": "Zeynix",
+    "description": "Profound animation storytelling captured in artisanal streetwear. Tailored in a relaxed oversized fit using 240 GSM organic combed cotton in soft buttercream. The front bears the soul-stirring quote: “I hope one day you have the courage to run away from everything that makes you miserable” -Spirited Away. The back portrays Chihiro enveloped in a breathtaking vortex of fluttering paper birds (shikigami) in stunning illustrative detail.",
+    "images": [
+      "/images/products/new/spirited-away-paper-birds-courage-quote-cream-tee/front.png",
+      "/images/products/new/spirited-away-paper-birds-courage-quote-cream-tee/back.png",
+      "/images/products/new/spirited-away-paper-birds-courage-quote-cream-tee/whole.png"
+    ],
+    "mainImage": "/images/products/new/spirited-away-paper-birds-courage-quote-cream-tee/front.png",
+    "category": "unisex",
+    "subcategory": "t-shirts",
+    "actualPrice": 1349,
+    "originalPrice": 1349,
+    "discountPrice": 699,
+    "price": 699,
+    "discount": 48,
+    "rating": 5,
+    "totalRatings": 290,
+    "productFit": "OVERSIZED FIT",
+    "featured": false,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 45,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 90,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 155,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 180,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 120,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 65,
+        "inStock": true
+      }
+    ]
   }
 ]
