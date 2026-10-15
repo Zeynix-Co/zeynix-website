@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { protect } from '@/lib/middleware/auth';
 import { verifyAndUpdateOrderPayment, validatePaymentData } from '@/lib/utils/razorpay';
+import { sendAdminNewOrderNotification } from '@/lib/config/email';
 
 export async function POST(request: NextRequest) {
     try {
@@ -55,6 +56,44 @@ export async function POST(request: NextRequest) {
         const redirectUrl = verificationResult.isValid
             ? `/payment/success?orderId=${orderId}&razorpayOrderId=${razorpayOrderId}&razorpayPaymentId=${razorpayPaymentId}`
             : `/payment/failure?orderId=${orderId}&error=${encodeURIComponent(verificationResult.error || 'Payment verification failed')}`;
+
+        // Send instant admin email alert to zeynix.co@gmail.com
+        if (verificationResult.isValid && verificationResult.order) {
+            try {
+                const verifiedOrder: any = verificationResult.order;
+                const shipping = verifiedOrder.shippingAddress || {};
+                const customerName = `${shipping.firstName || ''} ${shipping.lastName || ''}`.trim() || authResult.user.name || 'Valued Client';
+
+                const orderItems = Array.isArray(verifiedOrder.items) ? verifiedOrder.items.map((item: any) => ({
+                    title: item.productTitle || item.title || (typeof item.product === 'object' && item.product?.title) || 'Boutique Item',
+                    size: item.size || 'Standard',
+                    quantity: item.quantity || 1,
+                    price: item.price || 0,
+                })) : [];
+
+                sendAdminNewOrderNotification({
+                    orderNumber: verifiedOrder.orderNumber || orderId,
+                    orderId: verifiedOrder._id?.toString() || orderId,
+                    totalAmount: verifiedOrder.totalAmount,
+                    paymentMethod: 'Razorpay',
+                    paymentStatus: 'completed',
+                    customerName,
+                    customerEmail: shipping.email || authResult.user.email,
+                    customerPhone: shipping.phone || authResult.user.phone,
+                    shippingAddress: {
+                        addressLine1: shipping.addressLine1 || verifiedOrder.deliveryAddress?.street || 'N/A',
+                        addressLine2: shipping.addressLine2,
+                        city: shipping.city || verifiedOrder.deliveryAddress?.city || 'N/A',
+                        state: shipping.state || verifiedOrder.deliveryAddress?.state || 'N/A',
+                        pincode: shipping.pincode || verifiedOrder.deliveryAddress?.pincode || 'N/A',
+                        country: shipping.country || 'India',
+                    },
+                    items: orderItems,
+                }).catch(err => console.error('Admin order alert background error:', err));
+            } catch (notifyErr) {
+                console.error('Failed to dispatch admin notification:', notifyErr);
+            }
+        }
 
         // Return success response
         return NextResponse.json({

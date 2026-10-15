@@ -3,6 +3,7 @@ import connectDB from '@/lib/config/database';
 import { protect } from '@/lib/middleware/auth';
 import { Order } from '@/lib/models/Order';
 import { Product } from '@/lib/models/Product';
+import { sendAdminNewOrderNotification } from '@/lib/config/email';
 
 export async function POST(request: NextRequest) {
     try {
@@ -202,6 +203,39 @@ export async function POST(request: NextRequest) {
             } catch (stockError) {
                 console.error(`❌ Failed to update stock for product ${item.productId}:`, stockError);
                 // Don't fail the order if stock update fails - just log it
+            }
+        }
+
+        // If order is placed via WhatsApp or COD, notify admin immediately
+        if (order.paymentMethod !== 'razorpay') {
+            try {
+                const customerName = `${shippingAddress.firstName || ''} ${shippingAddress.lastName || ''}`.trim() || user.name || 'Valued Client';
+                sendAdminNewOrderNotification({
+                    orderNumber: order.orderNumber,
+                    orderId: order._id.toString(),
+                    totalAmount: order.totalAmount,
+                    paymentMethod: order.paymentMethod,
+                    paymentStatus: order.paymentStatus,
+                    customerName,
+                    customerEmail: shippingAddress.email || user.email,
+                    customerPhone: shippingAddress.phone || user.phone,
+                    shippingAddress: {
+                        addressLine1: shippingAddress.addressLine1,
+                        addressLine2: shippingAddress.addressLine2,
+                        city: shippingAddress.city,
+                        state: shippingAddress.state,
+                        pincode: shippingAddress.pincode,
+                        country: shippingAddress.country || 'India',
+                    },
+                    items: orderItems.map((item: any) => ({
+                        title: item.productTitle || 'Boutique Item',
+                        size: item.size,
+                        quantity: item.quantity,
+                        price: item.price,
+                    })),
+                }).catch(err => console.error('Admin order alert background error:', err));
+            } catch (notifyErr) {
+                console.error('Failed to dispatch admin notification:', notifyErr);
             }
         }
 

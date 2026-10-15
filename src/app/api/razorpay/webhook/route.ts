@@ -3,6 +3,7 @@ import crypto from 'crypto';
 import connectDB from '@/lib/config/database';
 import { Order } from '@/lib/models/Order';
 import env from '@/lib/config/env';
+import { sendAdminNewOrderNotification } from '@/lib/config/email';
 
 export async function POST(request: NextRequest) {
     try {
@@ -51,6 +52,7 @@ export async function POST(request: NextRequest) {
                 const order = await Order.findOne({ razorpayOrderId });
 
                 if (order) {
+                    const wasPending = order.paymentStatus === 'pending';
                     order.paymentStatus = 'completed';
                     if (razorpayPaymentId) {
                         order.razorpayPaymentId = razorpayPaymentId;
@@ -62,6 +64,41 @@ export async function POST(request: NextRequest) {
                     await order.save();
 
                     console.log(`✅ Order ${order.orderNumber} successfully marked as completed via Razorpay webhook`);
+
+                    if (wasPending) {
+                        try {
+                            const shipping: any = order.shippingAddress || {};
+                            const customerName = `${shipping.firstName || ''} ${shipping.lastName || ''}`.trim() || 'Valued Client';
+                            const orderItems = Array.isArray(order.items) ? order.items.map((item: any) => ({
+                                title: item.productTitle || 'Boutique Item',
+                                size: item.size || 'Standard',
+                                quantity: item.quantity || 1,
+                                price: item.price || 0,
+                            })) : [];
+
+                            sendAdminNewOrderNotification({
+                                orderNumber: order.orderNumber,
+                                orderId: order._id.toString(),
+                                totalAmount: order.totalAmount,
+                                paymentMethod: 'Razorpay',
+                                paymentStatus: 'completed',
+                                customerName,
+                                customerEmail: shipping.email,
+                                customerPhone: shipping.phone,
+                                shippingAddress: {
+                                    addressLine1: shipping.addressLine1 || order.deliveryAddress?.street || 'N/A',
+                                    addressLine2: shipping.addressLine2,
+                                    city: shipping.city || order.deliveryAddress?.city || 'N/A',
+                                    state: shipping.state || order.deliveryAddress?.state || 'N/A',
+                                    pincode: shipping.pincode || order.deliveryAddress?.pincode || 'N/A',
+                                    country: shipping.country || 'India',
+                                },
+                                items: orderItems,
+                            }).catch(err => console.error('Webhook admin alert error:', err));
+                        } catch (e) {
+                            console.error('Failed to notify admin from webhook:', e);
+                        }
+                    }
                 } else {
                     console.warn(`⚠️ Order with razorpayOrderId ${razorpayOrderId} not found in database`);
                 }
