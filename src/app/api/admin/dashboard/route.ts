@@ -5,6 +5,7 @@ import { Product } from '@/lib/models/Product';
 import { Order } from '@/lib/models/Order';
 import env from '@/lib/config/env';
 import jwt from 'jsonwebtoken';
+import { protectAdmin } from '@/lib/middleware/auth';
 
 // Connect to MongoDB
 const connectDB = async () => {
@@ -84,33 +85,12 @@ export async function GET(request: NextRequest) {
     try {
         await connectDB();
 
-        let userId: string | null | undefined = request.nextUrl.searchParams.get('userId');
-
-        if (!userId) {
-            // Check auth header or cookie
-            const authHeader = request.headers.get('authorization');
-            const token = authHeader?.startsWith('Bearer ')
-                ? authHeader.substring(7)
-                : request.cookies.get('token')?.value;
-
-            if (token) {
-                try {
-                    const decoded = jwt.verify(token, env.JWT_SECRET) as { userId?: string; role?: string };
-                    userId = decoded.userId;
-                } catch {
-                    // Ignore token verify error here
-                }
-            }
-        }
-
-        if (userId) {
-            const adminUser = await User.findOne({ _id: userId, role: 'admin' });
-            if (!adminUser) {
-                return NextResponse.json(
-                    { success: false, message: 'Unauthorized access' },
-                    { status: 401 }
-                );
-            }
+        const { user, error } = await protectAdmin(request);
+        if (error || !user) {
+            return NextResponse.json(
+                { success: false, message: error || 'Unauthorized access' },
+                { status: 401 }
+            );
         }
 
         const data = await fetchStats();
@@ -134,23 +114,12 @@ export async function POST(request: NextRequest) {
     try {
         await connectDB();
 
-        let userId: string | undefined;
-        try {
-            const body = await request.json();
-            userId = body.userId;
-        } catch {
-            // Empty body
-        }
-
-        // Validate input
-        if (userId) {
-            const adminUser = await User.findOne({ _id: userId, role: 'admin' });
-            if (!adminUser) {
-                return NextResponse.json(
-                    { success: false, message: 'Unauthorized access' },
-                    { status: 401 }
-                );
-            }
+        const { user, error } = await protectAdmin(request);
+        if (error || !user) {
+            return NextResponse.json(
+                { success: false, message: error || 'Unauthorized access' },
+                { status: 401 }
+            );
         }
 
         const data = await fetchStats();

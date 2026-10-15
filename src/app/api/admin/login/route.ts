@@ -98,13 +98,18 @@ export async function POST(request: NextRequest) {
             }
         });
 
-        // Set cookie
-        response.cookies.set('token', token, {
+        // Set isolated admin_token cookie with root path
+        const isHttps = request.nextUrl.protocol === 'https:' || request.headers.get('x-forwarded-proto') === 'https';
+        const cookieOptions = {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'lax',
-            maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
-        });
+            secure: isHttps,
+            sameSite: 'lax' as const,
+            maxAge: 7 * 24 * 60 * 60, // 7 days in seconds
+            path: '/'
+        };
+
+        response.cookies.set('admin_token', token, cookieOptions);
+        response.cookies.set('token', token, cookieOptions);
 
         return response;
 

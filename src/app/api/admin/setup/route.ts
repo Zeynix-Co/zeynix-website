@@ -92,7 +92,16 @@ export async function POST(request: NextRequest) {
             role: adminUser.role
         };
 
-        return NextResponse.json({
+        const isHttps = request.nextUrl.protocol === 'https:' || request.headers.get('x-forwarded-proto') === 'https';
+        const cookieOptions = {
+            httpOnly: true,
+            secure: isHttps,
+            sameSite: 'lax' as const,
+            maxAge: 7 * 24 * 60 * 60, // 7 days in seconds
+            path: '/'
+        };
+
+        const response = NextResponse.json({
             success: true,
             message: 'Admin account created successfully',
             data: {
@@ -100,6 +109,11 @@ export async function POST(request: NextRequest) {
                 token
             }
         }, { status: 201 });
+
+        response.cookies.set('admin_token', token, cookieOptions);
+        response.cookies.set('token', token, cookieOptions);
+
+        return response;
 
     } catch (error) {
         console.error('Admin setup error:', error);

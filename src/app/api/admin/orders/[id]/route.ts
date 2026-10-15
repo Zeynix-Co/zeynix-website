@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/config/database';
-import { protect } from '@/lib/middleware/auth';
+import { protectAdmin } from '@/lib/middleware/auth';
 import { Order } from '@/lib/models/Order';
 import { User } from '@/lib/models/User';
 
@@ -12,20 +12,11 @@ export async function GET(
     try {
         await connectDB();
 
-        // Authenticate user
-        const { user, error } = await protect(request);
+        // Authenticate admin user strictly
+        const { user, error } = await protectAdmin(request);
         if (error || !user) {
             return NextResponse.json(
                 { success: false, message: error || 'Authentication required' },
-                { status: 401 }
-            );
-        }
-
-        // Verify admin user
-        const adminUser = await User.findById(user._id);
-        if (!adminUser || adminUser.role !== 'admin') {
-            return NextResponse.json(
-                { success: false, message: 'Access denied. Admin role required.' },
                 { status: 401 }
             );
         }
@@ -68,20 +59,11 @@ export async function PUT(
     try {
         await connectDB();
 
-        // Authenticate user
-        const { user, error } = await protect(request);
+        // Authenticate admin user strictly
+        const { user, error } = await protectAdmin(request);
         if (error || !user) {
             return NextResponse.json(
                 { success: false, message: error || 'Authentication required' },
-                { status: 401 }
-            );
-        }
-
-        // Verify admin user
-        const adminUser = await User.findById(user._id);
-        if (!adminUser || adminUser.role !== 'admin') {
-            return NextResponse.json(
-                { success: false, message: 'Access denied. Admin role required.' },
                 { status: 401 }
             );
         }
@@ -132,20 +114,11 @@ export async function DELETE(
     try {
         await connectDB();
 
-        // Authenticate user
-        const { user, error } = await protect(request);
+        // Authenticate admin user strictly
+        const { user, error } = await protectAdmin(request);
         if (error || !user) {
             return NextResponse.json(
                 { success: false, message: error || 'Authentication required' },
-                { status: 401 }
-            );
-        }
-
-        // Verify admin user
-        const adminUser = await User.findById(user._id);
-        if (!adminUser || adminUser.role !== 'admin') {
-            return NextResponse.json(
-                { success: false, message: 'Access denied. Admin role required.' },
                 { status: 401 }
             );
         }

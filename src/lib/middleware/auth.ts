@@ -28,15 +28,14 @@ export const protect = async (req: NextRequest): Promise<{ user: AuthenticatedRe
         }
         // Check for token in cookies (NextRequest cookies or header)
         if (!token) {
-            token = req.cookies.get('token')?.value;
+            token = req.cookies.get('admin_token')?.value || req.cookies.get('token')?.value;
         }
         if (!token) {
             const cookies = req.headers.get('cookie');
             if (cookies) {
+                const adminMatch = cookies.match(/admin_token=([^;]+)/);
                 const tokenMatch = cookies.match(/token=([^;]+)/);
-                if (tokenMatch) {
-                    token = tokenMatch[1];
-                }
+                token = adminMatch ? adminMatch[1] : (tokenMatch ? tokenMatch[1] : undefined);
             }
         }
         // Check query params for token
@@ -75,6 +74,69 @@ export const protect = async (req: NextRequest): Promise<{ user: AuthenticatedRe
     } catch (error) {
         console.error('Auth middleware error:', error);
         return { user: null, error: 'Internal server error in authentication.' };
+    }
+};
+
+// Strict middleware for protecting admin endpoints
+export const protectAdmin = async (req: NextRequest): Promise<{ user: AuthenticatedRequest['user'] | null; error?: string }> => {
+    try {
+        await connectDB();
+
+        let token: string | undefined;
+
+        // 1. Check for token in Authorization header (preferred)
+        const authHeader = req.headers.get('authorization');
+        if (authHeader && authHeader.startsWith('Bearer ')) {
+            token = authHeader.split(' ')[1];
+        }
+
+        // 2. Check for admin_token cookie FIRST, then fallback to token cookie
+        if (!token) {
+            token = req.cookies.get('admin_token')?.value || req.cookies.get('token')?.value;
+        }
+
+        // 3. Fallback cookie header parse
+        if (!token) {
+            const cookies = req.headers.get('cookie');
+            if (cookies) {
+                const adminMatch = cookies.match(/admin_token=([^;]+)/);
+                const tokenMatch = cookies.match(/token=([^;]+)/);
+                token = adminMatch ? adminMatch[1] : (tokenMatch ? tokenMatch[1] : undefined);
+            }
+        }
+
+        if (!token) {
+            return { user: null, error: 'Authentication required. Please log in as admin.' };
+        }
+
+        // 4. Verify cryptographic signature of JWT
+        const jwtSecret = process.env.JWT_SECRET || 'fallback-secret-change-in-production';
+        let decoded: { userId?: string; id?: string; role?: string };
+        try {
+            decoded = jwt.verify(token, jwtSecret) as { userId?: string; id?: string; role?: string };
+        } catch {
+            return { user: null, error: 'Admin session expired or invalid. Please log in again.' };
+        }
+
+        const userId = decoded.userId || decoded.id;
+        if (!userId) {
+            return { user: null, error: 'Malformed admin credentials.' };
+        }
+
+        // 5. Look up user in database & enforce active admin role
+        const user = await User.findById(userId).select('-password');
+        if (!user || !user.isActive) {
+            return { user: null, error: 'Admin account not found or deactivated.' };
+        }
+
+        if (user.role !== 'admin') {
+            return { user: null, error: 'Access denied. Admin role required.' };
+        }
+
+        return { user };
+    } catch (error) {
+        console.error('protectAdmin middleware error:', error);
+        return { user: null, error: 'Internal server error in admin authentication.' };
     }
 };
 

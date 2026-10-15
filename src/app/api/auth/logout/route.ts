@@ -10,17 +10,21 @@ export async function POST(request: NextRequest) {
 
         // 1. Clear via Next.js cookies API
         response.cookies.delete('token');
+        response.cookies.delete('admin_token');
 
         // 2. Clear with explicit past expiration and path
         const isHttps = request.nextUrl.protocol === 'https:' || request.headers.get('x-forwarded-proto') === 'https';
-        response.cookies.set('token', '', {
+        const expiredOptions = {
             httpOnly: true,
             secure: isHttps,
-            sameSite: 'lax',
+            sameSite: 'lax' as const,
             maxAge: 0,
             expires: new Date(0),
             path: '/'
-        });
+        };
+
+        response.cookies.set('token', '', expiredOptions);
+        response.cookies.set('admin_token', '', expiredOptions);
 
         return response;
 

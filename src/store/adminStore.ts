@@ -248,8 +248,10 @@ const useAdminStore = create<AdminState & AdminActions>()(
                 }
 
                 if (typeof document !== 'undefined') {
+                    document.cookie = 'admin_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; max-age=0; SameSite=Lax';
                     document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; max-age=0; SameSite=Lax';
                     if (typeof window !== 'undefined' && window.location.hostname) {
+                        document.cookie = `admin_token=; path=/; domain=${window.location.hostname}; expires=Thu, 01 Jan 1970 00:00:00 GMT; max-age=0; SameSite=Lax`;
                         document.cookie = `token=; path=/; domain=${window.location.hostname}; expires=Thu, 01 Jan 1970 00:00:00 GMT; max-age=0; SameSite=Lax`;
                     }
                 }
@@ -591,6 +593,7 @@ const useAdminStore = create<AdminState & AdminActions>()(
             name: 'admin-storage', // localStorage key
             partialize: (state) => ({
                 user: state.user,
+                token: state.token,
                 isAuthenticated: state.isAuthenticated,
             }),
         }
