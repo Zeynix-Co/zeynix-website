@@ -49,7 +49,8 @@ const HALLOWEEN_SLUGS = new Set([
     'mystic-haunted-mansion-harvest-moon-purple-tee',
     'halloween-rip-still-dead-tee',
     'spookie-peeking-cat-skeletons-tee',
-    'halloween-i-scream-spooky-season-black-tee'
+    'halloween-i-scream-spooky-season-black-tee',
+    'halloween-kawaii-pink-bow-ghosts-cherry-blossom-pink-tee'
 ]);
 
 const EXCLUDED_FROM_HALLOWEEN = new Set([

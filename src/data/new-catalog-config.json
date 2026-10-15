@@ -4029,5 +4029,60 @@
         "inStock": true
       }
     ]
+  },
+  {
+    "title": "Kawaii 'Pink Bow Ghosts & Cherry Blossom Dream' Halloween Oversized Pink T-Shirt",
+    "slug": "halloween-kawaii-pink-bow-ghosts-cherry-blossom-pink-tee",
+    "brand": "Zeynix",
+    "description": "Pastel kawaii aesthetic meets spooky season enchantment. Cut in a contemporary drop-shoulder oversized silhouette from 240 GSM organic combed cotton in delicate baby pink. The front is adorned with an artistic branch of blooming sakura cherry blossoms drifting with delicate petals, accompanied by a minimalist flower sketch and the inspiring calligraphy quote 'If you can dream it you can do it'. The back brings pure whimsical Halloween joy with a delightful constellation of adorable sheet ghosts wearing soft pink ribbons and carrying trick-or-treat jack-o'-lantern candy baskets.",
+    "images": [
+      "/images/products/new/halloween-kawaii-pink-bow-ghosts-cherry-blossom-pink-tee/front.png",
+      "/images/products/new/halloween-kawaii-pink-bow-ghosts-cherry-blossom-pink-tee/back.png",
+      "/images/products/new/halloween-kawaii-pink-bow-ghosts-cherry-blossom-pink-tee/whole.png"
+    ],
+    "mainImage": "/images/products/new/halloween-kawaii-pink-bow-ghosts-cherry-blossom-pink-tee/front.png",
+    "category": "unisex",
+    "subcategory": "t-shirts",
+    "actualPrice": 1349,
+    "originalPrice": 1349,
+    "discountPrice": 699,
+    "price": 699,
+    "discount": 48,
+    "rating": 5,
+    "totalRatings": 315,
+    "productFit": "OVERSIZED FIT",
+    "featured": false,
+    "sizes": [
+      {
+        "size": "XS",
+        "stock": 45,
+        "inStock": true
+      },
+      {
+        "size": "S",
+        "stock": 90,
+        "inStock": true
+      },
+      {
+        "size": "M",
+        "stock": 155,
+        "inStock": true
+      },
+      {
+        "size": "L",
+        "stock": 180,
+        "inStock": true
+      },
+      {
+        "size": "XL",
+        "stock": 120,
+        "inStock": true
+      },
+      {
+        "size": "XXL",
+        "stock": 65,
+        "inStock": true
+      }
+    ]
   }
 ]

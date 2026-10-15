@@ -71,12 +71,18 @@ export default function HomePage() {
 
                     // Section 1: Top 4 casual streetwear products
                     const nonHalloween = allProds.filter(
-                        (p: any) => !HALLOWEEN_SLUGS.includes(p.slug)
+                        (p: any) => !HALLOWEEN_SLUGS.includes(p.slug) &&
+                                    p.slug !== 'halloween-i-scream-spooky-season-black-tee' &&
+                                    p.slug !== 'halloween-kawaii-pink-bow-ghosts-cherry-blossom-pink-tee'
                     );
                     setCasualProducts(nonHalloween.slice(0, 4));
 
-                    // New arrivals: Use top products directly from allProds (eliminates redundant second network request)
-                    setNewArrivals(allProds.slice(0, 8));
+                    // New arrivals: Use top products directly from allProds (excluding standalone Halloween drops)
+                    const filteredArrivals = allProds.filter(
+                        (p: any) => p.slug !== 'halloween-kawaii-pink-bow-ghosts-cherry-blossom-pink-tee' &&
+                                    p.slug !== 'halloween-i-scream-spooky-season-black-tee'
+                    );
+                    setNewArrivals(filteredArrivals.slice(0, 8));
                 }
             } catch (err) {
                 console.error('Failed to load homepage products:', err);
