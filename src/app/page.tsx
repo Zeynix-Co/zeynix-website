@@ -335,7 +335,7 @@ export default function HomePage() {
                             </h2>
                         </div>
                         <Link
-                            href="/products"
+                            href="/products/casual"
                             className="inline-flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-5 sm:py-2.5 rounded-xl bg-[#070F2B] text-white hover:bg-[#B5945B] hover:text-[#070F2B] font-extrabold text-xs sm:text-sm uppercase tracking-wider transition-all duration-300 shadow-sm hover:shadow-md active:scale-95 group cursor-pointer border border-[#070F2B] shrink-0"
                         >
                             <span>View All</span>
