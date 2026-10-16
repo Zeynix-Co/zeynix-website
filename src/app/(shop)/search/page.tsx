@@ -320,6 +320,7 @@ function SearchResultsPageContent() {
                             <>
                                 <ProductGrid
                                     products={filteredProducts}
+                                    storageKey="/search"
                                 />
 
                                 {/* Load More */}

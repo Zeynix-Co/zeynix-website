@@ -93,6 +93,52 @@ export default function HomePage() {
         loadHomeData();
     }, []);
 
+    const restoredScrollRef = useRef(false);
+
+    // Restore scroll position or highlight the product the user just visited on Homepage
+    useEffect(() => {
+        if (isLoading || casualProducts.length === 0 || restoredScrollRef.current) return;
+        if (typeof window === 'undefined') return;
+
+        try {
+            const lastClickedId = sessionStorage.getItem('zeynix_last_clicked_product');
+            const savedScroll = sessionStorage.getItem('zeynix_scroll_/');
+
+            if (lastClickedId) {
+                const timer = setTimeout(() => {
+                    const el = document.getElementById(`product-card-${lastClickedId}`);
+                    if (el) {
+                        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        el.classList.add('ring-4', 'ring-[#B5945B]/80', 'ring-offset-2', 'transition-all');
+                        setTimeout(() => {
+                            el.classList.remove('ring-4', 'ring-[#B5945B]/80', 'ring-offset-2');
+                        }, 2500);
+                        restoredScrollRef.current = true;
+                        sessionStorage.removeItem('zeynix_last_clicked_product');
+                    } else if (savedScroll) {
+                        const y = parseInt(savedScroll, 10);
+                        if (!isNaN(y)) {
+                            window.scrollTo({ top: y, behavior: 'smooth' });
+                            restoredScrollRef.current = true;
+                        }
+                    }
+                }, 120);
+                return () => clearTimeout(timer);
+            } else if (savedScroll) {
+                const y = parseInt(savedScroll, 10);
+                if (!isNaN(y) && y > 0) {
+                    const timer = setTimeout(() => {
+                        window.scrollTo({ top: y, behavior: 'smooth' });
+                        restoredScrollRef.current = true;
+                    }, 120);
+                    return () => clearTimeout(timer);
+                }
+            }
+        } catch (e) {
+            // Ignore
+        }
+    }, [isLoading, casualProducts.length]);
+
     const handleWishlistToggle = (e: React.MouseEvent, product: any) => {
         e.preventDefault();
         e.stopPropagation();

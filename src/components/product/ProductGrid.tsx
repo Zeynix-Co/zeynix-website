@@ -14,6 +14,7 @@ interface ProductGridProps {
     className?: string;
     enableInfiniteScroll?: boolean;
     productsPerPage?: number;
+    storageKey?: string;
 }
 
 type ViewMode = 'grid' | 'list';
@@ -25,25 +26,129 @@ export default memo(function ProductGrid({
     hasMore = false,
     className = '',
     enableInfiniteScroll = false,
-    productsPerPage = 8
+    productsPerPage = 8,
+    storageKey
 }: ProductGridProps) {
     const [viewMode, setViewMode] = useState<ViewMode>('grid');
-    const [currentPage, setCurrentPage] = useState(1);
+
+    // Initialize section/page from URL query parameters or sessionStorage
+    const [currentPage, setCurrentPage] = useState<number>(() => {
+        if (typeof window === 'undefined') return 1;
+        try {
+            const params = new URLSearchParams(window.location.search);
+            const urlSec = parseInt(params.get('section') || params.get('page') || '0', 10);
+            if (urlSec > 0) return urlSec;
+
+            const key = storageKey || window.location.pathname;
+            const savedSec = parseInt(sessionStorage.getItem(`zeynix_section_${key}`) || '0', 10);
+            if (savedSec > 0) return savedSec;
+        } catch (e) {
+            // Ignore storage errors
+        }
+        return 1;
+    });
+
     const [displayedProducts, setDisplayedProducts] = useState<Product[]>([]);
     const loadMoreRef = useRef<HTMLDivElement>(null);
     const observerRef = useRef<IntersectionObserver | null>(null);
+    const gridContainerRef = useRef<HTMLDivElement>(null);
+    const restoredScrollRef = useRef<boolean>(false);
 
-    // Update displayed products when products change
+    // Sync section state on browser back/forward (popstate)
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+
+        const handlePopState = () => {
+            try {
+                const params = new URLSearchParams(window.location.search);
+                const urlSec = parseInt(params.get('section') || params.get('page') || '0', 10);
+                if (urlSec > 0) {
+                    setCurrentPage(urlSec);
+                    return;
+                }
+                const key = storageKey || window.location.pathname;
+                const savedSec = parseInt(sessionStorage.getItem(`zeynix_section_${key}`) || '0', 10);
+                if (savedSec > 0) {
+                    setCurrentPage(savedSec);
+                } else {
+                    setCurrentPage(1);
+                }
+            } catch (e) {
+                // Ignore
+            }
+        };
+
+        window.addEventListener('popstate', handlePopState);
+        return () => window.removeEventListener('popstate', handlePopState);
+    }, [storageKey]);
+
+    // Total pages calculation
+    const totalPages = Math.max(1, Math.ceil(products.length / productsPerPage));
+
+    // Clamp currentPage only if products are loaded and it exceeds totalPages
+    useEffect(() => {
+        if (products.length > 0 && currentPage > totalPages) {
+            setCurrentPage(totalPages);
+        }
+    }, [products.length, totalPages, currentPage]);
+
+    // Update displayed products when products or currentPage change
     useEffect(() => {
         if (enableInfiniteScroll) {
             setDisplayedProducts(products);
         } else {
-            const totalPages = Math.ceil(products.length / productsPerPage);
-            const startIndex = (currentPage - 1) * productsPerPage;
+            const validPage = Math.min(Math.max(1, currentPage), Math.max(1, Math.ceil(products.length / productsPerPage) || 1));
+            const startIndex = (validPage - 1) * productsPerPage;
             const endIndex = startIndex + productsPerPage;
             setDisplayedProducts(products.slice(startIndex, endIndex));
         }
     }, [products, currentPage, enableInfiniteScroll, productsPerPage]);
+
+    // Restore scroll position or highlight the product the user just visited
+    useEffect(() => {
+        if (typeof window === 'undefined' || restoredScrollRef.current) return;
+        if (products.length === 0 || displayedProducts.length === 0) return;
+
+        try {
+            const lastClickedId = sessionStorage.getItem('zeynix_last_clicked_product');
+            const key = storageKey || window.location.pathname;
+            const savedScroll = sessionStorage.getItem(`zeynix_scroll_${key}`);
+
+            if (lastClickedId) {
+                const timer = setTimeout(() => {
+                    const el = document.getElementById(`product-card-${lastClickedId}`);
+                    if (el) {
+                        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        // Add sleek highlight ring to guide the user back to where they left off
+                        el.classList.add('ring-4', 'ring-[#B5945B]/80', 'ring-offset-2', 'transition-all');
+                        setTimeout(() => {
+                            el.classList.remove('ring-4', 'ring-[#B5945B]/80', 'ring-offset-2');
+                        }, 2500);
+                        restoredScrollRef.current = true;
+                        sessionStorage.removeItem('zeynix_last_clicked_product');
+                    } else if (savedScroll) {
+                        const y = parseInt(savedScroll, 10);
+                        if (!isNaN(y) && y > 0) {
+                            window.scrollTo({ top: y, behavior: 'smooth' });
+                            restoredScrollRef.current = true;
+                        }
+                    }
+                }, 120);
+                return () => clearTimeout(timer);
+            } else if (savedScroll) {
+                const y = parseInt(savedScroll, 10);
+                if (!isNaN(y) && y > 0) {
+                    const timer = setTimeout(() => {
+                        window.scrollTo({ top: y, behavior: 'smooth' });
+                        restoredScrollRef.current = true;
+                    }, 120);
+                    return () => clearTimeout(timer);
+                }
+            }
+        } catch (e) {
+            // Ignore
+        }
+    }, [products.length, displayedProducts.length, storageKey]);
 
     // Infinite scroll setup
     useEffect(() => {
@@ -71,14 +176,35 @@ export default memo(function ProductGrid({
         };
     }, [enableInfiniteScroll, onLoadMore, hasMore, isLoading]);
 
-    const totalPages = Math.ceil(products.length / productsPerPage);
     const startIndex = (currentPage - 1) * productsPerPage;
     const endIndex = startIndex + productsPerPage;
     const currentProducts = enableInfiniteScroll ? displayedProducts : products.slice(startIndex, endIndex);
 
     const handlePageChange = (page: number) => {
-        setCurrentPage(page);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        const targetPage = Math.min(Math.max(1, page), totalPages);
+        setCurrentPage(targetPage);
+
+        // Update URL search parameters so browser history keeps the section
+        if (typeof window !== 'undefined') {
+            try {
+                const url = new URL(window.location.href);
+                url.searchParams.set('section', targetPage.toString());
+                window.history.pushState({ ...window.history.state, section: targetPage }, '', url.toString());
+
+                const key = storageKey || window.location.pathname;
+                sessionStorage.setItem(`zeynix_section_${key}`, targetPage.toString());
+                sessionStorage.setItem('zeynix_last_active_section', targetPage.toString());
+            } catch (e) {
+                // Ignore
+            }
+        }
+
+        // Smoothly scroll back to the top of the product grid
+        if (gridContainerRef.current) {
+            gridContainerRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
     };
 
     // Calculate visible section buttons (Maximum 3 section buttons shown at a time)
@@ -86,11 +212,13 @@ export default memo(function ProductGrid({
         if (totalPages <= 3) {
             return Array.from({ length: totalPages }, (_, i) => i + 1);
         }
-        if (currentPage <= 3) {
+        if (currentPage <= 2) {
             return [1, 2, 3];
         }
-        const start = Math.min(currentPage - 1, totalPages - 2);
-        return [start, start + 1, start + 2];
+        if (currentPage >= totalPages - 1) {
+            return [totalPages - 2, totalPages - 1, totalPages];
+        }
+        return [currentPage - 1, currentPage, currentPage + 1];
     };
 
     const visiblePages = getVisiblePages();
@@ -99,7 +227,7 @@ export default memo(function ProductGrid({
         if (onLoadMore) {
             onLoadMore();
         } else {
-            setCurrentPage(prev => prev + 1);
+            handlePageChange(currentPage + 1);
         }
     };
 
@@ -125,7 +253,7 @@ export default memo(function ProductGrid({
     }
 
     return (
-        <div className={className}>
+        <div ref={gridContainerRef} id="products-grid-section" className={className}>
             {/* View Mode Toggle & Results Info */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5 sm:mb-6">
                 <div className="flex items-center justify-between sm:justify-start space-x-3 sm:space-x-4">

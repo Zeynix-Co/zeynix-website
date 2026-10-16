@@ -189,6 +189,7 @@ export default function CategoryProductsPage() {
                         <ProductGrid
                             products={filteredProducts}
                             productsPerPage={8}
+                            storageKey={`/products/${category.toLowerCase()}`}
                         />
                     </div>
                 </div>

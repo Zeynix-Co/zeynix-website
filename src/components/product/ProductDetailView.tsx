@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import {
     Star, Heart, Share2, ShieldCheck, Truck, RotateCcw,
     ChevronLeft, ChevronRight, Check, ShoppingCart, Zap,
-    Ruler, Sparkles, ZoomIn, X
+    Ruler, Sparkles, ZoomIn, X, ArrowLeft
 } from 'lucide-react';
 import { Product } from '@/data/products';
 import { APP_CONFIG } from '@/lib/constants';
@@ -349,25 +349,68 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam }: Pr
         return labels[index] || `View ${index + 1}`;
     };
 
+    const handleGoBack = () => {
+        if (typeof window !== 'undefined') {
+            const returnUrl = sessionStorage.getItem('zeynix_return_url');
+            if (returnUrl && !returnUrl.includes(productIdOrSlug)) {
+                router.push(returnUrl);
+                return;
+            }
+            if (window.history.length > 1) {
+                router.back();
+                return;
+            }
+        }
+        // Fallback to category page with saved section if any
+        const cat = (product?.category || 'casual').toLowerCase();
+        let fallbackUrl = `/products/${cat}`;
+        if (typeof window !== 'undefined') {
+            const savedSec = sessionStorage.getItem(`zeynix_section_/products/${cat}`);
+            if (savedSec) {
+                fallbackUrl += `?section=${savedSec}`;
+            }
+        }
+        router.push(fallbackUrl);
+    };
+
+    const categoryName = (product?.category || 'casual').toLowerCase();
+    const savedCatSection = typeof window !== 'undefined'
+        ? sessionStorage.getItem(`zeynix_section_/products/${categoryName}`)
+        : null;
+    const categoryLink = `/products/${categoryName}${savedCatSection ? `?section=${savedCatSection}` : ''}`;
+
     return (
         <div className="min-h-screen bg-[#FAF8F5] text-[#070F2B]">
             <Header />
 
-            {/* Breadcrumbs Header */}
+            {/* Breadcrumbs & Navigation Header */}
             <div className="bg-white/80 border-b border-gray-200/80 backdrop-blur-xs sticky top-16 z-30">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between text-[11px] font-bold text-gray-500 uppercase tracking-wider">
-                    <div className="flex items-center gap-2 truncate">
-                        <Link href="/" className="hover:text-[#B5945B] transition-colors">Home</Link>
-                        <span>/</span>
-                        <Link href="/products" className="hover:text-[#B5945B] transition-colors">Products</Link>
-                        <span>/</span>
-                        <Link href={`/products/${product.category.toLowerCase()}`} className="hover:text-[#B5945B] transition-colors">
-                            {product.category.toLowerCase() === 'unisexual' || product.category.toLowerCase() === 'unisex' ? 'Unisex' : product.category.toLowerCase() === 'casual' ? 'Streetwear' : product.category}
-                        </Link>
-                        <span>/</span>
-                        <span className="text-[#070F2B] font-extrabold truncate max-w-[200px] sm:max-w-md">
-                            {product.name}
-                        </span>
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between text-[11px] font-bold text-gray-500 uppercase tracking-wider">
+                    <div className="flex items-center gap-2 sm:gap-3 truncate">
+                        {/* Quick Back Button */}
+                        <button
+                            onClick={handleGoBack}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gray-100 hover:bg-[#070F2B] text-[#070F2B] hover:text-[#FFCB05] transition-all font-black text-[10px] sm:text-[11px] uppercase tracking-wider cursor-pointer shadow-2xs group active:scale-95 shrink-0 border border-gray-200/60 hover:border-[#070F2B]"
+                            title="Go back to last browsing section"
+                            aria-label="Back to products"
+                        >
+                            <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
+                            <span>Back</span>
+                        </button>
+
+                        <div className="flex items-center gap-2 truncate">
+                            <Link href="/" className="hover:text-[#B5945B] transition-colors shrink-0">Home</Link>
+                            <span>/</span>
+                            <Link href="/products" className="hover:text-[#B5945B] transition-colors shrink-0">Products</Link>
+                            <span>/</span>
+                            <Link href={categoryLink} className="hover:text-[#B5945B] transition-colors shrink-0">
+                                {product.category.toLowerCase() === 'unisexual' || product.category.toLowerCase() === 'unisex' ? 'Unisex' : product.category.toLowerCase() === 'casual' ? 'Streetwear' : product.category}
+                            </Link>
+                            <span>/</span>
+                            <span className="text-[#070F2B] font-extrabold truncate max-w-[140px] sm:max-w-md">
+                                {product.name}
+                            </span>
+                        </div>
                     </div>
 
                     <div className="flex items-center gap-3 shrink-0">

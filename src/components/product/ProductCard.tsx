@@ -43,11 +43,25 @@ export default function ProductCard({ product, theme = 'default' }: ProductCardP
 
     const isAlreadyInCart = isInCart(product.id, selectedSize);
 
+    const saveBrowsingState = () => {
+        if (typeof window !== 'undefined') {
+            try {
+                sessionStorage.setItem('zeynix_return_url', window.location.href);
+                sessionStorage.setItem('zeynix_last_clicked_product', String(product.id || product.slug));
+                sessionStorage.setItem('zeynix_last_scroll_pos', window.scrollY.toString());
+                sessionStorage.setItem(`zeynix_scroll_${window.location.pathname}`, window.scrollY.toString());
+            } catch (e) {
+                // Ignore storage errors
+            }
+        }
+    };
+
     const handleCardClick = (e: React.MouseEvent) => {
         const target = e.target as HTMLElement;
         if (target.closest('button') || target.closest('input') || target.closest('select') || target.closest('[data-stop-propagation="true"]')) {
             return;
         }
+        saveBrowsingState();
         router.push(productHref);
     };
 
@@ -92,6 +106,7 @@ export default function ProductCard({ product, theme = 'default' }: ProductCardP
 
     return (
         <div
+            id={`product-card-${product.id || product.slug}`}
             onClick={handleCardClick}
             className={`cursor-pointer group relative rounded-2xl transition-all duration-300 flex flex-col justify-between h-full overflow-hidden ${
                 isHalloween
@@ -122,7 +137,7 @@ export default function ProductCard({ product, theme = 'default' }: ProductCardP
                 )}
 
                 {/* High-Resolution Product Image with object-contain & Hover Back-View */}
-                <Link href={productHref} className="relative w-full h-full block">
+                <Link href={productHref} onClick={saveBrowsingState} className="relative w-full h-full block">
                     <Image
                         src={mainImageUrl}
                         alt={product.name}
@@ -177,7 +192,10 @@ export default function ProductCard({ product, theme = 'default' }: ProductCardP
                 >
                     <Link
                         href={productHref}
-                        onClick={(e) => e.stopPropagation()}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            saveBrowsingState();
+                        }}
                         className={`flex-1 min-h-[36px] text-[10px] font-extrabold uppercase tracking-wider rounded-xl shadow-lg transition-all duration-200 flex items-center justify-center gap-1.5 px-3 ${
                             isHalloween
                                 ? 'bg-[#FF7518] hover:bg-[#FFA500] text-black font-black'

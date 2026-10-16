@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import {
     Filter,
@@ -138,7 +138,27 @@ export default function FilterProducts({ searchQuery: propSearchQuery }: FilterP
     const urlCategory = searchParams?.get('category') || '';
     const urlQuery = propSearchQuery ?? (searchParams?.get('q') || '');
 
-    const [selectedCategory, setSelectedCategory] = useState<string>('All');
+    // Initialize category from URL parameter or sessionStorage
+    const [selectedCategory, setSelectedCategory] = useState<string>(() => {
+        if (typeof window === 'undefined') return 'All';
+        try {
+            const params = new URLSearchParams(window.location.search);
+            const catParam = params.get('category');
+            if (catParam) {
+                const matched = FILTER_CATEGORIES.find(c => c.id.toLowerCase() === catParam.toLowerCase());
+                if (matched) return matched.id;
+            }
+            const savedCat = sessionStorage.getItem('zeynix_filter_category');
+            if (savedCat) {
+                const matched = FILTER_CATEGORIES.find(c => c.id.toLowerCase() === savedCat.toLowerCase());
+                if (matched) return matched.id;
+            }
+        } catch (e) {
+            // Ignore
+        }
+        return 'All';
+    });
+
     const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
     const [selectedPriceRange, setSelectedPriceRange] = useState<string>('all');
     const [sortBy, setSortBy] = useState<SortOption>('featured');
@@ -150,6 +170,7 @@ export default function FilterProducts({ searchQuery: propSearchQuery }: FilterP
     const [showMobileFilters, setShowMobileFilters] = useState(false);
     const [showWishlistModal, setShowWishlistModal] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+    const restoredScrollRef = useRef(false);
 
     // Sync with URL category parameter if present
     useEffect(() => {
@@ -160,6 +181,68 @@ export default function FilterProducts({ searchQuery: propSearchQuery }: FilterP
             }
         }
     }, [urlCategory]);
+
+    const handleSelectCategory = (catId: string) => {
+        setSelectedCategory(catId);
+        if (typeof window !== 'undefined') {
+            try {
+                const url = new URL(window.location.href);
+                if (catId === 'All') {
+                    url.searchParams.delete('category');
+                } else {
+                    url.searchParams.set('category', catId);
+                }
+                window.history.replaceState({ ...window.history.state, category: catId }, '', url.toString());
+                sessionStorage.setItem('zeynix_filter_category', catId);
+            } catch (e) {
+                // Ignore
+            }
+        }
+    };
+
+    // Restore scroll position or highlight the product the user just visited
+    useEffect(() => {
+        if (isLoading || products.length === 0 || restoredScrollRef.current) return;
+        if (typeof window === 'undefined') return;
+
+        try {
+            const lastClickedId = sessionStorage.getItem('zeynix_last_clicked_product');
+            const savedScroll = sessionStorage.getItem('zeynix_scroll_/products');
+
+            if (lastClickedId) {
+                const timer = setTimeout(() => {
+                    const el = document.getElementById(`product-card-${lastClickedId}`);
+                    if (el) {
+                        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        el.classList.add('ring-4', 'ring-[#B5945B]/80', 'ring-offset-2', 'transition-all');
+                        setTimeout(() => {
+                            el.classList.remove('ring-4', 'ring-[#B5945B]/80', 'ring-offset-2');
+                        }, 2500);
+                        restoredScrollRef.current = true;
+                        sessionStorage.removeItem('zeynix_last_clicked_product');
+                    } else if (savedScroll) {
+                        const y = parseInt(savedScroll, 10);
+                        if (!isNaN(y) && y > 0) {
+                            window.scrollTo({ top: y, behavior: 'smooth' });
+                            restoredScrollRef.current = true;
+                        }
+                    }
+                }, 120);
+                return () => clearTimeout(timer);
+            } else if (savedScroll) {
+                const y = parseInt(savedScroll, 10);
+                if (!isNaN(y) && y > 0) {
+                    const timer = setTimeout(() => {
+                        window.scrollTo({ top: y, behavior: 'smooth' });
+                        restoredScrollRef.current = true;
+                    }, 120);
+                    return () => clearTimeout(timer);
+                }
+            }
+        } catch (e) {
+            // Ignore
+        }
+    }, [isLoading, products.length]);
 
     // Fetch full catalog of products
     useEffect(() => {
@@ -198,10 +281,13 @@ export default function FilterProducts({ searchQuery: propSearchQuery }: FilterP
 
     // Reset all filters
     const clearAllFilters = () => {
-        setSelectedCategory('All');
+        handleSelectCategory('All');
         setSelectedSizes([]);
         setSelectedPriceRange('all');
         setSortBy('featured');
+        if (typeof window !== 'undefined') {
+            sessionStorage.removeItem('zeynix_filter_category');
+        }
 
         // Clear query param if present
         if (urlQuery) {
@@ -407,7 +493,7 @@ export default function FilterProducts({ searchQuery: propSearchQuery }: FilterP
                                     return (
                                         <button
                                             key={category.id}
-                                            onClick={() => setSelectedCategory(category.id)}
+                                            onClick={() => handleSelectCategory(category.id)}
                                             className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer text-left group ${
                                                 isSelected
                                                     ? 'bg-[#070F2B] text-white shadow-xs'
@@ -610,7 +696,7 @@ export default function FilterProducts({ searchQuery: propSearchQuery }: FilterP
                                 <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#070F2B] text-white text-xs font-bold rounded-lg shadow-2xs">
                                     <span className="text-[#FFCB05]">{FILTER_CATEGORIES.find(c => c.id === selectedCategory)?.label}</span>
                                     <button
-                                        onClick={() => setSelectedCategory('All')}
+                                        onClick={() => handleSelectCategory('All')}
                                         className="hover:text-rose-400 cursor-pointer"
                                         aria-label="Clear category filter"
                                     >
@@ -762,7 +848,7 @@ export default function FilterProducts({ searchQuery: propSearchQuery }: FilterP
                                         return (
                                             <button
                                                 key={category.id}
-                                                onClick={() => setSelectedCategory(category.id)}
+                                                onClick={() => handleSelectCategory(category.id)}
                                                 className={`w-full flex items-center justify-between p-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer text-left ${
                                                     isSelected
                                                         ? 'bg-[#070F2B] text-white shadow-xs'
