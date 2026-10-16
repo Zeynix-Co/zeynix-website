@@ -24,13 +24,23 @@ interface AddressForm {
 }
 
 interface CheckoutFormProps {
-    onOrderCreated: (orderId: string) => void;
+    onOrderCreated: (orderId: string, orderTotal?: number) => void;
 }
 
 export default function CheckoutForm({ onOrderCreated }: CheckoutFormProps) {
     const router = useRouter();
     const { user } = useAuthStore();
-    const { items, totalAmount, clearCart } = useCartStore();
+    const { items, removeSelectedItemsFromCart } = useCartStore();
+
+    const selectedItems = items.filter((item) => item.selected !== false);
+    const selectedTotalAmount = selectedItems.reduce((total, item) => {
+        const price = item.customization
+            ? (item.customization.basePrice + item.customization.customizationPrice)
+            : ((item.product.discountPrice && item.product.discountPrice < item.product.price)
+                ? item.product.discountPrice
+                : item.product.price);
+        return total + (price * item.quantity);
+    }, 0);
 
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [paymentMethod, setPaymentMethod] = useState<'whatsapp' | 'razorpay'>('razorpay');
@@ -137,19 +147,26 @@ export default function CheckoutForm({ onOrderCreated }: CheckoutFormProps) {
             return;
         }
 
+        if (selectedItems.length === 0) {
+            alert('Please select at least one item from the Order Summary to place your order.');
+            return;
+        }
+
         setIsSubmitting(true);
 
         try {
-            // Create order data
+            // Create order data using only selected items
             const orderData = {
-                items: items.map(item => ({
+                items: selectedItems.map(item => ({
                     productId: item.product.id,
                     size: item.size,
                     quantity: item.quantity,
-                    price: item.product.discountPrice || item.product.price,
+                    price: item.customization
+                        ? (item.customization.basePrice + item.customization.customizationPrice)
+                        : ((item.product.discountPrice && item.product.discountPrice < item.product.price) ? item.product.discountPrice : item.product.price),
                     customization: item.customization || undefined
                 })),
-                totalAmount,
+                totalAmount: selectedTotalAmount,
                 shippingAddress: {
                     firstName: formData.firstName,
                     lastName: formData.lastName,
@@ -191,15 +208,15 @@ export default function CheckoutForm({ onOrderCreated }: CheckoutFormProps) {
                 setOrderCreated(true);
 
                 if (paymentMethod === 'whatsapp') {
-                    // Clear cart after successful order
-                    clearCart();
+                    // Remove only ordered (selected) items from cart
+                    removeSelectedItemsFromCart();
 
                     // Create enhanced WhatsApp message with order details
                     const order = result.data;
                     const address = `${formData.addressLine1}, ${formData.city}, ${formData.state} - ${formData.pincode}`;
 
-                    // Create detailed product information
-                    const productDetails = items.map((item, index) => {
+                    // Create detailed product information for selected items
+                    const productDetails = selectedItems.map((item, index) => {
                         // Generate product URL - try to get category from product or default to 'casual'
                         const category = 'casual'; // Default category since cart items don't store category
                         const productUrl = `${window.location.origin}/products/${category}/${item.product.id}`;
@@ -209,13 +226,17 @@ export default function CheckoutForm({ onOrderCreated }: CheckoutFormProps) {
                             ? item.product.images[0]
                             : `${window.location.origin}/images/placeholder.jpg`;
 
+                        const itemUnitPrice = item.customization
+                            ? (item.customization.basePrice + item.customization.customizationPrice)
+                            : ((item.product.discountPrice && item.product.discountPrice < item.product.price) ? item.product.discountPrice : item.product.price);
+
                         // Calculate item total
-                        const itemTotal = (item.product.discountPrice || item.product.price) * item.quantity;
+                        const itemTotal = itemUnitPrice * item.quantity;
 
                         return `${index + 1}. *${item.product.title}*
    Size: ${item.size}
    Quantity: ${item.quantity}
-   Price: ₹${item.product.discountPrice || item.product.price} each
+   Price: ₹${itemUnitPrice} each
    Total: ₹${itemTotal}
    Image: ${productImage}
    Link: ${productUrl}`;
@@ -230,7 +251,7 @@ I would like to place an order with the following details:
 *Order Items:*
 ${productDetails}
 
-*Order Total:* ₹${totalAmount}
+*Order Total:* ₹${selectedTotalAmount}
 
 *Customer Details:*
 Name: ${formData.firstName} ${formData.lastName}
@@ -253,7 +274,7 @@ Thank you!`;
                     window.open(whatsappUrl, '_blank');
 
                     // Also call the original callback for any additional handling
-                    onOrderCreated(result.data.id);
+                    onOrderCreated(result.data.id, selectedTotalAmount);
                 }
                 // For Paytm payment, we'll show the payment component
             } else {
@@ -471,8 +492,8 @@ Thank you!`;
                     </h3>
                     <div className="space-y-2">
                         <div className="flex justify-between">
-                            <span className="text-gray-600">Items ({items.length})</span>
-                            <span className="font-medium text-gray-600">{formatPrice(totalAmount)}</span>
+                            <span className="text-gray-600">Selected Items ({selectedItems.length})</span>
+                            <span className="font-medium text-gray-600">{formatPrice(selectedTotalAmount)}</span>
                         </div>
                         <div className="flex justify-between">
                             <span className="text-gray-600">Shipping</span>
@@ -482,7 +503,7 @@ Thank you!`;
                             <div className={`flex justify-between text-lg font-bold ${colorClasses.primary.text}`}>
                                 <span>Total</span>
                                 <span className={colorClasses.primary.text}>
-                                    {formatPrice(totalAmount)}
+                                    {formatPrice(selectedTotalAmount)}
                                 </span>
                             </div>
                         </div>
@@ -558,11 +579,20 @@ Thank you!`;
                     <div className="pt-4">
                         <Button
                             type="submit"
-                            disabled={isSubmitting}
+                            disabled={isSubmitting || selectedItems.length === 0}
                             className="w-full py-3 text-lg"
                         >
-                            {isSubmitting ? 'Creating Order...' : 'Create Order'}
+                            {isSubmitting
+                                ? 'Creating Order...'
+                                : selectedItems.length === 0
+                                    ? 'Select Items in Order Summary'
+                                    : `Create Order (${formatPrice(selectedTotalAmount)})`}
                         </Button>
+                        {selectedItems.length === 0 && (
+                            <p className="text-xs text-amber-600 text-center mt-2 font-medium">
+                                Please select at least 1 product from the Order Summary to place your order.
+                            </p>
+                        )}
                     </div>
                 )}
 
@@ -571,11 +601,11 @@ Thank you!`;
                     <div className="pt-6">
                         <RazorpayPayment
                             orderId={createdOrderId}
-                            amount={totalAmount}
+                            amount={selectedTotalAmount}
                             onPaymentSuccess={(razorpayOrderId, razorpayPaymentId) => {
                                 console.log('Payment successful:', { razorpayOrderId, razorpayPaymentId });
-                                clearCart();
-                                onOrderCreated(createdOrderId);
+                                removeSelectedItemsFromCart();
+                                onOrderCreated(createdOrderId, selectedTotalAmount);
                             }}
                             onPaymentFailure={(error) => {
                                 console.error('Payment failed:', error);

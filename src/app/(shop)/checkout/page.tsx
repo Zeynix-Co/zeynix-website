@@ -18,9 +18,12 @@ export default function CheckoutPage() {
     const { items, totalItems } = useCartStore();
     const [orderCreated, setOrderCreated] = useState(false);
     const [orderId, setOrderId] = useState<string>('');
+    const [orderTotal, setOrderTotal] = useState<number>(0);
 
     // Handle redirects
     useEffect(() => {
+        if (orderCreated) return;
+
         if (!isAuthenticated) {
             router.push('/login?redirect=/checkout');
             return;
@@ -30,15 +33,18 @@ export default function CheckoutPage() {
             router.push('/cart');
             return;
         }
-    }, [isAuthenticated, totalItems, router]);
+    }, [isAuthenticated, totalItems, router, orderCreated]);
 
     // Show loading or redirect if not ready
-    if (!isAuthenticated || totalItems === 0) {
+    if (!orderCreated && (!isAuthenticated || totalItems === 0)) {
         return null;
     }
 
-    const handleOrderCreated = (newOrderId: string) => {
+    const handleOrderCreated = (newOrderId: string, total?: number) => {
         setOrderId(newOrderId);
+        if (total !== undefined) {
+            setOrderTotal(total);
+        }
         setOrderCreated(true);
     };
 
@@ -84,10 +90,7 @@ export default function CheckoutPage() {
                                 <strong>Order ID:</strong> {orderId}
                             </p>
                             <p className="text-sm text-gray-700 mt-1">
-                                <strong>Total Amount:</strong> ₹{items.reduce((total, item) => {
-                                    const price = item.product.discountPrice || item.product.price;
-                                    return total + (price * item.quantity);
-                                }, 0).toLocaleString()}
+                                <strong>Total Amount:</strong> ₹{orderTotal.toLocaleString()}
                             </p>
                         </div>
 

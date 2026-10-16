@@ -1,7 +1,35 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-interface CartItem {
+export interface CartItem {
+    id: string;
+    product: {
+        id: string;
+        title: string;
+        images: string[];
+        price: number;
+        discountPrice?: number;
+    };
+    size: 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL';
+    color?: string;
+    quantity: number;
+    totalPrice: number;
+    selected?: boolean;
+    customization?: {
+        fit: string;
+        color: string;
+        customImage?: string;
+        customText?: string;
+        textColor?: string;
+        textFont?: string;
+        textSize?: string;
+        placement: string;
+        customizationPrice: number;
+        basePrice: number;
+    };
+}
+
+export interface SavedItem {
     id: string;
     product: {
         id: string;
@@ -28,34 +56,7 @@ interface CartItem {
     };
 }
 
-interface SavedItem {
-    id: string;
-    product: {
-        id: string;
-        title: string;
-        images: string[];
-        price: number;
-        discountPrice?: number;
-    };
-    size: 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL';
-    color?: string;
-    quantity: number;
-    totalPrice: number;
-    customization?: {
-        fit: string;
-        color: string;
-        customImage?: string;
-        customText?: string;
-        textColor?: string;
-        textFont?: string;
-        textSize?: string;
-        placement: string;
-        customizationPrice: number;
-        basePrice: number;
-    };
-}
-
-interface CartState {
+export interface CartState {
     items: CartItem[];
     savedForLater: SavedItem[];
     totalItems: number;
@@ -63,12 +64,23 @@ interface CartState {
     savedItemsCount: number;
 }
 
-interface CartActions {
+export interface CartActions {
     // Cart operations
     addToCart: (item: Omit<CartItem, 'id'>) => void;
     removeFromCart: (productId: string, size: string, customizationId?: string) => void;
+    removeItemById: (itemId: string) => void;
     updateQuantity: (productId: string, size: string, quantity: number, customizationId?: string) => void;
+    updateItemQuantity: (itemId: string, quantity: number) => void;
     clearCart: () => void;
+
+    // Item selection operations
+    toggleSelectItem: (itemId: string) => void;
+    setItemSelected: (itemId: string, selected: boolean) => void;
+    selectAllItems: () => void;
+    unselectAllItems: () => void;
+    removeSelectedItemsFromCart: () => void;
+    getSelectedItems: () => CartItem[];
+    getSelectedTotalAmount: () => number;
 
     // Saved for later operations
     moveToSaved: (productId: string, size: string, customizationId?: string) => void;
@@ -127,7 +139,8 @@ const useCartStore = create<CartState & CartActions>()(
                     const newItem = {
                         ...item,
                         id: `${item.product.id}-${item.size}${customSuffix}-${Date.now()}`,
-                        totalPrice: item.quantity * itemUnitPrice
+                        totalPrice: item.quantity * itemUnitPrice,
+                        selected: true
                     };
                     set({ items: [...items, newItem] });
                 }
@@ -135,6 +148,65 @@ const useCartStore = create<CartState & CartActions>()(
                 // Recalculate totals
                 get().getItemCount();
                 get().getTotalAmount();
+            },
+
+            // Item selection operations
+            toggleSelectItem: (itemId) => {
+                const { items } = get();
+                const updatedItems = items.map((i) =>
+                    i.id === itemId
+                        ? { ...i, selected: i.selected === false ? true : false }
+                        : i
+                );
+                set({ items: updatedItems });
+            },
+
+            setItemSelected: (itemId, selected) => {
+                const { items } = get();
+                const updatedItems = items.map((i) =>
+                    i.id === itemId ? { ...i, selected } : i
+                );
+                set({ items: updatedItems });
+            },
+
+            selectAllItems: () => {
+                const { items } = get();
+                const updatedItems = items.map((i) => ({ ...i, selected: true }));
+                set({ items: updatedItems });
+            },
+
+            unselectAllItems: () => {
+                const { items } = get();
+                const updatedItems = items.map((i) => ({ ...i, selected: false }));
+                set({ items: updatedItems });
+            },
+
+            removeSelectedItemsFromCart: () => {
+                const { items } = get();
+                const remainingItems = items
+                    .filter((i) => i.selected === false)
+                    .map((i) => ({ ...i, selected: true }));
+                set({ items: remainingItems });
+                get().getItemCount();
+                get().getTotalAmount();
+            },
+
+            getSelectedItems: () => {
+                const { items } = get();
+                return items.filter((i) => i.selected !== false);
+            },
+
+            getSelectedTotalAmount: () => {
+                const { items } = get();
+                const selected = items.filter((i) => i.selected !== false);
+                return selected.reduce((total, item) => {
+                    const price = item.customization
+                        ? (item.customization.basePrice + item.customization.customizationPrice)
+                        : ((item.product.discountPrice && item.product.discountPrice < item.product.price)
+                            ? item.product.discountPrice
+                            : item.product.price);
+                    return total + (price * item.quantity);
+                }, 0);
             },
 
             removeFromCart: (productId, size, customizationId) => {
@@ -154,6 +226,14 @@ const useCartStore = create<CartState & CartActions>()(
                 get().getTotalAmount();
             },
 
+            removeItemById: (itemId: string) => {
+                const { items } = get();
+                const updatedItems = items.filter((i) => i.id !== itemId);
+                set({ items: updatedItems });
+                get().getItemCount();
+                get().getTotalAmount();
+            },
+
             updateQuantity: (productId, size, quantity, customizationId) => {
                 if (quantity <= 0) {
                     get().removeFromCart(productId, size, customizationId);
@@ -167,6 +247,34 @@ const useCartStore = create<CartState & CartActions>()(
                         : (i.product.id === productId && i.size === size);
 
                     if (match) {
+                        const itemUnitPrice = i.customization
+                            ? (i.customization.basePrice + i.customization.customizationPrice)
+                            : ((i.product.discountPrice && i.product.discountPrice < i.product.price) ? i.product.discountPrice : i.product.price);
+
+                        return {
+                            ...i,
+                            quantity,
+                            totalPrice: quantity * itemUnitPrice
+                        };
+                    }
+                    return i;
+                });
+                set({ items: updatedItems });
+
+                // Recalculate totals
+                get().getItemCount();
+                get().getTotalAmount();
+            },
+
+            updateItemQuantity: (itemId: string, quantity: number) => {
+                if (quantity <= 0) {
+                    get().removeItemById(itemId);
+                    return;
+                }
+
+                const { items } = get();
+                const updatedItems = items.map((i) => {
+                    if (i.id === itemId) {
                         const itemUnitPrice = i.customization
                             ? (i.customization.basePrice + i.customization.customizationPrice)
                             : ((i.product.discountPrice && i.product.discountPrice < i.product.price) ? i.product.discountPrice : i.product.price);

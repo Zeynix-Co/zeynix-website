@@ -5,7 +5,7 @@ import useCartStore from '@/store/cartStore';
 import { useAuthStore } from '@/store';
 import { Button } from '@/components/ui/Button';
 import { colorClasses } from '@/lib/constants';
-import { ShoppingBag, Trash2, Heart, ArrowRight, Minus, Plus, ArrowLeft, Lock } from 'lucide-react';
+import { ShoppingBag, Trash2, Heart, ArrowRight, Minus, Plus, ArrowLeft, Lock, Check } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Link from 'next/link';
@@ -23,8 +23,22 @@ export default function CartPage() {
         moveToSaved,
         moveToCart,
         removeFromSaved,
-        clearCart
+        clearCart,
+        toggleSelectItem,
+        selectAllItems,
+        unselectAllItems,
     } = useCartStore();
+
+    const selectedItems = items.filter((item) => item.selected !== false);
+    const allSelected = items.length > 0 && selectedItems.length === items.length;
+    const selectedTotalAmount = selectedItems.reduce((total, item) => {
+        const price = item.customization
+            ? (item.customization.basePrice + item.customization.customizationPrice)
+            : ((item.product.discountPrice && item.product.discountPrice < item.product.price)
+                ? item.product.discountPrice
+                : item.product.price);
+        return total + (price * item.quantity);
+    }, 0);
 
     const formatPrice = (price: number) => {
         return new Intl.NumberFormat('en-IN', {
@@ -158,25 +172,64 @@ export default function CartPage() {
                         ) : (
                             /* Cart Items */
                             <div className="bg-white rounded-lg shadow-sm">
-                                <div className="p-6 border-b">
-                                    <h3 className={`text-lg font-semibold ${colorClasses.primary.text}`}>Cart Items ({totalItems})</h3>
+                                <div className="p-4 sm:p-6 border-b flex items-center justify-between">
+                                    <h3 className={`text-base sm:text-lg font-semibold ${colorClasses.primary.text}`}>
+                                        Cart Items ({selectedItems.length} of {totalItems} selected)
+                                    </h3>
+                                    <button
+                                        type="button"
+                                        onClick={() => (allSelected ? unselectAllItems() : selectAllItems())}
+                                        className="text-xs font-semibold text-[#070F2B] hover:text-[#B5945B] transition-colors underline cursor-pointer"
+                                    >
+                                        {allSelected ? 'Deselect All' : 'Select All'}
+                                    </button>
                                 </div>
 
                                 <div className="divide-y">
-                                    {items.map((item) => (
-                                        <div key={item.id} className="p-3 lg:p-6">
-                                            <div className="flex space-x-3 lg:space-x-4">
-                                                {/* Product Image */}
-                                                <div className="flex-shrink-0">
-                                                    <img
-                                                        src={item.product.images[0] || '/images/products/placeholder.jpg'}
-                                                        alt={item.product.title}
-                                                        className="w-20 h-20 lg:w-24 lg:h-24 object-cover rounded-lg"
-                                                    />
-                                                </div>
+                                    {items.map((item) => {
+                                        const isSelected = item.selected !== false;
+                                        return (
+                                            <div
+                                                key={item.id}
+                                                className={`p-3 lg:p-6 transition-all ${
+                                                    !isSelected ? 'bg-gray-50/70 opacity-60' : ''
+                                                }`}
+                                            >
+                                                <div className="flex space-x-3 lg:space-x-4 items-start">
+                                                    {/* Selection Checkbox */}
+                                                    <div className="pt-2 flex-shrink-0">
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => toggleSelectItem(item.id)}
+                                                            aria-label={isSelected ? `Deselect ${item.product.title}` : `Select ${item.product.title}`}
+                                                            className={`w-5 h-5 rounded flex items-center justify-center border transition-all cursor-pointer ${
+                                                                isSelected
+                                                                    ? 'bg-[#070F2B] border-[#070F2B] text-white'
+                                                                    : 'bg-white border-gray-300 hover:border-gray-500 text-transparent'
+                                                            }`}
+                                                        >
+                                                            <Check className={`w-3.5 h-3.5 ${isSelected ? 'opacity-100' : 'opacity-0'}`} />
+                                                        </button>
+                                                    </div>
 
-                                                {/* Product Details */}
-                                                <div className="flex-1 min-w-0">
+                                                    {/* Product Image */}
+                                                    <div className="flex-shrink-0 relative">
+                                                        <img
+                                                            src={item.product.images[0] || '/images/products/placeholder.jpg'}
+                                                            alt={item.product.title}
+                                                            className={`w-20 h-20 lg:w-24 lg:h-24 object-cover rounded-lg border border-gray-100 ${
+                                                                !isSelected ? 'filter grayscale contrast-75' : ''
+                                                            }`}
+                                                        />
+                                                        {!isSelected && (
+                                                            <span className="absolute inset-0 bg-white/40 rounded-lg flex items-center justify-center text-[9px] font-bold text-gray-700 uppercase">
+                                                                Unselected
+                                                            </span>
+                                                        )}
+                                                    </div>
+
+                                                    {/* Product Details */}
+                                                    <div className="flex-1 min-w-0">
                                                     <h4 className={`text-base lg:text-lg font-medium ${colorClasses.primary.text} line-clamp-2`}>
                                                         {item.product.title}
                                                     </h4>
@@ -259,7 +312,8 @@ export default function CartPage() {
                                                 </div>
                                             </div>
                                         </div>
-                                    ))}
+                                    );
+                                })}
                                 </div>
                             </div>
                         )}
@@ -341,8 +395,8 @@ export default function CartPage() {
                                 {/* Summary Details */}
                                 <div className="space-y-3 mb-6">
                                     <div className="flex justify-between text-xs sm:text-sm">
-                                        <span className="text-gray-600">Subtotal ({totalItems} items)</span>
-                                        <span className="font-bold text-[#070F2B]">{formatPrice(totalAmount)}</span>
+                                        <span className="text-gray-600">Subtotal ({selectedItems.length} selected)</span>
+                                        <span className="font-bold text-[#070F2B]">{formatPrice(selectedTotalAmount)}</span>
                                     </div>
                                     <div className="flex justify-between text-xs sm:text-sm">
                                         <span className="text-gray-600">Shipping</span>
@@ -351,7 +405,7 @@ export default function CartPage() {
                                     <div className="border-t border-gray-100 pt-3">
                                         <div className="flex justify-between font-extrabold text-base sm:text-lg">
                                             <span className="text-[#070F2B]">Total</span>
-                                            <span className="text-[#070F2B]">{formatPrice(totalAmount)}</span>
+                                            <span className="text-[#070F2B]">{formatPrice(selectedTotalAmount)}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -360,11 +414,16 @@ export default function CartPage() {
                                 <div className="space-y-2.5">
                                     <button
                                         onClick={handleCheckout}
-                                        disabled={totalItems === 0}
+                                        disabled={selectedItems.length === 0}
                                         className="w-full min-h-[48px] py-3.5 px-6 bg-[#070F2B] text-white font-bold uppercase tracking-wider text-xs shadow-[3px_3px_0px_#B5945B] hover:shadow-[0px_0px_0px_#B5945B] hover:bg-[#B5945B] hover:text-[#070F2B] border border-[#070F2B] hover:border-[#B5945B] transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed text-center"
                                     >
-                                        Proceed to Checkout &rarr;
+                                        {selectedItems.length === 0 ? 'Select Items to Checkout' : `Proceed to Checkout (${formatPrice(selectedTotalAmount)}) \u2192`}
                                     </button>
+                                    {selectedItems.length === 0 && (
+                                        <p className="text-[11px] text-amber-600 text-center font-medium">
+                                            Please select at least 1 item to proceed to checkout.
+                                        </p>
+                                    )}
                                     <button
                                         onClick={handleContinueShopping}
                                         className="w-full min-h-[44px] py-3 px-6 bg-white text-[#070F2B] font-bold uppercase tracking-wider text-xs border border-gray-300 hover:border-[#070F2B] transition-colors cursor-pointer text-center"
