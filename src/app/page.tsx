@@ -335,7 +335,7 @@ export default function HomePage() {
                             </h2>
                         </div>
                         <Link
-                            href="/products/casual"
+                            href="/products"
                             className="inline-flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-5 sm:py-2.5 rounded-xl bg-[#070F2B] text-white hover:bg-[#B5945B] hover:text-[#070F2B] font-extrabold text-xs sm:text-sm uppercase tracking-wider transition-all duration-300 shadow-sm hover:shadow-md active:scale-95 group cursor-pointer border border-[#070F2B] shrink-0"
                         >
                             <span>View All</span>
@@ -371,7 +371,7 @@ export default function HomePage() {
                     {/* Bottom CTA Button - especially prominent on mobile */}
                     <div className="mt-8 sm:mt-10 flex justify-center">
                         <Link
-                            href="/products/casual"
+                            href="/products"
                             className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-3.5 sm:py-4 rounded-xl bg-[#070F2B] text-white hover:bg-[#B5945B] hover:text-[#070F2B] font-black text-xs sm:text-sm uppercase tracking-widest transition-all duration-300 shadow-[0_4px_14px_rgba(7,15,43,0.18)] hover:shadow-[0_6px_20px_rgba(181,148,91,0.3)] active:scale-95 group cursor-pointer border border-[#070F2B]"
                         >
                             <span>Explore All Streetwear Essentials</span>
