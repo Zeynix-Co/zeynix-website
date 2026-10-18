@@ -1,4 +1,5 @@
 import ProductDetailView from '@/components/product/ProductDetailView';
+import { getProductBySlugOrId } from '@/lib/services/productService';
 import type { Metadata } from 'next';
 
 interface ProductDetailPageProps {
@@ -10,6 +11,20 @@ interface ProductDetailPageProps {
 
 export async function generateMetadata({ params }: ProductDetailPageProps): Promise<Metadata> {
     const { productId } = await params;
+    const product = await getProductBySlugOrId(productId);
+
+    if (product) {
+        return {
+            title: `${product.name || product.title} | ZEYNIX Luxury Streetwear`,
+            description: product.description || `Explore the ${product.name} by ZEYNIX. Premium oversized cut luxury streetwear.`,
+            openGraph: {
+                title: product.name,
+                description: product.description,
+                images: product.images || [product.image]
+            }
+        };
+    }
+
     const formattedTitle = productId
         ? productId
             .split('-')
@@ -25,11 +40,13 @@ export async function generateMetadata({ params }: ProductDetailPageProps): Prom
 
 export default async function ProductDetailPage({ params }: ProductDetailPageProps) {
     const { category, productId } = await params;
+    const initialProduct = await getProductBySlugOrId(productId);
 
     return (
         <ProductDetailView
             productIdOrSlug={productId}
             categoryParam={category}
+            initialProduct={initialProduct}
         />
     );
 }

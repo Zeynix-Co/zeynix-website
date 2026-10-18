@@ -137,7 +137,7 @@ export default function ProductCard({ product, theme = 'default' }: ProductCardP
                 )}
 
                 {/* High-Resolution Product Image with object-contain & Hover Back-View */}
-                <Link href={productHref} onClick={saveBrowsingState} className="relative w-full h-full block">
+                <Link href={productHref} prefetch={true} onClick={saveBrowsingState} className="relative w-full h-full block">
                     <Image
                         src={mainImageUrl}
                         alt={product.name}
@@ -192,6 +192,7 @@ export default function ProductCard({ product, theme = 'default' }: ProductCardP
                 >
                     <Link
                         href={productHref}
+                        prefetch={true}
                         onClick={(e) => {
                             e.stopPropagation();
                             saveBrowsingState();
@@ -249,7 +250,7 @@ export default function ProductCard({ product, theme = 'default' }: ProductCardP
                     </div>
 
                     {/* Product Title */}
-                    <Link href={productHref} className="block transition-colors">
+                    <Link href={productHref} prefetch={true} className="block transition-colors">
                         <h3 className={`font-extrabold uppercase tracking-tight text-xs sm:text-[13px] line-clamp-1 mb-1.5 leading-snug ${
                             isHalloween ? 'text-white group-hover:text-[#FFA500]' : 'text-[#070F2B] group-hover:text-[#B5945B]'
                         }`}>

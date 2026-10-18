@@ -21,21 +21,31 @@ import Footer from '@/components/layout/Footer';
 interface ProductDetailViewProps {
     productIdOrSlug: string;
     categoryParam?: string;
+    initialProduct?: Product | null;
 }
 
-export default function ProductDetailView({ productIdOrSlug, categoryParam }: ProductDetailViewProps) {
+export default function ProductDetailView({ productIdOrSlug, categoryParam, initialProduct }: ProductDetailViewProps) {
     const router = useRouter();
     const { addToCart, isInCart } = useCartStore();
     const { isAuthenticated } = useAuthStore();
     const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlistStore();
 
-    const [product, setProduct] = useState<Product | null>(null);
+    const [product, setProduct] = useState<Product | null>(initialProduct || null);
     const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
-    const [selectedSize, setSelectedSize] = useState<string>('');
+    const [selectedSize, setSelectedSize] = useState<string>(() => {
+        if (initialProduct?.sizes && initialProduct.sizes.length > 0) {
+            const inStockSize = initialProduct.sizes.find(s => s.inStock);
+            return inStockSize ? inStockSize.size : initialProduct.sizes[0].size;
+        }
+        if (initialProduct?.size && initialProduct.size.length > 0) {
+            return initialProduct.size[0];
+        }
+        return 'M';
+    });
     const [selectedColorIndex, setSelectedColorIndex] = useState<number>(0);
     const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
     const [quantity, setQuantity] = useState<number>(1);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [isLoading, setIsLoading] = useState<boolean>(!initialProduct);
     const [error, setError] = useState<string | null>(null);
 
     // Zoom & Lightbox state
@@ -54,9 +64,15 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam }: Pr
     const imageContainerRef = useRef<HTMLDivElement>(null);
     const mobileGalleryRef = useRef<HTMLDivElement>(null);
 
-    // Fetch product details
+    // Fetch product details if not already passed or if id changed
     useEffect(() => {
         let isMounted = true;
+
+        if (initialProduct && (initialProduct.slug === productIdOrSlug || initialProduct.id === productIdOrSlug || (initialProduct as any).productId === productIdOrSlug)) {
+            setProduct(initialProduct);
+            setIsLoading(false);
+            return;
+        }
 
         const loadProduct = async () => {
             try {
@@ -95,7 +111,7 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam }: Pr
         return () => {
             isMounted = false;
         };
-    }, [productIdOrSlug]);
+    }, [productIdOrSlug, initialProduct]);
 
     // Fetch related products from active catalog
     useEffect(() => {

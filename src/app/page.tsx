@@ -27,11 +27,18 @@ import {
     Instagram
 } from 'lucide-react';
 
+// Module-level client cache for instant return visits with 0ms delay
+let clientHomeCache: {
+    sec2Products: any[];
+    casualProducts: any[];
+    newArrivals: any[];
+} | null = null;
+
 export default function HomePage() {
-    const [casualProducts, setCasualProducts] = useState<any[]>([]);
-    const [sec2Products, setSec2Products] = useState<any[]>([]);
-    const [newArrivals, setNewArrivals] = useState<any[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [casualProducts, setCasualProducts] = useState<any[]>(() => clientHomeCache?.casualProducts || []);
+    const [sec2Products, setSec2Products] = useState<any[]>(() => clientHomeCache?.sec2Products || []);
+    const [newArrivals, setNewArrivals] = useState<any[]>(() => clientHomeCache?.newArrivals || []);
+    const [isLoading, setIsLoading] = useState(!clientHomeCache);
 
     // Carousel State for New Arrivals
     const [carouselIndex, setCarouselIndex] = useState(0);
@@ -57,7 +64,19 @@ export default function HomePage() {
                     'spookie-peeking-cat-skeletons-tee'
                 ];
 
-                const prodRes = await fetch('/api/customer/products?limit=60');
+                // Curated sequence for Section 1 (Streetwear Essentials) - Left to Right:
+                // 1st: Zeynix & Co. Botanical Sunflower T-Shirt
+                // 2nd: Zeynix 'Make Money Not Hoes' Oversized Streetwear T-Shirt
+                // 3rd: Urban Grunge 'Hustle Never Settle - Stay Grinding' Oversized Black T-Shirt
+                // 4th: Desi Pop 'Cutie Patola' Lotus Buttercream Yellow Oversized T-Shirt
+                const STREETWEAR_FEATURED_SLUGS = [
+                    'sunflower-collection-tee',
+                    'make-money-not-hoes-tee',
+                    'hustle-never-settle-stay-grinding-black-tee',
+                    'cutie-patola-lotus-tee'
+                ];
+
+                const prodRes = await fetch('/api/customer/products?limit=100');
                 const prodJson = await prodRes.json();
                 if (prodJson.success && prodJson.data.products?.length > 0) {
                     const allProds = prodJson.data.products;
@@ -67,22 +86,42 @@ export default function HomePage() {
                         allProds.find((p: any) => p.slug === slug)
                     ).filter(Boolean);
 
-                    setSec2Products(halloweenProds);
+                    // Section 1: Exact 4 Streetwear Essentials in curated sequence (left to right)
+                    const curatedStreetwear = STREETWEAR_FEATURED_SLUGS.map((slug) =>
+                        allProds.find((p: any) =>
+                            p.slug === slug ||
+                            (slug === 'sunflower-collection-tee' && p.title?.toLowerCase().includes('botanical sunflower')) ||
+                            (slug === 'make-money-not-hoes-tee' && p.title?.toLowerCase().includes('make money not hoes')) ||
+                            (slug === 'hustle-never-settle-stay-grinding-black-tee' && p.title?.toLowerCase().includes('hustle never settle')) ||
+                            (slug === 'cutie-patola-lotus-tee' && p.title?.toLowerCase().includes('cutie patola'))
+                        )
+                    ).filter(Boolean);
 
-                    // Section 1: Top 4 casual streetwear products
                     const nonHalloween = allProds.filter(
                         (p: any) => !HALLOWEEN_SLUGS.includes(p.slug) &&
                                     p.slug !== 'halloween-i-scream-spooky-season-black-tee' &&
-                                    p.slug !== 'halloween-kawaii-pink-bow-ghosts-cherry-blossom-pink-tee'
+                                    p.slug !== 'halloween-kawaii-pink-bow-ghosts-cherry-blossom-pink-tee' &&
+                                    !curatedStreetwear.some((cp: any) => cp.slug === p.slug)
                     );
-                    setCasualProducts(nonHalloween.slice(0, 4));
+
+                    const finalCasual = [...curatedStreetwear, ...nonHalloween].slice(0, 4);
 
                     // New arrivals: Use top products directly from allProds (excluding standalone Halloween drops)
                     const filteredArrivals = allProds.filter(
                         (p: any) => p.slug !== 'halloween-kawaii-pink-bow-ghosts-cherry-blossom-pink-tee' &&
                                     p.slug !== 'halloween-i-scream-spooky-season-black-tee'
                     );
-                    setNewArrivals(filteredArrivals.slice(0, 8));
+                    const finalArrivals = filteredArrivals.slice(0, 8);
+
+                    setSec2Products(halloweenProds);
+                    setCasualProducts(finalCasual);
+                    setNewArrivals(finalArrivals);
+
+                    clientHomeCache = {
+                        sec2Products: halloweenProds,
+                        casualProducts: finalCasual,
+                        newArrivals: finalArrivals
+                    };
                 }
             } catch (err) {
                 console.error('Failed to load homepage products:', err);

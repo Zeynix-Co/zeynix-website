@@ -173,6 +173,13 @@ const productSchema = new Schema<IProduct>({
     timestamps: true
 });
 
+// High-performance compound indexes for fast querying and sorting
+productSchema.index({ isActive: 1, status: 1, createdAt: -1 });
+productSchema.index({ isActive: 1, status: 1, category: 1 });
+productSchema.index({ isActive: 1, status: 1, featured: -1 });
+productSchema.index({ productId: 1 });
+productSchema.index({ category: 1 });
+
 // Synchronize fields and calculate discount percentage before saving
 productSchema.pre('save', function (next) {
     if (!this.name && this.title) {

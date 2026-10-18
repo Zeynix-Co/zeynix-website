@@ -667,11 +667,9 @@
     "brand": "Zeynix",
     "description": "Heavyweight 240 GSM drop-shoulder oversized streetwear t-shirt in washed jet black. Features the signature gothic outlined ZEYNIX metal chest logo on the front, complemented on the reverse by bold psychedelic liquid typography reading 'Make Money not hoes' anchored by the high-density 'CHASE YOUR DREAMS' statement print. Tailored from 100% premium combed cotton with a structured boxy drape.",
     "images": [
-      "/images/products/new/make-money-not-hoes-tee/back.png",
-      "/images/products/new/make-money-not-hoes-tee/front.png",
-      "/images/products/new/make-money-not-hoes-tee/detail.png",
-      "/images/products/new/make-money-not-hoes-tee/angle.png",
-      "/images/products/new/make-money-not-hoes-tee/showcase.png"
+      "/images/products/new/make-money-not-hoes-tee/back-hd.png",
+      "/images/products/new/make-money-not-hoes-tee/front-hd.png",
+      "/images/products/new/make-money-not-hoes-tee/whole-hd.png"
     ],
     "category": "unisex",
     "actualPrice": 1299,
@@ -712,7 +710,7 @@
         "inStock": true
       }
     ],
-    "mainImage": "/images/products/new/make-money-not-hoes-tee/back.png",
+    "mainImage": "/images/products/new/make-money-not-hoes-tee/back-hd.png",
     "subcategory": "t-shirts",
     "price": 699,
     "originalPrice": 1299,

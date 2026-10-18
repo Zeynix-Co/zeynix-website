@@ -127,6 +127,9 @@ function matchesSizes(product: Product, selectedSizes: string[]): boolean {
     return true;
 }
 
+// Module-level catalog cache for instant page switches
+let cachedCatalog: Product[] | null = null;
+
 interface FilterProductsProps {
     searchQuery?: string;
 }
@@ -163,8 +166,8 @@ export default function FilterProducts({ searchQuery: propSearchQuery }: FilterP
     const [selectedPriceRange, setSelectedPriceRange] = useState<string>('all');
     const [sortBy, setSortBy] = useState<SortOption>('featured');
 
-    const [products, setProducts] = useState<Product[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [products, setProducts] = useState<Product[]>(() => cachedCatalog || []);
+    const [isLoading, setIsLoading] = useState(!cachedCatalog);
     const [error, setError] = useState<string | null>(null);
 
     const [showMobileFilters, setShowMobileFilters] = useState(false);
@@ -258,6 +261,7 @@ export default function FilterProducts({ searchQuery: propSearchQuery }: FilterP
 
                 if (response.success && response.data?.products) {
                     setProducts(response.data.products);
+                    cachedCatalog = response.data.products;
                 } else {
                     setError('Failed to load catalog');
                 }
