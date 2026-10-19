@@ -186,11 +186,12 @@ export default function OrderList({ onViewOrder }: OrderListProps) {
                         <select
                             value={filters.status}
                             onChange={(e) => handleFilterChange('status', e.target.value)}
-                            className="w-full px-3.5 py-2.5 bg-[#070F2B] border border-white/15 focus:border-[#B5945B] focus:ring-1 focus:ring-[#B5945B] rounded-xl text-white text-xs focus:outline-none transition-all"
+                            className="w-full px-3.5 py-2.5 bg-[#070F2B] border border-white/20 focus:border-[#B5945B] focus:ring-1 focus:ring-[#B5945B] rounded-xl !text-white text-xs font-semibold focus:outline-none transition-all cursor-pointer shadow-sm"
+                            style={{ color: '#FFFFFF', backgroundColor: '#070F2B' }}
                         >
-                            <option value="all">All Order Statuses</option>
+                            <option value="all" className="bg-[#070F2B] text-white py-1.5" style={{ backgroundColor: '#070F2B', color: '#FFFFFF' }}>All Order Statuses</option>
                             {ORDER_CONSTANTS.statuses.map(status => (
-                                <option key={status} value={status}>
+                                <option key={status} value={status} className="bg-[#070F2B] text-white py-1.5" style={{ backgroundColor: '#070F2B', color: '#FFFFFF' }}>
                                     Status: {status.charAt(0).toUpperCase() + status.slice(1)}
                                 </option>
                             ))}
@@ -202,11 +203,12 @@ export default function OrderList({ onViewOrder }: OrderListProps) {
                         <select
                             value={filters.paymentStatus}
                             onChange={(e) => handleFilterChange('paymentStatus', e.target.value)}
-                            className="w-full px-3.5 py-2.5 bg-[#070F2B] border border-white/15 focus:border-[#B5945B] focus:ring-1 focus:ring-[#B5945B] rounded-xl text-white text-xs focus:outline-none transition-all"
+                            className="w-full px-3.5 py-2.5 bg-[#070F2B] border border-white/20 focus:border-[#B5945B] focus:ring-1 focus:ring-[#B5945B] rounded-xl !text-white text-xs font-semibold focus:outline-none transition-all cursor-pointer shadow-sm"
+                            style={{ color: '#FFFFFF', backgroundColor: '#070F2B' }}
                         >
-                            <option value="all">All Payment Methods</option>
+                            <option value="all" className="bg-[#070F2B] text-white py-1.5" style={{ backgroundColor: '#070F2B', color: '#FFFFFF' }}>All Payment Methods</option>
                             {ORDER_CONSTANTS.paymentMethods.map(method => (
-                                <option key={method} value={method}>
+                                <option key={method} value={method} className="bg-[#070F2B] text-white py-1.5" style={{ backgroundColor: '#070F2B', color: '#FFFFFF' }}>
                                     Payment: {method.toUpperCase()}
                                 </option>
                             ))}
@@ -224,10 +226,11 @@ export default function OrderList({ onViewOrder }: OrderListProps) {
                                     getAllOrders(newFilters);
                                 }
                             }}
-                            className="w-full px-3.5 py-2.5 bg-[#070F2B] border border-white/15 focus:border-[#B5945B] focus:ring-1 focus:ring-[#B5945B] rounded-xl text-white text-xs focus:outline-none transition-all"
+                            className="w-full px-3.5 py-2.5 bg-[#070F2B] border border-white/20 focus:border-[#B5945B] focus:ring-1 focus:ring-[#B5945B] rounded-xl !text-white text-xs font-semibold focus:outline-none transition-all cursor-pointer shadow-sm"
+                            style={{ color: '#FFFFFF', backgroundColor: '#070F2B' }}
                         >
                             {PAGINATION.limits.map(limit => (
-                                <option key={limit} value={limit}>
+                                <option key={limit} value={limit} className="bg-[#070F2B] text-white py-1.5" style={{ backgroundColor: '#070F2B', color: '#FFFFFF' }}>
                                     Show {limit} entries per page
                                 </option>
                             ))}
@@ -331,12 +334,13 @@ export default function OrderList({ onViewOrder }: OrderListProps) {
                                                     <select
                                                         value={order.status}
                                                         onChange={(e) => handleStatusUpdate(order._id, e.target.value)}
-                                                        className="px-2 py-0.5 bg-[#070F2B] border border-white/15 rounded text-[10px] text-gray-300 focus:outline-none focus:border-[#B5945B]"
+                                                        className="px-2.5 py-1 bg-[#070F2B] border border-white/25 rounded-lg text-xs font-bold !text-white focus:outline-none focus:border-[#B5945B] cursor-pointer"
+                                                        style={{ color: '#FFFFFF', backgroundColor: '#070F2B' }}
                                                     >
-                                                        <option value="pending">Pending</option>
-                                                        <option value="confirmed">Confirmed</option>
-                                                        <option value="delivered">Delivered</option>
-                                                        <option value="cancelled">Cancelled</option>
+                                                        <option value="pending" className="bg-[#070F2B] text-white" style={{ backgroundColor: '#070F2B', color: '#FFFFFF' }}>Pending</option>
+                                                        <option value="confirmed" className="bg-[#070F2B] text-white" style={{ backgroundColor: '#070F2B', color: '#FFFFFF' }}>Confirmed</option>
+                                                        <option value="delivered" className="bg-[#070F2B] text-white" style={{ backgroundColor: '#070F2B', color: '#FFFFFF' }}>Delivered</option>
+                                                        <option value="cancelled" className="bg-[#070F2B] text-white" style={{ backgroundColor: '#070F2B', color: '#FFFFFF' }}>Cancelled</option>
                                                     </select>
                                                 </div>
                                             </td>

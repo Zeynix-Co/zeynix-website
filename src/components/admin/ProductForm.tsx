@@ -253,10 +253,11 @@ export default function ProductForm({ productId, onSuccess }: ProductFormProps) 
                             <select
                                 value={formData.brand}
                                 onChange={(e) => handleInputChange('brand', e.target.value)}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-[#070F2B] bg-white"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 !text-[#070F2B] bg-white font-medium cursor-pointer shadow-xs"
+                                style={{ color: '#070F2B', backgroundColor: '#FFFFFF' }}
                                 disabled={isLoading}
                             >
-                                <option value="Zeynix">Zeynix</option>
+                                <option value="Zeynix" className="!text-[#070F2B] bg-white" style={{ color: '#070F2B', backgroundColor: '#FFFFFF' }}>Zeynix</option>
                                 {/* Add more brands later */}
                             </select>
                         </div>
@@ -268,11 +269,12 @@ export default function ProductForm({ productId, onSuccess }: ProductFormProps) 
                             <select
                                 value={formData.category}
                                 onChange={(e) => handleInputChange('category', e.target.value)}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-[#070F2B] bg-white"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 !text-[#070F2B] bg-white font-medium cursor-pointer shadow-xs"
+                                style={{ color: '#070F2B', backgroundColor: '#FFFFFF' }}
                                 disabled={isLoading}
                             >
                                 {CATEGORIES.map(category => (
-                                    <option key={category} value={category} className="text-[#070F2B]">
+                                    <option key={category} value={category} className="!text-[#070F2B] bg-white" style={{ color: '#070F2B', backgroundColor: '#FFFFFF' }}>
                                         {category.charAt(0).toUpperCase() + category.slice(1)}
                                     </option>
                                 ))}
@@ -286,11 +288,12 @@ export default function ProductForm({ productId, onSuccess }: ProductFormProps) 
                             <select
                                 value={formData.productFit}
                                 onChange={(e) => handleInputChange('productFit', e.target.value)}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-[#070F2B] bg-white"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 !text-[#070F2B] bg-white font-medium cursor-pointer shadow-xs"
+                                style={{ color: '#070F2B', backgroundColor: '#FFFFFF' }}
                                 disabled={isLoading}
                             >
                                 {PRODUCT_FITS.map(fit => (
-                                    <option key={fit} value={fit} className="text-[#070F2B]">{fit}</option>
+                                    <option key={fit} value={fit} className="!text-[#070F2B] bg-white" style={{ color: '#070F2B', backgroundColor: '#FFFFFF' }}>{fit}</option>
                                 ))}
                             </select>
                         </div>
@@ -452,12 +455,13 @@ export default function ProductForm({ productId, onSuccess }: ProductFormProps) 
                             <select
                                 value={formData.status}
                                 onChange={(e) => handleInputChange('status', e.target.value as 'draft' | 'published' | 'archived')}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-[#070F2B] bg-white"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 !text-[#070F2B] bg-white font-medium cursor-pointer shadow-xs"
+                                style={{ color: '#070F2B', backgroundColor: '#FFFFFF' }}
                                 disabled={isLoading}
                             >
-                                <option value="draft" className="text-[#070F2B]">Draft</option>
-                                <option value="published" className="text-[#070F2B]">Published</option>
-                                <option value="archived" className="text-[#070F2B]">Archived</option>
+                                <option value="draft" className="!text-[#070F2B] bg-white" style={{ color: '#070F2B', backgroundColor: '#FFFFFF' }}>Draft</option>
+                                <option value="published" className="!text-[#070F2B] bg-white" style={{ color: '#070F2B', backgroundColor: '#FFFFFF' }}>Published</option>
+                                <option value="archived" className="!text-[#070F2B] bg-white" style={{ color: '#070F2B', backgroundColor: '#FFFFFF' }}>Archived</option>
                             </select>
                         </div>
                     </div>

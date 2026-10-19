@@ -193,11 +193,12 @@ export default function ProductList({ onEditProduct, onAddProduct }: ProductList
                         <select
                             value={filters.category}
                             onChange={(e) => handleFilterChange('category', e.target.value)}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-[#070F2B] bg-white"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 !text-[#070F2B] bg-white font-medium text-sm cursor-pointer shadow-xs"
+                            style={{ color: '#070F2B', backgroundColor: '#FFFFFF' }}
                         >
-                            <option value="all" className="text-[#070F2B]">All</option>
+                            <option value="all" className="!text-[#070F2B] bg-white" style={{ color: '#070F2B', backgroundColor: '#FFFFFF' }}>All</option>
                             {PRODUCT_CONSTANTS.categories.map(category => (
-                                <option key={category} value={category} className="text-[#070F2B]">
+                                <option key={category} value={category} className="!text-[#070F2B] bg-white" style={{ color: '#070F2B', backgroundColor: '#FFFFFF' }}>
                                     {category.charAt(0).toUpperCase() + category.slice(1)}
                                 </option>
                             ))}
@@ -212,11 +213,12 @@ export default function ProductList({ onEditProduct, onAddProduct }: ProductList
                         <select
                             value={filters.status}
                             onChange={(e) => handleFilterChange('status', e.target.value)}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-[#070F2B] bg-white"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 !text-[#070F2B] bg-white font-medium text-sm cursor-pointer shadow-xs"
+                            style={{ color: '#070F2B', backgroundColor: '#FFFFFF' }}
                         >
-                            <option value="all" className="text-[#070F2B]">All</option>
+                            <option value="all" className="!text-[#070F2B] bg-white" style={{ color: '#070F2B', backgroundColor: '#FFFFFF' }}>All</option>
                             {PRODUCT_CONSTANTS.statuses.map(status => (
-                                <option key={status} value={status} className="text-[#070F2B]">
+                                <option key={status} value={status} className="!text-[#070F2B] bg-white" style={{ color: '#070F2B', backgroundColor: '#FFFFFF' }}>
                                     {status.charAt(0).toUpperCase() + status.slice(1)}
                                 </option>
                             ))}
@@ -236,10 +238,11 @@ export default function ProductList({ onEditProduct, onAddProduct }: ProductList
                                     getAllProducts(user.id, { limit: parseInt(e.target.value), page: 1 });
                                 }
                             }}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-[#070F2B] bg-white"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 !text-[#070F2B] bg-white font-medium text-sm cursor-pointer shadow-xs"
+                            style={{ color: '#070F2B', backgroundColor: '#FFFFFF' }}
                         >
                             {PAGINATION.limits.map(limit => (
-                                <option key={limit} value={limit} className="text-[#070F2B]">{limit}</option>
+                                <option key={limit} value={limit} className="!text-[#070F2B] bg-white" style={{ color: '#070F2B', backgroundColor: '#FFFFFF' }}>{limit}</option>
                             ))}
                         </select>
                     </div>

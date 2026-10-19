@@ -378,14 +378,15 @@ export default function OrderDetailsPage() {
                                         value={order.status}
                                         onChange={(e) => handleStatusUpdate(e.target.value)}
                                         disabled={updatingStatus}
-                                        className="flex-1 px-4 py-2.5 bg-[#050B1E] border border-[#B5945B]/30 text-white rounded-xl text-xs font-medium focus:outline-none focus:border-[#B5945B] focus:ring-1 focus:ring-[#B5945B] cursor-pointer"
+                                        className="flex-1 px-4 py-2.5 bg-[#070F2B] border border-[#B5945B]/40 !text-white rounded-xl text-xs font-semibold focus:outline-none focus:border-[#B5945B] focus:ring-1 focus:ring-[#B5945B] cursor-pointer shadow-sm"
+                                        style={{ color: '#FFFFFF', backgroundColor: '#070F2B' }}
                                     >
-                                        <option value="pending">Pending</option>
-                                        <option value="processing">Processing</option>
-                                        <option value="shipped">Shipped</option>
-                                        <option value="delivered">Delivered</option>
-                                        <option value="completed">Completed</option>
-                                        <option value="cancelled">Cancelled</option>
+                                        <option value="pending" className="bg-[#070F2B] text-white py-1.5" style={{ backgroundColor: '#070F2B', color: '#FFFFFF' }}>Pending</option>
+                                        <option value="processing" className="bg-[#070F2B] text-white py-1.5" style={{ backgroundColor: '#070F2B', color: '#FFFFFF' }}>Processing</option>
+                                        <option value="shipped" className="bg-[#070F2B] text-white py-1.5" style={{ backgroundColor: '#070F2B', color: '#FFFFFF' }}>Shipped</option>
+                                        <option value="delivered" className="bg-[#070F2B] text-white py-1.5" style={{ backgroundColor: '#070F2B', color: '#FFFFFF' }}>Delivered</option>
+                                        <option value="completed" className="bg-[#070F2B] text-white py-1.5" style={{ backgroundColor: '#070F2B', color: '#FFFFFF' }}>Completed</option>
+                                        <option value="cancelled" className="bg-[#070F2B] text-white py-1.5" style={{ backgroundColor: '#070F2B', color: '#FFFFFF' }}>Cancelled</option>
                                     </select>
                                     {updatingStatus && (
                                         <div className="flex items-center gap-2 text-xs text-[#B5945B]">

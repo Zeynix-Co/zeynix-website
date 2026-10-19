@@ -30,12 +30,29 @@ body {
 }
 
 /* Ensure inputs and placeholders are always crisp and visible regardless of system dark mode */
-input, textarea, select {
+input, textarea {
   color: #070F2B;
 }
 input::placeholder, textarea::placeholder {
   color: #9CA3AF;
   opacity: 1;
+}
+
+/* Native select & option elements: Ensure text is always crisp and visible */
+select {
+  color: inherit;
+}
+
+select option {
+  background-color: #070F2B;
+  color: #FFFFFF;
+}
+
+select.bg-white,
+select.bg-white option,
+.bg-white select option {
+  background-color: #FFFFFF !important;
+  color: #070F2B !important;
 }
 
 /* Luxury Modal Animations */
