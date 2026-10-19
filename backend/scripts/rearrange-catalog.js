@@ -122,7 +122,7 @@ const newProducts = [
         images: [
             "/images/products/new/confidence-looks-cute-cherries-white-tee/back.png",
             "/images/products/new/confidence-looks-cute-cherries-white-tee/front.png",
-            "/images/products/new/confidence-looks-cute-cherries-white-tee/showcase.png"
+            "/images/products/new/confidence-looks-cute-cherries-white-tee/whole.png"
         ],
         mainImage: "/images/products/new/confidence-looks-cute-cherries-white-tee/back.png",
         category: "unisexual",
