@@ -185,10 +185,17 @@ export const sendAdminNewOrderNotification = async (orderData: AdminOrderNotific
         const adminUrl = `${clientUrl}/admin/orders/${orderData.orderId}`;
 
         const isPaid = orderData.paymentStatus === 'completed';
-        const statusBadge = isPaid ? 'PAID ✓' : 'PENDING';
-        const statusColor = isPaid ? '#10B981' : '#F59E0B';
+        const isWhatsApp = (orderData.paymentMethod || '').toLowerCase() === 'whatsapp';
 
-        const subject = `🚨 New Order: #${orderData.orderNumber} - ₹${orderData.totalAmount.toLocaleString('en-IN')} (${isPaid ? 'PAID' : 'PENDING'})`;
+        let statusBadge = isPaid ? 'PAID ✓' : (isWhatsApp ? 'WHATSAPP ORDER' : 'PAYMENT PENDING');
+        let statusColor = isPaid ? '#10B981' : (isWhatsApp ? '#25D366' : '#F59E0B');
+
+        let subject = `🛍️ New Order: #${orderData.orderNumber} - ₹${orderData.totalAmount.toLocaleString('en-IN')} (${statusBadge})`;
+        if (isPaid) {
+            subject = `✅ Payment Confirmed: #${orderData.orderNumber} - ₹${orderData.totalAmount.toLocaleString('en-IN')} (PAID ✓)`;
+        } else if (isWhatsApp) {
+            subject = `📱 New WhatsApp Order: #${orderData.orderNumber} - ₹${orderData.totalAmount.toLocaleString('en-IN')}`;
+        }
 
         const html = `
             <!DOCTYPE html>

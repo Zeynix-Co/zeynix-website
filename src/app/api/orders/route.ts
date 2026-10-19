@@ -57,7 +57,8 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        const { items, totalAmount, shippingAddress } = requestBody;
+        const { items, totalAmount, shippingAddress, paymentMethod } = requestBody;
+        const normalizedPaymentMethod = (paymentMethod || 'razorpay').toLowerCase();
 
         // Validate required fields
         if (!items || !Array.isArray(items) || items.length === 0) {
@@ -176,7 +177,7 @@ export async function POST(request: NextRequest) {
             },
             status: 'pending',
             paymentStatus: 'pending',
-            paymentMethod: 'razorpay',
+            paymentMethod: normalizedPaymentMethod,
             expectedDelivery: new Date(Date.now() + (3 * 24 * 60 * 60 * 1000)) // 3 days from now
         });
 
@@ -206,37 +207,35 @@ export async function POST(request: NextRequest) {
             }
         }
 
-        // If order is placed via WhatsApp or COD, notify admin immediately
-        if (order.paymentMethod !== 'razorpay') {
-            try {
-                const customerName = `${shippingAddress.firstName || ''} ${shippingAddress.lastName || ''}`.trim() || user.name || 'Valued Client';
-                sendAdminNewOrderNotification({
-                    orderNumber: order.orderNumber,
-                    orderId: order._id.toString(),
-                    totalAmount: order.totalAmount,
-                    paymentMethod: order.paymentMethod,
-                    paymentStatus: order.paymentStatus,
-                    customerName,
-                    customerEmail: shippingAddress.email || user.email,
-                    customerPhone: shippingAddress.phone || user.phone,
-                    shippingAddress: {
-                        addressLine1: shippingAddress.addressLine1,
-                        addressLine2: shippingAddress.addressLine2,
-                        city: shippingAddress.city,
-                        state: shippingAddress.state,
-                        pincode: shippingAddress.pincode,
-                        country: shippingAddress.country || 'India',
-                    },
-                    items: orderItems.map((item: any) => ({
-                        title: item.productTitle || 'Boutique Item',
-                        size: item.size,
-                        quantity: item.quantity,
-                        price: item.price,
-                    })),
-                }).catch(err => console.error('Admin order alert background error:', err));
-            } catch (notifyErr) {
-                console.error('Failed to dispatch admin notification:', notifyErr);
-            }
+        // Notify admin immediately about the new order (WhatsApp, COD, or Online Checkout)
+        try {
+            const customerName = `${shippingAddress.firstName || ''} ${shippingAddress.lastName || ''}`.trim() || user.name || 'Valued Client';
+            sendAdminNewOrderNotification({
+                orderNumber: order.orderNumber,
+                orderId: order._id.toString(),
+                totalAmount: order.totalAmount,
+                paymentMethod: order.paymentMethod,
+                paymentStatus: order.paymentStatus,
+                customerName,
+                customerEmail: shippingAddress.email || user.email,
+                customerPhone: shippingAddress.phone || user.phone,
+                shippingAddress: {
+                    addressLine1: shippingAddress.addressLine1,
+                    addressLine2: shippingAddress.addressLine2,
+                    city: shippingAddress.city,
+                    state: shippingAddress.state,
+                    pincode: shippingAddress.pincode,
+                    country: shippingAddress.country || 'India',
+                },
+                items: orderItems.map((item: any) => ({
+                    title: item.productTitle || 'Boutique Item',
+                    size: item.size,
+                    quantity: item.quantity,
+                    price: item.price,
+                })),
+            }).catch(err => console.error('Admin order alert background error:', err));
+        } catch (notifyErr) {
+            console.error('Failed to dispatch admin notification:', notifyErr);
         }
 
         // Return success response

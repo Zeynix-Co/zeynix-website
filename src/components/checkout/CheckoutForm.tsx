@@ -7,7 +7,7 @@ import { useCartStore } from '@/store';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { colorClasses } from '@/lib/constants';
-import { MapPin, User, Phone, Mail, Home, Building, Navigation, CreditCard, MessageCircle } from 'lucide-react';
+import { MapPin, User, Phone, Mail, Home, Building, Navigation, CreditCard, MessageCircle, Loader2, CheckCircle2 } from 'lucide-react';
 import RazorpayPayment from '@/components/payment/RazorpayPayment';
 
 interface AddressForm {
@@ -60,6 +60,40 @@ export default function CheckoutForm({ onOrderCreated }: CheckoutFormProps) {
     });
 
     const [errors, setErrors] = useState<Partial<AddressForm>>({});
+    const [isPincodeLoading, setIsPincodeLoading] = useState(false);
+    const [pincodeSuccess, setPincodeSuccess] = useState<string | null>(null);
+
+    const lookupPincode = async (code: string) => {
+        if (!/^\d{6}$/.test(code)) return;
+        setIsPincodeLoading(true);
+        setPincodeSuccess(null);
+        try {
+            const res = await fetch(`/api/pincode/${code}`);
+            const result = await res.json();
+            if (result.success && result.data) {
+                const { city, state } = result.data;
+                setFormData(prev => ({
+                    ...prev,
+                    city: city || prev.city,
+                    state: state || prev.state,
+                }));
+                setErrors(prev => ({
+                    ...prev,
+                    city: undefined,
+                    state: undefined,
+                    pincode: undefined,
+                }));
+                setPincodeSuccess(`${city}, ${state}`);
+            } else {
+                setPincodeSuccess(null);
+            }
+        } catch (err) {
+            console.warn('Pincode lookup error:', err);
+            setPincodeSuccess(null);
+        } finally {
+            setIsPincodeLoading(false);
+        }
+    };
 
     // Refresh auth state when component mounts
     useEffect(() => {
@@ -119,6 +153,20 @@ export default function CheckoutForm({ onOrderCreated }: CheckoutFormProps) {
     };
 
     const handleInputChange = (field: keyof AddressForm, value: string) => {
+        if (field === 'pincode') {
+            const digitsOnly = value.replace(/\D/g, '').slice(0, 6);
+            setFormData(prev => ({ ...prev, pincode: digitsOnly }));
+            if (errors.pincode) {
+                setErrors(prev => ({ ...prev, pincode: undefined }));
+            }
+            if (digitsOnly.length === 6) {
+                lookupPincode(digitsOnly);
+            } else {
+                setPincodeSuccess(null);
+            }
+            return;
+        }
+
         setFormData(prev => ({ ...prev, [field]: value }));
         // Clear error when user starts typing
         if (errors[field]) {
@@ -167,6 +215,7 @@ export default function CheckoutForm({ onOrderCreated }: CheckoutFormProps) {
                     customization: item.customization || undefined
                 })),
                 totalAmount: selectedTotalAmount,
+                paymentMethod: paymentMethod,
                 shippingAddress: {
                     firstName: formData.firstName,
                     lastName: formData.lastName,
@@ -415,6 +464,44 @@ Thank you!`;
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {/* Pincode with Auto-detection */}
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                            <MapPin className="w-4 h-4 inline mr-2 text-[#B5945B]" />
+                            Pincode *
+                        </label>
+                        <div className="relative">
+                            <Input
+                                type="text"
+                                name="pincode"
+                                value={formData.pincode}
+                                onChange={(e) => handleInputChange('pincode', e.target.value)}
+                                className={errors.pincode ? 'border-red-500 pr-10' : 'pr-10'}
+                                placeholder="Enter 6-digit pincode"
+                                maxLength={6}
+                            />
+                            {isPincodeLoading && (
+                                <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center text-blue-600">
+                                    <Loader2 className="w-4 h-4 animate-spin" />
+                                </div>
+                            )}
+                        </div>
+                        {errors.pincode && (
+                            <p className="text-red-500 text-sm mt-1">{errors.pincode}</p>
+                        )}
+                        {isPincodeLoading && (
+                            <p className="text-xs text-blue-600 mt-1 flex items-center gap-1">
+                                <Loader2 className="w-3 h-3 animate-spin" /> Detecting city & state...
+                            </p>
+                        )}
+                        {!isPincodeLoading && pincodeSuccess && (
+                            <p className="text-xs text-green-600 font-medium mt-1 flex items-center gap-1">
+                                <CheckCircle2 className="w-3 h-3 text-green-600" /> Auto-filled: {pincodeSuccess}
+                            </p>
+                        )}
+                    </div>
+
+                    {/* City (Auto-filled) */}
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                             <Navigation className="w-4 h-4 inline mr-2" />
@@ -433,6 +520,7 @@ Thank you!`;
                         )}
                     </div>
 
+                    {/* State (Auto-filled) */}
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                             <Navigation className="w-4 h-4 inline mr-2" />
@@ -448,25 +536,6 @@ Thank you!`;
                         />
                         {errors.state && (
                             <p className="text-red-500 text-sm mt-1">{errors.state}</p>
-                        )}
-                    </div>
-
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                            <MapPin className="w-4 h-4 inline mr-2" />
-                            Pincode *
-                        </label>
-                        <Input
-                            type="text"
-                            name="pincode"
-                            value={formData.pincode}
-                            onChange={(e) => handleInputChange('pincode', e.target.value)}
-                            className={errors.pincode ? 'border-red-500' : ''}
-                            placeholder="Enter 6-digit pincode"
-                            maxLength={6}
-                        />
-                        {errors.pincode && (
-                            <p className="text-red-500 text-sm mt-1">{errors.pincode}</p>
                         )}
                     </div>
                 </div>
