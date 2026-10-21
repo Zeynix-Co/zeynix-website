@@ -17,7 +17,6 @@ export interface ServiceabilityResponse {
     courierCompanyId?: number;
     estimatedDeliveryDays?: string;
     etd?: string;
-    codAvailable?: boolean;
     rate?: number;
     message?: string;
 }
@@ -75,8 +74,7 @@ export async function getShiprocketToken(): Promise<string | null> {
  */
 export async function checkShiprocketServiceability(
     deliveryPincode: string,
-    weight: number = 0.5,
-    isCod: boolean = false
+    weight: number = 0.5
 ): Promise<ServiceabilityResponse> {
     const pickupPincode = process.env.SHIPROCKET_PICKUP_PINCODE;
 
@@ -95,7 +93,7 @@ export async function checkShiprocketServiceability(
         const url = new URL('https://apiv2.shiprocket.in/v1/external/courier/serviceability/');
         url.searchParams.set('pickup_postcode', pickupPincode.trim());
         url.searchParams.set('delivery_postcode', deliveryPincode.trim());
-        url.searchParams.set('cod', isCod ? '1' : '0');
+        url.searchParams.set('cod', '0'); // Prepaid shipments only (COD disabled)
         url.searchParams.set('weight', weight.toString());
 
         const controller = new AbortController();
@@ -122,7 +120,6 @@ export async function checkShiprocketServiceability(
             const topCourier = couriers[0];
             const courierName = topCourier?.courier_name || 'Express Courier';
             const etd = topCourier?.etd || topCourier?.estimated_delivery_days || '3-5 Days';
-            const codAvailable = Boolean(topCourier?.cod === 1);
             const rate = topCourier?.rate || 0;
 
             return {
@@ -133,7 +130,6 @@ export async function checkShiprocketServiceability(
                 courierCompanyId: topCourier?.courier_company_id,
                 estimatedDeliveryDays: typeof etd === 'number' ? `${etd} business days` : etd,
                 etd: typeof etd === 'number' ? `${etd} business days` : etd,
-                codAvailable,
                 rate,
                 message: `Delivery available via ${courierName}`,
             };

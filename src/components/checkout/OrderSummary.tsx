@@ -321,7 +321,7 @@ export default function OrderSummary() {
                 </div>
                 <div className="flex items-center gap-2">
                     <CreditCard className="w-4 h-4 text-[#B5945B] flex-shrink-0" />
-                    <span>UPI, Cards, Net Banking & WhatsApp confirmed</span>
+                    <span>Prepaid Only • UPI, Cards, Net Banking & WhatsApp confirmed</span>
                 </div>
             </div>
 

@@ -6,7 +6,6 @@ export async function GET(request: NextRequest) {
         const { searchParams } = new URL(request.url);
         const pincode = searchParams.get('pincode')?.trim();
         const weight = parseFloat(searchParams.get('weight') || '0.5');
-        const cod = searchParams.get('cod') === '1' || searchParams.get('cod') === 'true';
 
         if (!pincode || !/^\d{6}$/.test(pincode)) {
             return NextResponse.json(
@@ -15,7 +14,7 @@ export async function GET(request: NextRequest) {
             );
         }
 
-        const result = await checkShiprocketServiceability(pincode, weight, cod);
+        const result = await checkShiprocketServiceability(pincode, weight);
 
         if (result.configured && !result.serviceable) {
             return NextResponse.json({

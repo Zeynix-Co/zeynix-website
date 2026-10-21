@@ -61,6 +61,13 @@ export async function POST(request: NextRequest) {
         const { items, totalAmount, shippingAddress, paymentMethod, couponCode } = requestBody;
         const normalizedPaymentMethod = (paymentMethod || 'razorpay').toLowerCase();
 
+        if (normalizedPaymentMethod === 'cod') {
+            return NextResponse.json(
+                { success: false, message: 'Cash on Delivery (COD) is not accepted. Please pay online via Razorpay or confirm via WhatsApp.' },
+                { status: 400 }
+            );
+        }
+
         // Validate required fields
         if (!items || !Array.isArray(items) || items.length === 0) {
             return NextResponse.json(

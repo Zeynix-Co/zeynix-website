@@ -113,7 +113,7 @@ export const PRODUCT_CONSTANTS = {
 // Order constants
 export const ORDER_CONSTANTS = {
     statuses: ['pending', 'confirmed', 'delivered', 'cancelled'],
-    paymentMethods: ['razorpay', 'cod'],
+    paymentMethods: ['razorpay', 'whatsapp'],
     deliveryPartners: ['dtdc'],
 };
 

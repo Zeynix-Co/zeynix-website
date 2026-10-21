@@ -118,7 +118,6 @@ export async function GET(
                 configured: shiprocketResult.configured,
                 courierName: shiprocketResult.courierName,
                 estimatedDeliveryDays: shiprocketResult.estimatedDeliveryDays,
-                codAvailable: shiprocketResult.codAvailable,
                 message: shiprocketResult.message,
             }
         });
