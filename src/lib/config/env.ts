@@ -17,7 +17,11 @@ export const env = {
     // Razorpay Configuration (Live API Only)
     RAZORPAY_KEY_ID_LIVE: process.env.RAZORPAY_KEY_ID_LIVE || process.env.RAZORPAY_KEY_ID,
     RAZORPAY_KEY_SECRET_LIVE: process.env.RAZORPAY_KEY_SECRET_LIVE || process.env.RAZORPAY_KEY_SECRET,
-    RAZORPAY_WEBHOOK_SECRET: process.env.RAZORPAY_WEBHOOK_SECRET || process.env.RAZORPAY_KEY_SECRET_LIVE || process.env.RAZORPAY_KEY_SECRET
+    RAZORPAY_WEBHOOK_SECRET: process.env.RAZORPAY_WEBHOOK_SECRET || process.env.RAZORPAY_KEY_SECRET_LIVE || process.env.RAZORPAY_KEY_SECRET,
+    // Shiprocket Configuration
+    SHIPROCKET_EMAIL: process.env.SHIPROCKET_EMAIL,
+    SHIPROCKET_PASSWORD: process.env.SHIPROCKET_PASSWORD,
+    SHIPROCKET_PICKUP_PINCODE: process.env.SHIPROCKET_PICKUP_PINCODE,
 };
 
 // Debug function to check environment variables
@@ -33,6 +37,8 @@ export const debugEnv = () => {
     console.log('RESEND_API_KEY:', process.env.RESEND_API_KEY ? '✅ Set' : '❌ Missing');
     console.log('RAZORPAY_KEY_ID_LIVE:', (process.env.RAZORPAY_KEY_ID_LIVE || process.env.RAZORPAY_KEY_ID) ? '✅ Set' : '❌ Missing');
     console.log('RAZORPAY_KEY_SECRET_LIVE:', (process.env.RAZORPAY_KEY_SECRET_LIVE || process.env.RAZORPAY_KEY_SECRET) ? '✅ Set' : '❌ Missing');
+    console.log('SHIPROCKET_EMAIL:', process.env.SHIPROCKET_EMAIL ? '✅ Set' : '❌ Missing');
+    console.log('SHIPROCKET_PICKUP_PINCODE:', process.env.SHIPROCKET_PICKUP_PINCODE ? '✅ Set' : '❌ Missing');
 };
 
 // Validate required environment variables

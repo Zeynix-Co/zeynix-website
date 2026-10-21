@@ -7,7 +7,7 @@ import { useCartStore } from '@/store';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { colorClasses } from '@/lib/constants';
-import { MapPin, User, Phone, Mail, Home, Building, Navigation, CreditCard, MessageCircle, Loader2, CheckCircle2 } from 'lucide-react';
+import { MapPin, User, Phone, Mail, Home, Building, Navigation, CreditCard, MessageCircle, Loader2, CheckCircle2, Truck, AlertCircle } from 'lucide-react';
 import RazorpayPayment from '@/components/payment/RazorpayPayment';
 
 interface AddressForm {
@@ -67,28 +67,68 @@ export default function CheckoutForm({ onOrderCreated }: CheckoutFormProps) {
     const [errors, setErrors] = useState<Partial<AddressForm>>({});
     const [isPincodeLoading, setIsPincodeLoading] = useState(false);
     const [pincodeSuccess, setPincodeSuccess] = useState<string | null>(null);
+    const [serviceability, setServiceability] = useState<{
+        checked: boolean;
+        serviceable: boolean;
+        configured?: boolean;
+        city?: string;
+        state?: string;
+        courierName?: string;
+        estimatedDeliveryDays?: string;
+        message?: string;
+    } | null>(null);
 
     const lookupPincode = async (code: string) => {
         if (!/^\d{6}$/.test(code)) return;
         setIsPincodeLoading(true);
         setPincodeSuccess(null);
+        setServiceability(null);
         try {
             const res = await fetch(`/api/pincode/${code}`);
             const result = await res.json();
-            if (result.success && result.data) {
-                const { city, state } = result.data;
-                setFormData(prev => ({
+
+            // Check if explicitly unserviceable
+            if (res.status === 422 || result.serviceable === false || (result.data && result.data.serviceable === false)) {
+                setServiceability({
+                    checked: true,
+                    serviceable: false,
+                    configured: true,
+                    message: result.message || `Delivery is not available to pincode ${code}.`,
+                });
+                setErrors(prev => ({
                     ...prev,
-                    city: city || prev.city,
-                    state: state || prev.state,
+                    pincode: result.message || 'Delivery is not available to this pincode via courier',
                 }));
+                setPincodeSuccess(null);
+                return;
+            }
+
+            if (result.success && result.data) {
+                const { city, state, courierName, estimatedDeliveryDays } = result.data;
+                if (city) {
+                    setFormData(prev => ({
+                        ...prev,
+                        city: city || prev.city,
+                        state: state || prev.state,
+                    }));
+                }
                 setErrors(prev => ({
                     ...prev,
                     city: undefined,
                     state: undefined,
                     pincode: undefined,
                 }));
-                setPincodeSuccess(`${city}, ${state}`);
+                const locText = [city, state].filter(Boolean).join(', ');
+                setPincodeSuccess(locText || 'Verified');
+                setServiceability({
+                    checked: true,
+                    serviceable: true,
+                    configured: result.data.configured,
+                    city,
+                    state,
+                    courierName,
+                    estimatedDeliveryDays,
+                });
             } else {
                 setPincodeSuccess(null);
             }
@@ -131,6 +171,8 @@ export default function CheckoutForm({ onOrderCreated }: CheckoutFormProps) {
         // Pincode validation
         if (formData.pincode && !/^\d{6}$/.test(formData.pincode)) {
             newErrors.pincode = 'Please enter a valid 6-digit pincode';
+        } else if (serviceability && !serviceability.serviceable) {
+            newErrors.pincode = 'This pincode is not serviceable by our courier partners';
         }
 
         setErrors(newErrors);
@@ -501,11 +543,41 @@ Thank you!`;
                             <p className="text-red-500 text-sm mt-1">{errors.pincode}</p>
                         )}
                         {isPincodeLoading && (
-                            <p className="text-xs text-blue-600 mt-1 flex items-center gap-1">
-                                <Loader2 className="w-3 h-3 animate-spin" /> Detecting city & state...
+                            <p className="text-xs text-blue-600 mt-1 flex items-center gap-1 font-medium">
+                                <Loader2 className="w-3.5 h-3.5 animate-spin" /> Checking courier serviceability with Shiprocket...
                             </p>
                         )}
-                        {!isPincodeLoading && pincodeSuccess && (
+                        {!isPincodeLoading && serviceability && !serviceability.serviceable && (
+                            <div className="mt-2 p-3 bg-red-50 border border-red-200 rounded-xl text-xs text-red-800 flex items-start gap-2">
+                                <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0 mt-0.5" />
+                                <div>
+                                    <p className="font-bold text-red-900">Delivery Not Available</p>
+                                    <p className="mt-0.5 text-red-700">
+                                        {serviceability.message || `Sorry, our courier partners currently cannot deliver to pincode ${formData.pincode}.`}
+                                    </p>
+                                </div>
+                            </div>
+                        )}
+                        {!isPincodeLoading && serviceability && serviceability.serviceable && (
+                            <div className="mt-2 p-2.5 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-900 flex flex-wrap items-center justify-between gap-2">
+                                <div className="flex items-center gap-2">
+                                    <Truck className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                                    <div>
+                                        <span className="font-bold">Delivery Available</span>
+                                        {serviceability.city && <span> to {serviceability.city}</span>}
+                                        {serviceability.courierName && (
+                                            <span className="text-emerald-700 font-medium"> • via {serviceability.courierName}</span>
+                                        )}
+                                    </div>
+                                </div>
+                                {serviceability.estimatedDeliveryDays && (
+                                    <span className="bg-emerald-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0">
+                                        Est. {serviceability.estimatedDeliveryDays}
+                                    </span>
+                                )}
+                            </div>
+                        )}
+                        {!isPincodeLoading && !serviceability && pincodeSuccess && (
                             <p className="text-xs text-green-600 font-medium mt-1 flex items-center gap-1">
                                 <CheckCircle2 className="w-3 h-3 text-green-600" /> Auto-filled: {pincodeSuccess}
                             </p>
@@ -659,15 +731,22 @@ Thank you!`;
                     <div className="pt-4">
                         <Button
                             type="submit"
-                            disabled={isSubmitting || selectedItems.length === 0}
+                            disabled={isSubmitting || selectedItems.length === 0 || Boolean(serviceability && !serviceability.serviceable)}
                             className="w-full py-3 text-lg"
                         >
                             {isSubmitting
                                 ? 'Creating Order...'
                                 : selectedItems.length === 0
                                     ? 'Select Items in Order Summary'
-                                    : `Create Order (${formatPrice(selectedTotalAmount)})`}
+                                    : (serviceability && !serviceability.serviceable)
+                                        ? 'Pincode Not Deliverable'
+                                        : `Create Order (${formatPrice(selectedTotalAmount)})`}
                         </Button>
+                        {serviceability && !serviceability.serviceable && (
+                            <p className="text-xs text-red-600 text-center mt-2 font-semibold">
+                                ⚠️ Please enter a serviceable delivery pincode above to proceed with your order.
+                            </p>
+                        )}
                         {selectedItems.length === 0 && (
                             <p className="text-xs text-amber-600 text-center mt-2 font-medium">
                                 Please select at least 1 product from the Order Summary to place your order.
