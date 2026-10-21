@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import HeroSection from '@/components/home/HeroSection';
-import LaunchBannerCard from '@/components/home/LaunchBannerCard';
 import Link from 'next/link';
 import Image from 'next/image';
 import { colorClasses, APP_CONFIG } from '@/lib/constants';
@@ -246,9 +245,6 @@ export default function HomePage() {
 
             {/* 1. HERO SECTION */}
             <HeroSection />
-
-            {/* Launching 20th October Pre-Order Card */}
-            <LaunchBannerCard />
 
             {/* 2. Floating rounded benefits panel separated cleanly from the Hero section */}
             <div className="relative z-20 mt-8 sm:mt-12 lg:mt-14 mb-6 sm:mb-8 max-w-6xl mx-auto px-3 sm:px-4">

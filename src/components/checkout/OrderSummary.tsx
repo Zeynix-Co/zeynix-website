@@ -2,11 +2,13 @@
 
 import { useCartStore } from '@/store';
 import { colorClasses } from '@/lib/constants';
-import { Package, Truck, CreditCard, Plus, Minus, Trash2, Check, AlertCircle } from 'lucide-react';
+import { Package, Truck, CreditCard, Plus, Minus, Trash2, Check, AlertCircle, Tag } from 'lucide-react';
+import PromoCodeBox from '@/components/checkout/PromoCodeBox';
 
 export default function OrderSummary() {
     const {
         items,
+        appliedCoupon,
         toggleSelectItem,
         selectAllItems,
         unselectAllItems,
@@ -49,8 +51,11 @@ export default function OrderSummary() {
 
     const subtotal = calculateSubtotal();
     const savings = calculateSavings();
+    const couponDiscount = appliedCoupon
+        ? Math.round((subtotal * appliedCoupon.discountPercent) / 100)
+        : 0;
     const shipping = 0; // Free shipping
-    const total = subtotal + shipping;
+    const total = Math.max(0, subtotal - couponDiscount + shipping);
 
     const getItemUnitPrice = (item: typeof items[0]) => {
         if (item.customization) {
@@ -246,6 +251,13 @@ export default function OrderSummary() {
                 )}
             </div>
 
+            {/* Promo / Coupon Code Section */}
+            {items.length > 0 && (
+                <div className="mb-4 pt-1">
+                    <PromoCodeBox />
+                </div>
+            )}
+
             {/* Pricing Breakdown */}
             <div className="border-t border-gray-100 pt-3 lg:pt-4 space-y-2 lg:space-y-2.5 text-xs lg:text-sm">
                 <div className="flex justify-between text-gray-600">
@@ -265,6 +277,19 @@ export default function OrderSummary() {
                         <span>Total Savings</span>
                         <span className="font-bold text-green-600">
                             - {formatPrice(savings)}
+                        </span>
+                    </div>
+                )}
+
+                {/* Special CEO / Promo Discount */}
+                {couponDiscount > 0 && (
+                    <div className="flex justify-between items-center text-xs lg:text-sm bg-emerald-50 px-3 py-2 rounded-xl border border-emerald-200">
+                        <span className="font-bold text-emerald-900 flex items-center gap-1.5">
+                            <Tag className="w-3.5 h-3.5 text-emerald-600" />
+                            {appliedCoupon?.code} ({appliedCoupon?.discountPercent}% OFF)
+                        </span>
+                        <span className="font-black text-emerald-700">
+                            - {formatPrice(couponDiscount)}
                         </span>
                     </div>
                 )}

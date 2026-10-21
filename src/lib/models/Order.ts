@@ -51,6 +51,8 @@ export interface IOrder extends Document {
     paymentStatus: 'pending' | 'completed' | 'failed' | 'refunded';
     razorpayOrderId?: string;
     razorpayPaymentId?: string;
+    couponCode?: string;
+    discountAmount?: number;
     isActive: boolean;
     createdAt: Date;
     updatedAt: Date;
@@ -213,6 +215,14 @@ const OrderSchema = new Schema<IOrder>({
     },
     razorpayPaymentId: {
         type: String
+    },
+    couponCode: {
+        type: String,
+        default: null
+    },
+    discountAmount: {
+        type: Number,
+        default: 0
     },
     isActive: {
         type: Boolean,

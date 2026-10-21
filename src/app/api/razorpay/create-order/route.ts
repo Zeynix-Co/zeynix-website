@@ -95,9 +95,13 @@ export async function POST(request: NextRequest) {
             totalAmountFromDiscountPrice += itemPrice * orderItem.quantity;
         }
 
-        // Create Razorpay order using discountPrice amount
+        // Apply coupon discount if recorded on the order
+        const discountAmount = order.discountAmount || 0;
+        const finalChargeAmount = Math.max(1, order.totalAmount || (totalAmountFromDiscountPrice - discountAmount));
+
+        // Create Razorpay order using finalChargeAmount
         const razorpayOrderResult = await createRazorpayOrder({
-            amount: totalAmountFromDiscountPrice, // Amount in rupees (calculated from discountPrice)
+            amount: finalChargeAmount, // Amount in rupees after coupon discount
             orderId: order.orderNumber || order._id.toString(), // Use orderNumber or _id as receipt
             customerId: user._id.toString(),
             customerEmail: user.email,

@@ -4,6 +4,7 @@ import { protect } from '@/lib/middleware/auth';
 import { Order } from '@/lib/models/Order';
 import { Product } from '@/lib/models/Product';
 import { sendAdminNewOrderNotification } from '@/lib/config/email';
+import { validateCoupon, calculateCouponDiscount } from '@/lib/config/coupons';
 
 export async function POST(request: NextRequest) {
     try {
@@ -57,7 +58,7 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        const { items, totalAmount, shippingAddress, paymentMethod } = requestBody;
+        const { items, totalAmount, shippingAddress, paymentMethod, couponCode } = requestBody;
         const normalizedPaymentMethod = (paymentMethod || 'razorpay').toLowerCase();
 
         // Validate required fields
@@ -130,14 +131,28 @@ export async function POST(request: NextRequest) {
             });
         }
 
-        // Use frontend's total amount instead of recalculating
-        const finalTotalAmount = totalAmount;
+        // Validate and apply coupon if provided
+        let discountAmount = 0;
+        let validatedCouponCode: string | undefined = undefined;
+
+        if (couponCode) {
+            const coupon = validateCoupon(couponCode);
+            if (coupon) {
+                validatedCouponCode = coupon.code;
+                discountAmount = calculateCouponDiscount(calculatedTotal, coupon.discountPercent);
+            }
+        }
+
+        // Use calculatedTotal minus discountAmount (or fallback to validated frontend total)
+        const finalTotalAmount = Math.max(0, calculatedTotal - discountAmount);
 
         // Create order
         console.log('📦 Creating order with data:', {
             userId: user._id,
             itemCount: orderItems.length,
             totalAmount: finalTotalAmount,
+            couponCode: validatedCouponCode,
+            discountAmount: discountAmount,
             shippingAddress: shippingAddress
         });
 
@@ -155,6 +170,8 @@ export async function POST(request: NextRequest) {
             user: user._id,
             items: orderItems,
             totalAmount: finalTotalAmount,
+            couponCode: validatedCouponCode,
+            discountAmount: discountAmount,
             orderNumber: generateOrderNumber(), // Set fallback order number
             deliveryAddress: {
                 street: shippingAddress.addressLine1,

@@ -5,16 +5,18 @@ import useCartStore from '@/store/cartStore';
 import { useAuthStore } from '@/store';
 import { Button } from '@/components/ui/Button';
 import { colorClasses } from '@/lib/constants';
-import { ShoppingBag, Trash2, Heart, ArrowRight, Minus, Plus, ArrowLeft, Lock, Check } from 'lucide-react';
+import { ShoppingBag, Trash2, Heart, ArrowRight, Minus, Plus, ArrowLeft, Lock, Check, Tag } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Link from 'next/link';
+import PromoCodeBox from '@/components/checkout/PromoCodeBox';
 
 export default function CartPage() {
     const router = useRouter();
     const { isAuthenticated } = useAuthStore();
     const {
         items,
+        appliedCoupon,
         savedForLater,
         totalItems,
         totalAmount,
@@ -39,6 +41,11 @@ export default function CartPage() {
                 : item.product.price);
         return total + (price * item.quantity);
     }, 0);
+
+    const couponDiscount = appliedCoupon
+        ? Math.round((selectedTotalAmount * appliedCoupon.discountPercent) / 100)
+        : 0;
+    const finalCartTotal = Math.max(0, selectedTotalAmount - couponDiscount);
 
     const formatPrice = (price: number) => {
         return new Intl.NumberFormat('en-IN', {
@@ -392,6 +399,11 @@ export default function CartPage() {
                             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-6 sticky top-4 lg:top-8">
                                 <h3 className={`text-base font-extrabold uppercase tracking-wide ${colorClasses.primary.text} mb-4`}>Order Summary</h3>
 
+                                {/* Promo Code Box */}
+                                <div className="mb-4">
+                                    <PromoCodeBox />
+                                </div>
+
                                 {/* Summary Details */}
                                 <div className="space-y-3 mb-6">
                                     <div className="flex justify-between text-xs sm:text-sm">
@@ -402,10 +414,24 @@ export default function CartPage() {
                                         <span className="text-gray-600">Shipping</span>
                                         <span className="text-green-600 font-bold uppercase tracking-wider text-xs">Free</span>
                                     </div>
+
+                                    {/* CEO Discount row */}
+                                    {couponDiscount > 0 && (
+                                        <div className="flex justify-between items-center text-xs sm:text-sm bg-emerald-50 px-2.5 py-1.5 rounded-lg border border-emerald-200">
+                                            <span className="font-bold text-emerald-900 flex items-center gap-1.5">
+                                                <Tag className="w-3.5 h-3.5 text-emerald-600" />
+                                                {appliedCoupon?.code} ({appliedCoupon?.discountPercent}% OFF)
+                                            </span>
+                                            <span className="font-bold text-emerald-700">
+                                                - {formatPrice(couponDiscount)}
+                                            </span>
+                                        </div>
+                                    )}
+
                                     <div className="border-t border-gray-100 pt-3">
                                         <div className="flex justify-between font-extrabold text-base sm:text-lg">
                                             <span className="text-[#070F2B]">Total</span>
-                                            <span className="text-[#070F2B]">{formatPrice(selectedTotalAmount)}</span>
+                                            <span className="text-[#070F2B]">{formatPrice(finalCartTotal)}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -417,7 +443,7 @@ export default function CartPage() {
                                         disabled={selectedItems.length === 0}
                                         className="w-full min-h-[48px] py-3.5 px-6 bg-[#070F2B] text-white font-bold uppercase tracking-wider text-xs shadow-[3px_3px_0px_#B5945B] hover:shadow-[0px_0px_0px_#B5945B] hover:bg-[#B5945B] hover:text-[#070F2B] border border-[#070F2B] hover:border-[#B5945B] transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed text-center"
                                     >
-                                        {selectedItems.length === 0 ? 'Select Items to Checkout' : `Proceed to Checkout (${formatPrice(selectedTotalAmount)}) \u2192`}
+                                        {selectedItems.length === 0 ? 'Select Items to Checkout' : `Proceed to Checkout (${formatPrice(finalCartTotal)}) \u2192`}
                                     </button>
                                     {selectedItems.length === 0 && (
                                         <p className="text-[11px] text-amber-600 text-center font-medium">

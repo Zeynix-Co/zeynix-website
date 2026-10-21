@@ -30,10 +30,10 @@ interface CheckoutFormProps {
 export default function CheckoutForm({ onOrderCreated }: CheckoutFormProps) {
     const router = useRouter();
     const { user } = useAuthStore();
-    const { items, removeSelectedItemsFromCart } = useCartStore();
+    const { items, appliedCoupon, removeSelectedItemsFromCart } = useCartStore();
 
     const selectedItems = items.filter((item) => item.selected !== false);
-    const selectedTotalAmount = selectedItems.reduce((total, item) => {
+    const rawSelectedTotal = selectedItems.reduce((total, item) => {
         const price = item.customization
             ? (item.customization.basePrice + item.customization.customizationPrice)
             : ((item.product.discountPrice && item.product.discountPrice < item.product.price)
@@ -41,6 +41,11 @@ export default function CheckoutForm({ onOrderCreated }: CheckoutFormProps) {
                 : item.product.price);
         return total + (price * item.quantity);
     }, 0);
+
+    const couponDiscount = appliedCoupon
+        ? Math.round((rawSelectedTotal * appliedCoupon.discountPercent) / 100)
+        : 0;
+    const selectedTotalAmount = Math.max(0, rawSelectedTotal - couponDiscount);
 
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [paymentMethod, setPaymentMethod] = useState<'whatsapp' | 'razorpay'>('razorpay');
@@ -215,6 +220,8 @@ export default function CheckoutForm({ onOrderCreated }: CheckoutFormProps) {
                     customization: item.customization || undefined
                 })),
                 totalAmount: selectedTotalAmount,
+                couponCode: appliedCoupon?.code || undefined,
+                couponDiscount: couponDiscount > 0 ? couponDiscount : undefined,
                 paymentMethod: paymentMethod,
                 shippingAddress: {
                     firstName: formData.firstName,
@@ -291,6 +298,10 @@ export default function CheckoutForm({ onOrderCreated }: CheckoutFormProps) {
    Link: ${productUrl}`;
                     }).join('\n\n');
 
+                    const couponLine = appliedCoupon && couponDiscount > 0
+                        ? `\n*Coupon Applied:* ${appliedCoupon.code} (${appliedCoupon.discountPercent}% OFF: -₹${couponDiscount})\n`
+                        : '';
+
                     const whatsappMessage = `*New Order Request*
 
 Hello Zeynix Team,
@@ -299,7 +310,7 @@ I would like to place an order with the following details:
 
 *Order Items:*
 ${productDetails}
-
+${couponLine}
 *Order Total:* ₹${selectedTotalAmount}
 
 *Customer Details:*

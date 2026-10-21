@@ -37,6 +37,8 @@ export interface Order {
     estimatedDelivery?: string;
     expectedDelivery?: string;
     notes?: string;
+    couponCode?: string;
+    discountAmount?: number;
     createdAt: string;
     updatedAt: string;
 }
@@ -49,6 +51,8 @@ export interface CreateOrderData {
         price: number;
     }>;
     totalAmount: number;
+    couponCode?: string;
+    couponDiscount?: number;
     shippingAddress: ShippingAddress;
 }
 

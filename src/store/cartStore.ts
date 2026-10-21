@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { validateCoupon, calculateCouponDiscount } from '@/lib/config/coupons';
 
 export interface CartItem {
     id: string;
@@ -56,12 +57,21 @@ export interface SavedItem {
     };
 }
 
+export interface AppliedCoupon {
+    code: string;
+    discountPercent: number;
+    title: string;
+    description: string;
+    badgeText: string;
+}
+
 export interface CartState {
     items: CartItem[];
     savedForLater: SavedItem[];
     totalItems: number;
     totalAmount: number;
     savedItemsCount: number;
+    appliedCoupon: AppliedCoupon | null;
 }
 
 export interface CartActions {
@@ -92,6 +102,11 @@ export interface CartActions {
     getTotalAmount: () => number;
     getSavedItemsCount: () => number;
     isInCart: (productId: string, size: string, customization?: any) => boolean;
+
+    // Coupon operations
+    applyCoupon: (code: string) => { success: boolean; message: string };
+    removeCoupon: () => void;
+    getCouponDiscount: () => number;
 }
 
 const useCartStore = create<CartState & CartActions>()(
@@ -103,6 +118,7 @@ const useCartStore = create<CartState & CartActions>()(
             totalItems: 0,
             totalAmount: 0,
             savedItemsCount: 0,
+            appliedCoupon: null,
 
             // Cart operations
             addToCart: (item) => {
@@ -410,12 +426,42 @@ const useCartStore = create<CartState & CartActions>()(
                                          i.size === size && 
                                          JSON.stringify(i.customization) === JSON.stringify(customization));
             },
+
+            // Coupon actions
+            applyCoupon: (code: string) => {
+                const coupon = validateCoupon(code);
+                if (!coupon) {
+                    return { success: false, message: 'Invalid promo code. Please check and try again.' };
+                }
+                set({
+                    appliedCoupon: {
+                        code: coupon.code,
+                        discountPercent: coupon.discountPercent,
+                        title: coupon.title,
+                        description: coupon.description,
+                        badgeText: coupon.badgeText,
+                    }
+                });
+                return { success: true, message: `Special code '${code.trim()}' applied! 10% discount added.` };
+            },
+
+            removeCoupon: () => {
+                set({ appliedCoupon: null });
+            },
+
+            getCouponDiscount: () => {
+                const { appliedCoupon } = get();
+                if (!appliedCoupon) return 0;
+                const subtotal = get().getSelectedTotalAmount();
+                return calculateCouponDiscount(subtotal, appliedCoupon.discountPercent);
+            },
         }),
         {
             name: 'cart-storage', // localStorage key
             partialize: (state) => ({
                 items: state.items,
                 savedForLater: state.savedForLater,
+                appliedCoupon: state.appliedCoupon,
             }),
             onRehydrateStorage: () => (state) => {
                 if (state) {
