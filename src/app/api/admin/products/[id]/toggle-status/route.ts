@@ -73,10 +73,13 @@ export async function PATCH(
             );
         }
 
-        // Find and update product status
+        // Find and update product status & visibility
         const product = await Product.findByIdAndUpdate(
             id,
-            { status },
+            {
+                status,
+                isActive: status === 'published'
+            },
             { new: true, runValidators: true }
         ).select('-__v');
 

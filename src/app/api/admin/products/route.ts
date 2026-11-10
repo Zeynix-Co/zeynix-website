@@ -173,12 +173,23 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Create new product
+        // Create new product with valid slug and identifiers
+        const status = productData.status || 'draft';
+        const baseSlug = (productData.slug || productData.title || 'product')
+            .toLowerCase()
+            .trim()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-+|-+$/g, '');
+        const slug = `${baseSlug}-${Date.now().toString().slice(-4)}`;
+
         const product = await Product.create({
             ...productData,
-            isActive: true,
-            status: productData.status || 'draft',
-            rating: productData.rating || 0,
+            name: productData.name || productData.title,
+            slug,
+            productId: productData.productId || `prod_${Date.now()}`,
+            isActive: status === 'published',
+            status,
+            rating: productData.rating || 5,
             featured: productData.featured || false
         });
 

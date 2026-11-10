@@ -156,6 +156,11 @@ export async function PUT(
             );
         }
 
+        // Synchronize isActive with status if status is modified
+        if (updateData.status) {
+            updateData.isActive = updateData.status === 'published';
+        }
+
         // Find and update product
         const product = await Product.findByIdAndUpdate(
             id,

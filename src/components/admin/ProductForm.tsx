@@ -30,9 +30,25 @@ interface ProductFormProps {
     onSuccess?: () => void;
 }
 
-const AVAILABLE_SIZES = PRODUCT_CONSTANTS.sizes;
-const CATEGORIES = PRODUCT_CONSTANTS.categories;
-const PRODUCT_FITS = PRODUCT_CONSTANTS.productFits;
+const AVAILABLE_SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+const CATEGORIES = [
+    { id: 'casual', label: 'Streetwear / Casual' },
+    { id: 'unisex', label: 'Unisex Collection' },
+    { id: 't-shirts', label: 'T-Shirts' },
+    { id: 'formal', label: 'Formal Wear' },
+    { id: 'ethnic', label: 'Ethnic Wear' },
+    { id: 'sports', label: 'Sports Wear' }
+];
+const PRODUCT_FITS = ['OVERSIZED FIT', 'CASUAL FIT', 'FORMAL FIT', 'CLASSIC FIT', 'SLIM FIT', 'RELAXED FIT'];
+
+const DEFAULT_SIZES = [
+    { size: 'XS', inStock: true },
+    { size: 'S', inStock: true },
+    { size: 'M', inStock: true },
+    { size: 'L', inStock: true },
+    { size: 'XL', inStock: true },
+    { size: 'XXL', inStock: true }
+];
 
 export default function ProductForm({ productId, onSuccess }: ProductFormProps) {
     const router = useRouter();
@@ -47,20 +63,22 @@ export default function ProductForm({ productId, onSuccess }: ProductFormProps) 
         clearError
     } = useProductStore();
 
+    const [imageUrlInput, setImageUrlInput] = useState('');
+
     // Form state
     const [formData, setFormData] = useState<ProductFormData>({
         title: '',
         brand: 'Zeynix',
         category: 'casual',
         description: '',
-        actualPrice: 0,
-        discountPrice: 0,
-        productFit: 'CASUAL FIT',
-        sizes: [],
-        images: [], // Start with empty array
+        actualPrice: 1349,
+        discountPrice: 699,
+        productFit: 'OVERSIZED FIT',
+        sizes: DEFAULT_SIZES,
+        images: [],
         rating: 5,
         featured: false,
-        status: 'draft',
+        status: 'published',
         tags: '',
         launchDate: ''
     });
@@ -84,13 +102,13 @@ export default function ProductForm({ productId, onSuccess }: ProductFormProps) 
                 category: currentProduct.category || 'casual',
                 description: currentProduct.description || '',
                 actualPrice: currentProduct.actualPrice || 0,
-                discountPrice: currentProduct.discountPrice || 0,
-                productFit: currentProduct.productFit || 'CASUAL FIT',
-                sizes: currentProduct.sizes || [],
-                images: currentProduct.images || ['', ''],
+                discountPrice: currentProduct.discountPrice || (currentProduct as any).price || 0,
+                productFit: currentProduct.productFit || 'OVERSIZED FIT',
+                sizes: (currentProduct.sizes && currentProduct.sizes.length > 0) ? currentProduct.sizes : DEFAULT_SIZES,
+                images: currentProduct.images || [],
                 rating: currentProduct.rating || 5,
                 featured: currentProduct.featured || false,
-                status: currentProduct.status || 'draft',
+                status: (currentProduct.status as any) || 'published',
                 tags: currentProduct.tags?.join(', ') || '',
                 launchDate: currentProduct.launchDate || ''
             });
@@ -98,7 +116,7 @@ export default function ProductForm({ productId, onSuccess }: ProductFormProps) 
     }, [currentProduct, productId]);
 
     // Handle input changes
-    const handleInputChange = (field: keyof ProductFormData, value: string | number | boolean | string[]) => {
+    const handleInputChange = (field: keyof ProductFormData, value: string | number | boolean | string[] | any) => {
         setFormData(prev => ({ ...prev, [field]: value }));
 
         // Clear error when user starts typing
@@ -115,13 +133,11 @@ export default function ProductForm({ productId, onSuccess }: ProductFormProps) 
         setFormData(prev => {
             const existingSize = prev.sizes.find(s => s.size === size);
             if (existingSize) {
-                // Update existing size
                 return {
                     ...prev,
                     sizes: prev.sizes.map(s => s.size === size ? { ...s, inStock } : s)
                 };
             } else {
-                // Add new size
                 return {
                     ...prev,
                     sizes: [...prev.sizes, { size, inStock }]
@@ -129,8 +145,6 @@ export default function ProductForm({ productId, onSuccess }: ProductFormProps) 
             }
         });
     };
-
-
 
     // Validate form
     const validateForm = () => {
@@ -157,11 +171,11 @@ export default function ProductForm({ productId, onSuccess }: ProductFormProps) 
         }
 
         if (formData.sizes.length === 0) {
-            errors.sizes = 'At least one size must be selected';
+            errors.sizes = 'At least one size must be configured';
         }
 
-        if (formData.images.length < 2) {
-            errors.images = 'At least 2 images are required';
+        if (formData.images.length === 0) {
+            errors.images = 'At least 1 product image is required';
         }
 
         if (formData.rating < 1 || formData.rating > 5) {
@@ -274,8 +288,8 @@ export default function ProductForm({ productId, onSuccess }: ProductFormProps) 
                                 disabled={isLoading}
                             >
                                 {CATEGORIES.map(category => (
-                                    <option key={category} value={category} className="!text-[#070F2B] bg-white" style={{ color: '#070F2B', backgroundColor: '#FFFFFF' }}>
-                                        {category.charAt(0).toUpperCase() + category.slice(1)}
+                                    <option key={category.id} value={category.id} className="!text-[#070F2B] bg-white" style={{ color: '#070F2B', backgroundColor: '#FFFFFF' }}>
+                                        {category.label}
                                     </option>
                                 ))}
                             </select>
@@ -412,9 +426,42 @@ export default function ProductForm({ productId, onSuccess }: ProductFormProps) 
 
                     {/* Images */}
                     <div>
-                        <label className={`block text-sm font-medium mb-2 ${colorClasses.primary.text}`}>
-                            Product Images * (Minimum 2)
-                        </label>
+                        <div className="flex items-center justify-between mb-2">
+                            <label className={`block text-sm font-medium ${colorClasses.primary.text}`}>
+                                Product Images * (At least 1 image)
+                            </label>
+                            <span className="text-xs text-gray-500 font-medium">
+                                {formData.images.length} / 5 uploaded
+                            </span>
+                        </div>
+
+                        {/* Existing Images Thumbnail Preview */}
+                        {formData.images.length > 0 && (
+                            <div className="flex flex-wrap gap-3 mb-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                                {formData.images.map((img, index) => (
+                                    <div key={index} className="relative group w-20 h-24 rounded-md overflow-hidden border border-gray-300 bg-white shadow-xs">
+                                        <img src={img} alt={`Preview ${index + 1}`} className="w-full h-full object-contain" />
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                const updated = formData.images.filter((_, i) => i !== index);
+                                                handleInputChange('images', updated);
+                                            }}
+                                            className="absolute top-1 right-1 w-5 h-5 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center text-xs opacity-90 group-hover:opacity-100 transition-opacity cursor-pointer shadow-md"
+                                            title="Remove image"
+                                        >
+                                            ×
+                                        </button>
+                                        {index === 0 && (
+                                            <span className="absolute bottom-0 inset-x-0 bg-black/75 text-[9px] text-white text-center font-bold uppercase py-0.5">
+                                                Main
+                                            </span>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+
                         <ImageUpload
                             images={formData.images}
                             onImagesChange={(newImages: string[]) => handleInputChange('images', newImages)}
@@ -422,6 +469,33 @@ export default function ProductForm({ productId, onSuccess }: ProductFormProps) 
                             maxImages={5}
                             userId={user?.id || ''}
                         />
+
+                        {/* Direct Image Path/URL Input */}
+                        <div className="flex gap-2 mt-2">
+                            <Input
+                                type="text"
+                                placeholder="Or enter image URL / path (e.g. /images/products/...)"
+                                value={imageUrlInput}
+                                onChange={(e) => setImageUrlInput(e.target.value)}
+                                className="flex-1 text-xs"
+                                disabled={isLoading || formData.images.length >= 5}
+                            />
+                            <Button
+                                type="button"
+                                variant="outline"
+                                onClick={() => {
+                                    if (imageUrlInput.trim() && formData.images.length < 5) {
+                                        handleInputChange('images', [...formData.images, imageUrlInput.trim()]);
+                                        setImageUrlInput('');
+                                    }
+                                }}
+                                disabled={!imageUrlInput.trim() || formData.images.length >= 5 || isLoading}
+                                className="text-xs cursor-pointer"
+                            >
+                                + Add URL
+                            </Button>
+                        </div>
+
                         {formErrors.images && (
                             <p className="mt-1 text-sm text-red-600">{formErrors.images}</p>
                         )}
@@ -450,7 +524,7 @@ export default function ProductForm({ productId, onSuccess }: ProductFormProps) 
 
                         <div>
                             <label className={`block text-sm font-medium mb-2 ${colorClasses.primary.text}`}>
-                                Product Status
+                                Visibility &amp; Status *
                             </label>
                             <select
                                 value={formData.status}
@@ -459,9 +533,9 @@ export default function ProductForm({ productId, onSuccess }: ProductFormProps) 
                                 style={{ color: '#070F2B', backgroundColor: '#FFFFFF' }}
                                 disabled={isLoading}
                             >
-                                <option value="draft" className="!text-[#070F2B] bg-white" style={{ color: '#070F2B', backgroundColor: '#FFFFFF' }}>Draft</option>
-                                <option value="published" className="!text-[#070F2B] bg-white" style={{ color: '#070F2B', backgroundColor: '#FFFFFF' }}>Published</option>
-                                <option value="archived" className="!text-[#070F2B] bg-white" style={{ color: '#070F2B', backgroundColor: '#FFFFFF' }}>Archived</option>
+                                <option value="published" className="!text-[#070F2B] bg-white" style={{ color: '#070F2B', backgroundColor: '#FFFFFF' }}>🟢 Live on Store (Published)</option>
+                                <option value="draft" className="!text-[#070F2B] bg-white" style={{ color: '#070F2B', backgroundColor: '#FFFFFF' }}>🟡 Hidden from Store (Draft)</option>
+                                <option value="archived" className="!text-[#070F2B] bg-white" style={{ color: '#070F2B', backgroundColor: '#FFFFFF' }}>📦 Archived</option>
                             </select>
                         </div>
                     </div>
