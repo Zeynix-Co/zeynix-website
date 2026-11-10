@@ -12,6 +12,7 @@ import {
 import { Product } from '@/data/products';
 import { APP_CONFIG } from '@/lib/constants';
 import { productAPI } from '@/lib/api';
+import { isHalloweenSlug } from '@/lib/utils/productTransformer';
 import useCartStore from '@/store/cartStore';
 import { useAuthStore, useWishlistStore } from '@/store';
 import ProductCard from '@/components/product/ProductCard';
@@ -64,11 +65,26 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam, init
     const imageContainerRef = useRef<HTMLDivElement>(null);
     const mobileGalleryRef = useRef<HTMLDivElement>(null);
 
+    // Redirect away if someone attempts to visit a hidden Halloween product
+    useEffect(() => {
+        if (isHalloweenSlug(productIdOrSlug)) {
+            router.replace('/products');
+        }
+    }, [productIdOrSlug, router]);
+
     // Fetch product details if not already passed or if id changed
     useEffect(() => {
         let isMounted = true;
 
+        if (isHalloweenSlug(productIdOrSlug)) {
+            return;
+        }
+
         if (initialProduct && (initialProduct.slug === productIdOrSlug || initialProduct.id === productIdOrSlug || (initialProduct as any).productId === productIdOrSlug)) {
+            if (isHalloweenSlug(initialProduct.slug)) {
+                router.replace('/products');
+                return;
+            }
             setProduct(initialProduct);
             setIsLoading(false);
             return;
@@ -82,6 +98,10 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam, init
 
                 if (response.success && response.data) {
                     if (!isMounted) return;
+                    if (isHalloweenSlug(response.data.slug)) {
+                        router.replace('/products');
+                        return;
+                    }
                     setProduct(response.data);
 
                     // Default to first size that is in stock
@@ -111,7 +131,7 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam, init
         return () => {
             isMounted = false;
         };
-    }, [productIdOrSlug, initialProduct]);
+    }, [productIdOrSlug, initialProduct, router]);
 
     // Fetch related products from active catalog
     useEffect(() => {
@@ -119,9 +139,9 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam, init
             try {
                 const response = await productAPI.getAllProducts({ limit: 4 });
                 if (response.success && response.data?.products) {
-                    // Filter out current product
+                    // Filter out current product and hidden Halloween pieces
                     const others = response.data.products.filter(
-                        p => p.id !== productIdOrSlug && p.slug !== productIdOrSlug
+                        p => p.id !== productIdOrSlug && p.slug !== productIdOrSlug && !isHalloweenSlug(p.slug)
                     );
                     setRelatedProducts(others.slice(0, 4));
                 }
@@ -342,7 +362,7 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam, init
                     title: `Zeynix - ${product.name}`,
                     text: product.description || `Check out ${product.name} on Zeynix`,
                     url: window.location.href,
-                }).catch(() => {});
+                }).catch(() => { });
             } else {
                 navigator.clipboard.writeText(window.location.href);
                 setCopiedLink(true);
@@ -447,7 +467,7 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam, init
 
                     {/* ================= LEFT SIDE: IMAGE GALLERY ================= */}
                     <div className="lg:col-span-7 w-full">
-                        
+
                         {/* ================= MOBILE VIEW: HORIZONTAL SCROLL/SWIPE GALLERY ================= */}
                         <div className="block lg:hidden w-full">
                             {/* Horizontal Snap Scroll Gallery */}
@@ -558,11 +578,10 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam, init
                                                 type="button"
                                                 onClick={() => scrollToImage(idx)}
                                                 aria-label={`Go to slide ${idx + 1}`}
-                                                className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                                                    selectedImageIndex === idx
+                                                className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${selectedImageIndex === idx
                                                         ? 'w-5 bg-[#070F2B]'
                                                         : 'w-1.5 bg-gray-300 hover:bg-gray-400'
-                                                }`}
+                                                    }`}
                                             />
                                         ))}
                                     </div>
@@ -577,11 +596,10 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam, init
                                             key={idx}
                                             type="button"
                                             onClick={() => scrollToImage(idx)}
-                                            className={`group relative w-16 h-20 rounded-xl overflow-hidden bg-[#F2EFE9] border-2 transition-all duration-200 shrink-0 cursor-pointer p-1 ${
-                                                selectedImageIndex === idx
+                                            className={`group relative w-16 h-20 rounded-xl overflow-hidden bg-[#F2EFE9] border-2 transition-all duration-200 shrink-0 cursor-pointer p-1 ${selectedImageIndex === idx
                                                     ? 'border-[#070F2B] shadow-md ring-2 ring-[#070F2B]/10 scale-102'
                                                     : 'border-transparent opacity-75 hover:opacity-100 hover:border-gray-300'
-                                            }`}
+                                                }`}
                                         >
                                             <Image
                                                 src={img}
@@ -609,11 +627,10 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam, init
                                             key={idx}
                                             type="button"
                                             onClick={() => scrollToImage(idx)}
-                                            className={`group relative w-full h-28 rounded-xl overflow-hidden bg-[#F2EFE9] border-2 transition-all duration-200 shrink-0 cursor-pointer p-1 ${
-                                                selectedImageIndex === idx
+                                            className={`group relative w-full h-28 rounded-xl overflow-hidden bg-[#F2EFE9] border-2 transition-all duration-200 shrink-0 cursor-pointer p-1 ${selectedImageIndex === idx
                                                     ? 'border-[#070F2B] shadow-md ring-2 ring-[#070F2B]/10 scale-102'
                                                     : 'border-transparent hover:border-gray-300 opacity-80 hover:opacity-100'
-                                            }`}
+                                                }`}
                                             title={getThumbnailLabel(idx, img)}
                                         >
                                             <Image
@@ -652,9 +669,8 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam, init
                                             fill
                                             sizes="(max-width: 1024px) 100vw, 60vw"
                                             priority
-                                            className={`object-contain transition-transform duration-200 ${
-                                                isZooming ? 'scale-150' : 'scale-100'
-                                            }`}
+                                            className={`object-contain transition-transform duration-200 ${isZooming ? 'scale-150' : 'scale-100'
+                                                }`}
                                             style={
                                                 isZooming
                                                     ? {
@@ -751,11 +767,10 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam, init
                                         {[...Array(5)].map((_, i) => (
                                             <Star
                                                 key={i}
-                                                className={`w-3.5 h-3.5 ${
-                                                    i < Math.floor(product.rating || 5)
+                                                className={`w-3.5 h-3.5 ${i < Math.floor(product.rating || 5)
                                                         ? 'text-amber-500 fill-amber-500'
                                                         : 'text-gray-200'
-                                                }`}
+                                                    }`}
                                             />
                                         ))}
                                     </div>
@@ -822,11 +837,10 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam, init
                                                     setSelectedColorIndex(idx);
                                                     setSelectedImageIndex(0);
                                                 }}
-                                                className={`group relative flex items-center gap-2 px-3 py-2 rounded-xl border-2 transition-all duration-200 cursor-pointer ${
-                                                    isSelected
+                                                className={`group relative flex items-center gap-2 px-3 py-2 rounded-xl border-2 transition-all duration-200 cursor-pointer ${isSelected
                                                         ? 'border-[#070F2B] bg-[#070F2B] text-white shadow-md scale-102 ring-2 ring-[#070F2B]/10'
                                                         : 'border-gray-200 bg-white hover:border-[#070F2B]/50 hover:bg-gray-50 text-gray-800'
-                                                }`}
+                                                    }`}
                                             >
                                                 <span
                                                     className="w-4 h-4 rounded-full border border-black/20 shadow-xs shrink-0 transition-transform group-hover:scale-110"
@@ -877,13 +891,12 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam, init
                                             type="button"
                                             disabled={!isAvailable}
                                             onClick={() => setSelectedSize(s.size)}
-                                            className={`h-12 rounded-xl text-xs font-black uppercase transition-all duration-200 flex flex-col items-center justify-center border cursor-pointer relative ${
-                                                isSelected
+                                            className={`h-12 rounded-xl text-xs font-black uppercase transition-all duration-200 flex flex-col items-center justify-center border cursor-pointer relative ${isSelected
                                                     ? 'bg-[#070F2B] text-white border-[#070F2B] shadow-md scale-103'
                                                     : isAvailable
                                                         ? 'bg-white text-gray-800 border-gray-200 hover:border-[#070F2B]/60 hover:bg-gray-50'
                                                         : 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed line-through'
-                                            }`}
+                                                }`}
                                         >
                                             <span>{s.size}</span>
                                             {s.stock > 0 && s.stock <= 10 && (
@@ -941,13 +954,12 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam, init
                                 <button
                                     onClick={handleAddToCart}
                                     disabled={!sizeInStock || isAddingToCart}
-                                    className={`flex-1 h-12 px-5 rounded-xl font-black uppercase tracking-wider text-xs transition-all duration-300 flex items-center justify-center gap-2 shadow-md cursor-pointer active:scale-98 ${
-                                        justAddedToCart
+                                    className={`flex-1 h-12 px-5 rounded-xl font-black uppercase tracking-wider text-xs transition-all duration-300 flex items-center justify-center gap-2 shadow-md cursor-pointer active:scale-98 ${justAddedToCart
                                             ? 'bg-emerald-600 text-white'
                                             : isAlreadyInCart
                                                 ? 'bg-[#070F2B] text-white hover:bg-[#B5945B] hover:text-[#070F2B]'
                                                 : 'bg-[#070F2B] hover:bg-[#B5945B] text-white hover:text-[#070F2B] border border-[#070F2B] hover:border-[#B5945B]'
-                                    }`}
+                                        }`}
                                 >
                                     {isAddingToCart ? (
                                         <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
@@ -972,11 +984,10 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam, init
                                 {/* Wishlist Heart */}
                                 <button
                                     onClick={toggleWishlist}
-                                    className={`w-12 h-12 rounded-xl border flex items-center justify-center transition-all duration-200 cursor-pointer shadow-xs ${
-                                        isWishlisted
+                                    className={`w-12 h-12 rounded-xl border flex items-center justify-center transition-all duration-200 cursor-pointer shadow-xs ${isWishlisted
                                             ? 'bg-red-50 text-red-600 border-red-200'
                                             : 'bg-white text-gray-500 border-gray-200 hover:text-red-500 hover:border-red-200'
-                                    }`}
+                                        }`}
                                     aria-label="Wishlist"
                                 >
                                     <Heart className={`w-5 h-5 ${isWishlisted ? 'fill-red-500 text-red-500' : ''}`} />
@@ -1191,11 +1202,10 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam, init
                             <button
                                 type="button"
                                 onClick={() => setSizeGuideTab('table')}
-                                className={`flex-1 py-2 px-3 rounded-lg text-xs font-black uppercase tracking-wider transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 ${
-                                    sizeGuideTab === 'table'
+                                className={`flex-1 py-2 px-3 rounded-lg text-xs font-black uppercase tracking-wider transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 ${sizeGuideTab === 'table'
                                         ? 'bg-[#070F2B] text-white shadow-xs'
                                         : 'text-gray-600 hover:text-[#070F2B]'
-                                }`}
+                                    }`}
                             >
                                 <Ruler className="w-3.5 h-3.5" />
                                 Measurement Table
@@ -1203,11 +1213,10 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam, init
                             <button
                                 type="button"
                                 onClick={() => setSizeGuideTab('diagram')}
-                                className={`flex-1 py-2 px-3 rounded-lg text-xs font-black uppercase tracking-wider transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 ${
-                                    sizeGuideTab === 'diagram'
+                                className={`flex-1 py-2 px-3 rounded-lg text-xs font-black uppercase tracking-wider transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 ${sizeGuideTab === 'diagram'
                                         ? 'bg-[#070F2B] text-white shadow-xs'
                                         : 'text-gray-600 hover:text-[#070F2B]'
-                                }`}
+                                    }`}
                             >
                                 <Sparkles className="w-3.5 h-3.5 text-[#FFCB05]" />
                                 Visual Chart
@@ -1241,13 +1250,12 @@ export default function ProductDetailView({ productIdOrSlug, categoryParam, init
                                                     return (
                                                         <tr
                                                             key={row.size}
-                                                            className={`transition-colors ${
-                                                                isCurrent
+                                                            className={`transition-colors ${isCurrent
                                                                     ? 'bg-[#FFCB05]/20 font-black text-[#070F2B]'
                                                                     : idx % 2 === 1
                                                                         ? 'bg-gray-50/70 hover:bg-gray-100/50'
                                                                         : 'bg-white hover:bg-gray-50'
-                                                            }`}
+                                                                }`}
                                                         >
                                                             <td className="py-2.5 px-3 text-left pl-4 font-black text-[#070F2B]">
                                                                 <div className="flex items-center gap-1.5">

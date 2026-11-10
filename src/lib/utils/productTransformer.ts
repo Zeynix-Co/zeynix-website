@@ -1,4 +1,4 @@
-import { IProduct } from '@/lib/models/Product';
+import type { IProduct } from '@/lib/models/Product';
 
 // Product transformation utility for converting backend data structure to frontend format
 export const transformProduct = (product: IProduct) => ({
@@ -28,8 +28,26 @@ export const transformProduct = (product: IProduct) => ({
     colors: product.colors || []
 });
 
-// Base filter for active and published products
+export const HALLOWEEN_SLUGS = [
+    'spooky-boo-graveyard-ghost-cream-tee',
+    'slashers-dream-play-scream-repeat-black-tee',
+    'kawaii-pink-bow-ghost-halloween-white-tee',
+    'mystic-haunted-mansion-harvest-moon-purple-tee',
+    'halloween-rip-still-dead-tee',
+    'spookie-peeking-cat-skeletons-tee',
+    'halloween-i-scream-spooky-season-black-tee',
+    'halloween-kawaii-pink-bow-ghosts-cherry-blossom-pink-tee'
+];
+
+export const isHalloweenSlug = (slug?: string | null): boolean => {
+    if (!slug) return false;
+    const s = slug.toLowerCase();
+    return HALLOWEEN_SLUGS.includes(s) || s.includes('halloween');
+};
+
+// Base filter for active and published products (excluding hidden Halloween products from storefront)
 export const getBaseProductFilter = () => ({
     isActive: true,
-    status: 'published'
+    status: 'published',
+    slug: { $nin: HALLOWEEN_SLUGS }
 });

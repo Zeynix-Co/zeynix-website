@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/config/database';
 import { Product } from '@/lib/models/Product';
-import { transformProduct } from '@/lib/utils/productTransformer';
+import { transformProduct, getBaseProductFilter } from '@/lib/utils/productTransformer';
 
 // GET /api/products - Get all products
 export async function GET(request: NextRequest) {
@@ -15,8 +15,7 @@ export async function GET(request: NextRequest) {
         const search = searchParams.get('search');
 
         const filter: any = {
-            isActive: true,
-            status: 'published'
+            ...getBaseProductFilter()
         };
 
         if (category && category !== 'all') {

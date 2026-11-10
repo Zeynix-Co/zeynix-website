@@ -10,13 +10,14 @@ import Footer from '@/components/layout/Footer';
 import { Filter, ArrowLeft, X, Home, ShoppingBag, ChevronRight, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import { productAPI } from '@/lib/api';
+import { isHalloweenSlug } from '@/lib/utils/productTransformer';
 
 import ProductDetailView from '@/components/product/ProductDetailView';
 
 const KNOWN_CATEGORIES = new Set([
     'casual', 'streetwear', 'formal', 'ethnic', 'sports', 't-shirts', 'tshirts',
     'shirts', 'jeans', 'pants', 'jackets', 'all', 'men', 'women', 'hoodies', 'sweatshirts',
-    'unisex', 'unisexual', 'halloween'
+    'unisex', 'unisexual'
 ]);
 
 export default function CategoryProductsPage() {
@@ -31,7 +32,17 @@ export default function CategoryProductsPage() {
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
     const [showFilters, setShowFilters] = useState(false);
 
+    useEffect(() => {
+        if (category && (category.toLowerCase() === 'halloween' || isHalloweenSlug(category))) {
+            router.replace('/products');
+            return;
+        }
+    }, [category, router]);
+
     if (isProductSlugOrId) {
+        if (isHalloweenSlug(category)) {
+            return null;
+        }
         return <ProductDetailView productIdOrSlug={category} />;
     }
 
@@ -40,14 +51,15 @@ export default function CategoryProductsPage() {
         const fetchCategoryProducts = async () => {
             try {
                 if (category.toLowerCase() === 'halloween') {
-                    router.replace('/products?category=Halloween');
+                    router.replace('/products');
                     return;
                 }
                 const apiCat = (category.toLowerCase() === 'streetwear' || category.toLowerCase() === 'casual') ? 'casual' : category;
                 const response = await productAPI.getProductsByCategory(apiCat, { limit: 100 });
                 if (response.success) {
-                    setProducts(response.data.products);
-                    setFilteredProducts(response.data.products);
+                    const visible = (response.data.products || []).filter((p: Product) => !isHalloweenSlug(p.slug));
+                    setProducts(visible);
+                    setFilteredProducts(visible);
                 }
             } catch (err) {
                 console.error('Error fetching category products:', err);
@@ -55,7 +67,7 @@ export default function CategoryProductsPage() {
         };
 
         fetchCategoryProducts();
-    }, [category]);
+    }, [category, router]);
 
     const handleFilterChange = (filtered: Product[]) => {
         setFilteredProducts(filtered);

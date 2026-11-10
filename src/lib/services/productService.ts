@@ -103,8 +103,7 @@ export async function getActiveProductsList(options: {
         await connectDB();
 
         const filter: any = {
-            isActive: true,
-            status: 'published'
+            ...getBaseProductFilter()
         };
 
         if (category && category !== 'all') {

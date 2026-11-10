@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/config/database';
 import { Product } from '@/lib/models/Product';
+import { getBaseProductFilter } from '@/lib/utils/productTransformer';
 
 // GET /api/products/search - Search products
 export async function GET(request: NextRequest) {
@@ -16,17 +17,9 @@ export async function GET(request: NextRequest) {
         const page = parseInt(searchParams.get('page') || '1');
         const limit = parseInt(searchParams.get('limit') || '20');
 
-        // Build filter - only active and published products
-        const filter: { 
-            isActive: boolean; 
-            status: string; 
-            category?: string; 
-            $or?: Array<{ [key: string]: { $regex: string; $options: string } }>; 
-            $and?: Array<{ [key: string]: { $gte?: number; $lte?: number } }>; 
-            'sizes.size'?: string 
-        } = { 
-            isActive: true, 
-            status: 'published' 
+        // Build filter - only active and published products (excluding seasonal drops)
+        const filter: any = {
+            ...getBaseProductFilter()
         };
 
         // Text search

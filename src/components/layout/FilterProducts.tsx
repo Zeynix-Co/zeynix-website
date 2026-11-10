@@ -27,7 +27,6 @@ export const FILTER_CATEGORIES = [
     { id: 'Gothic', label: 'Gothic & Dark Art', badge: 'Viper & Skulls' },
     { id: 'Bollywood', label: 'Bollywood & Desi', badge: 'Cult Cinema' },
     { id: 'PopCulture', label: 'Pop Culture & Motors', badge: 'Cars & Retro' },
-    { id: 'Halloween', label: 'Halloween Edition', badge: 'Limited Edition' },
     { id: 'Anime', label: 'Anime & Manga', badge: 'DBZ & Pokemon' },
     { id: 'Japanese', label: 'Japanese Aesthetic', badge: 'Samurai & Bonsai' },
 ];
@@ -42,7 +41,7 @@ export const FILTER_PRICE_RANGES = [
 
 export type SortOption = 'featured' | 'price-asc' | 'price-desc' | 'rating-desc' | 'name-asc';
 
-const HALLOWEEN_SLUGS = new Set([
+export const HALLOWEEN_SLUGS = new Set([
     'spooky-boo-graveyard-ghost-cream-tee',
     'slashers-dream-play-scream-repeat-black-tee',
     'kawaii-pink-bow-ghost-halloween-white-tee',
@@ -53,19 +52,14 @@ const HALLOWEEN_SLUGS = new Set([
     'halloween-kawaii-pink-bow-ghosts-cherry-blossom-pink-tee'
 ]);
 
-const EXCLUDED_FROM_HALLOWEEN = new Set([
-    'marlboro-doberman-die-anyway-tee',
-    'yin-yang-koi-dead-fish-tee',
-    'i-love-my-crazy-girlfriend-tee',
-    'kawaii-baoo-bear-ghost-pink-tee',
-    'f1-racing-lights-out-legacy-vinyl-tee',
-    'marvel-spider-gwen-multiverse-white-tee',
-    'bitcoin-time-for-plan-b-tictactoe-tee',
-    'crypto-periodic-table-money-stack-tee',
-    'botanical-flower-typo-watercolor-petal-tee',
-    'marvel-spiderman-peter-parker-typography-mask-tee',
-    'cinematic-grunge-eyes-never-lie-black-tee'
-]);
+export function isHalloweenProduct(product: Product): boolean {
+    const slug = (product.slug || '').toLowerCase();
+    const title = (product.name || product.title || '').toLowerCase();
+    if (HALLOWEEN_SLUGS.has(slug)) return true;
+    if (slug.includes('halloween')) return true;
+    if (/\bhalloween\b/i.test(title)) return true;
+    return false;
+}
 
 function matchesCategory(product: Product, categoryId: string): boolean {
     if (categoryId === 'All') return true;
@@ -84,24 +78,8 @@ function matchesCategory(product: Product, categoryId: string): boolean {
             return /gothic|insanity|viper|demon|doberman|chained|rage|cemetery|veni vidi|skull|noir|dark|eyes never lie|grunge/.test(text);
         case 'Japanese':
             return /samurai|zen|fuji|sakura|bonsai|koi|japanese|kanagawa|botanical/.test(text);
-        case 'Halloween': {
-            if (
-                EXCLUDED_FROM_HALLOWEEN.has(slug) ||
-                title.includes('doberman') ||
-                title.includes('dead fish') ||
-                title.includes('crazy girlfriend') ||
-                title.includes('baoo! bear') ||
-                title.includes('lights out and away') ||
-                title.includes('spider-gwen') ||
-                title.includes('bitcoin') ||
-                title.includes('crypto') ||
-                title.includes('eyes never lie')
-            ) {
-                return false;
-            }
-            if (HALLOWEEN_SLUGS.has(slug)) return true;
-            return /\bhalloween\b|\bspooky season\b/i.test(title);
-        }
+        case 'Halloween':
+            return false;
         case 'PopCulture':
             return /mcqueen|porsche|vice city|gta|mickey|tom and jerry|cartoon|minions|spider-man|spiderman|spidergwen|gwen|marvel|tony stark|looney|f1|racing|motorsport|formula|bitcoin|crypto|currency/.test(text);
         default:
@@ -147,12 +125,12 @@ export default function FilterProducts({ searchQuery: propSearchQuery }: FilterP
         try {
             const params = new URLSearchParams(window.location.search);
             const catParam = params.get('category');
-            if (catParam) {
+            if (catParam && catParam.toLowerCase() !== 'halloween') {
                 const matched = FILTER_CATEGORIES.find(c => c.id.toLowerCase() === catParam.toLowerCase());
                 if (matched) return matched.id;
             }
             const savedCat = sessionStorage.getItem('zeynix_filter_category');
-            if (savedCat) {
+            if (savedCat && savedCat.toLowerCase() !== 'halloween') {
                 const matched = FILTER_CATEGORIES.find(c => c.id.toLowerCase() === savedCat.toLowerCase());
                 if (matched) return matched.id;
             }
@@ -178,6 +156,17 @@ export default function FilterProducts({ searchQuery: propSearchQuery }: FilterP
     // Sync with URL category parameter if present
     useEffect(() => {
         if (urlCategory) {
+            if (urlCategory.toLowerCase() === 'halloween') {
+                setSelectedCategory('All');
+                if (typeof window !== 'undefined') {
+                    try {
+                        const url = new URL(window.location.href);
+                        url.searchParams.delete('category');
+                        window.history.replaceState({}, '', url.toString());
+                    } catch (e) { }
+                }
+                return;
+            }
             const matched = FILTER_CATEGORIES.find(c => c.id.toLowerCase() === urlCategory.toLowerCase());
             if (matched) {
                 setSelectedCategory(matched.id);
@@ -316,7 +305,7 @@ export default function FilterProducts({ searchQuery: propSearchQuery }: FilterP
     const categoryCounts = useMemo(() => {
         const counts: Record<string, number> = {};
         for (const cat of FILTER_CATEGORIES) {
-            counts[cat.id] = products.filter(p => matchesCategory(p, cat.id)).length;
+            counts[cat.id] = products.filter(p => !isHalloweenProduct(p) && matchesCategory(p, cat.id)).length;
         }
         return counts;
     }, [products]);
@@ -324,11 +313,12 @@ export default function FilterProducts({ searchQuery: propSearchQuery }: FilterP
     // Dynamic counts per price range
     const priceCounts = useMemo(() => {
         const counts: Record<string, number> = {};
+        const visibleProducts = products.filter(p => !isHalloweenProduct(p));
         for (const range of FILTER_PRICE_RANGES) {
             if (range.id === 'all') {
-                counts[range.id] = products.length;
+                counts[range.id] = visibleProducts.length;
             } else {
-                counts[range.id] = products.filter(p => p.price >= range.min && p.price <= range.max).length;
+                counts[range.id] = visibleProducts.filter(p => p.price >= range.min && p.price <= range.max).length;
             }
         }
         return counts;
@@ -339,6 +329,9 @@ export default function FilterProducts({ searchQuery: propSearchQuery }: FilterP
         const priceConfig = FILTER_PRICE_RANGES.find(r => r.id === selectedPriceRange);
 
         const filtered = products.filter(product => {
+            // Hide Halloween products
+            if (isHalloweenProduct(product)) return false;
+
             // Category check
             const categoryMatch = matchesCategory(product, selectedCategory);
 
@@ -498,22 +491,20 @@ export default function FilterProducts({ searchQuery: propSearchQuery }: FilterP
                                         <button
                                             key={category.id}
                                             onClick={() => handleSelectCategory(category.id)}
-                                            className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer text-left group ${
-                                                isSelected
+                                            className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer text-left group ${isSelected
                                                     ? 'bg-[#070F2B] text-white shadow-xs'
                                                     : 'text-gray-700 hover:bg-gray-50 hover:text-[#070F2B]'
-                                            }`}
+                                                }`}
                                         >
                                             <div className="flex items-center gap-2 min-w-0">
                                                 <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${isSelected ? 'bg-[#FFCB05]' : 'bg-transparent group-hover:bg-[#B5945B]'}`} />
                                                 <span className="truncate">{category.label}</span>
                                             </div>
                                             <span
-                                                className={`text-[10px] font-mono px-2 py-0.5 rounded-full shrink-0 ml-2 ${
-                                                    isSelected
+                                                className={`text-[10px] font-mono px-2 py-0.5 rounded-full shrink-0 ml-2 ${isSelected
                                                         ? 'bg-white/15 text-[#FFCB05] font-black'
                                                         : 'bg-gray-100 text-gray-500 group-hover:bg-gray-200'
-                                                }`}
+                                                    }`}
                                             >
                                                 {count}
                                             </span>
@@ -546,11 +537,10 @@ export default function FilterProducts({ searchQuery: propSearchQuery }: FilterP
                                         <button
                                             key={size}
                                             onClick={() => toggleSize(size)}
-                                            className={`py-2 px-2 text-xs font-black rounded-xl border transition-all cursor-pointer flex items-center justify-center gap-1 ${
-                                                isSelected
+                                            className={`py-2 px-2 text-xs font-black rounded-xl border transition-all cursor-pointer flex items-center justify-center gap-1 ${isSelected
                                                     ? 'bg-[#070F2B] text-white border-[#070F2B] shadow-xs ring-2 ring-[#B5945B]/40'
                                                     : 'bg-[#FAF8F5] text-gray-700 border-gray-200 hover:border-[#070F2B] hover:bg-white'
-                                            }`}
+                                                }`}
                                         >
                                             {isSelected && <Check className="w-3 h-3 text-[#FFCB05]" />}
                                             <span>{size}</span>
@@ -577,11 +567,10 @@ export default function FilterProducts({ searchQuery: propSearchQuery }: FilterP
                                     return (
                                         <label
                                             key={range.id}
-                                            className={`flex items-center justify-between p-2.5 rounded-xl border cursor-pointer transition-all ${
-                                                isSelected
+                                            className={`flex items-center justify-between p-2.5 rounded-xl border cursor-pointer transition-all ${isSelected
                                                     ? 'border-[#070F2B] bg-[#070F2B]/5 shadow-2xs'
                                                     : 'border-gray-100 bg-white hover:border-gray-300'
-                                            }`}
+                                                }`}
                                         >
                                             <div className="flex items-center gap-2.5">
                                                 <input
@@ -618,11 +607,10 @@ export default function FilterProducts({ searchQuery: propSearchQuery }: FilterP
                             <button
                                 onClick={clearAllFilters}
                                 disabled={!hasActiveFilters}
-                                className={`w-full py-2.5 px-4 rounded-xl text-xs font-black uppercase tracking-wider transition-all flex items-center justify-center gap-2 cursor-pointer ${
-                                    hasActiveFilters
+                                className={`w-full py-2.5 px-4 rounded-xl text-xs font-black uppercase tracking-wider transition-all flex items-center justify-center gap-2 cursor-pointer ${hasActiveFilters
                                         ? 'bg-gray-100 text-[#070F2B] hover:bg-rose-50 hover:text-rose-600 border border-gray-200'
                                         : 'bg-gray-50 text-gray-300 border border-gray-100 cursor-not-allowed'
-                                }`}
+                                    }`}
                             >
                                 <RotateCcw className="w-3.5 h-3.5" />
                                 <span>Reset All Filters</span>
@@ -853,11 +841,10 @@ export default function FilterProducts({ searchQuery: propSearchQuery }: FilterP
                                             <button
                                                 key={category.id}
                                                 onClick={() => handleSelectCategory(category.id)}
-                                                className={`w-full flex items-center justify-between p-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer text-left ${
-                                                    isSelected
+                                                className={`w-full flex items-center justify-between p-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer text-left ${isSelected
                                                         ? 'bg-[#070F2B] text-white shadow-xs'
                                                         : 'text-gray-700 bg-gray-50 hover:bg-gray-100'
-                                                }`}
+                                                    }`}
                                             >
                                                 <div className="flex items-center gap-2">
                                                     <span className={`w-1.5 h-1.5 rounded-full ${isSelected ? 'bg-[#FFCB05]' : 'bg-gray-300'}`} />
@@ -884,11 +871,10 @@ export default function FilterProducts({ searchQuery: propSearchQuery }: FilterP
                                             <button
                                                 key={size}
                                                 onClick={() => toggleSize(size)}
-                                                className={`py-2 px-2 text-xs font-black rounded-xl border transition-all cursor-pointer flex items-center justify-center gap-1 ${
-                                                    isSelected
+                                                className={`py-2 px-2 text-xs font-black rounded-xl border transition-all cursor-pointer flex items-center justify-center gap-1 ${isSelected
                                                         ? 'bg-[#070F2B] text-white border-[#070F2B] shadow-xs'
                                                         : 'bg-white text-gray-700 border-gray-200'
-                                                }`}
+                                                    }`}
                                             >
                                                 {isSelected && <Check className="w-3 h-3 text-[#FFCB05]" />}
                                                 <span>{size}</span>
@@ -911,11 +897,10 @@ export default function FilterProducts({ searchQuery: propSearchQuery }: FilterP
                                         return (
                                             <label
                                                 key={range.id}
-                                                className={`flex items-center justify-between p-2.5 rounded-xl border cursor-pointer transition-all ${
-                                                    isSelected
+                                                className={`flex items-center justify-between p-2.5 rounded-xl border cursor-pointer transition-all ${isSelected
                                                         ? 'border-[#070F2B] bg-[#070F2B]/5'
                                                         : 'border-gray-200 bg-white'
-                                                }`}
+                                                    }`}
                                             >
                                                 <div className="flex items-center gap-2">
                                                     <input
